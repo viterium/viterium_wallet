@@ -1,0 +1,53 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'node_types.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+_$_ViteNodeConfigSettings _$$_ViteNodeConfigSettingsFromJson(Map json) =>
+    _$_ViteNodeConfigSettings(
+      options: json['options'] == null
+          ? const IListConst([mainnetViteNodeConfig, testnetViteNodeConfig])
+          : IList<ViteNodeConfig>.fromJson(
+              json['options'],
+              (value) => ViteNodeConfig.fromJson(
+                  Map<String, dynamic>.from(value as Map))),
+      selected: json['selected'] == null
+          ? mainnetViteNodeConfig
+          : ViteNodeConfig.fromJson(
+              Map<String, dynamic>.from(json['selected'] as Map)),
+    );
+
+Map<String, dynamic> _$$_ViteNodeConfigSettingsToJson(
+        _$_ViteNodeConfigSettings instance) =>
+    <String, dynamic>{
+      'options': instance.options.toJson(
+        (value) => value.toJson(),
+      ),
+      'selected': instance.selected.toJson(),
+    };
+
+_$_ViteNodeConfig _$$_ViteNodeConfigFromJson(Map json) => _$_ViteNodeConfig(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      http: json['http'] as String,
+      ws: json['ws'] as String,
+      network: $enumDecode(_$ViteNetworkEnumMap, json['network']),
+    );
+
+Map<String, dynamic> _$$_ViteNodeConfigToJson(_$_ViteNodeConfig instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'http': instance.http,
+      'ws': instance.ws,
+      'network': _$ViteNetworkEnumMap[instance.network],
+    };
+
+const _$ViteNetworkEnumMap = {
+  ViteNetwork.mainnet: 'mainnet',
+  ViteNetwork.testnet: 'testnet',
+  ViteNetwork.devnet: 'devnet',
+};
