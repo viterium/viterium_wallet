@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1
+
+* Fix token details sheet for tokens with more than 18 digits
+* Improve amount input
+* Tooltip for approx amounts
+* Experimental web support
+
 ## 1.0.0 - Viterium Stable Release
 
 * New theme options - Viterium, Sapphirium and Pillium.
