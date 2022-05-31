@@ -423,12 +423,12 @@ class AppLocalization {
 
   /// -- PIN SCREEN
   String get pinCreateTitle {
-    return Intl.message("Create a 6-digit pin",
+    return Intl.message("Create a 6-digit PIN",
         desc: 'pin_create_title', name: 'pinCreateTitle');
   }
 
   String get pinConfirmTitle {
-    return Intl.message("Confirm your pin",
+    return Intl.message("Confirm your PIN",
         desc: 'pin_confirm_title', name: 'pinConfirmTitle');
   }
 
@@ -443,7 +443,7 @@ class AppLocalization {
   }
 
   String get pinInvalid {
-    return Intl.message("Invalid pin entered",
+    return Intl.message("Invalid PIN entered",
         desc: 'pin_error', name: 'pinInvalid');
   }
 
@@ -591,7 +591,7 @@ class AppLocalization {
   String get shareViteriumText {
     return Intl.message(
       "Check out Viterium - a Non-Custodial Wallet for Vite blockchain." +
-          "\nWeb - viterium.io\nTwitter - twitter.com/viterium\nDiscord - discord.gg/STZAkgTFdh",
+          "\nWebsite - viterium.io\nTwitter - twitter.com/viterium\nDiscord - discord.gg/STZAkgTFdh",
       desc: 'share_text',
       name: 'shareViteriumText',
     );
@@ -1207,17 +1207,17 @@ class AppLocalization {
 
   /// PARAGRAPS
   String get passwordWillBeRequiredToOpenParagraph {
-    return Intl.message("This password will be required to open Viterium.",
+    return Intl.message("This password will be required to open this wallet.",
         desc:
-            'A paragraph that tells the users that the created password will be required to open Viterium.',
+            'A paragraph that tells the users that the created password will be required to open the wallet.',
         name: 'passwordWillBeRequiredToOpenParagraph');
   }
 
   String get passwordNoLongerRequiredToOpenParagraph {
     return Intl.message(
-        "You will not need a password to open Viterium anymore.",
+        "You will not need a password to open this wallet.",
         desc:
-            'An info paragraph that tells the user a password will no longer be needed to open Viterium',
+            'An info paragraph that tells the user a password will no longer be needed to open the wallet',
         name: 'passwordNoLongerRequiredToOpenParagraph');
   }
 
