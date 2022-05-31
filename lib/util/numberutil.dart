@@ -35,14 +35,14 @@ class NumberUtil {
     var split = asString.split(".");
     if (split.length > 1) {
       // Remove trailing 0s from this
-      if (int.parse(split[1]) == 0) {
+      if (int.tryParse(split[1].substring(0, maxDigits)) == 0) {
         asString = split[0];
       } else {
         String newStr = split[0] + ".";
         String digits = split[1];
         int endIndex = digits.length;
         for (int i = 1; i <= digits.length; i++) {
-          if (int.parse(digits[digits.length - i]) == 0) {
+          if (int.tryParse(digits[digits.length - i]) == 0) {
             endIndex--;
           } else {
             break;
@@ -78,15 +78,14 @@ class NumberUtil {
     int precision = 6,
   ]) {
     // Indicate that this is a special amount if some digits are not displayed
-    if (NumberUtil.getRawAsUsableString(amountRaw, decimals) ==
+    if (NumberUtil.getRawAsUsableString(amountRaw, decimals, precision) ==
         NumberUtil.getRawAsUsableDecimal(amountRaw, decimals).toString()) {
       final amount = NumberUtil.getRawAsUsableString(amountRaw, decimals);
       return amount;
     } else {
       final amount = NumberUtil.getRawAsUsableDecimal(amountRaw, decimals)
-              .toStringAsFixed(precision) +
-          "~";
-      return amount;
+          .toStringAsFixed(precision);
+      return '~' + amount;
     }
   }
 
