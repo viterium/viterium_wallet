@@ -41,7 +41,6 @@ class SendConfirmSheet extends ConsumerStatefulWidget {
 class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
   late String amount;
   late String destinationAltered;
-  bool animationOpen = false;
 
   TokenInfo get tokenInfo => widget.tokenInfo;
   int get decimals => widget.tokenInfo.decimals;
@@ -50,7 +49,6 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
   void initState() {
     super.initState();
 
-    animationOpen = false;
     // Derive amount from raw amount
     if (NumberUtil.getRawAsUsableString(widget.amountRaw, decimals)
             .replaceAll(',', '') ==
@@ -58,9 +56,9 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
             .toString()) {
       amount = NumberUtil.getRawAsUsableString(widget.amountRaw, decimals);
     } else {
-      amount = NumberUtil.getRawAsUsableDecimal(widget.amountRaw, decimals)
-              .toStringAsFixed(6) +
-          "~";
+      amount = '~' +
+          NumberUtil.getRawAsUsableDecimal(widget.amountRaw, decimals)
+              .toStringAsFixed(6);
     }
     destinationAltered = widget.destination;
   }
@@ -70,6 +68,10 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
     final theme = ref.watch(themeProvider);
     final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+
+    final amountAll =
+        NumberUtil.getRawAsUsableString(widget.amountRaw, decimals, decimals) +
+            ' ${tokenInfo.symbolLabel}';
 
     return SafeArea(
       minimum: EdgeInsets.only(
@@ -128,31 +130,39 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
                                     TokenIconWidget(tokenId: tokenInfo.tokenId),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "$amount",
-                                      style: TextStyle(
-                                        color: theme.primary,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: kFontFamily,
+                            Expanded(
+                              child: Tooltip(
+                                message: amountAll,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: RichText(
+                                      textAlign: TextAlign.center,
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text: "$amount",
+                                            style: TextStyle(
+                                              color: theme.primary,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: kFontFamily,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: ' ${tokenInfo.symbolLabel}',
+                                            style: TextStyle(
+                                              color: theme.primary,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w100,
+                                              fontFamily: kFontFamily,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                    TextSpan(
-                                      text: ' ${tokenInfo.symbolLabel}',
-                                      style: TextStyle(
-                                        color: theme.primary,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w100,
-                                        fontFamily: kFontFamily,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),

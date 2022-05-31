@@ -57,6 +57,19 @@ class App extends ConsumerWidget {
                 backgroundColor: theme.backgroundDark,
                 fontFamily: kFontFamily,
                 brightness: Brightness.dark,
+                tooltipTheme: TooltipThemeData(
+                  preferBelow: false,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: theme.backgroundDarkest,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  textStyle: styles.textStyleAddressText60,
+                ),
               ),
               localizationsDelegates: [
                 AppLocalizationsDelegate(language, ref.read),

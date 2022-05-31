@@ -38,6 +38,11 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
   Widget build(BuildContext context) {
     final theme = ref.watch(themeProvider);
     final localization = ref.watch(l10nProvider);
+
+    final amountAll =
+        NumberUtil.getRawAsUsableString(widget.amountRaw, decimals, decimals) +
+            ' ${tokenSymbol}';
+
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -76,29 +81,38 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   // Amount text
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "$amount",
-                          style: TextStyle(
-                            color: theme.success,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: kFontFamily,
+                  child: Tooltip(
+                    message: amountAll,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "$amount",
+                                style: TextStyle(
+                                  color: theme.success,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: kFontFamily,
+                                ),
+                              ),
+                              TextSpan(
+                                text: " $tokenSymbol",
+                                style: TextStyle(
+                                  color: theme.success,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w100,
+                                  fontFamily: kFontFamily,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        TextSpan(
-                          text: " $tokenSymbol",
-                          style: TextStyle(
-                            color: theme.success,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w100,
-                            fontFamily: kFontFamily,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

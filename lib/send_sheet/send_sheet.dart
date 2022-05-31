@@ -5,6 +5,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
@@ -129,10 +130,6 @@ class _SendSheetState extends ConsumerState<SendSheet> {
     // On amount focus change
     _amountFocusNode.addListener(() {
       if (_amountFocusNode.hasFocus) {
-        if (amountRaw != null) {
-          _amountController.text = '';
-          setState(() => amountRaw = null);
-        }
         setState(() => _amountHint = '');
       } else {
         setState(() => _amountHint = null);
@@ -479,8 +476,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
 
                     final viteUri = ViteUri.tryParse(qrData);
                     if (viteUri == null) {
-                      UIUtil.showSnackbar(
-                          l10n.qrInvalidAddress, context);
+                      UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
                       return;
                     }
                     // See if this address belongs to a contact
@@ -503,6 +499,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                       _isContact = true;
                       _sendAddressStyle = AddressStyle.PRIMARY;
                       _addressController.text = contact.name;
+                      _addressValidAndUnfocused = false;
                     }
                     final amount = viteUri.amount ?? Decimal.zero;
                     final tokenId =
@@ -648,6 +645,17 @@ class _SendSheetState extends ConsumerState<SendSheet> {
       final balance = ref.watch(balanceForTokenProvider(tokenInfo.tokenId));
       final isMaxSend = amountRaw == balance;
 
+      ref.listen<TokenInfo>(selectedTokenProvider, (_, tokenInfo) {
+        final text = _amountController.text;
+        final amountDecimal = Decimal.tryParse(text);
+        if (amountDecimal == null) {
+          amountRaw = null;
+          return;
+        }
+        amountRaw = Amount(value: amountDecimal, tokenInfo: tokenInfo).raw;
+        setState(() => _amountValidationText = '');
+      });
+
       return AppTextField(
         focusNode: _amountFocusNode,
         controller: _amountController,
@@ -660,8 +668,15 @@ class _SendSheetState extends ConsumerState<SendSheet> {
           fontFamily: kFontFamily,
         ),
         inputFormatters: [
-          LengthLimitingTextInputFormatter(24),
           CurrencyFormatter(maxDecimalDigits: tokenInfo.decimals),
+          LocalCurrencyFormatter(
+            active: false,
+            maxDeciamlDigits: tokenInfo.decimals,
+            currencyFormat: NumberFormat.currency(
+              locale: 'en',
+              symbol: '\$',
+            ),
+          )
         ],
         onChanged: (text) {
           final amountDecimal = Decimal.tryParse(text);
@@ -671,9 +686,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
           }
           amountRaw = Amount(value: amountDecimal, tokenInfo: tokenInfo).raw;
           // Always reset the error message to be less annoying
-          setState(() {
-            _amountValidationText = '';
-          });
+          setState(() => _amountValidationText = '');
         },
         textInputAction: TextInputAction.next,
         maxLines: null,

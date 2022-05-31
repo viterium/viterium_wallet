@@ -10,8 +10,8 @@ class CurrencyFormatter extends TextInputFormatter {
   int maxDecimalDigits;
 
   CurrencyFormatter(
-      {this.commaSeparator = ",",
-      this.decimalSeparator = ".",
+      {this.commaSeparator = ',',
+      this.decimalSeparator = '.',
       this.maxDecimalDigits = NumberUtil.maxDecimalDigits});
 
   TextEditingValue formatEditUpdate(
@@ -35,7 +35,7 @@ class CurrencyFormatter extends TextInputFormatter {
           text: oldValue.text,
           selection: TextSelection.collapsed(offset: oldValue.text.length));
     } else if (workingText.startsWith(decimalSeparator)) {
-      workingText = "0" + workingText;
+      workingText = '0' + workingText;
     }
 
     List<String> splitStr = workingText.split(decimalSeparator);
@@ -67,27 +67,32 @@ class CurrencyFormatter extends TextInputFormatter {
 }
 
 class LocalCurrencyFormatter extends TextInputFormatter {
-  NumberFormat? currencyFormat;
-  bool? active;
+  NumberFormat currencyFormat;
+  bool active;
+  int maxDeciamlDigits;
 
-  LocalCurrencyFormatter({this.currencyFormat, this.active});
+  LocalCurrencyFormatter({
+    required this.currencyFormat,
+    required this.active,
+    required this.maxDeciamlDigits,
+  });
 
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.trim() == currencyFormat!.currencySymbol.trim() ||
+    if (newValue.text.trim() == currencyFormat.currencySymbol.trim() ||
         newValue.text.isEmpty) {
       // Return empty string
       return newValue.copyWith(
-          text: "", selection: TextSelection.collapsed(offset: 0));
+          text: '', selection: TextSelection.collapsed(offset: 0));
     }
     // Ensure our input is in the right formatting here
-    if (active!) {
+    if (active) {
       // Make local currency = symbol + amount with correct decimal separator
       String curText = newValue.text;
       String shouldBeText =
-          NumberUtil.sanitizeNumber(curText.replaceAll(",", "."));
-      shouldBeText = currencyFormat!.currencySymbol +
-          shouldBeText.replaceAll(".", currencyFormat!.symbols.DECIMAL_SEP);
+          NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
+      shouldBeText = currencyFormat.currencySymbol +
+          shouldBeText.replaceAll('.', currencyFormat.symbols.DECIMAL_SEP);
       if (shouldBeText != curText) {
         return newValue.copyWith(
             text: shouldBeText,
@@ -96,8 +101,10 @@ class LocalCurrencyFormatter extends TextInputFormatter {
     } else {
       // Make crypto amount have no symbol and formatted as US locale
       String curText = newValue.text;
-      String shouldBeText =
-          NumberUtil.sanitizeNumber(curText.replaceAll(",", "."));
+      String shouldBeText = NumberUtil.sanitizeNumber(
+        curText.replaceAll(',', '.'),
+        maxDecimalDigits: maxDeciamlDigits,
+      );
       if (shouldBeText != curText) {
         return newValue.copyWith(
             text: shouldBeText,
@@ -117,14 +124,14 @@ class ContactInputFormatter extends TextInputFormatter {
     }
 
     String workingText = newValue.text;
-    if (!workingText.startsWith("@")) {
-      workingText = "@" + workingText;
+    if (!workingText.startsWith('@')) {
+      workingText = '@' + workingText;
     }
 
     List<String> splitStr = workingText.split('@');
     // If this string contains more than 1 @, remove all but the first one
     if (splitStr.length > 2) {
-      workingText = "@" + workingText.replaceAll(r"@", "");
+      workingText = '@' + workingText.replaceAll(r'@', '');
     }
 
     // If nothing changed, return original
@@ -149,9 +156,9 @@ class SingleSpaceInputFormatter extends TextInputFormatter {
     // Don't allow first character to be a space
     if (newValue.text.length < oldValue.text.length) {
       return newValue;
-    } else if (oldValue.text.length == 0 && newValue.text == " ") {
+    } else if (oldValue.text.length == 0 && newValue.text == ' ') {
       return oldValue;
-    } else if (oldValue.text.endsWith(" ") && newValue.text.endsWith("  ")) {
+    } else if (oldValue.text.endsWith(' ') && newValue.text.endsWith('  ')) {
       return oldValue;
     }
 
