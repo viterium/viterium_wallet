@@ -28,7 +28,7 @@ class SendCompleteSheet extends ConsumerStatefulWidget {
 }
 
 class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
-  late final amount = NumberUtil.aproxAmount(widget.amountRaw, decimals);
+  late final amount = NumberUtil.approxAmount(widget.amountRaw, decimals);
   late final destination = widget.destination;
 
   late final decimals = widget.tokenInfo.decimals;

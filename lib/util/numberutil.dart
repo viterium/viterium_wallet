@@ -72,8 +72,11 @@ class NumberUtil {
     return decimalRaw.toBigInt();
   }
 
-  static String aproxAmount(BigInt amountRaw, int decimals,
-      [int precision = 6]) {
+  static String approxAmount(
+    BigInt amountRaw,
+    int decimals, [
+    int precision = 6,
+  ]) {
     // Indicate that this is a special amount if some digits are not displayed
     if (NumberUtil.getRawAsUsableString(amountRaw, decimals) ==
         NumberUtil.getRawAsUsableDecimal(amountRaw, decimals).toString()) {

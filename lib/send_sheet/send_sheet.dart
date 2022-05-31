@@ -530,7 +530,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                       );
 
                       amountRaw = amountBigInt;
-                      _amountController.text = NumberUtil.aproxAmount(
+                      _amountController.text = NumberUtil.approxAmount(
                         amountBigInt,
                         tokenInfo.decimals,
                       );
