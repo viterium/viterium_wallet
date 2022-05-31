@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
 
   flutter_secure_storage: 5.0.2
-  flutter_nano_ffi: 2.0.0
   shared_preferences: 2.0.15
   web_socket_channel: 2.2.0
   package_info_plus: 1.4.2

@@ -2,10 +2,10 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:decimal/decimal.dart';
-import 'package:flutter_nano_ffi/flutter_nano_ffi.dart';
 import 'package:vite/vite.dart' as vite;
 import 'package:vite/vite.dart';
 
+import '../encrypt/crypter.dart';
 import '../quota/quota_stake_amounts.dart';
 
 class ViteUtil {
