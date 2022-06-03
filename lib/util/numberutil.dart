@@ -35,7 +35,7 @@ class NumberUtil {
     var split = asString.split(".");
     if (split.length > 1) {
       // Remove trailing 0s from this
-      if (int.tryParse(split[1].substring(0, maxDigits)) == 0) {
+      if (int.tryParse(split[1]) == 0) {
         asString = split[0];
       } else {
         String newStr = split[0] + ".";
