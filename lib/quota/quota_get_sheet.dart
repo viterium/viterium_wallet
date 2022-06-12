@@ -5,10 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
-import '../accounts/account_info_provider.dart';
 import '../accounts/accounts_providers.dart';
 import '../app_icons.dart';
-import '../app_styles.dart';
 import '../core/core_providers.dart';
 import '../tokens/token_icon_widget.dart';
 import '../util/formatters.dart';
@@ -257,12 +255,7 @@ class QuotaGetSheet extends HookConsumerWidget {
             controller: amountController,
             topMargin: 15,
             cursorColor: theme.primary,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: theme.text,
-              fontFamily: kFontFamily,
-            ),
+            style: styles.textStyleAppTextFieldSimple,
             inputFormatters: [
               LengthLimitingTextInputFormatter(24),
               CurrencyFormatter(maxDecimalDigits: tokenInfo.decimals),
@@ -287,12 +280,7 @@ class QuotaGetSheet extends HookConsumerWidget {
             suffixButton: TextFieldButton(
               widget: Text(
                 'VITE',
-                style: TextStyle(
-                  fontFamily: kFontFamily,
-                  color: theme.primary,
-                  fontSize: AppFontSizes.smallest,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: styles.textStyleDialogButtonText,
               ),
               onPressed: null,
             ),

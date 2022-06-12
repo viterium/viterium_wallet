@@ -14,6 +14,7 @@ import '../widgets/sheet_util.dart';
 import '../widgets/sheet_widget.dart';
 import 'quota_get_sheet.dart';
 import 'quota_item.dart';
+import 'quota_message_widget.dart';
 
 class QuotaSheet extends ConsumerWidget {
   const QuotaSheet({Key? key}) : super(key: key);
@@ -68,22 +69,12 @@ class QuotaSheet extends ConsumerWidget {
                       children: [
                         Text(
                           'Account Quota'.toUpperCase(),
-                          style: TextStyle(
-                            fontFamily: "NunitoSans",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: theme.text,
-                          ),
+                          style: styles.textStyleParagraphSmall,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Total Locked'.toUpperCase(),
-                          style: TextStyle(
-                            fontFamily: "NunitoSans",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: theme.text,
-                          ),
+                          style: styles.textStyleParagraphSmall,
                         ),
                       ],
                     ),
@@ -107,13 +98,11 @@ class QuotaSheet extends ConsumerWidget {
                               children: [
                                 TextSpan(
                                   text: '$currentLabel / ${max}',
-                                  style: styles.textStyleTransactionAmount
-                                      .copyWith(fontSize: 14),
+                                  style: styles.textStyleTransactionAmountSmall,
                                 ),
                                 TextSpan(
                                   text: ' UT',
-                                  style: styles.textStyleTransactionUnit
-                                      .copyWith(fontSize: 14),
+                                  style: styles.textStyleTransactionUnitSmall,
                                 ),
                               ],
                             ),
@@ -128,13 +117,11 @@ class QuotaSheet extends ConsumerWidget {
                               children: [
                                 TextSpan(
                                   text: '${totalStakeAmount.value}',
-                                  style: styles.textStyleTransactionAmount
-                                      .copyWith(fontSize: 14),
+                                  style: styles.textStyleTransactionAmountSmall,
                                 ),
                                 TextSpan(
                                   text: ' VITE',
-                                  style: styles.textStyleTransactionUnit
-                                      .copyWith(fontSize: 14),
+                                  style: styles.textStyleTransactionUnitSmall,
                                 ),
                               ],
                             ),
@@ -150,37 +137,17 @@ class QuotaSheet extends ConsumerWidget {
             padding: const EdgeInsets.only(left: 16, top: 8),
             child: Text(
               'Quota Records'.toUpperCase(),
-              style: TextStyle(
-                fontFamily: "NunitoSans",
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                color: theme.text,
-              ),
+              style: styles.textStyleParagraphSmall,
             ),
           ),
           Expanded(
             child: Stack(
               children: [
                 if (items.length == 0)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      Divider(height: 2, color: theme.text15),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, top: 8),
-                        child: Text(
-                          'No Quota Records',
-                          style: TextStyle(
-                            fontFamily: "NunitoSans",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: theme.text,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                  if (quotaStakeList.loading)
+                    QuotaMessageWidget(message: 'Loading Quota Records')
+                  else
+                    QuotaMessageWidget(message: 'No Quota Records')
                 else
                   ListView.builder(
                     shrinkWrap: true,

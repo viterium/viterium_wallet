@@ -103,22 +103,12 @@ class QuotaItem extends ConsumerWidget {
                         children: [
                           Text(
                             'Beneficiary',
-                            style: TextStyle(
-                              fontFamily: "NunitoSans",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: theme.text,
-                            ),
+                            style: styles.textStyleParagraphSmall,
                           ),
                           if (name != null)
                             Text(
                               ' - ${name}',
-                              style: TextStyle(
-                                fontFamily: "NunitoSans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: theme.text,
-                              ),
+                              style: styles.textStyleParagraphSmall,
                             ),
                         ],
                       ),
@@ -155,14 +145,12 @@ class QuotaItem extends ConsumerWidget {
                         children: [
                           Text(
                             '${amount.value}',
-                            style: TextStyle(
-                              fontFamily: "NunitoSans",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: theme.text,
-                            ),
+                            style: styles.textStyleAppTextFieldSimple,
                           ),
-                          Text('VITE', style: styles.textStyleTransactionUnit),
+                          Text(
+                            'VITE',
+                            style: styles.textStyleTransactionUnit,
+                          ),
                         ],
                       ),
                       const SizedBox(height: 12),
@@ -181,12 +169,7 @@ class QuotaItem extends ConsumerWidget {
                               ),
                               child: Text(
                                 'UNLOCK',
-                                style: TextStyle(
-                                  fontFamily: "NunitoSans",
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                  color: theme.text,
-                                ),
+                                style: styles.textStyleDialogButtonTextSimple,
                               ),
                             ),
                           ),
@@ -204,11 +187,7 @@ class QuotaItem extends ConsumerWidget {
                         //     ),
                         //     child: Text(
                         //       'LOCKED',
-                        //       style: TextStyle(
-                        //         fontFamily: "NunitoSans",
-                        //         fontWeight: FontWeight.w600,
-                        //         fontSize: 12,
-                        //         color: theme.text,
+                        //       style: styles.textStyleDialogButtonTextSimple,
                         //       ),
                         //     ),
                         //   ),
