@@ -28,6 +28,7 @@ void main() async {
   // Setup logger, only show warning and higher in release mode.
   if (kDebugMode) {
     Logger.level = Level.debug;
+    //debugRepaintRainbowEnabled = true;
   } else {
     Logger.level = Level.warning;
   }
@@ -37,10 +38,11 @@ void main() async {
   // Init database
   await Database.init();
 
-  //debugRepaintRainbowEnabled = true;
-
   runApp(
     ProviderScope(
+      // observers: [
+      //   const ProviderLogger(),
+      // ],
       overrides: [
         sharedPrefsProvider.overrideWithValue(sharedPrefs),
       ],
