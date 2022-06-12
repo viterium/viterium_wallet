@@ -11,7 +11,7 @@ class NumberUtil {
     return raw;
   }
 
-  static Decimal getRawAsUsableDecimal(BigInt raw, int decimals) {
+  static Decimal getDecimalFromRaw(BigInt raw, int decimals) {
     final result = (raw.toDecimal() / Decimal.ten.pow(decimals))
         .toDecimal(scaleOnInfinitePrecision: decimals);
     return result;
@@ -22,15 +22,12 @@ class NumberUtil {
   /// @param raw 100000000000000000000000000000
   /// @returns 1
   ///
-  static String getRawAsUsableString(
+  static String getStringFromRaw(
     BigInt raw,
     int decimals, [
     int maxDigits = 6,
   ]) {
-    // NumberFormat nf = NumberFormat.currency(
-    //     locale: 'en_US', decimalDigits: decimals, symbol: '');
-    final decimal = (raw.toDecimal() / Decimal.ten.pow(decimals))
-        .toDecimal(scaleOnInfinitePrecision: decimals);
+    final decimal = getDecimalFromRaw(raw, decimals);
     String asString = decimal.toStringAsFixed(decimals);
     var split = asString.split(".");
     if (split.length > 1) {
@@ -58,13 +55,13 @@ class NumberUtil {
   }
 
   static BigInt? tryParseAmountAsRaw(String amount, int decimals) {
-    final asDecimalRaw = Decimal.tryParse(amount);
-    if (asDecimalRaw == null) {
+    final decimal = Decimal.tryParse(amount);
+    if (decimal == null) {
       return null;
     }
 
-    final asDecimal = asDecimalRaw * Decimal.ten.pow(decimals);
-    return asDecimal.toBigInt();
+    final decimalRaw = decimal * Decimal.ten.pow(decimals);
+    return decimalRaw.toBigInt();
   }
 
   static BigInt parseAmountAsRaw(String amount, int decimals) {
@@ -78,12 +75,13 @@ class NumberUtil {
     int precision = 6,
   ]) {
     // Indicate that this is a special amount if some digits are not displayed
-    if (NumberUtil.getRawAsUsableString(amountRaw, decimals, precision) ==
-        NumberUtil.getRawAsUsableDecimal(amountRaw, decimals).toString()) {
-      final amount = NumberUtil.getRawAsUsableString(amountRaw, decimals);
+    if (getStringFromRaw(amountRaw, decimals, precision) ==
+        getDecimalFromRaw(amountRaw, decimals).toString()) {
+      final amount = getStringFromRaw(amountRaw, decimals);
       return amount;
     } else {
-      final amount = NumberUtil.getRawAsUsableDecimal(amountRaw, decimals)
+      final amount =
+          getDecimalFromRaw(amountRaw, decimals)
           .toStringAsFixed(precision);
       return '~' + amount;
     }

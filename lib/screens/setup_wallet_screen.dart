@@ -7,7 +7,7 @@ import '../app_providers.dart';
 import '../intro/intro_providers.dart';
 import '../util/ui_util.dart';
 import '../wallet/wallet_types.dart';
-import '../widgets/buttons.dart';
+import 'setup_failed_page.dart';
 
 class SetupWalletScreen extends HookConsumerWidget {
   const SetupWalletScreen({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class SetupWalletScreen extends HookConsumerWidget {
 
         final seed = await introData.seed;
         if (seed == null) {
-          throw Exception('Mising seed');
+          throw Exception('Missing seed');
         }
         String? entropy = null;
         final mnemonic = introData.mnemonic;
@@ -48,10 +48,12 @@ class SetupWalletScreen extends HookConsumerWidget {
         final auth = ref.read(walletAuthNotifierProvider);
         if (auth == null) throw Exception('No active wallet');
         await auth.unlock(password: walletData.password);
+
         Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
       } catch (e, st) {
         final log = ref.read(loggerProvider);
         log.e('Failed to create wallet', e, st);
+
         UIUtil.showSnackbar('Something went wrong. Please try again', context);
         setupFailed.value = true;
       }
@@ -67,49 +69,9 @@ class SetupWalletScreen extends HookConsumerWidget {
     }, const []);
 
     if (setupFailed.value) {
-      return Scaffold(
-        backgroundColor: theme.background,
-        body: Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  FractionallySizedBox(
-                    widthFactor: 0.4,
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: ImageIcon(
-                        AssetImage('assets/viterium.png'),
-                        color: theme.primary,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'Something went wrong.',
-                    style: styles.textStyleSettingItemHeader
-                        .copyWith(fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Column(
-                children: [
-                  PrimaryButton(
-                    title: 'Try Again',
-                    onPressed: setupWallet,
-                  ),
-                  const SizedBox(height: 16),
-                  PrimaryOutlineButton(
-                    title: 'Restart setup',
-                    onPressed: restartSetup,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+      return SetupFailedPage(
+        onTryAgain: setupWallet,
+        onRestart: restartSetup,
       );
     }
 
@@ -129,9 +91,10 @@ class SetupWalletScreen extends HookConsumerWidget {
                 ),
               ),
             ),
-            Text('Setting up wallet',
-                style:
-                    styles.textStyleSettingItemHeader.copyWith(fontSize: 18)),
+            Text(
+              'Setting up wallet',
+              style: styles.textStyleSettingItemHeaderLarge,
+            ),
             const SizedBox(),
           ],
         ),

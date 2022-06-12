@@ -50,8 +50,9 @@ dependencies:
   #go_router: ^3.0.4
   vite: 0.1.1
   #google_fonts: ^2.3.2
-  cupertino_icons: ^1.0.4
-  oktoast: ^3.1.5
+  cupertino_icons: 1.0.4
+  oktoast: 3.1.5
+  automatic_animated_list: 1.1.0
 
 dev_dependencies:
   flutter_test:

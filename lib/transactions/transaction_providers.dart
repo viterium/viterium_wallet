@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
+import '../accounts/account.dart';
 import '../app_providers.dart';
 import 'transaction_history_notifier.dart';
 import 'transaction_types.dart';
@@ -17,11 +18,38 @@ final transactionHistoryProvider = ChangeNotifierProvider.autoDispose
     log: log,
   );
 
-  ref.listen(newAccountBlockProvider(pair.account.address),
-      (_, __) => notifier.refresh());
+  ref.listen<AsyncValue<RpcAccountBlockWithHeightMessage>>(
+      newAccountBlockProvider(pair.account.address), (_, next) {
+    final message = next.asData?.value;
+    if (message != null && message.removed) {
+      final hash = Hash.tryParse(message.hash);
+      if (hash != null) {
+        notifier.remove(hash);
+      }
+    }
+    notifier.refresh();
+  });
 
   ref.listen(snapshotTickerProvider, (_, __) => notifier.refreshUnconfirmed());
 
+  ref.onDispose(() {
+    notifier.disposed = true;
+  });
+
+  return notifier;
+});
+
+final txHistoryForAccountProvider = Provider.autoDispose
+    .family<TransactionHistoryNotifier, Account>((ref, account) {
+  final pair = AccountTokenPair(account: account);
+  final txHistory = ref.watch(transactionHistoryProvider(pair));
+  return txHistory;
+});
+
+final selectedTxHistoryProvider = Provider.autoDispose((ref) {
+  final account = ref.watch(selectedAccountProvider);
+  final pair = AccountTokenPair(account: account);
+  final notifier = ref.watch(transactionHistoryProvider(pair));
   return notifier;
 });
 
@@ -32,7 +60,7 @@ final confirmationStatusProvider =
     return const TxState.confirmed();
   }
   final asyncValue = ref.watch(snapshotTickerProvider);
-  final message = asyncValue.value;
+  final message = asyncValue.asData?.value;
   if (message == null) {
     return const TxState.unknown();
   }

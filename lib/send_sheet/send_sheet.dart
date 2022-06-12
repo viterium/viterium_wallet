@@ -20,13 +20,13 @@ import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
-import '../util/vite_util.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/one_or_three_address_text.dart';
 import '../widgets/sheet_handle.dart';
 import '../widgets/sheet_util.dart';
+import '../widgets/tap_outside_unfocus.dart';
 import 'balance_text_widget.dart';
 import 'send_confirm_sheet.dart';
 import 'send_data_widget.dart';
@@ -70,7 +70,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
 
   //BigInt? quickSendAmount;
   late List<Contact> _contacts;
-  bool? animationOpen;
+
   // Used to replace address textfield with colorized TextSpan
   bool _addressValidAndUnfocused = false;
   bool _memoValidAndUnfocused = false;
@@ -93,7 +93,6 @@ class _SendSheetState extends ConsumerState<SendSheet> {
     super.initState();
 
     _contacts = [];
-    animationOpen = false;
     if (widget.contact != null) {
       // Setup initial state for contact pre-filled
       _addressController.text = widget.contact!.name;
@@ -174,9 +173,10 @@ class _SendSheetState extends ConsumerState<SendSheet> {
     // Set quick send amount
     if (amountRaw != null) {
       final tokenInfo = ref.read(selectedTokenProvider);
-      _amountController.text =
-          NumberUtil.getRawAsUsableString(amountRaw!, tokenInfo.decimals)
-              .replaceAll(",", "");
+      _amountController.text = NumberUtil.getStringFromRaw(
+        amountRaw!,
+        tokenInfo.decimals,
+      );
     }
   }
 
@@ -205,341 +205,331 @@ class _SendSheetState extends ConsumerState<SendSheet> {
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
       ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(width: 60, height: 60),
-              Column(
-                children: [
-                  const SheetHandle(),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width - 140,
-                    ),
-                    child: Column(
-                      children: [
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            l10n.sendFrom.toUpperCase(),
-                            style: styles.textStyleHeader(context),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
+      child: TapOutsideUnfocus(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(width: 60, height: 60),
+                Column(
+                  children: [
+                    const SheetHandle(),
+                    Container(
+                      margin: const EdgeInsets.only(top: 15),
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width - 140,
+                      ),
+                      child: Column(
+                        children: [
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              l10n.sendFrom.toUpperCase(),
+                              style: styles.textStyleHeader(context),
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 60, height: 60),
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10, left: 30, right: 30),
-            child: Container(
-              child: RichText(
-                textAlign: TextAlign.start,
-                text: TextSpan(
-                  text: account.name,
-                  style: TextStyle(
-                    color: theme.text60,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: kFontFamily,
+                  ],
+                ),
+                const SizedBox(width: 60, height: 60),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 10, left: 30, right: 30),
+              child: Container(
+                child: RichText(
+                  textAlign: TextAlign.start,
+                  text: TextSpan(
+                    text: account.name,
+                    style: TextStyle(
+                      color: theme.text60,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: kFontFamily,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          // Address Text
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            child: OneOrThreeLineAddressText(
-              address: account.viteAddress,
-              type: AddressTextType.PRIMARY60,
+            // Address Text
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30),
+              child: OneOrThreeLineAddressText(
+                address: account.viteAddress,
+                type: AddressTextType.PRIMARY60,
+              ),
             ),
-          ),
 
-          // A main container that holds everything
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(top: 5, bottom: 15),
-              child: Stack(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      // Clear focus of our fields when tapped in this empty space
-                      _addressFocusNode.unfocus();
-                      _amountFocusNode.unfocus();
-                      _memoFocusNode.unfocus();
-                    },
-                    child: Container(
-                      color: Colors.transparent,
-                      child: SizedBox.expand(),
-                      constraints: BoxConstraints.expand(),
-                    ),
-                  ),
-                  // A column for Enter Amount, Enter Address, Error containers and the pop up list
-                  SingleChildScrollView(
-                    padding: EdgeInsets.only(
-                      bottom: max(
-                        0,
-                        MediaQuery.of(context).viewInsets.bottom - 180,
+            // A main container that holds everything
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(top: 5, bottom: 15),
+                child: Stack(
+                  children: [
+                    // A column for Enter Amount, Enter Address, Error containers and the pop up list
+                    SingleChildScrollView(
+                      padding: EdgeInsets.only(
+                        bottom: max(
+                          0,
+                          MediaQuery.of(context).viewInsets.bottom - 180,
+                        ),
                       ),
-                    ),
-                    child: Stack(
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(height: 15),
-                            const BalanceTextWidget(),
-                            // ******* Enter Amount Container ******* //
-                            getEnterAmountContainer(),
-                            // ******* Enter Amount Container End ******* //
+                      child: Stack(
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(height: 15),
+                              const BalanceTextWidget(),
+                              // ******* Enter Amount Container ******* //
+                              getEnterAmountContainer(),
+                              // ******* Enter Amount Container End ******* //
 
-                            // ******* Enter Amount Error Container ******* //
-                            Container(
-                              alignment: const AlignmentDirectional(0, 0),
-                              margin: const EdgeInsets.only(top: 3),
-                              child: Text(
-                                _amountValidationText,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: theme.primary,
-                                  fontFamily: kFontFamily,
-                                  fontWeight: FontWeight.w600,
+                              // ******* Enter Amount Error Container ******* //
+                              Container(
+                                alignment: const AlignmentDirectional(0, 0),
+                                margin: const EdgeInsets.only(top: 3),
+                                child: Text(
+                                  _amountValidationText,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: theme.primary,
+                                    fontFamily: kFontFamily,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
-                            // ******* Enter Amount Error Container End ******* //
-                          ],
-                        ),
-                        // Column for Enter Address container + Enter Address Error container
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              alignment: Alignment.topCenter,
-                              child: Stack(
+                              // ******* Enter Amount Error Container End ******* //
+                            ],
+                          ),
+                          // Column for Enter Address container + Enter Address Error container
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
                                 alignment: Alignment.topCenter,
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.105,
-                                      right: MediaQuery.of(context).size.width *
-                                          0.105,
-                                    ),
-                                    alignment: Alignment.bottomCenter,
-                                    constraints: const BoxConstraints(
-                                      maxHeight: 174,
-                                    ),
-                                    // ********************************************* //
-                                    // ********* The pop-up Contacts List ********* //
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(25),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          color: theme.backgroundDarkest,
-                                        ),
+                                child: Stack(
+                                  alignment: Alignment.topCenter,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left:
+                                            MediaQuery.of(context).size.width *
+                                                0.105,
+                                        right:
+                                            MediaQuery.of(context).size.width *
+                                                0.105,
+                                      ),
+                                      alignment: Alignment.bottomCenter,
+                                      constraints: const BoxConstraints(
+                                        maxHeight: 174,
+                                      ),
+                                      // ********************************************* //
+                                      // ********* The pop-up Contacts List ********* //
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(25),
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(25),
+                                            color: theme.backgroundDarkest,
                                           ),
-                                          margin: EdgeInsets.only(bottom: 50),
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            padding: const EdgeInsets.only(
-                                                bottom: 0, top: 0),
-                                            itemCount: _contacts.length,
-                                            itemBuilder: (context, index) {
-                                              return _buildContactItem(
-                                                  _contacts[index]);
-                                            },
-                                          ), // ********* The pop-up Contacts List End ********* //
-                                          // ************************************************** //
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                            ),
+                                            margin: EdgeInsets.only(bottom: 50),
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 0, top: 0),
+                                              itemCount: _contacts.length,
+                                              itemBuilder: (context, index) {
+                                                return _buildContactItem(
+                                                    _contacts[index]);
+                                              },
+                                            ), // ********* The pop-up Contacts List End ********* //
+                                            // ************************************************** //
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  getEnterAddressContainer(),
-                                ],
-                              ),
-                            ),
-
-                            // ******* Enter Address Error Container ******* //
-                            Container(
-                              alignment: const AlignmentDirectional(0, 0),
-                              margin: const EdgeInsets.only(top: 3),
-                              child: Text(
-                                _addressValidationText,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: theme.primary,
-                                  fontFamily: kFontFamily,
-                                  fontWeight: FontWeight.w600,
+                                    getEnterAddressContainer(),
+                                  ],
                                 ),
                               ),
-                            ),
-                            // ******* Enter Address Error Container End ******* //
 
-                            const SizedBox(height: 3),
-                            Column(
-                              children: [
-                                if (hasData)
-                                  SendDataWidget(data: _data!)
-                                else
-                                  getEnterMemoContainer(),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
-                      ],
+                              // ******* Enter Address Error Container ******* //
+                              Container(
+                                alignment: const AlignmentDirectional(0, 0),
+                                margin: const EdgeInsets.only(top: 3),
+                                child: Text(
+                                  _addressValidationText,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: theme.primary,
+                                    fontFamily: kFontFamily,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                              // ******* Enter Address Error Container End ******* //
+
+                              const SizedBox(height: 3),
+                              Column(
+                                children: [
+                                  if (hasData)
+                                    SendDataWidget(data: _data!)
+                                  else
+                                    getEnterMemoContainer(),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
+                    const ListTopGradient(),
+                    const ListBottomGradient(),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: Column(
+                children: [
+                  PrimaryButton(
+                    title: l10n.send,
+                    onPressed: () {
+                      final validRequest = _validateRequest();
+                      if (!validRequest) {
+                        return;
+                      }
+                      final tokenInfo = ref.read(selectedTokenProvider);
+                      final addressText = _addressController.text.trim();
+                      Contact? contact = null;
+                      String destination;
+
+                      final contacts = ref.read(contactsProvider);
+                      if (addressText.startsWith("@")) {
+                        // Need to make sure its a valid contact
+                        contact = contacts.getContactWithName(addressText);
+
+                        if (contact == null) {
+                          setState(() {
+                            _addressValidationText = l10n.contactInvalid;
+                          });
+                          return;
+                        }
+                        destination = contact.address;
+                      } else {
+                        destination = addressText;
+                        contact = contacts.getLabelForAddress(destination);
+                      }
+
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        theme: ref.read(themeProvider),
+                        widget: SendConfirmSheet(
+                          amountRaw: amountRaw ?? BigInt.zero,
+                          tokenInfo: tokenInfo,
+                          destination: destination,
+                          contactName: contact?.name,
+                          memo: _memoController.text,
+                          data: _data,
+                        ),
+                      );
+                    },
                   ),
-                  const ListTopGradient(),
-                  const ListBottomGradient(),
+                  const SizedBox(height: 16),
+                  PrimaryOutlineButton(
+                    title: l10n.scanQrCode,
+                    onPressed: () async {
+                      FocusManager.instance.primaryFocus?.unfocus();
+
+                      final qrCode = await UserDataUtil.scanQrCode(context);
+
+                      final qrData = qrCode?.code;
+                      if (qrData == null) {
+                        return;
+                      }
+
+                      final viteUri = ViteUri.tryParse(qrData);
+                      if (viteUri == null) {
+                        UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
+                        return;
+                      }
+                      // See if this address belongs to a contact
+                      Contact? contact = ref
+                          .read(contactsProvider)
+                          .getContactWithAddress(viteUri.viteAddress);
+
+                      _addressValidationText = '';
+                      _pasteButtonVisible = false;
+                      _contactButtonVisible = false;
+
+                      if (contact == null) {
+                        // Not a contact
+                        _isContact = false;
+                        _sendAddressStyle = AddressStyle.TEXT90;
+                        _addressController.text = viteUri.viteAddress;
+                        _addressValidAndUnfocused = true;
+                      } else {
+                        // Is a contact
+                        _isContact = true;
+                        _sendAddressStyle = AddressStyle.PRIMARY;
+                        _addressController.text = contact.name;
+                        _addressValidAndUnfocused = false;
+                      }
+                      final amount = viteUri.amount ?? Decimal.zero;
+                      final tokenId = viteUri.token?.tokenId ??
+                          ref.read(selectedTokenProvider).tokenId;
+
+                      final tokenInfo =
+                          await ref.read(tokenInfoProvider(tokenId).future);
+
+                      final data = viteUri.data;
+                      if (data != null) {
+                        _data = data;
+                      }
+
+                      if (viteUri.isValidUri) {
+                        // update selected token
+                        final selectedToken =
+                            ref.read(selectedTokenProvider.notifier);
+                        selectedToken.state = tokenInfo;
+                      }
+                      if (amount != Decimal.zero || viteUri.isValidUri) {
+                        // set amount
+                        final amountBigInt = NumberUtil.getRawFromDecimal(
+                          amount,
+                          tokenInfo.decimals,
+                        );
+
+                        amountRaw = amountBigInt;
+                        _amountController.text = NumberUtil.approxAmount(
+                          amountBigInt,
+                          tokenInfo.decimals,
+                        );
+                      }
+
+                      setState(() {});
+                    },
+                  ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Column(
-              children: [
-                PrimaryButton(
-                  title: l10n.send,
-                  onPressed: () {
-                    final validRequest = _validateRequest();
-                    if (!validRequest) {
-                      return;
-                    }
-                    final tokenInfo = ref.read(selectedTokenProvider);
-                    final addressText = _addressController.text.trim();
-                    Contact? contact = null;
-                    String destination;
-
-                    final contacts = ref.read(contactsProvider);
-                    if (addressText.startsWith("@")) {
-                      // Need to make sure its a valid contact
-                      contact = contacts.getContactWithName(addressText);
-
-                      if (contact == null) {
-                        setState(() {
-                          _addressValidationText = l10n.contactInvalid;
-                        });
-                        return;
-                      }
-                      destination = contact.address;
-                    } else {
-                      destination = addressText;
-                      contact = contacts.getLabelForAddress(destination);
-                    }
-
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      theme: ref.read(themeProvider),
-                      widget: SendConfirmSheet(
-                        amountRaw: amountRaw ?? BigInt.zero,
-                        tokenInfo: tokenInfo,
-                        destination: destination,
-                        contactName: contact?.name,
-                        memo: _memoController.text,
-                        data: _data,
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 16),
-                PrimaryOutlineButton(
-                  title: l10n.scanQrCode,
-                  onPressed: () async {
-                    _amountFocusNode.unfocus();
-                    _addressFocusNode.unfocus();
-                    _memoFocusNode.unfocus();
-                    final qrCode = await UserDataUtil.scanQrCode(context);
-
-                    final qrData = qrCode?.code;
-                    if (qrData == null) {
-                      return;
-                    }
-
-                    final viteUri = ViteUri.tryParse(qrData);
-                    if (viteUri == null) {
-                      UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
-                      return;
-                    }
-                    // See if this address belongs to a contact
-                    Contact? contact = ref
-                        .read(contactsProvider)
-                        .getContactWithAddress(viteUri.viteAddress);
-
-                    _addressValidationText = '';
-                    _pasteButtonVisible = false;
-                    _contactButtonVisible = false;
-
-                    if (contact == null) {
-                      // Not a contact
-                      _isContact = false;
-                      _sendAddressStyle = AddressStyle.TEXT90;
-                      _addressController.text = viteUri.viteAddress;
-                      _addressValidAndUnfocused = true;
-                    } else {
-                      // Is a contact
-                      _isContact = true;
-                      _sendAddressStyle = AddressStyle.PRIMARY;
-                      _addressController.text = contact.name;
-                      _addressValidAndUnfocused = false;
-                    }
-                    final amount = viteUri.amount ?? Decimal.zero;
-                    final tokenId =
-                        viteUri.token?.tokenId ?? ViteUtil.viteTokenId;
-
-                    final tokenInfo =
-                        await ref.read(tokenInfoProvider(tokenId).future);
-
-                    final data = viteUri.data;
-                    if (data != null) {
-                      _data = data;
-                    }
-
-                    if (viteUri.isValidUri) {
-                      // update selected token
-                      final selectedToken =
-                          ref.read(selectedTokenProvider.notifier);
-                      selectedToken.state = tokenInfo;
-                    }
-                    if (amount != Decimal.zero || viteUri.isValidUri) {
-                      // set amount
-                      final amountBigInt = NumberUtil.getRawFromDecimal(
-                        amount,
-                        tokenInfo.decimals,
-                      );
-
-                      amountRaw = amountBigInt;
-                      _amountController.text = NumberUtil.approxAmount(
-                        amountBigInt,
-                        tokenInfo.decimals,
-                      );
-                    }
-
-                    setState(() {});
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -559,8 +549,8 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             child: TextButton(
               onPressed: () {
                 _addressController.text = contact.name;
-                _addressFocusNode.unfocus();
-                _memoFocusNode.unfocus();
+                FocusManager.instance.primaryFocus?.unfocus();
+
                 setState(() {
                   _isContact = true;
                   _contactButtonVisible = false;
@@ -641,6 +631,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
     return Consumer(builder: (context, ref, _) {
       final theme = ref.watch(themeProvider);
       final l10n = ref.watch(l10nProvider);
+
       final tokenInfo = ref.watch(selectedTokenProvider);
       final balance = ref.watch(balanceForTokenProvider(tokenInfo.tokenId));
       final isMaxSend = amountRaw == balance;
@@ -688,7 +679,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
           // Always reset the error message to be less annoying
           setState(() => _amountValidationText = '');
         },
-        textInputAction: TextInputAction.next,
+        textInputAction: TextInputAction.done,
         maxLines: null,
         autocorrect: false,
         hintText: _amountHint ?? l10n.enterAmount,
@@ -761,7 +752,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
               ? LengthLimitingTextInputFormatter(20)
               : LengthLimitingTextInputFormatter(kViteAddressLength),
         ],
-        textInputAction: TextInputAction.next,
+        textInputAction: TextInputAction.done,
         maxLines: null,
         autocorrect: false,
         hintText: _addressHint ?? l10n.enterAddress,
@@ -868,8 +859,8 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             _addressValidationText = '';
           });
           if (!isContact && ViteUri.tryParse(text) != null) {
-            _addressFocusNode.unfocus();
-            _memoFocusNode.unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+
             setState(() {
               _sendAddressStyle = AddressStyle.TEXT90;
               _addressValidationText = '';
@@ -933,9 +924,8 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         prefixButton: TextFieldButton(
           icon: AppIcons.scan,
           onPressed: () async {
-            _amountFocusNode.unfocus();
-            _memoFocusNode.unfocus();
-            _addressFocusNode.unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+
             final qr = await UserDataUtil.scanQrCode(context);
             final data = qr?.code;
             if (data == null) {
@@ -945,9 +935,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             _memoController.text = data;
             _memoPasteButtonVisible = false;
             _memoQrButtonVisible = false;
-            _memoFocusNode.unfocus();
-            _addressFocusNode.unfocus();
-            _amountFocusNode.unfocus();
+
             setState(() => _memoValidAndUnfocused = true);
           },
         ),
@@ -959,17 +947,17 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             if (!_memoPasteButtonVisible) {
               return;
             }
+
             Clipboard.getData("text/plain").then((ClipboardData? data) {
               final text = data?.text;
               if (text == null) {
                 return;
               }
+              FocusManager.instance.primaryFocus?.unfocus();
               _memoController.text = text;
               _memoPasteButtonVisible = false;
               _memoQrButtonVisible = false;
-              _memoFocusNode.unfocus();
-              _addressFocusNode.unfocus();
-              _amountFocusNode.unfocus();
+
               setState(() => _memoValidAndUnfocused = true);
             });
           },

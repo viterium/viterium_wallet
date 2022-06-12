@@ -10,52 +10,57 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import 'vitex_types.dart';
 
-final _vitexExchangeRateProvider =
+final _vitexExchangeRatesCacheProvider =
     StateProvider<IMap<TokenId, VitexExchangeRate>>((ref) {
   return <TokenId, VitexExchangeRate>{}.lock;
 });
 
-final remoteRefreshProvider = StateProvider((ref) => 0);
-
-final remoteVitexExchangeRatesProvider =
+final _vitexExchangeRatesRemoteProvider =
     FutureProvider.family<IMap<TokenId, VitexExchangeRate>, IList<TokenId>>(
         (ref, tokens) async {
   ref.watch(remoteRefreshProvider);
-  ref.read(loggerProvider).d('Fetching vitex rates');
+
+  final log = ref.read(loggerProvider);
+  log.d('Fetching vitex rates');
+
   final response = await http.get(Uri.parse(
       'https://api.vitex.net/api/v2/exchange-rate?tokenIds=${tokens.join(",")}'));
+
   if (response.statusCode != 200) {
     return <TokenId, VitexExchangeRate>{}.lock;
   }
+
   try {
     final jsonPayload = json.decode(response.body);
     final data = jsonPayload['data'];
     if (data == null) {
-      throw Exception('data field is null');
+      throw Exception('Data field is null');
     }
     if (data is! List) {
-      throw Exception('returned data is not a List');
+      throw Exception('Returned data is not a List');
     }
     return IMap.fromEntries(
-      data.map((e) => VitexExchangeRate.fromJson(e)).map(
-            (e) => MapEntry(e.tokenId, e),
-          ),
+      data.map((e) {
+        final rate = VitexExchangeRate.fromJson(e);
+        return MapEntry(rate.tokenId, rate);
+      }),
     );
   } catch (e, st) {
-    ref.read(loggerProvider).e('Failed to fetch Vitex exchange rates', e, st);
+    log.e('Failed to fetch Vitex exchange rates', e, st);
     return <TokenId, VitexExchangeRate>{}.lock;
   }
 });
 
-final remoteExchangeRatesProvider = Provider.autoDispose((ref) {
-  final accountInfo = ref.watch(selectedAccountBalanceProvider);
-  return ref.watch(
-      remoteVitexExchangeRatesProvider(IList(accountInfo.balances.keys)));
+final exchangeRatesRemoteProvider = Provider.autoDispose((ref) {
+  final accountInfo = ref.watch(selectedAccountInfoProvider);
+  final tokenIds = IList(accountInfo.balances.keys);
+  final rates = ref.watch(_vitexExchangeRatesRemoteProvider(tokenIds));
+  return rates;
 });
 
-final vitexExchangeRatesProvider = Provider.autoDispose((ref) {
-  final notifier = ref.watch(_vitexExchangeRateProvider.notifier);
-  final remote = ref.watch(remoteExchangeRatesProvider);
+final exchangeRatesProvider = Provider.autoDispose((ref) {
+  final notifier = ref.watch(_vitexExchangeRatesCacheProvider.notifier);
+  final remote = ref.watch(exchangeRatesRemoteProvider);
 
   remote.whenOrNull(data: (data) {
     notifier.update((state) => state.addAll(data));
@@ -64,15 +69,15 @@ final vitexExchangeRatesProvider = Provider.autoDispose((ref) {
   return remote.asData?.value ?? notifier.state;
 });
 
-final vitexExchangeRateForTokenIdProvider =
+final exchangeRateForTokenIdProvider =
     Provider.autoDispose.family<VitexExchangeRate, TokenId>((ref, tokenId) {
-  final exchangeRates = ref.watch(vitexExchangeRatesProvider);
+  final exchangeRates = ref.watch(exchangeRatesProvider);
   return exchangeRates[tokenId] ?? VitexExchangeRate.zero(tokenId: tokenId);
 });
 
 final totalBtcValueProvider = Provider.autoDispose((ref) {
-  final accountInfo = ref.watch(selectedAccountBalanceProvider);
-  final exchangeRates = ref.watch(vitexExchangeRatesProvider);
+  final accountInfo = ref.watch(selectedAccountInfoProvider);
+  final exchangeRates = ref.watch(exchangeRatesProvider);
 
   final value = accountInfo.balances.entries.fold<Decimal>(
     Decimal.zero,
@@ -84,9 +89,9 @@ final totalBtcValueProvider = Provider.autoDispose((ref) {
   return value;
 });
 
-final totalFiatValueProvider = Provider.autoDispose((ref) {
-  final accountInfo = ref.watch(selectedAccountBalanceProvider);
-  final exchangeRates = ref.watch(vitexExchangeRatesProvider);
+final totalFiatValueForAccountInfoProvider =
+    Provider.autoDispose.family<Decimal, AccountInfo>((ref, accountInfo) {
+  final exchangeRates = ref.watch(exchangeRatesProvider);
   final currency = ref.watch(currencyProvider);
 
   final value = accountInfo.balances.entries.fold<Decimal>(
@@ -103,10 +108,16 @@ final totalFiatValueProvider = Provider.autoDispose((ref) {
   return value;
 });
 
+final totalFiatValueProvider = Provider.autoDispose((ref) {
+  final accountInfo = ref.watch(selectedAccountInfoProvider);
+  final value = ref.watch(totalFiatValueForAccountInfoProvider(accountInfo));
+  return value;
+});
+
 final fiatValueForTokenProvider =
     Provider.autoDispose.family<Decimal, TokenId>((ref, tokenId) {
   final balance = ref.watch(balanceInfoForTokenProvider(tokenId));
-  final exchangeRate = ref.watch(vitexExchangeRateForTokenIdProvider(tokenId));
+  final exchangeRate = ref.watch(exchangeRateForTokenIdProvider(tokenId));
   final currency = ref.watch(currencyProvider);
   final fiatRate = exchangeRate.fiatRate(currency.currency);
   if (balance == null) return Decimal.zero;
@@ -117,6 +128,39 @@ final formatedFiatValueForTokenProvider =
     Provider.autoDispose.family<String, TokenId>((ref, tokenId) {
   final balance = ref.watch(fiatValueForTokenProvider(tokenId));
   final currency = ref.watch(currencyProvider);
+  final locale = ref.watch(currencyLocaleProvider);
+
+  return NumberFormat.currency(
+    locale: locale,
+    symbol: currency.getCurrencySymbol(),
+  ).format(balance.toDouble());
+});
+
+final totalBtcFormatedProvider = Provider.autoDispose((ref) {
+  final btcBalance = ref.watch(totalBtcValueProvider);
+  // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
+  if (btcBalance >= Decimal.parse('0.001')) {
+    return NumberFormat('#,##0.0000', 'en_US').format(btcBalance.toDouble());
+  } else {
+    return NumberFormat('#,##0.000000', 'en_US').format(btcBalance.toDouble());
+  }
+});
+
+final fiatFormatedForTotalValueProvider =
+    Provider.autoDispose.family<String, AccountInfo>((ref, accountInfo) {
+  final balance = ref.watch(totalFiatValueForAccountInfoProvider(accountInfo));
+  final currency = ref.watch(currencyProvider);
+  final locale = ref.watch(currencyLocaleProvider);
+
+  return NumberFormat.currency(
+    locale: locale,
+    symbol: currency.getCurrencySymbol(),
+  ).format(balance.toDouble());
+});
+
+final totalFiatFormatedProvider = Provider.autoDispose((ref) {
+  final currency = ref.watch(currencyProvider);
+  final balance = ref.watch(totalFiatValueProvider);
   final locale = ref.watch(currencyLocaleProvider);
 
   return NumberFormat.currency(

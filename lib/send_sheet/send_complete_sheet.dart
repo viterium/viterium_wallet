@@ -40,7 +40,7 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
     final localization = ref.watch(l10nProvider);
 
     final amountAll =
-        NumberUtil.getRawAsUsableString(widget.amountRaw, decimals, decimals) +
+        NumberUtil.getStringFromRaw(widget.amountRaw, decimals, decimals) +
             ' ${tokenSymbol}';
 
     return SafeArea(

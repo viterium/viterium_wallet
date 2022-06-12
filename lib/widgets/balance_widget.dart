@@ -36,7 +36,7 @@ class BalanceWidget extends ConsumerWidget {
         Text(
           '≈ $fiatBalance',
           textAlign: TextAlign.end,
-          style: styles.textStyleTransactionAmount.copyWith(fontSize: 16),
+          style: styles.textStyleTransactionAmountSmall,
         ),
       ],
     );

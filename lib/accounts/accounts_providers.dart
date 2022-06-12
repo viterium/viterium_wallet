@@ -9,6 +9,8 @@ import 'account.dart';
 import 'account_selection.dart';
 import 'accounts_notifier.dart';
 
+export 'account_info_provider.dart';
+
 final _accountsBoxProvider =
     Provider.autoDispose.family<TypedBox<Account>, WalletInfo>((ref, wallet) {
   final db = ref.watch(dbProvider);

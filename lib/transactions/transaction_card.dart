@@ -7,7 +7,6 @@ import '../app_providers.dart';
 import '../core/vite_uri.dart';
 import '../widgets/sheet_util.dart';
 import 'transaction_details_sheet.dart';
-import 'transaction_providers.dart';
 import 'transaction_state_tag.dart';
 
 class TransactionCard extends ConsumerWidget {
@@ -21,7 +20,7 @@ class TransactionCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
     final contacts = ref.watch(contactsProvider);
@@ -40,11 +39,11 @@ class TransactionCard extends ConsumerWidget {
     IconData icon;
     Color iconColor;
     if (item.blockType.isSendType) {
-      text = localization.sent;
+      text = l10n.sent;
       icon = AppIcons.sent;
       iconColor = theme.text60;
     } else {
-      text = localization.received;
+      text = l10n.received;
       icon = AppIcons.received;
       iconColor = theme.primary60;
     }
@@ -96,7 +95,7 @@ class TransactionCard extends ConsumerWidget {
                             ),
                             const SizedBox(height: 4),
                             RichText(
-                              textAlign: TextAlign.start,
+                              maxLines: 2,
                               text: TextSpan(
                                 children: [
                                   TextSpan(
@@ -110,7 +109,7 @@ class TransactionCard extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-                              maxLines: 2,
+
                             ),
                           ],
                         ),

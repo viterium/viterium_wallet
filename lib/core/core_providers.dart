@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vite/vite.dart';
@@ -20,7 +18,6 @@ import '../util/auth_util.dart';
 import '../util/biometrics.dart';
 import '../util/hapticutil.dart';
 import '../util/sharedprefsutil.dart';
-import '../vitex/vitex_providers.dart';
 import '../wallet_signer/wallet_signer.dart';
 import 'vault.dart';
 
@@ -58,14 +55,10 @@ final stylesProvider = Provider((ref) {
   return AppStyles(theme);
 });
 
-
-
 final localeProvider = Provider((ref) {
   final language = ref.watch(languageProvider);
   return Locale(language.getLocaleString());
 });
-
-
 
 final blockExplorerProvider = Provider((ref) {
   final settings = ref.watch(blockExplorerSettingsProvider);
@@ -99,7 +92,12 @@ final sharedPrefsUtilProvider = Provider((ref) {
   final sharedPrefs = ref.watch(sharedPrefsProvider);
   return SharedPrefsUtil(sharedPrefs);
 });
-final loggerProvider = Provider((ref) => Logger(printer: PrettyPrinter()));
+final loggerProvider = Provider(
+  (ref) => Logger(
+    printer: PrettyPrinter(),
+    filter: ProductionFilter(),
+  ),
+);
 
 final viteNetworkProvider = Provider((ref) {
   final config = ref.watch(viteNodeConfigProvider);
@@ -177,7 +175,13 @@ final wsServiceProvider = Provider<RpcService>((ref) {
   final service = WsService(url);
   ref.onDispose(() {
     logger.d('dispose WSService provider');
-    Future.delayed(const Duration(milliseconds: 300), service.close);
+    Future.delayed(const Duration(seconds: 1), () {
+      try {
+        service.close();
+      } catch (e, st) {
+        logger.e('Failed to close WsService', e, st);
+      }
+    });
   });
   return service;
 });
@@ -214,8 +218,6 @@ final mainCardProvider =
   return MainCardNotifier(ref.read);
 });
 
-
-
 final themeProvider = Provider((ref) {
   final themeSetting = ref.watch(themeSettingProvider);
   return themeSetting.getTheme();
@@ -228,28 +230,6 @@ final deviceLocaleProvider = StateProvider<Locale>((ref) {
 final currencyLocaleProvider = Provider((ref) {
   final currency = ref.watch(currencyProvider);
   return currency.getLocale().toString();
-});
-
-final totalBtcFormatedProvider = Provider.autoDispose((ref) {
-  final btcBalance = ref.watch(totalBtcValueProvider);
-  // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
-  if (btcBalance >= Decimal.parse('0.001')) {
-    return NumberFormat('#,##0.0000', 'en_US').format(btcBalance.toDouble());
-  } else {
-    return NumberFormat('#,##0.000000', 'en_US').format(btcBalance.toDouble());
-  }
-});
-
-final totalFiatFormatedProvider = Provider.autoDispose((ref) {
-  final currency = ref.watch(currencyProvider);
-  //final balance = ref.watch(localCurrencyBalanceProvider);
-  final balance = ref.watch(totalFiatValueProvider);
-  final locale = ref.watch(currencyLocaleProvider);
-
-  return NumberFormat.currency(
-    locale: locale,
-    symbol: currency.getCurrencySymbol(),
-  ).format(balance.toDouble());
 });
 
 // final initialDeepLinkProvider = FutureProvider((ref) {
@@ -388,6 +368,8 @@ final newAccountBlockProvider = StreamProvider.autoDispose
 
   yield* controller.stream;
 });
+
+final remoteRefreshProvider = StateProvider((ref) => 0);
 
 enum TokenCardAction {
   showTokenSheet,

@@ -5,15 +5,15 @@ import '../app_providers.dart';
 import 'transaction_dummy_card.dart';
 import 'transaction_welcome_card.dart';
 
-class TransactionListEmpty extends ConsumerWidget {
-  const TransactionListEmpty({Key? key}) : super(key: key);
+class TransactionEmptyList extends ConsumerWidget {
+  const TransactionEmptyList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = ref.watch(l10nProvider);
 
     return ListView(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 5.0, 0, 15.0),
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 15),
       children: [
         const WelcomeTransactionCard(),
         TransactionDummyCard(

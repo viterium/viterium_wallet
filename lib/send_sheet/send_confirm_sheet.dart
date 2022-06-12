@@ -50,14 +50,14 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
     super.initState();
 
     // Derive amount from raw amount
-    if (NumberUtil.getRawAsUsableString(widget.amountRaw, decimals)
+    if (NumberUtil.getStringFromRaw(widget.amountRaw, decimals)
             .replaceAll(',', '') ==
-        NumberUtil.getRawAsUsableDecimal(widget.amountRaw, decimals)
+        NumberUtil.getDecimalFromRaw(widget.amountRaw, decimals)
             .toString()) {
-      amount = NumberUtil.getRawAsUsableString(widget.amountRaw, decimals);
+      amount = NumberUtil.getStringFromRaw(widget.amountRaw, decimals);
     } else {
       amount = '~' +
-          NumberUtil.getRawAsUsableDecimal(widget.amountRaw, decimals)
+          NumberUtil.getDecimalFromRaw(widget.amountRaw, decimals)
               .toStringAsFixed(6);
     }
     destinationAltered = widget.destination;
@@ -70,7 +70,7 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
     final styles = ref.watch(stylesProvider);
 
     final amountAll =
-        NumberUtil.getRawAsUsableString(widget.amountRaw, decimals, decimals) +
+        NumberUtil.getStringFromRaw(widget.amountRaw, decimals, decimals) +
             ' ${tokenInfo.symbolLabel}';
 
     return SafeArea(
@@ -314,9 +314,10 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
   }
 
   Future<void> sendTransaction() async {
+    final account = ref.read(selectedAccountProvider);
+    final accountService = ref.read(accountServiceProvider);
+    final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
     try {
-      final account = ref.read(selectedAccountProvider);
-      final accountService = ref.read(accountServiceProvider);
       final address = account.address;
       final toAddress = Address.parse(destinationAltered);
 
@@ -335,12 +336,16 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
         'Please wait.',
       );
 
+      await autoreceiveService.pauseAutoreceive();
+
       await accountService.transfer(
         fromAddress: address,
         toAddress: toAddress,
         amount: amount,
         data: data,
       );
+
+      autoreceiveService.resumeAutoreceive();
 
       Navigator.of(context).pop();
 
@@ -369,6 +374,8 @@ class _SendConfirmSheetState extends ConsumerState<SendConfirmSheet> {
     } catch (e, st) {
       final log = ref.read(loggerProvider);
       log.e('Failed to send transaction', e, st);
+
+      autoreceiveService.resumeAutoreceive();
 
       final l10n = ref.read(l10nProvider);
       UIUtil.showSnackbar(l10n.sendError, context);

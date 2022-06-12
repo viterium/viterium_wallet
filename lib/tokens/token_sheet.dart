@@ -4,10 +4,10 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../autoreceive/unreceived_provider.dart';
 import '../send_sheet/balance_text_widget.dart';
 import '../send_sheet/send_sheet.dart';
 import '../transactions/transaction_history_widget.dart';
+import '../transactions/unreceived_providers.dart';
 import '../util/caseconverter.dart';
 import '../util/numberutil.dart';
 import '../util/util.dart';
@@ -32,16 +32,16 @@ class TokenSheet extends ConsumerWidget {
     final theme = ref.watch(themeProvider);
     final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
-    final account = ref.watch(selectedAccountProvider);
+
     final balance = ref.watch(tokenBalanceDisplayProvider(tokenId));
     final fiatValue = ref.watch(formatedFiatValueForTokenProvider(tokenId));
-    final unreceivedInfo = ref.watch(unreceivedProvider(account.address));
 
-    final unreceivedBalance = unreceivedInfo.balances[tokenId];
+    final unreceivedBalance =
+        ref.watch(unreceivedBalanceForTokenProvider(tokenId));
     String unreceivedBalanceDisplay = '0';
     String unreceivedCount = '';
     if (unreceivedBalance != null) {
-      unreceivedBalanceDisplay = NumberUtil.getRawAsUsableString(
+      unreceivedBalanceDisplay = NumberUtil.getStringFromRaw(
         unreceivedBalance.balance,
         tokenInfo.decimals,
       );

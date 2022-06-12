@@ -6,16 +6,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../accounts/account.dart';
 import '../app_providers.dart';
-import '../autoreceive/autoreceive_provider.dart';
-import '../autoreceive/unreceived_provider.dart';
 import '../main_card/main_card.dart';
 import '../receive/receive_sheet.dart';
 import '../send_sheet/send_sheet.dart';
 import '../settings_drawer/settings_drawer.dart';
 import '../tokens/tokens_widget.dart';
 import '../transactions/transaction_history_widget.dart';
-import '../transactions/transaction_providers.dart';
-import '../transactions/transaction_types.dart';
+import '../transactions/unreceived_providers.dart';
 import '../util/ui_util.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/network_banner.dart';
@@ -34,7 +31,7 @@ class HomeScreen extends HookConsumerWidget {
     // To lock and unlock the app
     final lockStreamListener = useRef<StreamSubscription?>(null);
 
-    Future<void> setAppLockEvent() async {
+    void setAppLockEvent() {
       final auth = ref.read(walletAuthProvider);
       final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
       final locked = sharedPrefsUtil.getLock();
@@ -42,14 +39,14 @@ class HomeScreen extends HookConsumerWidget {
       if ((locked || auth.encryptedSecret != null) && !lockDisabled.value) {
         lockStreamListener.value?.cancel();
 
-        final timeout = await sharedPrefsUtil.getLockTimeout();
+        final timeout = sharedPrefsUtil.getLockTimeout();
         Future<void> delayed = Future.delayed(timeout.getDuration());
         lockStreamListener.value = delayed.asStream().listen((_) {
           try {
             ref.read(walletAuthNotifierProvider)?.lock();
           } catch (e) {
             final log = ref.read(loggerProvider);
-            log.w("Failed to reset encrypted secret when locking ${e}");
+            log.w("Failed to lock wallet ${e}");
           } finally {
             Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
           }
@@ -93,21 +90,20 @@ class HomeScreen extends HookConsumerWidget {
 }
 
 // FIXME - aggregate provider to keep alive
-final _homePageWatchProvider =
-    Provider.autoDispose.family<bool, Account>((ref, account) {
-  //ref.watch(backgroundMonitorProvider);
+final _homePageWatcherProvider =
+    Provider.autoDispose.family<void, Account>((ref, account) {
   final inBackground = ref.watch(inBackgroundProvider);
-  if (!inBackground) {
-    ref.watch(accountsProvider);
-    ref.watch(snapshotTickerProvider);
-
-    final pair = AccountTokenPair(account: account);
-    ref.watch(transactionHistoryProvider(pair));
-    ref.watch(remoteUnreceivedProvider(account.address));
-    ref.watch(unreceivedSubscriptionProvider(account.address));
-    ref.watch(autoreceiveStateProvider(account.address));
+  if (inBackground) {
+    return;
   }
-  return false;
+
+  ref.watch(accountsProvider);
+  ref.watch(snapshotTickerProvider);
+
+  ref.watch(txHistoryForAccountProvider(account));
+  ref.watch(unreceivedProvider(account.address));
+  ref.watch(unreceivedSubscriptionProvider(account.address));
+  ref.watch(autoreceiveServiceProvider(account));
 });
 
 class HomeScreenPage extends HookConsumerWidget {
@@ -120,7 +116,7 @@ class HomeScreenPage extends HookConsumerWidget {
     final styles = ref.watch(stylesProvider);
 
     final account = ref.watch(selectedAccountProvider);
-    ref.watch(_homePageWatchProvider(account));
+    ref.watch(_homePageWatcherProvider(account));
 
     final scaffoldKey = useRef(GlobalKey<ScaffoldState>());
 
@@ -163,7 +159,9 @@ class HomeScreenPage extends HookConsumerWidget {
                                   indicatorWeight: 3,
                                   indicatorColor: theme.primary60,
                                   indicatorPadding: const EdgeInsets.only(
-                                      left: 20, right: 20),
+                                    left: 20,
+                                    right: 20,
+                                  ),
                                   tabs: [
                                     Tab(
                                       child: Container(

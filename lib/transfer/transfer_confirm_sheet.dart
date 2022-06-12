@@ -42,7 +42,7 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
     //   totalToTransfer += BigInt.parse(accountBalanceItem.balance!) +
     //       BigInt.parse(accountBalanceItem.pending!);
     // });
-    totalAsReadableAmount = NumberUtil.getRawAsUsableString(
+    totalAsReadableAmount = NumberUtil.getStringFromRaw(
       totalToTransfer,
       viteTokenDecimals,
     );

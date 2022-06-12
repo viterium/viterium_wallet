@@ -20,6 +20,10 @@ class TransactionStateTag extends ConsumerWidget {
 
     return Container(
       padding: EdgeInsetsDirectional.fromSTEB(6, 2, 6, 2),
+      decoration: BoxDecoration(
+        color: theme.text10,
+        borderRadius: BorderRadius.circular(4),
+      ),
       child: state.when(
         unknown: () => const SizedBox(),
         unconfirmed: () => Text(
@@ -34,10 +38,6 @@ class TransactionStateTag extends ConsumerWidget {
           l10n.confirmed,
           style: styles.tagText,
         ),
-      ),
-      decoration: BoxDecoration(
-        color: theme.text10,
-        borderRadius: BorderRadius.circular(4),
       ),
     );
   }

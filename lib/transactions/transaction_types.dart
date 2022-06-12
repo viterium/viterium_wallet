@@ -50,3 +50,18 @@ class AccountTokenPair with _$AccountTokenPair {
     Token? token,
   }) = _AccountTokenPair;
 }
+
+@freezed
+class TxListItem with _$TxListItem {
+  TxListItem._();
+  factory TxListItem.unreceived(AccountInfo unreceived) = TxListItemUnreceived;
+  factory TxListItem.transaction(AccountBlock accountBlock) =
+      TxListItemTransaction;
+  factory TxListItem.loading(bool hasMore) = TxListItemLoading;
+
+  late final id = when(
+    unreceived: (_) => 'unreceived',
+    transaction: (tx) => tx.hash.hex,
+    loading: (_) => 'loading',
+  );
+}

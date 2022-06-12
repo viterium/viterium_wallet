@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -13,10 +14,16 @@ class TransactionHistoryNotifier extends ChangeNotifier {
   final Logger log;
   final List<AccountBlock> history = [];
   final _accountHashes = <Hash>{};
-  final _unconfirmableHashes = <Hash>{};
+  final _unconfirmedHashes = <Hash>{};
   bool _refreshingUnconfirmed = false;
+  bool get hasUncofirmed => _unconfirmedHashes.isNotEmpty;
 
-  Hash? lastHash;
+  bool disposed = false;
+
+  int _lastSnapshotHeight = 0;
+  int get lastSnapshotHeight => _lastSnapshotHeight;
+
+  Hash? _lastHash;
 
   TransactionHistoryNotifier({
     required this.account,
@@ -31,9 +38,18 @@ class TransactionHistoryNotifier extends ChangeNotifier {
       (!(history.isEmpty && loading == false) ||
           (history.last.height > BigInt.one)) &&
       !_loadedLess;
+
   bool _loading = false;
   bool get loading => _loading;
   bool _loadedLess = false;
+
+  @override
+  void notifyListeners() {
+    if (disposed) {
+      return;
+    }
+    super.notifyListeners();
+  }
 
   Future<void> loadMore([int count = 20]) async {
     if (_loading) {
@@ -41,10 +57,10 @@ class TransactionHistoryNotifier extends ChangeNotifier {
     }
     _loading = true;
     try {
-      final skipCount = (lastHash != null ? 1 : 0);
+      final skipCount = (_lastHash != null ? 1 : 0);
       final blocks = await client.getAccountBlocks(
         account.address,
-        accountBlockHash: lastHash,
+        accountBlockHash: _lastHash,
         token: token,
         count: count + skipCount,
       );
@@ -54,14 +70,16 @@ class TransactionHistoryNotifier extends ChangeNotifier {
 
       for (final block in blocks) {
         if (block.firstSnapshotHash == null) {
-          _unconfirmableHashes.add(block.hash);
+          _unconfirmedHashes.add(block.hash);
         }
+        updateSnapshotHeight(block);
       }
       if (blocks.isNotEmpty) {
         history.addAll(blocks.skip(skipCount));
         _accountHashes.addAll(blocks.map((e) => e.hash));
-        lastHash = blocks.last.hash;
+        _lastHash = blocks.last.hash;
       }
+
       notifyListeners();
     } catch (e) {
       log.e(e);
@@ -87,26 +105,30 @@ class TransactionHistoryNotifier extends ChangeNotifier {
       }
       for (final block in blocks) {
         if (block.firstSnapshotHash == null) {
-          _unconfirmableHashes.add(block.hash);
+          _unconfirmedHashes.add(block.hash);
         }
+        updateSnapshotHeight(block);
       }
       history.insertAll(0, blocks);
       _accountHashes.addAll(blocks.map((e) => e.hash));
+
       notifyListeners();
-    } catch (e) {
-      log.e(e);
+    } catch (e, st) {
+      log.e('Failed to load history', e, st);
     } finally {
       _loading = false;
     }
   }
 
   void remove(Hash hash) {
+    _unconfirmedHashes.remove(hash);
     if (!_accountHashes.contains(hash)) {
       return;
     }
 
     history.removeWhere((element) => element.hash == hash);
     _accountHashes.remove(hash);
+
     notifyListeners();
   }
 
@@ -119,20 +141,22 @@ class TransactionHistoryNotifier extends ChangeNotifier {
 
     final index = history.indexWhere((element) => element.hash == block.hash);
     history[index] = block;
-    _unconfirmableHashes.remove(block.hash);
+    _unconfirmedHashes.remove(block.hash);
+
     notifyListeners();
   }
 
   void refreshUnconfirmed() async {
-    if (_refreshingUnconfirmed || _unconfirmableHashes.isEmpty) {
+    if (_refreshingUnconfirmed || _unconfirmedHashes.isEmpty) {
       return;
     }
     _refreshingUnconfirmed = true;
 
     try {
-      final hash = _unconfirmableHashes.first;
+      final hash = _unconfirmedHashes.first;
       log.d('Fetching $hash');
       final block = await client.getAccountBlockByHash(hash);
+      updateSnapshotHeight(block);
       update(block);
     } catch (e, st) {
       log.e('Failed to update account block with missing snapshot hash', e, st);
@@ -140,4 +164,11 @@ class TransactionHistoryNotifier extends ChangeNotifier {
 
     _refreshingUnconfirmed = false;
   }
+
+  void updateSnapshotHeight(AccountBlock block) {
+    final snapshotHeight = block.firstSnapshotHeight ?? 0;
+    _lastSnapshotHeight = max(_lastSnapshotHeight, snapshotHeight);
+  }
+
+  void addUnconfirmedHash(Hash hash) => _unconfirmedHashes.add(hash);
 }

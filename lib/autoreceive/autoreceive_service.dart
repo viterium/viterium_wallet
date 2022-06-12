@@ -1,21 +1,24 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:vite/vite.dart';
 
-import '../app_providers.dart';
-import 'unreceived_provider.dart';
+import '../accounts/account.dart';
+import '../transactions/transaction_history_notifier.dart';
 
-const _defaultTryDelta = Duration(seconds: 2);
+const _defaultTryDelta = Duration(seconds: 12);
 const _maxTryDelta = Duration(seconds: 30);
 
-class AutoreceiveNotifier extends ChangeNotifier {
-  final Reader read;
-  final Address address;
+class AutoreceiveService {
+  final Account account;
+  final Logger log;
+  Address get address => account.address;
 
-  late AccountInfo _unreceived = AccountInfo(address: address, blockCount: 0);
+  late AccountService accountService;
+  late AccountInfo unreceived;
+  late TransactionHistoryNotifier txNotifier;
+
   bool _inProgress = false;
   bool _paused = false;
   DateTime _lastTry = DateTime.now();
@@ -23,10 +26,10 @@ class AutoreceiveNotifier extends ChangeNotifier {
 
   Completer<void> _completer = Completer()..complete();
 
-  AutoreceiveNotifier(this.read, this.address);
+  AutoreceiveService({required this.account, required this.log});
 
   bool get inProgress => _inProgress;
-  int get unreceivedCount => _unreceived.blockCount;
+  int get unreceivedCount => unreceived.blockCount;
 
   bool get allowProcessNext {
     final nextTry = _lastTry.add(_nextTryDelta);
@@ -42,8 +45,7 @@ class AutoreceiveNotifier extends ChangeNotifier {
     return _completer.future;
   }
 
-  Future<void> processNext() async {
-    final unreceived = read(unreceivedProvider(address));
+  Future<void> processNext(int snapshotHeight) async {
     if (_inProgress ||
         _paused ||
         unreceived.blockCount == 0 ||
@@ -51,22 +53,29 @@ class AutoreceiveNotifier extends ChangeNotifier {
       return;
     }
 
+    final blocked = txNotifier.hasUncofirmed ||
+        snapshotHeight <= txNotifier.lastSnapshotHeight;
+    if (blocked) {
+      return;
+    }
+
     _inProgress = true;
     _completer = Completer();
     try {
       _lastTry = DateTime.now();
-      final service = read(accountServiceProvider);
-      final blocks = await service.unreceivedBlocksForAddress(address);
+      final blocks = await accountService.unreceivedBlocksForAddress(address);
       if (blocks.isNotEmpty) {
-        final hash = blocks.first.hash;
-        await service.receiveTransaction(
+        final sendBlockHash = blocks.first.hash;
+        final hash = await accountService.receiveTransaction(
           address: address,
-          sendBlockHash: hash,
+          sendBlockHash: sendBlockHash,
         );
+
+        txNotifier.addUnconfirmedHash(hash);
       }
       _nextTryDelta = _defaultTryDelta;
     } catch (e, st) {
-      read(loggerProvider).e('Failed to autoreceive transaction', e, st);
+      log.e('Failed to autoreceive transaction', e, st);
       _nextTryDelta = Duration(
         seconds: min(
           _maxTryDelta.inSeconds,

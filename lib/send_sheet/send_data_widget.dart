@@ -18,6 +18,7 @@ class SendDataWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
+
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(

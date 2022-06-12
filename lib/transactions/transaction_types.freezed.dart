@@ -1331,3 +1331,539 @@ abstract class _AccountTokenPair implements AccountTokenPair {
   _$AccountTokenPairCopyWith<_AccountTokenPair> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$TxListItemTearOff {
+  const _$TxListItemTearOff();
+
+  TxListItemUnreceived unreceived(AccountInfo unreceived) {
+    return TxListItemUnreceived(
+      unreceived,
+    );
+  }
+
+  TxListItemTransaction transaction(AccountBlock accountBlock) {
+    return TxListItemTransaction(
+      accountBlock,
+    );
+  }
+
+  TxListItemLoading loading(bool hasMore) {
+    return TxListItemLoading(
+      hasMore,
+    );
+  }
+}
+
+/// @nodoc
+const $TxListItem = _$TxListItemTearOff();
+
+/// @nodoc
+mixin _$TxListItem {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AccountInfo unreceived) unreceived,
+    required TResult Function(AccountBlock accountBlock) transaction,
+    required TResult Function(bool hasMore) loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TxListItemUnreceived value) unreceived,
+    required TResult Function(TxListItemTransaction value) transaction,
+    required TResult Function(TxListItemLoading value) loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TxListItemCopyWith<$Res> {
+  factory $TxListItemCopyWith(
+          TxListItem value, $Res Function(TxListItem) then) =
+      _$TxListItemCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$TxListItemCopyWithImpl<$Res> implements $TxListItemCopyWith<$Res> {
+  _$TxListItemCopyWithImpl(this._value, this._then);
+
+  final TxListItem _value;
+  // ignore: unused_field
+  final $Res Function(TxListItem) _then;
+}
+
+/// @nodoc
+abstract class $TxListItemUnreceivedCopyWith<$Res> {
+  factory $TxListItemUnreceivedCopyWith(TxListItemUnreceived value,
+          $Res Function(TxListItemUnreceived) then) =
+      _$TxListItemUnreceivedCopyWithImpl<$Res>;
+  $Res call({AccountInfo unreceived});
+
+  $AccountInfoCopyWith<$Res> get unreceived;
+}
+
+/// @nodoc
+class _$TxListItemUnreceivedCopyWithImpl<$Res>
+    extends _$TxListItemCopyWithImpl<$Res>
+    implements $TxListItemUnreceivedCopyWith<$Res> {
+  _$TxListItemUnreceivedCopyWithImpl(
+      TxListItemUnreceived _value, $Res Function(TxListItemUnreceived) _then)
+      : super(_value, (v) => _then(v as TxListItemUnreceived));
+
+  @override
+  TxListItemUnreceived get _value => super._value as TxListItemUnreceived;
+
+  @override
+  $Res call({
+    Object? unreceived = freezed,
+  }) {
+    return _then(TxListItemUnreceived(
+      unreceived == freezed
+          ? _value.unreceived
+          : unreceived // ignore: cast_nullable_to_non_nullable
+              as AccountInfo,
+    ));
+  }
+
+  @override
+  $AccountInfoCopyWith<$Res> get unreceived {
+    return $AccountInfoCopyWith<$Res>(_value.unreceived, (value) {
+      return _then(_value.copyWith(unreceived: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$TxListItemUnreceived extends TxListItemUnreceived {
+  _$TxListItemUnreceived(this.unreceived) : super._();
+
+  @override
+  final AccountInfo unreceived;
+
+  @override
+  String toString() {
+    return 'TxListItem.unreceived(unreceived: $unreceived)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is TxListItemUnreceived &&
+            const DeepCollectionEquality()
+                .equals(other.unreceived, unreceived));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(unreceived));
+
+  @JsonKey(ignore: true)
+  @override
+  $TxListItemUnreceivedCopyWith<TxListItemUnreceived> get copyWith =>
+      _$TxListItemUnreceivedCopyWithImpl<TxListItemUnreceived>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AccountInfo unreceived) unreceived,
+    required TResult Function(AccountBlock accountBlock) transaction,
+    required TResult Function(bool hasMore) loading,
+  }) {
+    return unreceived(this.unreceived);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+  }) {
+    return unreceived?.call(this.unreceived);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+    required TResult orElse(),
+  }) {
+    if (unreceived != null) {
+      return unreceived(this.unreceived);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TxListItemUnreceived value) unreceived,
+    required TResult Function(TxListItemTransaction value) transaction,
+    required TResult Function(TxListItemLoading value) loading,
+  }) {
+    return unreceived(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+  }) {
+    return unreceived?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (unreceived != null) {
+      return unreceived(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TxListItemUnreceived extends TxListItem {
+  factory TxListItemUnreceived(AccountInfo unreceived) = _$TxListItemUnreceived;
+  TxListItemUnreceived._() : super._();
+
+  AccountInfo get unreceived;
+  @JsonKey(ignore: true)
+  $TxListItemUnreceivedCopyWith<TxListItemUnreceived> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TxListItemTransactionCopyWith<$Res> {
+  factory $TxListItemTransactionCopyWith(TxListItemTransaction value,
+          $Res Function(TxListItemTransaction) then) =
+      _$TxListItemTransactionCopyWithImpl<$Res>;
+  $Res call({AccountBlock accountBlock});
+
+  $AccountBlockCopyWith<$Res> get accountBlock;
+}
+
+/// @nodoc
+class _$TxListItemTransactionCopyWithImpl<$Res>
+    extends _$TxListItemCopyWithImpl<$Res>
+    implements $TxListItemTransactionCopyWith<$Res> {
+  _$TxListItemTransactionCopyWithImpl(
+      TxListItemTransaction _value, $Res Function(TxListItemTransaction) _then)
+      : super(_value, (v) => _then(v as TxListItemTransaction));
+
+  @override
+  TxListItemTransaction get _value => super._value as TxListItemTransaction;
+
+  @override
+  $Res call({
+    Object? accountBlock = freezed,
+  }) {
+    return _then(TxListItemTransaction(
+      accountBlock == freezed
+          ? _value.accountBlock
+          : accountBlock // ignore: cast_nullable_to_non_nullable
+              as AccountBlock,
+    ));
+  }
+
+  @override
+  $AccountBlockCopyWith<$Res> get accountBlock {
+    return $AccountBlockCopyWith<$Res>(_value.accountBlock, (value) {
+      return _then(_value.copyWith(accountBlock: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$TxListItemTransaction extends TxListItemTransaction {
+  _$TxListItemTransaction(this.accountBlock) : super._();
+
+  @override
+  final AccountBlock accountBlock;
+
+  @override
+  String toString() {
+    return 'TxListItem.transaction(accountBlock: $accountBlock)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is TxListItemTransaction &&
+            const DeepCollectionEquality()
+                .equals(other.accountBlock, accountBlock));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(accountBlock));
+
+  @JsonKey(ignore: true)
+  @override
+  $TxListItemTransactionCopyWith<TxListItemTransaction> get copyWith =>
+      _$TxListItemTransactionCopyWithImpl<TxListItemTransaction>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AccountInfo unreceived) unreceived,
+    required TResult Function(AccountBlock accountBlock) transaction,
+    required TResult Function(bool hasMore) loading,
+  }) {
+    return transaction(accountBlock);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+  }) {
+    return transaction?.call(accountBlock);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+    required TResult orElse(),
+  }) {
+    if (transaction != null) {
+      return transaction(accountBlock);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TxListItemUnreceived value) unreceived,
+    required TResult Function(TxListItemTransaction value) transaction,
+    required TResult Function(TxListItemLoading value) loading,
+  }) {
+    return transaction(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+  }) {
+    return transaction?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (transaction != null) {
+      return transaction(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TxListItemTransaction extends TxListItem {
+  factory TxListItemTransaction(AccountBlock accountBlock) =
+      _$TxListItemTransaction;
+  TxListItemTransaction._() : super._();
+
+  AccountBlock get accountBlock;
+  @JsonKey(ignore: true)
+  $TxListItemTransactionCopyWith<TxListItemTransaction> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TxListItemLoadingCopyWith<$Res> {
+  factory $TxListItemLoadingCopyWith(
+          TxListItemLoading value, $Res Function(TxListItemLoading) then) =
+      _$TxListItemLoadingCopyWithImpl<$Res>;
+  $Res call({bool hasMore});
+}
+
+/// @nodoc
+class _$TxListItemLoadingCopyWithImpl<$Res>
+    extends _$TxListItemCopyWithImpl<$Res>
+    implements $TxListItemLoadingCopyWith<$Res> {
+  _$TxListItemLoadingCopyWithImpl(
+      TxListItemLoading _value, $Res Function(TxListItemLoading) _then)
+      : super(_value, (v) => _then(v as TxListItemLoading));
+
+  @override
+  TxListItemLoading get _value => super._value as TxListItemLoading;
+
+  @override
+  $Res call({
+    Object? hasMore = freezed,
+  }) {
+    return _then(TxListItemLoading(
+      hasMore == freezed
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TxListItemLoading extends TxListItemLoading {
+  _$TxListItemLoading(this.hasMore) : super._();
+
+  @override
+  final bool hasMore;
+
+  @override
+  String toString() {
+    return 'TxListItem.loading(hasMore: $hasMore)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is TxListItemLoading &&
+            const DeepCollectionEquality().equals(other.hasMore, hasMore));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(hasMore));
+
+  @JsonKey(ignore: true)
+  @override
+  $TxListItemLoadingCopyWith<TxListItemLoading> get copyWith =>
+      _$TxListItemLoadingCopyWithImpl<TxListItemLoading>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AccountInfo unreceived) unreceived,
+    required TResult Function(AccountBlock accountBlock) transaction,
+    required TResult Function(bool hasMore) loading,
+  }) {
+    return loading(hasMore);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+  }) {
+    return loading?.call(hasMore);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AccountInfo unreceived)? unreceived,
+    TResult Function(AccountBlock accountBlock)? transaction,
+    TResult Function(bool hasMore)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(hasMore);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TxListItemUnreceived value) unreceived,
+    required TResult Function(TxListItemTransaction value) transaction,
+    required TResult Function(TxListItemLoading value) loading,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TxListItemUnreceived value)? unreceived,
+    TResult Function(TxListItemTransaction value)? transaction,
+    TResult Function(TxListItemLoading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TxListItemLoading extends TxListItem {
+  factory TxListItemLoading(bool hasMore) = _$TxListItemLoading;
+  TxListItemLoading._() : super._();
+
+  bool get hasMore;
+  @JsonKey(ignore: true)
+  $TxListItemLoadingCopyWith<TxListItemLoading> get copyWith =>
+      throw _privateConstructorUsedError;
+}
