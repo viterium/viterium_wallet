@@ -18,7 +18,7 @@ final _mnemonicProvider = StateProvider.autoDispose((ref) => '');
 
 final _mnemonicIsValidProvider = Provider.autoDispose((ref) {
   final mnemonic = ref.watch(_mnemonicProvider);
-  return ViteUtil.isValidMnemonic(mnemonic.trim());
+  return mnemonic.endsWith(' ') && ViteUtil.isValidMnemonic(mnemonic.trim());
 });
 
 class IntroImportSeed extends HookConsumerWidget {
@@ -58,10 +58,11 @@ class IntroImportSeed extends HookConsumerWidget {
 
       mnemonic.state = text.substring(0, index + 1) + prefix;
 
-      if (prefix.length > 3) {
-        final suggestions = ref.read(wordSuggestionsProvider).removeWhere(
-              (element) => !element.startsWith(prefix),
-            );
+      if (prefix.length >= 3) {
+        final wordSuggestions = ref.read(wordSuggestionsProvider);
+        final suggestions = wordSuggestions.removeWhere(
+          (word) => !word.startsWith(prefix),
+        );
         if (suggestions.length == 1 && suggestions.first == prefix) {
           ref
               .read(wordSelectedProvider.notifier)
