@@ -28,6 +28,13 @@ class AppStyles {
     );
   }
 
+  late final textStyleParagraphSmall = TextStyle(
+    fontFamily: kFontFamily,
+    fontSize: AppFontSizes.small,
+    fontWeight: FontWeight.w400,
+    color: theme.text,
+  );
+
   TextStyle get textStyleParagraphBold {
     return TextStyle(
       fontFamily: kFontFamily,
@@ -258,14 +265,18 @@ class AppStyles {
   }
 
   // Amount
-  TextStyle get textStyleTransactionAmount {
-    return TextStyle(
-      fontFamily: kFontFamily,
-      color: theme.primary60,
-      fontSize: AppFontSizes.smallest,
-      fontWeight: FontWeight.w600,
-    );
-  }
+  late final textStyleTransactionAmount = TextStyle(
+    fontFamily: kFontFamily,
+    color: theme.primary60,
+    fontSize: AppFontSizes.smallest,
+    fontWeight: FontWeight.w600,
+  );
+
+  late final textStyleTransactionAmountSmall =
+      textStyleTransactionAmount.copyWith(fontSize: AppFontSizes.small);
+
+  late final textStyleTransactionAmountMedium =
+      textStyleTransactionAmount.copyWith(fontSize: AppFontSizes.medium);
 
   // Unit (e.g. BAN)
   TextStyle get textStyleTransactionUnit {
@@ -276,6 +287,13 @@ class AppStyles {
       fontWeight: FontWeight.w100,
     );
   }
+
+  late final textStyleTransactionUnitSmall = TextStyle(
+    fontFamily: kFontFamily,
+    color: theme.primary60,
+    fontSize: AppFontSizes.small,
+    fontWeight: FontWeight.w100,
+  );
 
   // Address
   TextStyle get textStyleTransactionAddress {
@@ -357,6 +375,13 @@ class AppStyles {
     );
   }
 
+  late final textStyleAppTextFieldSimple = TextStyle(
+    fontFamily: kFontFamily,
+    fontSize: AppFontSizes.medium,
+    fontWeight: FontWeight.w600,
+    color: theme.text,
+  );
+
   // Text style for dialog button text
   TextStyle get textStyleDialogButtonText {
     return TextStyle(
@@ -366,6 +391,13 @@ class AppStyles {
       color: theme.primary,
     );
   }
+
+  late final textStyleDialogButtonTextSimple = TextStyle(
+    fontFamily: kFontFamily,
+    fontSize: AppFontSizes.smallest,
+    fontWeight: FontWeight.w600,
+    color: theme.text,
+  );
 
   // Text style for seed text
   TextStyle get textStyleSeed {
@@ -492,6 +524,13 @@ class AppStyles {
       color: theme.text,
     );
   }
+
+  late final textStyleSettingItemHeaderLarge = TextStyle(
+    fontFamily: kFontFamily,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: theme.text,
+  );
 
   TextStyle get textStyleSettingItemHeader60 {
     return TextStyle(
