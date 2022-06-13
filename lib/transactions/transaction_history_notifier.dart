@@ -36,7 +36,7 @@ class TransactionHistoryNotifier extends ChangeNotifier {
 
   bool get hasMore =>
       (!(history.isEmpty && loading == false) ||
-          (history.last.height > BigInt.one)) &&
+          (history.isNotEmpty && history.last.height > BigInt.one)) &&
       !_loadedLess;
 
   bool _loading = false;
