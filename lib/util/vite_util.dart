@@ -2,8 +2,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:decimal/decimal.dart';
+import 'package:flutter/foundation.dart';
+import 'package:vite/utils.dart';
 import 'package:vite/vite.dart' as vite;
-import 'package:vite/vite.dart';
 
 import '../encrypt/crypter.dart';
 import '../quota/quota_stake_amounts.dart';
@@ -140,7 +141,7 @@ class ViteUtil {
     return votes.toStringAsFixed(0);
   }
 
-  static int utpeForAmount(Amount amount,
+  static int utpeForAmount(vite.Amount amount,
       {required List<String> quotaStakeList}) {
     int left = 0, right = quotaStakeList.length;
     final sValue = amount.raw + BigInt.one;
@@ -156,4 +157,26 @@ class ViteUtil {
 
     return max(1, left - 1);
   }
+
+  static Future<Uint8List> computeSignData(
+    Uint8List data,
+    Uint8List privateKey,
+  ) {
+    return compute(_computeSignData, [data, privateKey]);
+  }
+
+  static Future<vite.Hash> computeTxHash(
+      vite.RawTransaction transaction) async {
+    final bytes = await compute(_computeTxHash, transaction.toJson());
+    return vite.Hash(bytes);
+  }
+}
+
+Uint8List _computeSignData(List<Uint8List> params) {
+  return ViteUtil.signData(params.first, params.last);
+}
+
+Uint8List _computeTxHash(Map<String, dynamic> json) {
+  final transaction = vite.RawTransaction.fromJson(json);
+  return vite.computeTxHash(transaction).bytes;
 }

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
@@ -8,9 +7,7 @@ import '../util/vite_util.dart';
 import '../wallet/wallet_vault.dart';
 import 'wallet_auth_types.dart';
 
-Uint8List computeSignData(List<Uint8List> params) {
-  return ViteUtil.signData(params.first, params.last);
-}
+
 
 class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   final WalletVault walletVault;
@@ -78,7 +75,7 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   Future<Uint8List> sign(Uint8List data, int index) async {
     final seed = await _getSeed();
     final privKey = ViteUtil.seedToPrivateKey(seed, index);
-    final signature = await compute(computeSignData, [data, privKey]);
+    final signature = await ViteUtil.computeSignData(data, privKey);
     return signature;
   }
 

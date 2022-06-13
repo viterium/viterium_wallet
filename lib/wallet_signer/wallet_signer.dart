@@ -42,7 +42,7 @@ class WalletSigner implements SignerBase {
     if (index == null) {
       throw Exception('Address not found');
     }
-    final signature = _walletAuth.sign(data, index);
+    final signature = await _walletAuth.sign(data, index);
     return signature;
   }
 }
