@@ -7,7 +7,7 @@ import 'package:vite/vite.dart';
 import '../accounts/account.dart';
 import '../transactions/transaction_history_notifier.dart';
 
-const _defaultTryDelta = Duration(seconds: 12);
+const _defaultTryDelta = Duration(seconds: 2);
 const _maxTryDelta = Duration(seconds: 30);
 
 class AutoreceiveService {
