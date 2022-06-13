@@ -78,7 +78,7 @@ class TokensWidget extends HookConsumerWidget {
       onRefresh: refresh,
       child: ReorderableListView.builder(
         key: const PageStorageKey('TokensWidget'),
-        padding: const EdgeInsets.fromLTRB(0, 5, 0, 15),
+        padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
         proxyDecorator: proxyDecorator,
         itemCount: items.length,
         itemBuilder: (context, index) {

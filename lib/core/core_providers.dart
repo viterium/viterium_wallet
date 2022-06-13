@@ -95,7 +95,7 @@ final sharedPrefsUtilProvider = Provider((ref) {
 final loggerProvider = Provider(
   (ref) => Logger(
     printer: PrettyPrinter(),
-    filter: ProductionFilter(),
+    //filter: ProductionFilter(),
   ),
 );
 
