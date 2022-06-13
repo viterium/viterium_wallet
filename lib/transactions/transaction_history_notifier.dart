@@ -48,6 +48,19 @@ class TransactionHistoryNotifier extends ChangeNotifier {
     if (disposed) {
       return;
     }
+
+    assert(() {
+      if (token != null) {
+        return true;
+      }
+      for (int i = 1; i < history.length; ++i) {
+        if (history[i - 1].height != history[i].height + BigInt.one) {
+          return false;
+        }
+      }
+      return true;
+    }());
+
     super.notifyListeners();
   }
 
@@ -141,7 +154,6 @@ class TransactionHistoryNotifier extends ChangeNotifier {
 
     final index = history.indexWhere((element) => element.hash == block.hash);
     history[index] = block;
-    _unconfirmedHashes.remove(block.hash);
 
     notifyListeners();
   }
@@ -158,6 +170,9 @@ class TransactionHistoryNotifier extends ChangeNotifier {
       final block = await client.getAccountBlockByHash(hash);
       updateSnapshotHeight(block);
       update(block);
+      if (block.firstSnapshotHash != null) {
+        _unconfirmedHashes.remove(block.hash);
+      }
     } catch (e, st) {
       log.e('Failed to update account block with missing snapshot hash', e, st);
     }

@@ -146,11 +146,14 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                   else
                     FittedBox(
                       fit: BoxFit.scaleDown,
-                      child: Text(
-                        '≈ $fiatValue',
-                        textAlign: TextAlign.end,
-                        style: styles.textStyleTransactionAmountSmall,
-                        maxLines: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          '≈ $fiatValue',
+                          textAlign: TextAlign.end,
+                          style: styles.textStyleTransactionAmount,
+                          maxLines: 2,
+                        ),
                       ),
                     ),
                 ],

@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
-import 'package:viterium_wallet/transactions/transactions_unreceived_card.dart';
 
 import '../app_providers.dart';
 import '../widgets/reactive_refresh.dart';
 import 'transaction_card.dart';
 import 'transaction_empty_list.dart';
 import 'transaction_types.dart';
+import 'transactions_unreceived_card.dart';
 import 'unreceived_providers.dart';
 
-final txListItemsProvider = Provider.autoDispose
+final _txListItemsProvider = Provider.autoDispose
     .family<List<TxListItem>, AccountTokenPair>((ref, pair) {
   final unreceived = ref.watch(unreceivedProvider(pair.account.address));
   final historyNotifier = ref.watch(transactionHistoryProvider(pair));
-  final txList = historyNotifier.history.map((e) => TxListItem.transaction(e));
+  final txList =
+      historyNotifier.history.map((e) => TxListItem.transaction(e)).toList();
+  txList.add(TxListItem.loader(historyNotifier.hasMore));
   if (pair.token != null || unreceived.blockCount == 0) {
-    return txList.toList() + [TxListItem.loading(historyNotifier.hasMore)];
+    return txList;
   }
 
-  return [TxListItem.unreceived(unreceived)] +
-      txList.toList() +
-      [TxListItem.loading(historyNotifier.hasMore)];
+  return [TxListItem.unreceived(unreceived)] + txList;
 });
 
 class TransactionHistoryWidget extends HookConsumerWidget {
@@ -41,16 +41,12 @@ class TransactionHistoryWidget extends HookConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     final pair = AccountTokenPair(account: account, token: token);
-    final historyNotifier = ref.watch(transactionHistoryProvider(pair));
+    final txHistory = ref.watch(transactionHistoryProvider(pair));
+    final items = ref.watch(_txListItemsProvider(pair));
 
-    //final unreceived = ref.watch(unreceivedProvider(account.address));
-    //final history = historyNotifier.history;
-
-    final isLoading = historyNotifier.loading;
+    final isLoading = txHistory.loading;
     final isRefreshing = useState(false);
     final isMounted = useIsMounted();
-
-    final items = ref.watch(txListItemsProvider(pair));
 
     Future<void> refresh() async {
       isRefreshing.value = true;
@@ -68,7 +64,7 @@ class TransactionHistoryWidget extends HookConsumerWidget {
       }
 
       ref.refresh(unreceivedRemoteProvider(account.address));
-      await historyNotifier.refresh();
+      await txHistory.refresh();
 
       if (isMounted()) {
         isRefreshing.value = false;
@@ -100,68 +96,30 @@ class TransactionHistoryWidget extends HookConsumerWidget {
                         reverseCurve: Curves.easeIn,
                       ),
                       child: item.when(
-                        unreceived: (_) => TransactionsUnreceivedCard(),
+                        unreceived: (_) => const TransactionsUnreceivedCard(),
                         transaction: (item) => TransactionCard(item: item),
-                        loading: (hasMore) {
-                          if (hasMore) {
-                            Future.delayed(
-                              const Duration(milliseconds: 500),
-                              historyNotifier.loadMore,
-                            );
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'Loading Transactions...',
-                                    style: styles.textStyleParagraph,
-                                  )),
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
+                        loader: (hasMore) {
+                          if (!hasMore) return const SizedBox();
+
+                          Future.delayed(
+                            const Duration(milliseconds: 500),
+                            txHistory.loadMore,
+                          );
+                          return Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Loading Transactions...',
+                                  style: styles.textStyleParagraph,
+                                )),
+                          );
                         },
                       ),
                     ),
                   );
                 },
               )
-
-        // Column(
-        //     children: [
-        //       if (unreceived.blockCount > 0)
-        //         const TransactionsUnreceivedCard(),
-        //       Expanded(
-        //         child: ListView.builder(
-        //           physics: const AlwaysScrollableScrollPhysics(),
-        //           padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
-        //           itemCount: history.length + 1,
-        //           itemBuilder: (context, index) {
-        //             if (index == history.length) {
-        //               if (historyNotifier.hasMore) {
-        //                 Future.delayed(Duration.zero, () {
-        //                   historyNotifier.loadMore();
-        //                 });
-        //                 return Padding(
-        //                   padding: EdgeInsets.symmetric(vertical: 10),
-        //                   child: Align(
-        //                       alignment: Alignment.center,
-        //                       child: Text(
-        //                         'Loading Transactions...',
-        //                         style: styles.textStyleParagraph,
-        //                       )),
-        //                 );
-        //               } else {
-        //                 return const SizedBox();
-        //               }
-        //             }
-        //             final item = history[index];
-        //             return TransactionCard(item: item);
-        //           },
-        //         ),
-        //       ),
-        //     ],
-        //   ),
         );
   }
 }
