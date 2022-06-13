@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.2
+
+* Add long press to order token cards in token list
+* Add unreceived card at top of transaction list
+* Rework autoreceive service
+* Fix token details sheet for tokens with less than 6 digits
+* Fix unreceived transaction count in token details sheet
+* Fix import secret phrase does not work with some 3 letter words
+
 ## 1.0.1
 
 * Fix token details sheet for tokens with more than 18 digits
