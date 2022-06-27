@@ -15,7 +15,6 @@ class WalletListWidget extends ConsumerWidget {
     return Stack(children: [
       ListView.builder(
         padding: const EdgeInsets.only(top: 12, bottom: 16),
-        shrinkWrap: true,
         itemCount: wallets.length,
         itemBuilder: (context, index) {
           final item = wallets[index];
