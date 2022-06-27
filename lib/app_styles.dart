@@ -468,7 +468,6 @@ class AppStyles {
   }
 
   // Text style for data sub headers
-
   late final textStyleSubHeader = TextStyle(
     fontFamily: kFontFamily,
     fontSize: AppFontSizes.medium,

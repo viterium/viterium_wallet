@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
@@ -13,9 +14,13 @@ import '../tokens/token_info_provider.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
+import '../viteconnect/peer_widget.dart';
+import '../viteconnect/viteconnect_providers.dart';
+import '../viteconnect/viteconnect_types.dart';
 import '../widgets/address_widgets.dart';
 import '../widgets/app_icon_button.dart';
 import '../widgets/balance_widget.dart';
+import '../widgets/dialog.dart';
 import '../widgets/sheet_util.dart';
 
 class MainCard extends ConsumerWidget {
@@ -27,6 +32,78 @@ class MainCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final account = ref.watch(selectedAccountProvider);
+
+    final viteConnect = ref.watch(viteConnectProvider.notifier);
+
+    ref.listen<VCState>(viteConnectProvider, (prev, state) {
+      state.mapOrNull(
+        connectingToBridge: (state) {
+          AppDialogs.showInfoDialog(
+            context,
+            'ViteConnect',
+            'Connecting',
+            contentWidget: Center(
+              child: Container(
+                padding: const EdgeInsets.all(22),
+                decoration: BoxDecoration(
+                  color: theme.backgroundDarkest,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [theme.boxShadow],
+                ),
+                child: const CupertinoActivityIndicator(),
+              ),
+            ),
+            closeText: 'CANCEL',
+            onClose: viteConnect.disconnect,
+          );
+        },
+        pendingApproval: (state) {
+          Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+          final peerMeta = state.sessionRequest.peerMeta;
+          AppDialogs.showConfirmDialog(
+            context,
+            'ViteConnect',
+            '',
+            'Connect'.toUpperCase(),
+            () => viteConnect.approve(state.sessionRequest),
+            contentWidget: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: theme.backgroundDarkest,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [theme.boxShadow],
+              ),
+              child: ProviderScope(
+                overrides: [
+                  viteConnectPeerProvider.overrideWithValue(peerMeta)
+                ],
+                child: const PeerWidget(),
+              ),
+            ),
+            cancelAction: viteConnect.reject,
+          );
+        },
+        connected: (_) {
+          if (prev?.connected == true) {
+            return;
+          }
+          // FIXME
+          Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+          Navigator.of(context).pushNamed('/vite_connect');
+        },
+        disconnected: (state) {
+          var message = state.message;
+          if (message == null || message.isEmpty) {
+            message = 'Session disconnected';
+          }
+          if (prev?.connected == true) {
+            UIUtil.showSnackbar('ViteConnect: $message', context);
+          }
+          Navigator.of(context).popUntil(ModalRoute.withName('/home'));
+        },
+      );
+    });
 
     return GestureDetector(
       onTap: () {
@@ -77,10 +154,20 @@ class MainCard extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  AppIconButton(
-                    icon: Icons.qr_code_scanner,
-                    onPressed: () => qrScannerAction(context, ref.read),
-                  ),
+                  Consumer(builder: (context, ref, _) {
+                    final connected = ref.watch(viteConnectStatusProvider);
+                    if (connected) {
+                      return AppIconButton(
+                        icon: Icons.swap_horiz_outlined,
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed('/vite_connect'),
+                      );
+                    }
+                    return AppIconButton(
+                      icon: Icons.qr_code_scanner,
+                      onPressed: () => qrScannerAction(context, ref.read),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -111,10 +198,8 @@ class MainCard extends ConsumerWidget {
     final data = result?.code;
     if (data != null) {
       if (data.startsWith('vc:')) {
-        UIUtil.showSnackbar(
-          'ViteConnect not yet supported.',
-          context,
-        );
+        final viteConnect = read(viteConnectProvider.notifier);
+        viteConnect.connect(uri: data);
         return;
       }
       final viteUri = ViteUri.tryParse(data);

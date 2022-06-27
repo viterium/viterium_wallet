@@ -58,6 +58,8 @@ dependencies:
   image_picker_for_web: 2.1.8
   #flutter_zxing: 0.4.0
   barcode_finder: 0.0.5
+  viteconnect:
+    path: ../viteconnect_dart
 
 dev_dependencies:
   flutter_test:
@@ -71,9 +73,10 @@ dev_dependencies:
 # FIXME
 dependency_overrides:
   vite:
-    git:
-      url: https://github.com/viterium/vite_dart.git
-      ref: 56b229891897f00be03d563a2a7c5756e7cb4032
+    path: ../vite_dart
+    #git:
+    #  url: https://github.com/viterium/vite_dart.git
+    #  ref: 56b229891897f00be03d563a2a7c5756e7cb4032
 
 # Flutter launcher icons
 flutter_icons:
