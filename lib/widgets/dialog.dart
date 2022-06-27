@@ -10,6 +10,7 @@ class AppDialogs {
     BuildContext context,
     String title,
     String content, {
+    Widget? contentWidget,
     String? cancelText,
     Function? onCancel,
   }) {
@@ -21,10 +22,17 @@ class AppDialogs {
         child: Consumer(builder: (context, ref, _) {
           final l10n = ref.watch(l10nProvider);
           final styles = ref.watch(stylesProvider);
+
+          final contentPadding = contentWidget != null
+              ? const EdgeInsets.only(top: 20, left: 20, right: 20)
+              : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
+
           return AppAlertDialog(
             title: Text(title, style: styles.textStyleButtonPrimaryOutline),
+            contentPadding: contentPadding,
             content: SingleChildScrollView(
-              child: Text(content, style: styles.textStyleParagraph),
+              child: contentWidget ??
+                  Text(content, style: styles.textStyleParagraph),
             ),
             actions: onCancel != null
                 ? [
@@ -54,6 +62,7 @@ class AppDialogs {
     BuildContext context,
     String title,
     String content, {
+    Widget? contentWidget,
     String? closeText,
     Function? onClose,
   }) {
@@ -65,10 +74,17 @@ class AppDialogs {
         child: Consumer(builder: (context, ref, _) {
           final l10n = ref.watch(l10nProvider);
           final styles = ref.watch(stylesProvider);
+
+          final contentPadding = contentWidget != null
+              ? const EdgeInsets.only(top: 20, left: 20, right: 20)
+              : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
+
           return AppAlertDialog(
             title: Text(title, style: styles.textStyleButtonPrimaryOutline),
+            contentPadding: contentPadding,
             content: SingleChildScrollView(
-              child: Text(content, style: styles.textStyleParagraph),
+              child: contentWidget ??
+                  Text(content, style: styles.textStyleParagraph),
             ),
             actions: [
               TextButton(
@@ -98,25 +114,34 @@ class AppDialogs {
     String content,
     String buttonText,
     Function onPressed, {
+    Widget? contentWidget,
     String? cancelText,
     Function? cancelAction,
   }) {
     showAppDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Consumer(builder: (context, ref, _) {
           if (cancelText == null) {
-            final l10n = ref.read(l10nProvider);
+            final l10n = ref.watch(l10nProvider);
             cancelText = l10n.cancel.toUpperCase();
           }
           final styles = ref.watch(stylesProvider);
+
+          final contentPadding = contentWidget != null
+              ? const EdgeInsets.only(top: 20, left: 20, right: 20)
+              : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
+
           return AppAlertDialog(
             title: Text(
               title,
               style: styles.textStyleButtonPrimaryOutline,
             ),
+            contentPadding: contentPadding,
             content: SingleChildScrollView(
-              child: Text(content, style: styles.textStyleParagraph),
+              child: contentWidget ??
+                  Text(content, style: styles.textStyleParagraph),
             ),
             actions: [
               TextButton(
