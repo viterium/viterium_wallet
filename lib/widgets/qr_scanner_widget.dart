@@ -1,23 +1,26 @@
 import 'dart:io';
 
+import 'package:barcode_finder/barcode_finder.dart' as bf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../app_providers.dart';
+import '../util/ui_util.dart';
 
 class QrScannerWidget extends ConsumerStatefulWidget {
   const QrScannerWidget({Key? key}) : super(key: key);
 
   @override
-  _QrScannerWidgetState createState() =>
-      _QrScannerWidgetState();
+  _QrScannerWidgetState createState() => _QrScannerWidgetState();
 }
 
 class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
+  bool shouldScan = true;
 
   @override
   void reassemble() {
@@ -37,11 +40,42 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
             MediaQuery.of(context).size.height < 400)
         ? 250.0
         : 300.0;
+
+    Future<void> scanFromImage() async {
+      final lockDisabled = ref.read(lockDisabledProvider.notifier);
+      lockDisabled.state = true;
+
+      shouldScan = false;
+      controller?.pauseCamera();
+
+      final picker = ImagePicker();
+      final file = await picker.pickImage(source: ImageSource.gallery);
+
+      lockDisabled.state = false;
+      controller?.resumeCamera();
+
+      if (file == null) {
+        shouldScan = true;
+        return;
+      }
+      try {
+        final code = await bf.BarcodeFinder.scanFile(
+            path: file.path, formats: [bf.BarcodeFormat.QR_CODE]);
+        if (code == null) throw 'Empty Result';
+        final barcode = Barcode(code, BarcodeFormat.qrcode, null);
+        Navigator.of(context).pop(barcode);
+      } catch (e) {
+        UIUtil.showSnackbar('No QR code found', context);
+      }
+      shouldScan = true;
+    }
+
     return Scaffold(
       body: Stack(children: [
         QRView(
           key: qrKey,
           onQRViewCreated: _onQRViewCreated,
+          onPermissionSet: _onPermissionSet,
           formatsAllowed: [BarcodeFormat.qrcode],
           overlay: QrScannerOverlayShape(
             borderColor: Colors.white,
@@ -50,7 +84,6 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
             borderWidth: 10,
             cutOutSize: scanArea,
           ),
-          onPermissionSet: (ctrl, p) => _onPermissionSet(ctrl, p),
         ),
         SafeArea(
           child: Padding(
@@ -70,7 +103,13 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
                   style: styles.textStyleButtonTextOutline
                       .copyWith(color: Colors.white),
                 ),
-                const SizedBox(width: 48),
+                Platform.isAndroid || Platform.isIOS
+                    ? IconButton(
+                        iconSize: 32,
+                        icon: Icon(Icons.image),
+                        onPressed: scanFromImage,
+                      )
+                    : const SizedBox(width: 48),
               ],
             ),
           ),
@@ -83,16 +122,14 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
     final log = ref.read(loggerProvider);
     log.d('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
+      UIUtil.showSnackbar('Check Camera Permission', context);
     }
   }
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((event) {
-      if (result == null) {
+      if (result == null && shouldScan) {
         result = event;
         Navigator.of(context).pop(result);
       }
