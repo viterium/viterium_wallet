@@ -6,7 +6,7 @@ import '../app_icons.dart';
 import '../app_providers.dart';
 import '../app_styles.dart';
 import '../util/numberutil.dart';
-import '../util/ui_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/buttons/success_outline_button.dart';
 import '../widgets/sheet_handle.dart';
 
@@ -149,10 +149,10 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
                     color: theme.backgroundDarkest,
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: ThreeLineAddressText(
+                  child: AddressThreeLineText(
                     address: destination,
-                    type: ThreeLineAddressTextType.SUCCESS,
-                    contactName: widget.contactName,
+                    type: AddressThreeLineTextType.SUCCESS,
+                    label: widget.contactName,
                   ),
                 ),
               ],

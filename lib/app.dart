@@ -14,6 +14,7 @@ import 'screens/logout_screen.dart';
 import 'screens/password_lock_screen.dart';
 import 'screens/setup_wallet_screen.dart';
 import 'screens/splash_screen.dart';
+import 'screens/viteconnect_screen.dart';
 import 'settings/available_language.dart';
 import 'supported_locales.dart';
 import 'themes/themes.dart';
@@ -94,11 +95,11 @@ class App extends ConsumerWidget {
                       builder: (_) => const HomeScreen(),
                       settings: settings,
                     );
-                  case '/home_transition':
-                    return NoPopTransitionRoute(
-                      builder: (_) => const HomeScreen(),
-                      settings: settings,
-                    );
+                  // case '/home_transition':
+                  //   return NoPopTransitionRoute(
+                  //     builder: (_) => const HomeScreen(),
+                  //     settings: settings,
+                  //   );
                   case '/lock_screen':
                     return NoTransitionRoute(
                       builder: (_) => const LockScreen(),
@@ -122,6 +123,11 @@ class App extends ConsumerWidget {
                   case '/wallet_setup':
                     return NoTransitionRoute(
                       builder: (_) => const SetupWalletScreen(),
+                      settings: settings,
+                    );
+                  case '/vite_connect':
+                    return MaterialPageRoute(
+                      builder: (_) => const ViteConnectScreen(),
                       settings: settings,
                     );
                   default:

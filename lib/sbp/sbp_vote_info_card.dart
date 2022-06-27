@@ -4,8 +4,8 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../util/ui_util.dart';
 import '../util/vite_util.dart';
+import '../widgets/address_widgets.dart';
 
 class SboVoteInfoCard extends ConsumerWidget {
   final RpcVoteInfo? voteInfo;
@@ -84,7 +84,7 @@ class SboVoteInfoCard extends ConsumerWidget {
                         maintainState: true,
                         maintainSize: true,
                         maintainAnimation: true,
-                        child: OneLineAddressText(
+                        child: AddressOneLineText(
                             address: votedSbp?.blockProducingAddress ??
                                 '                                                       '),
                       ),

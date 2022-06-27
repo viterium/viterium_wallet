@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
 import '../util/ui_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/app_icon_button.dart';
 import '../widgets/sheet_util.dart';
 import 'contact.dart';
@@ -65,7 +66,7 @@ class SingleContactWidget extends ConsumerWidget {
                             contact.name,
                             style: styles.textStyleSettingItemHeader,
                           ),
-                          TwoLineAddressText(address: contact.address),
+                          AddressTwoLineText(address: contact.address),
                         ],
                       ),
                     ),

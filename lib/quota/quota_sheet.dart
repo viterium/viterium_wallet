@@ -5,7 +5,7 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../settings_drawer/accounts_area.dart';
+import '../settings_drawer/account_widget.dart';
 import '../util/util.dart';
 import '../widgets/buttons.dart';
 import '../widgets/gradient_widgets.dart';

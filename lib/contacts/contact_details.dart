@@ -10,6 +10,7 @@ import '../app_styles.dart';
 import '../send_sheet/send_sheet.dart';
 import '../util/ui_util.dart';
 import '../util/util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/buttons.dart';
 import '../widgets/contact_info_button.dart';
 import '../widgets/dialog.dart';
@@ -169,11 +170,11 @@ class ContactDetails extends HookConsumerWidget {
                       color: theme.backgroundDarkest,
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    child: ThreeLineAddressText(
+                    child: AddressThreeLineText(
                       address: contact.address,
                       type: addressCopied.value
-                          ? ThreeLineAddressTextType.SUCCESS_FULL
-                          : ThreeLineAddressTextType.PRIMARY,
+                          ? AddressThreeLineTextType.SUCCESS_FULL
+                          : AddressThreeLineTextType.PRIMARY,
                     ),
                   ),
                 ),

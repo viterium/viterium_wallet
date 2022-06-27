@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../app_icons.dart';
 import '../app_providers.dart';
 import '../util/ui_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/dialog.dart';
 import '../widgets/sheet_util.dart';
 import 'account.dart';
@@ -49,6 +50,11 @@ class AccountListItem extends ConsumerWidget {
         removeAccount,
         cancelText: localization.NO,
       );
+    }
+
+    Future<void> copyAddress() async {
+      await Clipboard.setData(ClipboardData(text: account.viteAddress));
+      UIUtil.showSnackbar('Account address copied!', context);
     }
 
     return Slidable(
@@ -138,7 +144,7 @@ class AccountListItem extends ConsumerWidget {
                           ),
                           FittedBox(
                             fit: BoxFit.scaleDown,
-                            child: TwoLineAddressText(
+                            child: AddressTwoLineText(
                               address: account.viteAddress,
                             ),
                           ),
@@ -152,15 +158,7 @@ class AccountListItem extends ConsumerWidget {
                     child: TextButton(
                       style: styles.roundedTextButtonStyle,
                       child: Icon(Icons.copy, color: theme.text),
-                      onPressed: () async {
-                        await Clipboard.setData(
-                          ClipboardData(text: account.viteAddress),
-                        );
-                        UIUtil.showSnackbar(
-                          'Account address copied!',
-                          context,
-                        );
-                      },
+                      onPressed: copyAddress,
                     ),
                   ),
                 ],

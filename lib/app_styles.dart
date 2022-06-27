@@ -467,6 +467,16 @@ class AppStyles {
     );
   }
 
+  // Text style for data sub headers
+
+  late final textStyleSubHeader = TextStyle(
+    fontFamily: kFontFamily,
+    fontSize: AppFontSizes.medium,
+    letterSpacing: 1.4,
+    fontWeight: FontWeight.w700,
+    color: theme.text,
+  );
+
   // Text style for settings headers
   TextStyle get textStyleSettingsHeader {
     return TextStyle(

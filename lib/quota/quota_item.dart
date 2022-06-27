@@ -5,6 +5,7 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../util/ui_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/dialog.dart';
 
 final quotaItemProvider =
@@ -112,7 +113,7 @@ class QuotaItem extends ConsumerWidget {
                             ),
                         ],
                       ),
-                      TwoLineAddressText(address: quotaInfo.beneficiary),
+                      AddressTwoLineText(address: quotaInfo.beneficiary),
                       const SizedBox(height: 4),
                       Row(
                         children: [

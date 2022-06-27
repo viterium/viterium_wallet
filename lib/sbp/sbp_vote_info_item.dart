@@ -4,8 +4,8 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../util/ui_util.dart';
 import '../util/vite_util.dart';
+import '../widgets/address_widgets.dart';
 
 class SbpVoteInfoItem extends ConsumerWidget {
   final RpcSbpVoteInfo sbpVoteInfo;
@@ -132,7 +132,7 @@ class SbpVoteInfoItem extends ConsumerWidget {
                             fontFamily: 'Nunito Sans',
                           ),
                         ),
-                        OneLineAddressText(
+                        AddressOneLineText(
                           address: sbpVoteInfo.blockProducingAddress,
                         ),
                       ],

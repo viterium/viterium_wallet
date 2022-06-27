@@ -14,6 +14,7 @@ import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
 import '../util/util.dart';
 import '../util/vite_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
@@ -331,8 +332,8 @@ class QuotaGetSheet extends HookConsumerWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 25, vertical: 15),
-                      child: ThreeLineAddressText(
-                        type: ThreeLineAddressTextType.PRIMARY,
+                      child: AddressThreeLineText(
+                        type: AddressThreeLineTextType.PRIMARY,
                         address: beneficiaryAddress.value!,
                       ),
                     ),

@@ -6,7 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../util/ui_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
@@ -111,9 +111,9 @@ class AccountDetailsSheet extends HookConsumerWidget {
           children: [
             Container(
               margin: const EdgeInsets.only(top: 10),
-              child: ThreeLineAddressText(
+              child: AddressThreeLineText(
                 address: account.viteAddress,
-                type: ThreeLineAddressTextType.PRIMARY60,
+                type: AddressThreeLineTextType.PRIMARY60,
               ),
             ),
             const SizedBox(),

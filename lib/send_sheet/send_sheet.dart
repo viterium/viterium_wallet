@@ -20,6 +20,7 @@ import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/gradient_widgets.dart';
@@ -436,14 +437,21 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                         contact = contacts.getLabelForAddress(destination);
                       }
 
+                      final toAddress = Address.tryParse(destination);
+                      if (toAddress == null) {
+                        UIUtil.showSnackbar(
+                            'Invalid destination address', context);
+                        return;
+                      }
+
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         theme: ref.read(themeProvider),
                         widget: SendConfirmSheet(
                           amountRaw: amountRaw ?? BigInt.zero,
                           tokenInfo: tokenInfo,
-                          destination: destination,
-                          contactName: contact?.name,
+                          destination: toAddress,
+                          label: contact?.name,
                           memo: _memoController.text,
                           data: _data,
                         ),
@@ -893,7 +901,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                     FocusScope.of(context).requestFocus(_addressFocusNode);
                   });
                 },
-                child: ThreeLineAddressText(
+                child: AddressThreeLineText(
                   address: _addressController.text,
                 ),
               )

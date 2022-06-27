@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../util/ui_util.dart';
+import 'seed_three_line_text.dart';
 
 class PlainSeedDisplay extends HookConsumerWidget {
   final String seed;
@@ -51,7 +51,7 @@ class PlainSeedDisplay extends HookConsumerWidget {
               color: theme.backgroundDarkest,
               borderRadius: BorderRadius.circular(25),
             ),
-            child: ThreeLineSeedText(
+            child: SeedThreeLineText(
               seed: obscureSeed && _seedObscured.value
                   ? _obscuredSeed.value
                   : seed,

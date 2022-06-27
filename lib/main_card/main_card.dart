@@ -13,6 +13,7 @@ import '../tokens/token_info_provider.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/app_icon_button.dart';
 import '../widgets/balance_widget.dart';
 import '../widgets/sheet_util.dart';
@@ -72,7 +73,7 @@ class MainCard extends ConsumerWidget {
                             color: theme.text,
                           ),
                         ),
-                        ShortAddressText(address: account.viteAddress),
+                        AddressShortText(address: account.viteAddress),
                       ],
                     ),
                   ),
@@ -118,10 +119,7 @@ class MainCard extends ConsumerWidget {
       }
       final viteUri = ViteUri.tryParse(data);
       if (viteUri == null) {
-        UIUtil.showSnackbar(
-          'Failed to parse qr code',
-          context,
-        );
+        UIUtil.showSnackbar('Failed to parse qr code', context);
         return;
       }
       final tokenId = viteUri.token?.tokenId ?? viteTokenId;

@@ -10,6 +10,7 @@ import '../util/formatters.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
 import '../util/vite_util.dart';
+import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/sheet_widget.dart';
@@ -232,7 +233,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
                               .requestFocus(_addressFocusNode);
                         });
                       },
-                      child: ThreeLineAddressText(
+                      child: AddressThreeLineText(
                         address: widget.address != null
                             ? widget.address!
                             : _addressController.text,
