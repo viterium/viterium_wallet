@@ -21,6 +21,8 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   Barcode? result;
   QRViewController? controller;
   bool shouldScan = true;
+  bool _flashOn = false;
+  bool _flashToggled = false;
 
   @override
   void reassemble() {
@@ -67,7 +69,22 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
       } catch (e) {
         UIUtil.showSnackbar('No QR code found', context);
       }
-      shouldScan = true;
+
+    Future<void> toggleFlash() async {
+      if (_flashToggled) return;
+      var flashState = _flashOn;
+      try {
+        controller?.toggleFlash();
+        flashState = await controller?.getFlashStatus() ?? false;
+      } catch (e) {
+        flashState = false;
+      }
+      if (_flashOn != flashState) {
+        setState(() {
+          _flashOn = flashState;
+        });
+      }
+      _flashToggled = false;
     }
 
     return Scaffold(
@@ -88,28 +105,48 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
         SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                IconButton(
-                  iconSize: 32,
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      iconSize: 32,
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    Text(
+                      'Scan QR Code',
+                      style: styles.textStyleButtonTextOutline
+                          .copyWith(color: Colors.white),
+                    ),
+                    Platform.isAndroid || Platform.isIOS
+                        ? IconButton(
+                            iconSize: 32,
+                            icon: Icon(Icons.image_outlined),
+                            onPressed: scanFromImage,
+                          )
+                        : const SizedBox(width: 48),
+                  ],
                 ),
-                Text(
-                  'Scan QR Code',
-                  style: styles.textStyleButtonTextOutline
-                      .copyWith(color: Colors.white),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 50),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: IconButton(
+                    iconSize: 32,
+                    icon: Icon(
+                      _flashOn
+                          ? Icons.flashlight_off_rounded
+                          : Icons.flashlight_on_rounded,
+                    ),
+                    onPressed: toggleFlash,
+                  ),
                 ),
-                Platform.isAndroid || Platform.isIOS
-                    ? IconButton(
-                        iconSize: 32,
-                        icon: Icon(Icons.image),
-                        onPressed: scanFromImage,
-                      )
-                    : const SizedBox(width: 48),
               ],
             ),
           ),
