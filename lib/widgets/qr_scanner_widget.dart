@@ -20,7 +20,7 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
-  bool shouldScan = true;
+  bool _shouldScan = true;
   bool _flashOn = false;
   bool _flashToggled = false;
 
@@ -47,28 +47,30 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
       final lockDisabled = ref.read(lockDisabledProvider.notifier);
       lockDisabled.state = true;
 
-      shouldScan = false;
-      controller?.pauseCamera();
+      _shouldScan = false;
 
       final picker = ImagePicker();
       final file = await picker.pickImage(source: ImageSource.gallery);
 
       lockDisabled.state = false;
-      controller?.resumeCamera();
 
       if (file == null) {
-        shouldScan = true;
+        _shouldScan = true;
         return;
       }
       try {
         final code = await bf.BarcodeFinder.scanFile(
-            path: file.path, formats: [bf.BarcodeFormat.QR_CODE]);
+          path: file.path,
+          formats: const [bf.BarcodeFormat.QR_CODE],
+        );
         if (code == null) throw 'Empty Result';
-        final barcode = Barcode(code, BarcodeFormat.qrcode, null);
-        Navigator.of(context).pop(barcode);
+        result = Barcode(code, BarcodeFormat.qrcode, null);
+        Navigator.of(context).pop(result);
       } catch (e) {
         UIUtil.showSnackbar('No QR code found', context);
       }
+      _shouldScan = true;
+    }
 
     Future<void> toggleFlash() async {
       if (_flashToggled) return;
@@ -166,7 +168,7 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((event) {
-      if (result == null && shouldScan) {
+      if (result == null && _shouldScan) {
         result = event;
         Navigator.of(context).pop(result);
       }
