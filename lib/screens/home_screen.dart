@@ -27,7 +27,7 @@ class HomeScreen extends HookConsumerWidget {
     ref.watch(inBackgroundProvider);
 
     // whether we should avoid locking the app
-    final lockDisabled = useState(false);
+    final lockDisabled = ref.watch(lockDisabledProvider);
     // To lock and unlock the app
     final lockStreamListener = useRef<StreamSubscription?>(null);
 
@@ -36,7 +36,7 @@ class HomeScreen extends HookConsumerWidget {
       final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
       final locked = sharedPrefsUtil.getLock();
 
-      if ((locked || auth.encryptedSecret != null) && !lockDisabled.value) {
+      if ((locked || auth.encryptedSecret != null) && !lockDisabled) {
         lockStreamListener.value?.cancel();
 
         final timeout = sharedPrefsUtil.getLockTimeout();

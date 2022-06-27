@@ -378,3 +378,5 @@ enum TokenCardAction {
 
 final tokenCardActionProvider =
     Provider((ref) => TokenCardAction.showTokenSheet);
+
+final lockDisabledProvider = StateProvider((ref) => false);
