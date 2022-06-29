@@ -472,8 +472,16 @@ class AppStyles {
     fontFamily: kFontFamily,
     fontSize: AppFontSizes.medium,
     letterSpacing: 1.4,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
     color: theme.text,
+  );
+
+  late final textStyleSubHeaderUnselected = TextStyle(
+    fontFamily: kFontFamily,
+    fontSize: AppFontSizes.medium,
+    letterSpacing: 1.4,
+    fontWeight: FontWeight.w400,
+    color: theme.text.withOpacity(0.3),
   );
 
   // Text style for settings headers
@@ -660,7 +668,7 @@ class AppStyles {
       fontSize: 20,
       color: theme.success,
       fontFamily: kFontFamily,
-      fontWeight: FontWeight.w800,
+      fontWeight: FontWeight.w500,
     );
   }
 
