@@ -37,7 +37,7 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final amountAll =
         NumberUtil.getStringFromRaw(widget.amountRaw, decimals, decimals) +
@@ -123,7 +123,7 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
                     children: [
                       // "SENT TO" text
                       Text(
-                        localization.sentTo.toUpperCase(),
+                        l10n.sentTo.toUpperCase(),
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
@@ -160,7 +160,7 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
           ),
           // CLOSE Button
           SuccessOutlineButton(
-            title: localization.close,
+            title: l10n.close,
             margin: const EdgeInsets.only(left: 28, right: 28, top: 8),
             onPressed: () => Navigator.of(context).pop(),
           ),

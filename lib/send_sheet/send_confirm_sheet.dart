@@ -148,8 +148,8 @@ class SendConfirmSheet extends HookConsumerWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Data',
-                          style: styles.textStyleHeader(context),
+                          'Data'.toUpperCase(),
+                          style: styles.textStyleSubHeader,
                         ),
                       ],
                     ),
@@ -181,8 +181,8 @@ class SendConfirmSheet extends HookConsumerWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Memo',
-                          style: styles.textStyleHeader(context),
+                          'Memo'.toUpperCase(),
+                          style: styles.textStyleSubHeader,
                         ),
                       ],
                     ),

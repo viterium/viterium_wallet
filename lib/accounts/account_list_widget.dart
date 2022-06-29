@@ -20,7 +20,7 @@ class AccountListWidget extends ConsumerWidget {
     final accountList = accounts.accounts;
 
     return ListView.builder(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       itemCount: accountList.length + 1,
       controller: scrollController,
       itemBuilder: (context, index) {
