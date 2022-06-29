@@ -20,9 +20,7 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
     );
   }
 
-  Future<void> connect({
-    required String uri,
-  }) async {
+  Future<void> connect({required String uri}) async {
     service.connect(uri: uri);
     final bridge = service.connector?.session.bridge;
     state = VCState.connectingToBridge(bridge ?? '');
@@ -42,8 +40,7 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
     state = VCState.disconnected();
   }
 
-  Future<void> onUserResponse(
-      VCTxRequest request, VCTxResponse response) async {
+  void onTxAction(VCTxRequest request, VCTxResponse response) {
     state.mapOrNull(connected: (value) {
       final id = request.id;
       response.when(
@@ -51,18 +48,69 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
           service.sendResult(id: id, result: accountBlock);
         },
         cancelled: () {
-          final error = {'code': 11012, 'message': 'User Canceled'};
-          service.sendError(id: id, error: error);
+          service.sendError(id: id, error: VCError.userCanceled);
         },
       );
+
       final currentRequest = value.currentRequest;
-      final historyItem = VCHistoryItem.tx(
-        request: request,
-        response: response,
-        timestamp: DateTime.now(),
-      );
-      if (currentRequest != null && currentRequest.id == id) {
+      if (currentRequest?.id == id) {
         final pending = value.pendingRequests;
+        final historyItem = VCHistoryItem.tx(
+          request: request,
+          response: response,
+          timestamp: DateTime.now(),
+        );
+        state = value.copyWith(
+          currentRequest: pending.firstOrNull,
+          pendingRequests: pending.isEmpty ? pending : pending.removeAt(0),
+          historyRequests: value.historyRequests.add(historyItem),
+        );
+      }
+    });
+  }
+
+  void onSignAction(VCSignRequest request, VCSignResponse response) {
+    state.mapOrNull(connected: (value) {
+      final id = request.id;
+      response.when(
+        confirmed: (signedData) {
+          service.sendResult(id: id, result: signedData);
+        },
+        cancelled: () {
+          service.sendError(id: id, error: VCError.userCanceled);
+        },
+      );
+
+      final currentRequest = value.currentRequest;
+      if (currentRequest?.id == id) {
+        final pending = value.pendingRequests;
+        final historyItem = VCHistoryItem.sign(
+          request: request,
+          response: response,
+          timestamp: DateTime.now(),
+        );
+        state = value.copyWith(
+          currentRequest: pending.firstOrNull,
+          pendingRequests: pending.isEmpty ? pending : pending.removeAt(0),
+          historyRequests: value.historyRequests.add(historyItem),
+        );
+      }
+    });
+  }
+
+  void onInvalidRequest(JsonRpcRequest request, Object error) {
+    state.mapOrNull(connected: (value) {
+      final id = request.id;
+      service.sendError(id: id, error: VCError.sessionRejected);
+
+      final currentRequest = value.currentRequest;
+      if (currentRequest?.id == id) {
+        final pending = value.pendingRequests;
+        final historyItem = VCHistoryItem.invalid(
+          request: request,
+          error: error,
+          timestamp: DateTime.now(),
+        );
         state = value.copyWith(
           currentRequest: pending.firstOrNull,
           pendingRequests: pending.isEmpty ? pending : pending.removeAt(0),
@@ -95,22 +143,24 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
       },
       signAndSendTx: (request) {
         state.mapOrNull(connected: (prev) {
+          final txRequest = VCRequest.transaction(request);
           if (prev.currentRequest == null) {
-            state = prev.copyWith(currentRequest: request);
+            state = prev.copyWith(currentRequest: txRequest);
           } else {
             state = prev.copyWith(
-              pendingRequests: prev.pendingRequests.add(request),
+              pendingRequests: prev.pendingRequests.add(txRequest),
             );
           }
         });
       },
       signMessage: (request) {
         state.mapOrNull(connected: (prev) {
+          final signRequest = VCRequest.signMessage(request);
           if (prev.currentRequest == null) {
-            state = prev.copyWith(currentRequest: request);
+            state = prev.copyWith(currentRequest: signRequest);
           } else {
             state = prev.copyWith(
-              pendingRequests: prev.pendingRequests.add(request),
+              pendingRequests: prev.pendingRequests.add(signRequest),
             );
           }
         });

@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/core.dart';
-import 'package:viteconnect/viteconnect.dart';
-import 'package:viterium_wallet/app_providers.dart';
-import 'package:viterium_wallet/tokens/token_info_provider.dart';
-import 'package:viterium_wallet/util/ui_util.dart';
-import 'package:viterium_wallet/viteconnect/peer_widget.dart';
-import 'package:viterium_wallet/viteconnect/viteconnect_confirm_sheet.dart';
-import 'package:viterium_wallet/viteconnect/viteconnect_types.dart';
 
+import '../app_providers.dart';
 import '../settings_drawer/account_widget.dart';
+import '../tokens/token_info_provider.dart';
+import '../util/ui_util.dart';
+import '../widgets/app_icon_button.dart';
 import '../widgets/dialog.dart';
-import '../widgets/selected_wallet_button.dart';
 import '../widgets/sheet_util.dart';
+import 'peer_widget.dart';
 import 'viteconnect_providers.dart';
+import 'viteconnect_requests_widget.dart';
+import 'viteconnect_sign_sheet.dart';
+import 'viteconnect_tx_sheet.dart';
+import 'viteconnect_types.dart';
 
 final autoSignEnabledProvider = StateProvider((ref) => false);
 
@@ -29,51 +29,83 @@ class ViteConnectPage extends HookConsumerWidget {
     final peer = ref.watch(viteConnectPeerProvider);
     final state = ref.watch(viteConnectProvider);
 
-    ref.listen<JsonRpcRequest?>(
-        viteConnectProvider.select(
-          (value) => value.mapOrNull<JsonRpcRequest?>(
-            connected: (value) => value.currentRequest,
-          ),
-        ), (previous, next) async {
-      if (next == null) {
-        return;
-      }
+    void handleRequest(VCRequest request) {
+      request.when(
+        transaction: (request) async {
+          try {
+            final block = request.params?.first['block'];
+            final tx = RawTransaction.fromJson(block);
+            final address = ref.read(selectedAddressProvider);
+            if (tx.address != address) {
+              throw Exception('Address mismatch');
+            }
 
-      try {
-        final block = next.params?[0]['block'];
-        final transaction = RawTransaction.fromJson(block);
-        final address = ref.read(selectedAddressProvider);
-        if (transaction.address != address) {
-          UIUtil.showSnackbar('Address mismatch', context);
-          return;
-        }
+            final toAddress = tx.toAddress;
+            if (toAddress == null) {
+              throw Exception('Missing destination address');
+            }
 
-        final toAddress = transaction.toAddress;
-        if (toAddress == null) {
-          UIUtil.showSnackbar('Missing destination address', context);
-          return;
-        }
+            final isCallType = toAddress.isContractAddress && tx.data != null;
+            final type = VCTxRequestType.fromBlockType(
+              tx.type,
+              isCallType: isCallType,
+            );
+            if (type == null) {
+              throw Exception('Invalid transaction request type');
+            }
 
-        final tokenId = transaction.token?.tokenId ?? viteTokenId;
-        final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
+            final tokenId = tx.token?.tokenId ?? viteTokenId;
+            final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
 
-        final txRequest = VCTxRequest.parse(
-          transaction,
-          id: next.id,
-          tokenInfo: tokenInfo,
-        );
+            final txRequest = VCTxRequest(
+              id: request.id,
+              type: type,
+              transaction: tx,
+              tokenInfo: tokenInfo,
+            );
 
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          theme: theme,
-          widget: ViteConnectConfirmSheet(txRequest: txRequest),
-        );
-      } catch (e, st) {
-        final log = ref.read(loggerProvider);
-        log.e('Invalid ViteConnect request', e, st);
-        UIUtil.showSnackbar('Invalid ViteConnect request', context);
-        return;
-      }
+            Sheets.showAppHeightNineSheet(
+              context: context,
+              theme: theme,
+              widget: ViteConnectTxSheet(request: txRequest),
+            );
+          } catch (e, st) {
+            final log = ref.read(loggerProvider);
+            log.e('Invalid transaction request', e, st);
+
+            UIUtil.showSnackbar('Invalid transaction request', context);
+
+            final viteConnect = ref.read(viteConnectProvider.notifier);
+            viteConnect.onInvalidRequest(request, e);
+          }
+        },
+        signMessage: (request) {
+          try {
+            final signRequest = VCSignRequest(
+              id: request.id,
+              data: request.params?.first,
+            );
+            Sheets.showAppHeightEightSheet(
+              context: context,
+              theme: theme,
+              widget: ViteConnectSignSheet(request: signRequest),
+            );
+          } catch (e, st) {
+            final log = ref.read(loggerProvider);
+            log.e('Invalid sign message request', e, st);
+
+            UIUtil.showSnackbar('Invalid sign message request', context);
+
+            final viteConnect = ref.read(viteConnectProvider.notifier);
+            viteConnect.onInvalidRequest(request, e);
+          }
+        },
+      );
+    }
+
+    ref.listen<VCRequest?>(viteConnectCurrentRequestProvider, (previous, next) {
+      if (next == null) return;
+      handleRequest(next);
     });
 
     void disconnect() {
@@ -106,10 +138,10 @@ class ViteConnectPage extends HookConsumerWidget {
       });
     }
 
-    Future<void> setAutoSign(bool value) async {
-      final notifier = ref.read(autoSignEnabledProvider.notifier);
-      notifier.state = value;
-    }
+    // Future<void> setAutoSign(bool value) async {
+    //   final notifier = ref.read(autoSignEnabledProvider.notifier);
+    //   notifier.state = value;
+    // }
 
     return Scaffold(
       backgroundColor: theme.backgroundDark,
@@ -124,12 +156,9 @@ class ViteConnectPage extends HookConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    iconSize: 24,
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: theme.text,
-                    ),
+                  AppIconButton(
+                    //iconSize: 24,
+                    icon: Icons.arrow_back,
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   Column(children: [
@@ -148,12 +177,8 @@ class ViteConnectPage extends HookConsumerWidget {
                       ),
                     ),
                   ]),
-                  IconButton(
-                    iconSize: 24,
-                    icon: Icon(
-                      Icons.power_settings_new_outlined,
-                      color: theme.text,
-                    ),
+                  AppIconButton(
+                    icon: Icons.power_settings_new_outlined,
                     onPressed: disconnectConfirm,
                   ),
                 ],
@@ -163,37 +188,33 @@ class ViteConnectPage extends HookConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 8),
-                        child: Text(
-                          'Connected Account'.toUpperCase(),
-                          style: styles.textStyleSubHeader,
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsetsDirectional.only(start: 8),
+                      //   child: Text(
+                      //     'Connected Account'.toUpperCase(),
+                      //     style: styles.textStyleSubHeader,
+                      //   ),
+                      // ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: const SelectedWalletButton(
-                              size: const Size(72, 56),
-                            ),
-                          ),
-                          const SizedBox(width: 20),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 4),
+                          //   child: const SelectedWalletButton(),
+                          // ),
+                          //const SizedBox(width: 20),
                           const AccountWidget(),
                         ],
                       ),
                       const SizedBox(height: 30),
                       if (peer != null) ...[
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(start: 8),
-                          child: Text(
-                            'Connected To'.toUpperCase(),
-                            style: styles.textStyleSubHeader,
-                          ),
+                        Text(
+                          'Connected To'.toUpperCase(),
+                          style: styles.textStyleSubHeader,
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 16),
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -207,74 +228,66 @@ class ViteConnectPage extends HookConsumerWidget {
                           ),
                           child: const PeerWidget(),
                         ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.only(start: 8),
-                              child: Text(
-                                'Auto Sign Requests'.toUpperCase(),
-                                style: styles.textStyleSubHeader,
-                              ),
-                            ),
-                            Consumer(builder: (context, ref, _) {
-                              final autoSign =
-                                  ref.watch(autoSignEnabledProvider);
-                              return CupertinoSwitch(
-                                activeColor: theme.primary,
-                                value: autoSign,
-                                onChanged: setAutoSign,
-                              );
-                            }),
-                          ],
-                        ),
+                        // const SizedBox(height: 20),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Padding(
+                        //       padding:
+                        //           const EdgeInsetsDirectional.only(start: 8),
+                        //       child: Text(
+                        //         'Auto Sign Requests'.toUpperCase(),
+                        //         style: styles.textStyleSubHeader,
+                        //       ),
+                        //     ),
+                        //     Consumer(builder: (context, ref, _) {
+                        //       final autoSign =
+                        //           ref.watch(autoSignEnabledProvider);
+                        //       return CupertinoSwitch(
+                        //         activeColor: theme.primary,
+                        //         value: autoSign,
+                        //         onChanged: setAutoSign,
+                        //       );
+                        //     }),
+                        //   ],
+                        // ),
+
                         const SizedBox(height: 30),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.only(start: 8),
-                              child: Text(
-                                'Requests'.toUpperCase(),
-                                style: styles.textStyleSubHeader,
-                              ),
-                            ),
-                            Consumer(builder: (context, ref, _) {
-                              final requests =
-                                  ref.watch(viteConnectRequestHistoryProvider);
-                              return Text(
-                                '${requests.length}',
-                                style: styles.textStyleSubHeader,
-                              );
-                            }),
-                          ],
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Requests'.toUpperCase(),
+                            style: styles.textStyleSubHeader,
+                          ),
                         ),
-                        Consumer(builder: (context, ref, _) {
-                          final requests =
-                              ref.watch(viteConnectRequestHistoryProvider);
-                          if (requests.isEmpty) {
-                            return Text('No Requests so far');
-                          }
-                          return ListView.builder(
-                            itemCount: requests.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                child: Row(
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Text('Contract Call'),
-                                      ],
-                                    ),
-                                  ],
+                        Expanded(
+                          child: ViteConnectRequestsWidget(
+                            onItemSelect: (item) {
+                              item.when(
+                                tx: (request, response, _) =>
+                                    Sheets.showAppHeightNineSheet(
+                                  context: context,
+                                  theme: theme,
+                                  widget: ViteConnectTxSheet(
+                                    request: request,
+                                    response: response,
+                                  ),
                                 ),
+                                sign: (request, response, _) =>
+                                    Sheets.showAppHeightEightSheet(
+                                  context: context,
+                                  theme: theme,
+                                  widget: ViteConnectSignSheet(
+                                    request: request,
+                                    response: response,
+                                  ),
+                                ),
+                                invalid: (_, __, ___) {},
+                                current: handleRequest,
                               );
                             },
-                          );
-                        }),
+                          ),
+                        ),
                       ],
                     ],
                   ),

@@ -36,9 +36,8 @@ class VCState with _$VCState {
   const factory VCState.connected({
     required SessionStatus sessionStatus,
     PeerMeta? peerMeta,
-    JsonRpcRequest? currentRequest,
-    @Default(IListConst<JsonRpcRequest>([]))
-        IList<JsonRpcRequest> pendingRequests,
+    VCRequest? currentRequest,
+    @Default(IListConst<VCRequest>([])) IList<VCRequest> pendingRequests,
     @Default(IListConst<VCHistoryItem>([]))
         IList<VCHistoryItem> historyRequests,
   }) = _VCStateConnected;
@@ -51,55 +50,49 @@ class VCState with _$VCState {
 }
 
 @freezed
+class VCRequest with _$VCRequest {
+  const VCRequest._();
+  const factory VCRequest.transaction(JsonRpcRequest request) =
+      _VCRequestTransaction;
+  const factory VCRequest.signMessage(JsonRpcRequest request) =
+      _VCRequestSignMessage;
+
+  int get id => when(
+        transaction: (tx) => tx.id,
+        signMessage: (message) => message.id,
+      );
+}
+
+@freezed
+class VCTxRequestType with _$VCTxRequestType {
+  const factory VCTxRequestType.transfer() = _VCTxRequestTypeTransfer;
+  const factory VCTxRequestType.create() = _VCTxRequestTypeCreate;
+  const factory VCTxRequestType.call() = _VCTxRequestTypeCall;
+
+  static VCTxRequestType? fromBlockType(
+    BlockType type, {
+    required bool isCallType,
+  }) {
+    switch (type) {
+      case BlockType.createContractRequest:
+        return VCTxRequestType.create();
+      case BlockType.transferRequest:
+        return isCallType ? VCTxRequestType.call() : VCTxRequestType.transfer();
+      default:
+        return null;
+    }
+  }
+}
+
+@freezed
 class VCTxRequest with _$VCTxRequest {
   const VCTxRequest._();
   const factory VCTxRequest({
     required int id,
-    required Address address,
-    required Address toAddress,
-    required BigInt amount,
+    required VCTxRequestType type,
+    required RawTransaction transaction,
     required TokenInfo tokenInfo,
-    BigInt? fee,
-    required Uint8List data,
   }) = _VCTxRequest;
-
-  factory VCTxRequest.parse(
-    RawTransaction transaction, {
-    required int id,
-    required TokenInfo tokenInfo,
-  }) {
-    assert(transaction.address != null);
-    assert(transaction.toAddress != null);
-    assert(transaction.data != null);
-    assert(transaction.toAddress!.isContractAddress);
-    assert((transaction.token?.tokenId ?? viteTokenId) == tokenInfo.tokenId);
-
-    return VCTxRequest(
-      id: id,
-      address: transaction.address!,
-      toAddress: transaction.toAddress!,
-      amount: transaction.amount ?? BigInt.zero,
-      tokenInfo: tokenInfo,
-      fee: transaction.fee,
-      data: transaction.data!,
-    );
-  }
-
-  static VCTxRequest? tryParse(
-    RawTransaction transaction, {
-    required int id,
-    required TokenInfo tokenInfo,
-  }) {
-    try {
-      return VCTxRequest.parse(
-        transaction,
-        id: id,
-        tokenInfo: tokenInfo,
-      );
-    } catch (_) {
-      return null;
-    }
-  }
 
   TokenId get tokenId => tokenInfo.tokenId;
 }
@@ -114,19 +107,27 @@ class VCTxResponse with _$VCTxResponse {
 @freezed
 class VCSignRequest with _$VCSignRequest {
   const factory VCSignRequest({
-    @Uint8ListBase64Converter() required Uint8List data,
+    required int id,
+    required Uint8List data,
   }) = _VCSignRequest;
 }
 
 @freezed
-class VCSignResponse with _$VCSignResponse {
-  const factory VCSignResponse({
+class SignedData with _$SignedData {
+  const factory SignedData({
     @Uint8ListBase64Converter() required Uint8List publicKey,
     @Uint8ListBase64Converter() required Uint8List signature,
-  }) = _VCSignResponse;
+  }) = _SignedData;
 
-  factory VCSignResponse.fromJson(Map<String, dynamic> json) =>
-      _$VCSignResponseFromJson(json);
+  factory SignedData.fromJson(Map<String, dynamic> json) =>
+      _$SignedDataFromJson(json);
+}
+
+@freezed
+class VCSignResponse with _$VCSignResponse {
+  const factory VCSignResponse.confirmed(SignedData signedData) =
+      _VCSignResponseConfirmed;
+  const factory VCSignResponse.cancelled() = _VCSignResponseCancelled;
 }
 
 @freezed
@@ -137,7 +138,37 @@ class VCHistoryItem with _$VCHistoryItem {
     required VCTxResponse response,
     required DateTime timestamp,
   }) = _VCHistoryItemTx;
+
   const factory VCHistoryItem.sign({
+    required VCSignRequest request,
+    required VCSignResponse response,
     required DateTime timestamp,
   }) = _VCHistoryItemSign;
+
+  const factory VCHistoryItem.invalid({
+    required JsonRpcRequest request,
+    required Object error,
+    required DateTime timestamp,
+  }) = _VCHistoryItemInvalid;
+
+  const factory VCHistoryItem.current({
+    required VCRequest request,
+  }) = _VCHistoryItemCurrent;
+}
+
+@freezed
+class VCError with _$VCError {
+  const factory VCError({
+    required int code,
+    String? message,
+  }) = _VCError;
+
+  static VCError userCanceled = VCError(code: 11012, message: 'User Cancelled');
+  static VCError requestRejected =
+      VCError(code: 11011, message: 'Request Rejected');
+  static VCError sessionRejected =
+      VCError(code: 11010, message: 'Session Rejected ');
+
+  factory VCError.fromJson(Map<String, dynamic> json) =>
+      _$VCErrorFromJson(json);
 }

@@ -37,14 +37,31 @@ final viteConnectPeerProvider = Provider.autoDispose((ref) {
   return state.mapOrNull<PeerMeta?>(connected: (state) => state.peerMeta);
 });
 
-final viteConnectRequestHistoryProvider = Provider.autoDispose((ref) {
+final viteConnectCurrentRequestProvider = Provider.autoDispose((ref) {
+  final request = ref.watch(
+    viteConnectProvider.select(
+      (value) => value.mapOrNull(
+        connected: (state) => state.currentRequest,
+      ),
+    ),
+  );
+
+  return request;
+});
+
+final viteConnectRequestsProvider = Provider.autoDispose((ref) {
   final requests = ref.watch(
     viteConnectProvider.select(
       (value) => value.maybeMap(
-        connected: (state) => state.historyRequests,
+        connected: (state) =>
+            state.historyRequests +
+            [
+              if (state.currentRequest != null)
+                VCHistoryItem.current(request: state.currentRequest!),
+            ],
         orElse: () => const IListConst(<VCHistoryItem>[]),
       ),
     ),
   );
-  return requests;
+  return requests.reversed;
 });

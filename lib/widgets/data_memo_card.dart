@@ -1,16 +1,14 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vite/vite.dart';
 
 import '../core/core_providers.dart';
 
-class DataEncodedCard extends HookConsumerWidget {
-  final Uint8List data;
-  const DataEncodedCard({
+class DataMemoCard extends ConsumerWidget {
+  final String memo;
+
+  const DataMemoCard({
     Key? key,
-    required this.data,
+    required this.memo,
   }) : super(key: key);
 
   @override
@@ -32,7 +30,7 @@ class DataEncodedCard extends HookConsumerWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       child: Text(
-        data.hex,
+        memo,
         textAlign: TextAlign.center,
         style: styles.textStyleAddressText90,
       ),
