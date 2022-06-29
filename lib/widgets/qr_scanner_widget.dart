@@ -8,6 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../app_providers.dart';
 import '../util/ui_util.dart';
+import 'app_icon_button.dart';
 
 class QrScannerWidget extends ConsumerStatefulWidget {
   const QrScannerWidget({Key? key}) : super(key: key);
@@ -113,9 +114,8 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      iconSize: 32,
-                      icon: Icon(Icons.arrow_back),
+                    AppIconButton(
+                      icon: Icons.arrow_back,
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                     Text(
@@ -124,9 +124,8 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
                           .copyWith(color: Colors.white),
                     ),
                     Platform.isAndroid || Platform.isIOS
-                        ? IconButton(
-                            iconSize: 32,
-                            icon: Icon(Icons.image_outlined),
+                        ? AppIconButton(
+                            icon: Icons.image_outlined,
                             onPressed: scanFromImage,
                           )
                         : const SizedBox(width: 48),
