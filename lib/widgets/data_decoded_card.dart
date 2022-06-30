@@ -41,7 +41,7 @@ class DataDecodedCard extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Method name'.toUpperCase(),
+            'Message'.toUpperCase(),
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w200,
