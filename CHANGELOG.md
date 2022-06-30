@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0
+
+* ViteConnect support
+* Scan from image support
+* Toggle torch when scanning qr codes
+
 ## 1.0.2
 
 * Add long press to order token cards in token list
