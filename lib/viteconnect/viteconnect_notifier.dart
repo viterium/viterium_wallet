@@ -122,8 +122,6 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
 
   @override
   Future<void> onEvent(VCEvent event) async {
-    print(event);
-
     event.when(
       sessionRequest: (request) {
         state = VCState.pendingApproval(request);

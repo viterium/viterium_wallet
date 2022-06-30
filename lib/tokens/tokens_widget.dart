@@ -89,8 +89,6 @@ class TokensWidget extends HookConsumerWidget {
           );
         },
         onReorder: (oldIndex, newIndex) {
-          print('Moved form $oldIndex to $newIndex');
-
           final ids =
               items.map((element) => element.tokenInfo.tokenId).toList();
           final balance = items[oldIndex];
