@@ -53,7 +53,7 @@ class DataDecodedCard extends HookConsumerWidget {
             style: styles.textStyleAddressPrimary,
           ),
           const SizedBox(height: 16),
-          if (function != null) ...[
+          if (function != null && inputs.isNotEmpty) ...[
             Text(
               'Inputs'.toUpperCase(),
               style: TextStyle(
