@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/core.dart';
+import 'package:vite/utils.dart';
 
 import '../app_providers.dart';
 import '../settings_drawer/account_widget.dart';
@@ -81,9 +82,10 @@ class ViteConnectPage extends HookConsumerWidget {
         },
         signMessage: (request) {
           try {
+            final message = request.params?.first['message'];
             final signRequest = VCSignRequest(
               id: request.id,
-              data: request.params?.first,
+              data: base64ToBytes(message),
             );
             Sheets.showAppHeightEightSheet(
               context: context,
