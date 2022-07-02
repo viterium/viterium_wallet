@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_displaymode/flutter_displaymode.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
 import 'app_localization.dart';
@@ -19,14 +22,27 @@ import 'settings/available_language.dart';
 import 'supported_locales.dart';
 import 'themes/themes.dart';
 import 'util/routes.dart';
+import 'util/ui_util.dart';
 
-class App extends ConsumerWidget {
+class App extends HookConsumerWidget {
   const App({Key? key}) : super(key: key);
 
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final language = ref.watch(languageProvider);
     final styles = ref.watch(stylesProvider);
+
+    useEffect(() {
+      if (kIsWeb) return null;
+      Future.delayed(Duration.zero, () {
+        try {
+          FlutterDisplayMode.setHighRefreshRate();
+        } catch (e) {
+          UIUtil.showSnackbar(e.toString(), context);
+        }
+      });
+      return null;
+    }, const []);
 
     ref.listen<BaseTheme>(themeProvider, (previous, theme) {
       SystemChrome.setSystemUIOverlayStyle(theme.statusBar);
