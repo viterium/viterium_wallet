@@ -616,7 +616,7 @@ class AppLocalization {
 
   String get logoutDialogContent {
     return Intl.message(
-      'Are you sure you want to logout form this wallet?',
+      'Are you sure you want to logout from this wallet?',
       desc: 'logout_dialog_content',
       name: 'logoutDialogContent',
     );
