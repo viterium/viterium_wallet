@@ -21,6 +21,16 @@ final _mnemonicIsValidProvider = Provider.autoDispose((ref) {
   return mnemonic.endsWith(' ') && ViteUtil.isValidMnemonic(mnemonic.trim());
 });
 
+final _showInvalidChecksumProvider = Provider.autoDispose((ref) {
+  final mnemonic = ref.watch(_mnemonicProvider).trim();
+  final isValid = ref.watch(_mnemonicIsValidProvider);
+  final hasValidChecksum = ViteUtil.isValidMnemonic(
+    mnemonic,
+    verifyChecksum: true,
+  );
+  return isValid && !hasValidChecksum;
+});
+
 class IntroImportSeed extends HookConsumerWidget {
   const IntroImportSeed({Key? key}) : super(key: key);
 
@@ -104,15 +114,16 @@ class IntroImportSeed extends HookConsumerWidget {
       final mnemonic = ViteUtil.mnemonicFromViteAppLink(data);
       if (mnemonic != null) {
         walletName.value = ViteUtil.walletNameFromViteAppLink(data);
-        ref.read(_mnemonicProvider.notifier).state = mnemonic + ' ';
+        ref.read(_mnemonicProvider.notifier).state = mnemonic.trim() + ' ';
         updateFocus(mnemonic.length + 1);
         ref.read(wordPrefixProvider.notifier).state = '';
         return;
       }
 
-      if (ViteUtil.isValidMnemonic(data)) {
-        ref.read(_mnemonicProvider.notifier).state = data + ' ';
-        updateFocus(data.length + 1);
+      final mData = data.toLowerCase();
+      if (ViteUtil.isValidMnemonic(mData)) {
+        ref.read(_mnemonicProvider.notifier).state = mData + ' ';
+        updateFocus(mData.length + 1);
         ref.read(wordPrefixProvider.notifier).update((state) => '');
         return;
       }
@@ -133,7 +144,7 @@ class IntroImportSeed extends HookConsumerWidget {
         UIUtil.showSnackbar('Clipboard is empty', context);
         return;
       }
-      final text = data.text!.trim();
+      final text = data.text!.trim().toLowerCase();
       if (ViteUtil.isValidMnemonic(text)) {
         final mnemonic = ref.read(_mnemonicProvider.notifier);
         mnemonic.state = text + ' ';
@@ -238,6 +249,23 @@ class IntroImportSeed extends HookConsumerWidget {
                                 .copyWith(fontWeight: FontWeight.w400),
                       ),
                     ),
+                    Consumer(builder: (context, ref, _) {
+                      final showInvalidChecksum =
+                          ref.watch(_showInvalidChecksumProvider);
+                      final invalidChecksumText = showInvalidChecksum
+                          ? 'Please check that your Secret Phrase\n is entered correctly!'
+                          : '';
+                      return Container(
+                        alignment: const AlignmentDirectional(0, 0),
+                        margin: const EdgeInsets.only(top: 6),
+                        child: Text(
+                          invalidChecksumText,
+                          style: styles.textStyleParagraphThinPrimary
+                              .copyWith(color: theme.success),
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }),
                   ]),
                 ],
               ),

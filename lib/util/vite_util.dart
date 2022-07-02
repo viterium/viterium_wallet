@@ -45,7 +45,7 @@ class ViteUtil {
   static bool isEncryptedHex(String hex) {
     try {
       final salted = bytesUtf8ToString(hexToBytes(hex.substring(0, 16)));
-      return salted == "Salted__";
+      return salted == 'Salted__';
     } catch (e) {
       return false;
     }
@@ -77,7 +77,8 @@ class ViteUtil {
         return null;
       }
       final entropy = uri.queryParameters['entropy'];
-      if (entropy == null) {
+      final lang = uri.queryParameters['language'] ?? 'en';
+      if (entropy == null || lang != 'en') {
         return null;
       }
       final mnemonic = mnemonicWordsFromEntropyHex(entropy).join(' ');
@@ -104,8 +105,11 @@ class ViteUtil {
     return vite.isValidMnemonicWord(word);
   }
 
-  static bool isValidMnemonic(String mnemonic) {
-    return vite.isValidMnemonic(mnemonic, verifyChecksum: false);
+  static bool isValidMnemonic(
+    String mnemonic, {
+    bool verifyChecksum = false,
+  }) {
+    return vite.isValidMnemonic(mnemonic, verifyChecksum: verifyChecksum);
   }
 
   static List<String> mnemonicWordsFromEntropyHex(String entropyHex) {
@@ -122,6 +126,10 @@ class ViteUtil {
 
   static String decryptHex(String value, String password) {
     return bytesToHex(decrypt(hexToBytes(value), password));
+  }
+
+  static String decryptToText(String value, String password) {
+    return bytesUtf8ToString(decrypt(hexToBytes(value), password));
   }
 
   static String? tryDecryptHex(String? value, String password) {
@@ -146,8 +154,9 @@ class ViteUtil {
     return bytesToHex(encrypt(stringToBytesUtf8(value), password));
   }
 
-  static String decryptToText(String value, String password) {
-    return bytesUtf8ToString(decrypt(hexToBytes(value), password));
+  static String? tryEncryptText(String? value, String password) {
+    if (value == null) return null;
+    return encryptText(value, password);
   }
 
   static Uint8List signData(Uint8List data, Uint8List privKey) {

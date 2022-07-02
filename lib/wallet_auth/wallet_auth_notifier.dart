@@ -7,8 +7,6 @@ import '../util/vite_util.dart';
 import '../wallet/wallet_vault.dart';
 import 'wallet_auth_types.dart';
 
-
-
 class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   final WalletVault walletVault;
 
@@ -23,16 +21,6 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   bool get walletLocked => state.isLocked;
   bool get walletEncrypted => state.isEncrypted;
 
-  bool _seedIsEncrypted(String seed) {
-    try {
-      final salted = bytesUtf8ToString(hexToBytes(seed.substring(0, 16)));
-      if (salted == "Salted__") {
-        return true;
-      }
-    } catch (e) {}
-    return false;
-  }
-
   Future<String> _getSeed() async {
     if (state.isLocked) {
       throw Exception('Wallet is locked');
@@ -40,11 +28,9 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
 
     if (!state.isEncrypted) {
       final seed = await walletVault.getSeed();
-      if (seed == null) {
-        throw Exception('Seed is missing from vault');
-      }
-      if (_seedIsEncrypted(seed)) {
-        throw Exception('Seed is encrypted');
+
+      if (ViteUtil.isEncryptedHex(seed)) {
+        throw Exception('Seed is password protected');
       }
       return seed;
     }
@@ -79,23 +65,11 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
     return signature;
   }
 
-  Future<bool> hasMnemonic() => walletVault.hasEntropy();
+  Future<bool> hasMnemonic() => walletVault.hasMnemonic();
 
   Future<List<String>> getMnemonic({String? password}) async {
-    final entropy = await walletVault.getEntropy();
-    if (entropy == null) {
-      throw Exception('Mnemonic is missing from vault');
-    }
-
-    if (!state.isEncrypted) {
-      return ViteUtil.mnemonicWordsFromEntropyHex(entropy);
-    }
-
-    if (password == null) {
-      throw Exception('Mnemonic is encrypted');
-    }
-    final decrypted = ViteUtil.decryptHex(entropy, password);
-    return ViteUtil.mnemonicWordsFromEntropyHex(decrypted);
+    final mnemonic = await walletVault.getMnemonic(password: password);
+    return mnemonic.split(' ');
   }
 
   void lock() {
@@ -106,31 +80,26 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   }
 
   Future<bool> unlock({String? password}) async {
-    if (password != null) {
+    if (state.isEncrypted) {
+      if (password == null) {
+        return false;
+      }
       try {
         await unlockWithPassword(password);
+        return true;
       } catch (_) {
         return false;
       }
-      return true;
     }
     state = state.copyWith(isLocked: false);
     return true;
   }
 
   Future<void> unlockWithPassword(String password) async {
-    final encryptedSeed = await walletVault.getSeed();
-    if (encryptedSeed == null) {
-      throw Exception('Seed unavailable');
-    }
+    final seed = await walletVault.getSeed(password: password);
 
-    if (!_seedIsEncrypted(encryptedSeed)) {
-      throw Exception('Seed unencrypted');
-    }
-
-    final decryptedSeed = ViteUtil.decryptHex(encryptedSeed, password);
     final sessionKey = await walletVault.getSessionKey();
-    final encryptedSecret = ViteUtil.encryptHex(decryptedSeed, sessionKey);
+    final encryptedSecret = ViteUtil.encryptHex(seed, sessionKey);
 
     state = state.copyWith(
       encryptedSecret: encryptedSecret,
@@ -140,28 +109,17 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   }
 
   Future<void> setPassword(String password) async {
-    final seed = await walletVault.getSeed();
-    if (seed == null) {
-      throw Exception('Seed is missing from vault');
-    }
-    if (_seedIsEncrypted(seed)) {
-      throw Exception('Seed is already encrypted');
-    }
-    if (!ViteUtil.isValidSeed(seed)) {
-      throw Exception('Seed invalid');
-    }
-
-    final entropy = await walletVault.getEntropy();
-
     try {
-      await walletVault.setSeed(
-        seed,
-        entropy: entropy,
-        password: password,
-      );
-
+      final seed = await walletVault.getSeed();
+      final mnemonic = await walletVault.getMnemonic();
       final sessionKey = await walletVault.getSessionKey();
       final encryptedSecret = ViteUtil.encryptHex(seed, sessionKey);
+
+      await walletVault.setSeed(
+        seed,
+        mnemonic: mnemonic,
+        password: password,
+      );
 
       state = state.copyWith(
         encryptedSecret: encryptedSecret,
@@ -173,26 +131,18 @@ class WalletAuthNotifier extends StateNotifier<WalletAuth> {
   }
 
   Future<void> removePassword(String password) async {
-    final encryptedSeed = await walletVault.getSeed();
-    if (encryptedSeed == null) {
-      throw Exception('Seed is missing from vault');
-    }
-
-    final seed = ViteUtil.decryptHex(encryptedSeed, password);
-    if (!ViteUtil.isValidSeed(seed)) {
-      throw Exception('Incorrect password');
-    }
-
-    final encryptedEntropy = await walletVault.getEntropy();
-    final entropy = ViteUtil.tryDecryptHex(encryptedEntropy, password);
     try {
-      await walletVault.setSeed(seed, entropy: entropy);
+      final seed = await walletVault.getSeed(password: password);
+      final mnemonic = await walletVault.getMnemonic(password: password);
+
+      await walletVault.setSeed(seed, mnemonic: mnemonic);
+
       state = state.copyWith(
         encryptedSecret: null,
         isEncrypted: false,
       );
-    } catch (_) {
-      walletVault.setSeed(encryptedSeed, entropy: encryptedEntropy);
+    } catch (e) {
+      throw Exception('Failed to remove password');
     }
   }
 }

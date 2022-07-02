@@ -71,11 +71,11 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
   Future<WalletInfo> setupWallet(WalletData walletData) async {
     final wallet = generateWalletInfo(walletData);
 
-    // set seed and entropy to vault
+    // set seed and mnemonic to vault
     final walletVault = WalletVault(wallet.wid, repository.vault);
     await walletVault.setSeed(
       walletData.seed,
-      entropy: walletData.entropy,
+      mnemonic: walletData.mnemonic,
       password: walletData.password,
     );
 
@@ -88,7 +88,7 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
       throw Exception('Can not remove active wallet');
     }
 
-    // remove seed and entropy from vault
+    // remove seed and mnemonic from vault
     final walletVault = WalletVault(wallet.wid, repository.vault);
     await walletVault.delete();
 

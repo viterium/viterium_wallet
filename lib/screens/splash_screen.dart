@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vite/utils.dart';
 
 import '../app_providers.dart';
 import '../intro/intro_providers.dart';
 import '../util/ui_util.dart';
-import '../util/vite_util.dart';
 import '../wallet/wallet_types.dart';
 import '../widgets/notice_dialog.dart';
 
@@ -54,31 +52,11 @@ class SplashScreen extends HookConsumerWidget {
           if (seed != null) {
             try {
               final mnemonic = await vault.get(mnemonicKey);
-
-              String? entropy = null;
-              if (mnemonic != null) {
-                entropy = mnemonicToEntropyHex(mnemonic);
-                if (ViteUtil.isEncryptedHex(seed)) {
-                  final authUtil = ref.read(authUtilProvider);
-                  final auth = await authUtil.authenticateWithPassword(context,
-                      (password) async {
-                    final decrypted = ViteUtil.decryptHex(seed, password);
-                    final isValid = ViteUtil.isValidSeed(decrypted);
-                    if (isValid && entropy != null) {
-                      entropy = ViteUtil.encryptHex(entropy!, password);
-                    }
-                    return isValid;
-                  });
-                  if (auth != true) {
-                    entropy = null;
-                  }
-                }
-              }
               final notifier = ref.read(walletBundleProvider.notifier);
               final data = WalletData(
-                name: 'Viterium Alpha Wallet ',
+                name: 'Viterium Wallet ',
                 seed: seed,
-                entropy: entropy,
+                mnemonic: mnemonic,
               );
               await notifier.setupWallet(data);
               await vault.delete(seedKey);
@@ -87,8 +65,8 @@ class SplashScreen extends HookConsumerWidget {
               await vault.deletePin();
             }
           } else {
-            // no alpha seed, remove pin
-            await vault.deletePin();
+            // no alpha seed so remove pin and any vault data
+            await vault.deleteAll();
           }
         }
 
@@ -145,28 +123,6 @@ class SplashScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: theme.backgroundDark,
-      // body: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //     children: [
-      //       FractionallySizedBox(
-      //         widthFactor: 0.4,
-      //         child: FittedBox(
-      //           fit: BoxFit.fitWidth,
-      //           child: ImageIcon(
-      //             AssetImage('assets/viterium.png'),
-      //             color: theme.primary,
-      //           ),
-      //         ),
-      //       ),
-      //       Text(
-      //         'Loading...',
-      //         style: styles.textStyleSettingItemHeader.copyWith(fontSize: 18),
-      //       ),
-      //       const SizedBox(),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

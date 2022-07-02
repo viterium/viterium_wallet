@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/core_providers.dart';
+import '../util/ui_util.dart';
 import '../widgets/buttons.dart';
 
 class SetupFailedPage extends ConsumerWidget {
-  final Function onTryAgain;
+  final Object? error;
   final Function onRestart;
 
   const SetupFailedPage({
     Key? key,
-    required this.onTryAgain,
+    required this.error,
     required this.onRestart,
   }) : super(key: key);
 
@@ -21,7 +23,7 @@ class SetupFailedPage extends ConsumerWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: theme.background,
+      backgroundColor: theme.backgroundDark,
       body: SafeArea(
         minimum: EdgeInsets.only(
           bottom: MediaQuery.of(context).size.height * 0.035,
@@ -30,7 +32,7 @@ class SetupFailedPage extends ConsumerWidget {
           children: [
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FractionallySizedBox(
                     widthFactor: 0.4,
@@ -43,7 +45,7 @@ class SetupFailedPage extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    'Something went wrong.',
+                    'Something went wrong',
                     style: styles.textStyleSettingItemHeaderLarge,
                   ),
                 ],
@@ -54,12 +56,18 @@ class SetupFailedPage extends ConsumerWidget {
               child: Column(
                 children: [
                   PrimaryButton(
-                    title: 'Try Again',
-                    onPressed: onTryAgain,
+                    title: 'Copy Error',
+                    onPressed: () async {
+                      await Clipboard.setData(
+                        ClipboardData(text: error.toString()),
+                      );
+                      UIUtil.showSnackbar(
+                          'Error message copied to clipboard.', context);
+                    },
                   ),
                   const SizedBox(height: 16),
                   PrimaryOutlineButton(
-                    title: 'Restart setup',
+                    title: 'Restart Setup',
                     onPressed: onRestart,
                   ),
                 ],

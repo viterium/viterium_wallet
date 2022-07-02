@@ -526,12 +526,12 @@ class _$WalletDataTearOff {
   _WalletData call(
       {required String name,
       required String seed,
-      String? entropy,
+      String? mnemonic,
       String? password}) {
     return _WalletData(
       name: name,
       seed: seed,
-      entropy: entropy,
+      mnemonic: mnemonic,
       password: password,
     );
   }
@@ -544,7 +544,7 @@ const $WalletData = _$WalletDataTearOff();
 mixin _$WalletData {
   String get name => throw _privateConstructorUsedError;
   String get seed => throw _privateConstructorUsedError;
-  String? get entropy => throw _privateConstructorUsedError;
+  String? get mnemonic => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -557,7 +557,7 @@ abstract class $WalletDataCopyWith<$Res> {
   factory $WalletDataCopyWith(
           WalletData value, $Res Function(WalletData) then) =
       _$WalletDataCopyWithImpl<$Res>;
-  $Res call({String name, String seed, String? entropy, String? password});
+  $Res call({String name, String seed, String? mnemonic, String? password});
 }
 
 /// @nodoc
@@ -572,7 +572,7 @@ class _$WalletDataCopyWithImpl<$Res> implements $WalletDataCopyWith<$Res> {
   $Res call({
     Object? name = freezed,
     Object? seed = freezed,
-    Object? entropy = freezed,
+    Object? mnemonic = freezed,
     Object? password = freezed,
   }) {
     return _then(_value.copyWith(
@@ -584,9 +584,9 @@ class _$WalletDataCopyWithImpl<$Res> implements $WalletDataCopyWith<$Res> {
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      entropy: entropy == freezed
-          ? _value.entropy
-          : entropy // ignore: cast_nullable_to_non_nullable
+      mnemonic: mnemonic == freezed
+          ? _value.mnemonic
+          : mnemonic // ignore: cast_nullable_to_non_nullable
               as String?,
       password: password == freezed
           ? _value.password
@@ -602,7 +602,7 @@ abstract class _$WalletDataCopyWith<$Res> implements $WalletDataCopyWith<$Res> {
           _WalletData value, $Res Function(_WalletData) then) =
       __$WalletDataCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String seed, String? entropy, String? password});
+  $Res call({String name, String seed, String? mnemonic, String? password});
 }
 
 /// @nodoc
@@ -619,7 +619,7 @@ class __$WalletDataCopyWithImpl<$Res> extends _$WalletDataCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? seed = freezed,
-    Object? entropy = freezed,
+    Object? mnemonic = freezed,
     Object? password = freezed,
   }) {
     return _then(_WalletData(
@@ -631,9 +631,9 @@ class __$WalletDataCopyWithImpl<$Res> extends _$WalletDataCopyWithImpl<$Res>
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as String,
-      entropy: entropy == freezed
-          ? _value.entropy
-          : entropy // ignore: cast_nullable_to_non_nullable
+      mnemonic: mnemonic == freezed
+          ? _value.mnemonic
+          : mnemonic // ignore: cast_nullable_to_non_nullable
               as String?,
       password: password == freezed
           ? _value.password
@@ -647,20 +647,20 @@ class __$WalletDataCopyWithImpl<$Res> extends _$WalletDataCopyWithImpl<$Res>
 
 class _$_WalletData implements _WalletData {
   const _$_WalletData(
-      {required this.name, required this.seed, this.entropy, this.password});
+      {required this.name, required this.seed, this.mnemonic, this.password});
 
   @override
   final String name;
   @override
   final String seed;
   @override
-  final String? entropy;
+  final String? mnemonic;
   @override
   final String? password;
 
   @override
   String toString() {
-    return 'WalletData(name: $name, seed: $seed, entropy: $entropy, password: $password)';
+    return 'WalletData(name: $name, seed: $seed, mnemonic: $mnemonic, password: $password)';
   }
 
   @override
@@ -670,7 +670,7 @@ class _$_WalletData implements _WalletData {
             other is _WalletData &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality().equals(other.entropy, entropy) &&
+            const DeepCollectionEquality().equals(other.mnemonic, mnemonic) &&
             const DeepCollectionEquality().equals(other.password, password));
   }
 
@@ -679,7 +679,7 @@ class _$_WalletData implements _WalletData {
       runtimeType,
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(entropy),
+      const DeepCollectionEquality().hash(mnemonic),
       const DeepCollectionEquality().hash(password));
 
   @JsonKey(ignore: true)
@@ -692,7 +692,7 @@ abstract class _WalletData implements WalletData {
   const factory _WalletData(
       {required String name,
       required String seed,
-      String? entropy,
+      String? mnemonic,
       String? password}) = _$_WalletData;
 
   @override
@@ -700,7 +700,7 @@ abstract class _WalletData implements WalletData {
   @override
   String get seed;
   @override
-  String? get entropy;
+  String? get mnemonic;
   @override
   String? get password;
   @override

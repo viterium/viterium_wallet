@@ -37,7 +37,7 @@ class WalletData with _$WalletData {
   const factory WalletData({
     required String name,
     required String seed,
-    String? entropy,
+    String? mnemonic,
     String? password,
   }) = _WalletData;
 }

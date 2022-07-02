@@ -17,19 +17,16 @@ class IntroScreen extends HookConsumerWidget {
 
     Future<bool> checkPin() async {
       final vault = ref.read(vaultProvider);
-      final expectedPin = await vault.getPin();
+      final pinIsSet = await vault.pinIsSet;
 
-      if (expectedPin != null) {
-        final pinOk = await Navigator.of(context).push(
-          MaterialPageRoute<bool>(
-            builder: (context) => PinScreen(
-              PinOverlayType.ENTER_PIN,
-              expectedPin: expectedPin,
-              description: 'Enter PIN to Add Wallet',
-            ),
-          ),
+      if (pinIsSet) {
+        final authUtil = ref.read(authUtilProvider);
+        final auth = authUtil.authenticate(
+          context,
+          'Enter PIN to Add Wallet',
+          'Authenticate to Add Wallet',
         );
-        return pinOk ?? false;
+        return auth;
       }
 
       final pin = await Navigator.of(context).push(

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../intro/intro_providers.dart';
-import '../util/ui_util.dart';
 import '../wallet/wallet_types.dart';
 import 'setup_failed_page.dart';
 
@@ -18,6 +16,7 @@ class SetupWalletScreen extends HookConsumerWidget {
     final styles = ref.watch(stylesProvider);
 
     final setupFailed = useState(false);
+    final setupError = useRef<Object?>(null);
 
     Future<void> setupWallet() async {
       try {
@@ -28,15 +27,11 @@ class SetupWalletScreen extends HookConsumerWidget {
         if (seed == null) {
           throw Exception('Missing seed');
         }
-        String? entropy = null;
-        final mnemonic = introData.mnemonic;
-        if (mnemonic != null) {
-          entropy = mnemonicToEntropyHex(mnemonic);
-        }
+
         final walletData = WalletData(
           name: introData.name ?? 'New Wallet',
           seed: seed,
-          entropy: entropy,
+          mnemonic: introData.mnemonic,
           password: introData.password,
         );
 
@@ -54,8 +49,8 @@ class SetupWalletScreen extends HookConsumerWidget {
         final log = ref.read(loggerProvider);
         log.e('Failed to create wallet', e, st);
 
-        UIUtil.showSnackbar('Something went wrong. Please try again', context);
         setupFailed.value = true;
+        setupError.value = e;
       }
     }
 
@@ -70,32 +65,44 @@ class SetupWalletScreen extends HookConsumerWidget {
 
     if (setupFailed.value) {
       return SetupFailedPage(
-        onTryAgain: setupWallet,
+        error: setupError.value,
         onRestart: restartSetup,
       );
     }
 
     return Scaffold(
-      backgroundColor: theme.background,
-      body: Center(
+      backgroundColor: theme.backgroundDark,
+      body: SafeArea(
+        minimum: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height * 0.035,
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            FractionallySizedBox(
-              widthFactor: 0.4,
-              child: FittedBox(
-                fit: BoxFit.fitWidth,
-                child: ImageIcon(
-                  AssetImage('assets/viterium.png'),
-                  color: theme.primary,
-                ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FractionallySizedBox(
+                    widthFactor: 0.4,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: ImageIcon(
+                        AssetImage('assets/viterium.png'),
+                        color: theme.primary,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Setting up wallet',
+                    style: styles.textStyleSettingItemHeaderLarge,
+                  ),
+                ],
               ),
             ),
-            Text(
-              'Setting up wallet',
-              style: styles.textStyleSettingItemHeaderLarge,
-            ),
-            const SizedBox(),
+            const SizedBox(
+              width: double.infinity,
+              height: 16 + 2 * 55,
+            )
           ],
         ),
       ),
