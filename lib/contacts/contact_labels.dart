@@ -58,5 +58,9 @@ final labeledAddresses = Map.fromEntries(
       name: '#VitePunks',
       address: 'vite_fd06f4ef9a32fcabcdcae1857c1cab18b496ef1eafd1b4edc1',
     ),
+    Contact(
+      name: '#51Aliens',
+      address: 'vite_378cb82adabb8608836883bd4d3720df7a5188b4c6bd0e7b75',
+    ),
   ].map((e) => MapEntry(e.address, e)),
 );

@@ -1,7 +1,8 @@
 import 'package:vite/contract.dart';
-import 'package:viterium_wallet/contracts/dex_fund.dart';
-import 'package:viterium_wallet/contracts/dex_trade.dart';
 
+import 'dex_fund.dart';
+import 'dex_trade.dart';
+import 's1_aliens.dart';
 import 'vitc_stake_v2.dart';
 import 'vitc_swap.dart';
 import 'vite_punks.dart';
@@ -18,5 +19,6 @@ final knownContracts = Map.fromEntries(
     vitcStakeV2Contract,
     vivaStakingV4Contract,
     vitePunksContract,
+    s1AliensContract,
   ].map((e) => MapEntry(e.contractAddress, e)),
 );
