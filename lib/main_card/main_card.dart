@@ -8,12 +8,13 @@ import 'package:vite/vite.dart';
 import '../app_icons.dart';
 import '../app_providers.dart';
 import '../core/vite_uri.dart';
-import '../send_sheet/balance_text_widget.dart';
+import '../send_sheet/send_confirm_sheet.dart';
 import '../send_sheet/send_sheet.dart';
 import '../tokens/token_info_provider.dart';
-import '../util/numberutil.dart';
+import '../transactions/send_tx.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
+import '../util/vite_util.dart';
 import '../viteconnect/peer_widget.dart';
 import '../viteconnect/viteconnect_providers.dart';
 import '../viteconnect/viteconnect_types.dart';
@@ -106,6 +107,66 @@ class MainCard extends ConsumerWidget {
       );
     });
 
+    Future<void> scanQrCode() async {
+      final qrCode = await UserDataUtil.scanQrCode(context);
+      final data = qrCode?.code;
+      if (data == null) {
+        return;
+      }
+
+      // Check for ViteConnect URL
+      if (data.startsWith('vc:')) {
+        final viteConnect = ref.read(viteConnectProvider.notifier);
+        viteConnect.connect(uri: data);
+        return;
+      }
+
+      // Check for ViteUri
+      final viteUri = ViteUri.tryParse(data);
+      if (viteUri == null) {
+        // Check for ViteAddress
+        final address = ViteUtil.findAddressInString(data);
+        if (address == null) {
+          UIUtil.showSnackbar('Failed to parse qr code', context);
+          return;
+        }
+        // Show SendSheet with address only
+        Sheets.showAppHeightNineSheet(
+          context: context,
+          theme: theme,
+          widget: SendSheet(address: address),
+        );
+        return;
+      }
+
+      final tokenId = viteUri.token.tokenId;
+      final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
+      final amount = Amount.value(viteUri.amount, tokenInfo: tokenInfo);
+
+      Amount? fee;
+      if (viteUri.fee != null) {
+        fee = Amount.value(viteUri.fee!, tokenInfo: TokenInfo.vite);
+      }
+
+      // final selectedToken = ref.read(selectedTokenProvider.notifier);
+      // selectedToken.update((_) => tokenInfo);
+
+      final tx = SendTx.compose(
+        address: account.address,
+        toAddress: viteUri.address,
+        amount: amount.raw,
+        tokenInfo: tokenInfo,
+        fee: fee?.raw,
+        data: viteUri.data,
+      );
+
+      Sheets.showAppHeightNineSheet(
+        context: context,
+        theme: theme,
+        widget: SendConfirmSheet(tx: tx),
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         final notifier = ref.read(mainCardProvider.notifier);
@@ -161,7 +222,7 @@ class MainCard extends ConsumerWidget {
                     }
                     return AppIconButton(
                       icon: Icons.qr_code_scanner,
-                      onPressed: () => qrScannerAction(context, ref.read),
+                      onPressed: scanQrCode,
                     );
                   }),
                 ],
@@ -182,43 +243,5 @@ class MainCard extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  Future<void> qrScannerAction(BuildContext context, Reader read) async {
-    final result = await UserDataUtil.scanQrCode(context);
-    final data = result?.code;
-    if (data != null) {
-      if (data.startsWith('vc:')) {
-        final viteConnect = read(viteConnectProvider.notifier);
-        viteConnect.connect(uri: data);
-        return;
-      }
-      final viteUri = ViteUri.tryParse(data);
-      if (viteUri == null) {
-        UIUtil.showSnackbar('Failed to parse qr code', context);
-        return;
-      }
-      final tokenId = viteUri.token?.tokenId ?? viteTokenId;
-      final tokenInfo = await read(tokenInfoProvider(tokenId).future);
-      BigInt? sendAmount;
-      if (viteUri.amount != null) {
-        sendAmount = NumberUtil.getRawFromDecimal(
-          viteUri.amount!,
-          tokenInfo.decimals,
-        );
-      }
-      final selectedToken = read(selectedTokenProvider.notifier);
-      selectedToken.update((_) => tokenInfo);
-      final theme = read(themeProvider);
-      Sheets.showAppHeightNineSheet(
-        context: context,
-        theme: theme,
-        widget: SendSheet(
-          address: viteUri.viteAddress,
-          amountRaw: sendAmount,
-          data: viteUri.data,
-        ),
-      );
-    }
   }
 }
