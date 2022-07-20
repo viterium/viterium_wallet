@@ -14,6 +14,11 @@ final tokenInfoProvider =
   if (tokenId == viteTokenId) {
     return TokenInfo.vite;
   }
+
+  final token = Token.tryParse(tokenId);
+  if (token == null) {
+    return TokenInfo.zero;
+  }
   final client = ref.watch(viteClientProvider);
   final tokenInfoBox = ref.watch(tokenInfoBoxProvider);
 
@@ -23,9 +28,11 @@ final tokenInfoProvider =
     return cachedTokenInfo;
   }
 
-  final tokenInfo = await client.getTokenInfo(tokenId);
-
-  tokenInfoBox.set(tokenId, tokenInfo);
-
-  return tokenInfo;
+  try {
+    final tokenInfo = await client.getTokenInfo(tokenId);
+    tokenInfoBox.set(tokenId, tokenInfo);
+    return tokenInfo;
+  } catch (_) {
+    return TokenInfo.unknownToken(token);
+  }
 });
