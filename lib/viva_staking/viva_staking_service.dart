@@ -47,14 +47,12 @@ class VivaStakingService {
     required BigInt rawValue,
   }) async {
     final function = 'withdraw';
-    final abi = ContractAbi.fromJson(vivaStakingContract.abi);
+    final abi = vivaStakingContract.contractAbi;
     final data = abi.encodeFunction(function, [poolId, rawValue]);
     final accountService = read(accountServiceProvider);
-    final hash = await accountService.sendTransaction(
+    final hash = await accountService.callContract(
       address: address,
-      toAddress: Address.parse(vivaStakingContract.contractAddress),
-      token: Token.parse(viteTokenId),
-      rawAmount: BigInt.zero,
+      contractAddress: vivaStakingContract.address,
       data: data,
     );
     return hash;
@@ -66,14 +64,14 @@ class VivaStakingService {
     required Amount amount,
   }) async {
     final function = 'deposit';
-    final abi = ContractAbi.fromJson(vivaStakingContract.abi);
+    final abi = vivaStakingContract.contractAbi;
     final data = abi.encodeFunction(function, [poolId]);
     final accountService = read(accountServiceProvider);
-    final hash = await accountService.sendTransaction(
+    final hash = await accountService.callContract(
       address: address,
-      toAddress: Address.parse(vivaStakingContract.contractAddress),
+      contractAddress: vivaStakingContract.address,
       token: amount.token,
-      rawAmount: amount.raw,
+      amount: amount.raw,
       data: data,
     );
     return hash;

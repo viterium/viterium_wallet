@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/core.dart';
@@ -111,10 +110,14 @@ class VivaStakingSheet extends ConsumerWidget {
                           final totalEarned = Amount.raw(totalEarnedRaw,
                               tokenInfo: rewardTokenInfo);
 
-                          var rewards = Amount(
-                              value: Decimal.zero, tokenInfo: rewardTokenInfo);
-                          final staked = Amount.raw(userInfo.stakingBalance,
-                              tokenInfo: stakingTokenInfo);
+                          var rewards = Amount.raw(
+                            BigInt.zero,
+                            tokenInfo: rewardTokenInfo,
+                          );
+                          final staked = Amount.raw(
+                            userInfo.stakingBalance,
+                            tokenInfo: stakingTokenInfo,
+                          );
                           final rewardFactor = BigInt.from(10).pow(36);
 
                           if (userInfo.stakingBalance > BigInt.zero &&
