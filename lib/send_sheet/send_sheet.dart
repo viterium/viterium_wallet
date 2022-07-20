@@ -10,16 +10,17 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../contacts/contact.dart';
 import '../core/vite_uri.dart';
 import '../tokens/token_icon_widget.dart';
 import '../tokens/token_info_provider.dart';
 import '../tokens/token_select_sheet.dart';
+import '../transactions/send_tx.dart';
 import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
+import '../util/vite_util.dart';
 import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
@@ -29,6 +30,7 @@ import '../widgets/sheet_handle.dart';
 import '../widgets/sheet_util.dart';
 import '../widgets/tap_outside_unfocus.dart';
 import 'balance_text_widget.dart';
+import 'fee_widget.dart';
 import 'send_confirm_sheet.dart';
 import 'send_data_widget.dart';
 
@@ -38,6 +40,7 @@ class SendSheet extends ConsumerStatefulWidget {
   final Contact? contact;
   final String? address;
   final BigInt? amountRaw;
+  final BigInt? feeRaw;
   final Uint8List? data;
 
   const SendSheet({
@@ -45,6 +48,7 @@ class SendSheet extends ConsumerStatefulWidget {
     this.contact,
     this.address,
     this.amountRaw,
+    this.feeRaw,
     this.data,
   }) : super(key: key);
 
@@ -69,7 +73,6 @@ class _SendSheetState extends ConsumerState<SendSheet> {
   String _amountValidationText = '';
   String _addressValidationText = '';
 
-  //BigInt? quickSendAmount;
   late List<Contact> _contacts;
 
   // Used to replace address textfield with colorized TextSpan
@@ -84,7 +87,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
   bool _memoQrButtonVisible = true;
 
   late BigInt? amountRaw = widget.amountRaw;
-
+  late BigInt? feeRaw = widget.feeRaw;
   late Uint8List? _data = widget.data;
 
   bool get hasData => _data != null;
@@ -160,7 +163,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         setState(() {
           _addressHint = null;
           _contacts = [];
-          if (ViteUri.tryParse(_addressController.text) != null) {
+          if (Address.tryParse(_addressController.text) != null) {
             _addressValidAndUnfocused = true;
           }
         });
@@ -201,6 +204,81 @@ class _SendSheetState extends ConsumerState<SendSheet> {
     final styles = ref.watch(stylesProvider);
 
     final account = ref.watch(selectedAccountProvider);
+
+    Future<void> scanQrCode() async {
+      FocusManager.instance.primaryFocus?.unfocus();
+
+      final qrCode = await UserDataUtil.scanQrCode(context);
+      final qrData = qrCode?.code;
+      if (qrData == null) {
+        return;
+      }
+
+      // Check for ViteUri
+      final viteUri = ViteUri.tryParse(qrData);
+      String? viteAddress = viteUri?.viteAddress;
+      if (viteUri == null) {
+        // Check for ViteAddress
+        viteAddress = ViteUtil.findAddressInString(qrData);
+      }
+      if (viteAddress == null) {
+        UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
+        return;
+      }
+      // See if this address belongs to a contact
+      Contact? contact =
+          ref.read(contactsProvider).getContactWithAddress(viteAddress);
+
+      _addressValidationText = '';
+      _pasteButtonVisible = false;
+      _contactButtonVisible = false;
+
+      if (contact == null) {
+        // Not a contact
+        _isContact = false;
+        _sendAddressStyle = AddressStyle.TEXT90;
+        _addressController.text = viteAddress;
+        _addressValidAndUnfocused = true;
+      } else {
+        // Is a contact
+        _isContact = true;
+        _sendAddressStyle = AddressStyle.PRIMARY;
+        _addressController.text = contact.name;
+        _addressValidAndUnfocused = false;
+      }
+
+      if (viteUri != null) {
+        final amount = viteUri.amount;
+        final tokenId = viteUri.token.tokenId;
+        final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
+
+        _data = viteUri.data;
+        // Reset Memo field
+        _memoController.text = '';
+
+        // update selected token
+        final selectedToken = ref.read(selectedTokenProvider.notifier);
+        selectedToken.state = tokenInfo;
+
+        // set amount
+        final amountBigInt = NumberUtil.getRawFromDecimal(
+          amount,
+          tokenInfo.decimals,
+        );
+
+        amountRaw = amountBigInt;
+        _amountController.text = NumberUtil.approxAmountRaw(
+          amountBigInt,
+          tokenInfo.decimals,
+        );
+
+        if (viteUri.fee != null) {
+          feeRaw = Amount.value(viteUri.fee!, tokenInfo: TokenInfo.vite).raw;
+        }
+      }
+
+      setState(() {});
+    }
 
     return SafeArea(
       minimum: EdgeInsets.only(
@@ -367,7 +445,14 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                                 ),
                               ),
                               // ******* Enter Address Error Container End ******* //
-
+                              if (feeRaw != null && feeRaw! > BigInt.zero) ...[
+                                FeeWidget(
+                                  amount: Amount.raw(
+                                    feeRaw!,
+                                    tokenInfo: TokenInfo.vite,
+                                  ),
+                                ),
+                              ],
                               const SizedBox(height: 3),
                               Column(
                                 children: [
@@ -429,16 +514,26 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                         return;
                       }
 
+                      final memo = _memoController.text;
+                      if (_data == null && memo.isNotEmpty) {
+                        _data = stringToBytesUtf8(memo);
+                      }
+
+                      final tx = SendTx.compose(
+                        address: account.address,
+                        toAddress: toAddress,
+                        amount: amountRaw ?? BigInt.zero,
+                        tokenInfo: tokenInfo,
+                        fee: feeRaw,
+                        data: _data,
+                      );
+
                       Sheets.showAppHeightNineSheet(
                         context: context,
-                        theme: ref.read(themeProvider),
+                        theme: theme,
                         widget: SendConfirmSheet(
-                          amountRaw: amountRaw ?? BigInt.zero,
-                          tokenInfo: tokenInfo,
-                          destination: toAddress,
+                          tx: tx,
                           label: contact?.name,
-                          memo: _memoController.text,
-                          data: _data,
                         ),
                       );
                     },
@@ -446,77 +541,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                   const SizedBox(height: 16),
                   PrimaryOutlineButton(
                     title: l10n.scanQrCode,
-                    onPressed: () async {
-                      FocusManager.instance.primaryFocus?.unfocus();
-
-                      final qrCode = await UserDataUtil.scanQrCode(context);
-
-                      final qrData = qrCode?.code;
-                      if (qrData == null) {
-                        return;
-                      }
-
-                      final viteUri = ViteUri.tryParse(qrData);
-                      if (viteUri == null) {
-                        UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
-                        return;
-                      }
-                      // See if this address belongs to a contact
-                      Contact? contact = ref
-                          .read(contactsProvider)
-                          .getContactWithAddress(viteUri.viteAddress);
-
-                      _addressValidationText = '';
-                      _pasteButtonVisible = false;
-                      _contactButtonVisible = false;
-
-                      if (contact == null) {
-                        // Not a contact
-                        _isContact = false;
-                        _sendAddressStyle = AddressStyle.TEXT90;
-                        _addressController.text = viteUri.viteAddress;
-                        _addressValidAndUnfocused = true;
-                      } else {
-                        // Is a contact
-                        _isContact = true;
-                        _sendAddressStyle = AddressStyle.PRIMARY;
-                        _addressController.text = contact.name;
-                        _addressValidAndUnfocused = false;
-                      }
-                      final amount = viteUri.amount ?? Decimal.zero;
-                      final tokenId = viteUri.token?.tokenId ??
-                          ref.read(selectedTokenProvider).tokenId;
-
-                      final tokenInfo =
-                          await ref.read(tokenInfoProvider(tokenId).future);
-
-                      final data = viteUri.data;
-                      if (data != null) {
-                        _data = data;
-                      }
-
-                      if (viteUri.isValidUri) {
-                        // update selected token
-                        final selectedToken =
-                            ref.read(selectedTokenProvider.notifier);
-                        selectedToken.state = tokenInfo;
-                      }
-                      if (amount != Decimal.zero || viteUri.isValidUri) {
-                        // set amount
-                        final amountBigInt = NumberUtil.getRawFromDecimal(
-                          amount,
-                          tokenInfo.decimals,
-                        );
-
-                        amountRaw = amountBigInt;
-                        _amountController.text = NumberUtil.approxAmount(
-                          amountBigInt,
-                          tokenInfo.decimals,
-                        );
-                      }
-
-                      setState(() {});
-                    },
+                    onPressed: scanQrCode,
                   ),
                 ],
               ),
@@ -603,7 +628,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
       });
       return false;
     }
-    if (!isContact && ViteUri.tryParse(addressText) == null) {
+    if (!isContact && Address.tryParse(addressText) == null) {
       setState(() {
         _addressValidationText = l10n.invalidAddress;
         _pasteButtonVisible = true;
@@ -637,7 +662,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
           amountRaw = null;
           return;
         }
-        amountRaw = Amount(value: amountDecimal, tokenInfo: tokenInfo).raw;
+        amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
         setState(() => _amountValidationText = '');
       });
 
@@ -664,7 +689,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             amountRaw = null;
             return;
           }
-          amountRaw = Amount(value: amountDecimal, tokenInfo: tokenInfo).raw;
+          amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
           // Always reset the error message to be less annoying
           setState(() => _amountValidationText = '');
         },
@@ -714,7 +739,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         textAlign: TextAlign.center,
         onSubmitted: (text) {
           //FocusScope.of(context).unfocus();
-          if (ViteUri.tryParse(_addressController.text) == null) {
+          if (Address.tryParse(_addressController.text) == null) {
             FocusScope.of(context).requestFocus(_addressFocusNode);
           }
         },
@@ -775,11 +800,11 @@ class _SendSheetState extends ConsumerState<SendSheet> {
               if (data == null || data.text == null) {
                 return;
               }
-              final viteUri = ViteUri.tryParse(data.text!);
-              if (viteUri != null) {
+              final viteAddress = ViteUtil.findAddressInString(data.text!);
+              if (viteAddress != null) {
                 final contacts = ref.read(contactsProvider);
                 final contact = contacts.getContactWithAddress(
-                  viteUri.viteAddress,
+                  viteAddress,
                   includeLabels: true,
                 );
                 if (contact == null) {
@@ -790,7 +815,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                     _pasteButtonVisible = false;
                     _contactButtonVisible = false;
                   });
-                  _addressController.text = viteUri.viteAddress;
+                  _addressController.text = viteAddress;
                   _addressFocusNode.unfocus();
                   _memoFocusNode.unfocus();
                   setState(() {
@@ -847,7 +872,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
           setState(() {
             _addressValidationText = '';
           });
-          if (!isContact && ViteUri.tryParse(text) != null) {
+          if (!isContact && Address.tryParse(text) != null) {
             FocusManager.instance.primaryFocus?.unfocus();
 
             setState(() {

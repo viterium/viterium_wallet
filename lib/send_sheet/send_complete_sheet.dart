@@ -1,47 +1,36 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/core.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../app_styles.dart';
-import '../util/numberutil.dart';
+import '../widgets/address_card.dart';
 import '../widgets/address_widgets.dart';
+import '../widgets/amount_label.dart';
 import '../widgets/buttons/success_outline_button.dart';
+import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_handle.dart';
+import 'send_data_widget.dart';
 
-class SendCompleteSheet extends ConsumerStatefulWidget {
-  final BigInt amountRaw;
-  final TokenInfo tokenInfo;
-  final String destination;
-  final String? contactName;
+class SendCompleteSheet extends HookConsumerWidget {
+  final Amount amount;
+  final Address toAddress;
+  final Uint8List? data;
 
   const SendCompleteSheet({
     Key? key,
-    required this.amountRaw,
-    required this.tokenInfo,
-    required this.destination,
-    this.contactName,
+    required this.amount,
+    required this.toAddress,
+    this.data,
   }) : super(key: key);
 
-  _SendCompleteSheetState createState() => _SendCompleteSheetState();
-}
-
-class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
-  late final amount = NumberUtil.approxAmount(widget.amountRaw, decimals);
-  late final destination = widget.destination;
-
-  late final decimals = widget.tokenInfo.decimals;
-  late final tokenSymbol = widget.tokenInfo.tokenSymbol;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
-
-    final amountAll =
-        NumberUtil.getStringFromRaw(widget.amountRaw, decimals, decimals) +
-            ' ${tokenSymbol}';
 
     return SafeArea(
       minimum: EdgeInsets.only(
@@ -52,98 +41,56 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
           const SheetHandle(),
           //A main container that holds the amount, address and "SENT TO" texts
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                // Success tick (icon)
-                Container(
-                  alignment: const AlignmentDirectional(0, 0),
-                  margin: const EdgeInsets.only(bottom: 25),
-                  child: Icon(
-                    AppIcons.success,
-                    size: 100,
-                    color: theme.success,
-                  ),
-                ),
-                // Container for the Amount Text
-                Container(
-                  margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.105,
-                    right: MediaQuery.of(context).size.width * 0.105,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 15,
-                  ),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: theme.backgroundDarkest,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  // Amount text
-                  child: Tooltip(
-                    message: amountAll,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: amountApprox,
-                                style: styles.textStyleApproxAmountSuccess,
-                              ),
-                              TextSpan(
-                                text: ' $tokenSymbol',
-                                style: styles.textStyleTokenSymbolSuccess,
-                              ),
-                            ],
-                          ),
+                SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        alignment: const AlignmentDirectional(0, 0),
+                        margin: const EdgeInsets.only(top: 50, bottom: 25),
+                        child: Icon(
+                          AppIcons.success,
+                          size: 100,
+                          color: theme.success,
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                // Container for the "SENT TO" text
-                Container(
-                  margin: const EdgeInsets.only(top: 30, bottom: 10),
-                  child: Column(
-                    children: [
-                      // "SENT TO" text
-                      Text(
-                        l10n.sentTo.toUpperCase(),
-                        style: styles.textStyleHeaderSuccess,
+                      const SizedBox(height: 20),
+                      AmountLabel(amount: amount),
+                      // Container for the "SENT TO" text
+                      Container(
+                        margin: const EdgeInsets.only(top: 30, bottom: 10),
+                        alignment: Alignment.center,
+                        child: Text(
+                          l10n.sentTo.toUpperCase(),
+                          style: styles.textStyleHeaderSuccess,
+                        ),
                       ),
+                      AddressCard(
+                        address: toAddress,
+                        type: AddressThreeLineTextType.SUCCESS,
+                      ),
+                      if (data != null)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 30,
+                            bottom: 10,
+                          ),
+                          child: SendDataWidget(
+                            data: data!,
+                            success: true,
+                          ),
+                        ),
                     ],
                   ),
                 ),
-                // The container for the address
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 15,
-                  ),
-                  margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.105,
-                    right: MediaQuery.of(context).size.width * 0.105,
-                  ),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: theme.backgroundDarkest,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: AddressThreeLineText(
-                    address: destination,
-                    type: AddressThreeLineTextType.SUCCESS,
-                    label: widget.contactName,
-                  ),
-                ),
+                const ListTopGradient(),
+                const ListBottomGradient(),
               ],
             ),
           ),
-          // CLOSE Button
           SuccessOutlineButton(
             title: l10n.close,
             margin: const EdgeInsets.only(left: 28, right: 28, top: 8),

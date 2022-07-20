@@ -1,11 +1,13 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
+import '../transactions/send_tx.dart';
+import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../widgets/address_card.dart';
 import '../widgets/amount_card.dart';
@@ -14,24 +16,18 @@ import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
 import '../widgets/sheet_widget.dart';
+import '../widgets/tx_data_widget.dart';
 import 'send_complete_sheet.dart';
+import 'send_tx_complete_sheet.dart';
 
 class SendConfirmSheet extends HookConsumerWidget {
-  final BigInt amountRaw;
-  final TokenInfo tokenInfo;
-  final Address destination;
+  final SendTx tx;
   final String? label;
-  final String memo;
-  final Uint8List? data;
 
   SendConfirmSheet({
     Key? key,
-    required this.amountRaw,
-    required this.tokenInfo,
-    required this.destination,
+    required this.tx,
     this.label,
-    this.memo = '',
-    this.data,
   }) : super(key: key);
 
   @override
@@ -40,54 +36,78 @@ class SendConfirmSheet extends HookConsumerWidget {
     final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
-    final amount = Amount.raw(amountRaw, tokenInfo: tokenInfo);
+    final address = tx.address;
+    final toAddress = tx.toAddress;
+    final amount = tx.amount;
+
+    final fee = tx.fee;
+    final data = tx.data;
+
+    final isSendTransfer = tx.maybeMap(
+      sendTransfer: (_) => true,
+      orElse: () => false,
+    );
+
+    final contract = ref.watch(
+      contractForAddressProvider(toAddress.viteAddress),
+    );
+
+    final title = useMemoized(() {
+      return tx.map(
+        sendTransfer: (_) => l10n.sendConfirm,
+        createContract: (_) => l10n.createContractConfirm,
+        callContract: (_) => l10n.callContractConfirm,
+      );
+    }, [tx]);
+
+    final toTitle = useMemoized(() {
+      return tx.map(
+        sendTransfer: (_) => 'To Address',
+        createContract: (_) => 'New Contract Address',
+        callContract: (_) => 'Contract Address',
+      );
+    }, [tx]);
 
     Future<void> sendTransaction() async {
       final account = ref.read(selectedAccountProvider);
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
 
+      if (address != account.address) {
+        UIUtil.showSnackbar('Error: Address mismatch', context);
+        return;
+      }
+
       try {
-        final address = account.address;
-        final toAddress = destination;
-
-        Uint8List? data;
-        if (memo.isNotEmpty) {
-          data = stringToBytesUtf8(memo);
-        } else {
-          data = data;
-        }
-
         AppDialogs.showInProgressDialog(
           context,
           'Sending Transaction',
-          'Please wait.',
+          'Please wait...',
         );
 
         await autoreceiveService.pauseAutoreceive();
-
-        await accountService.transfer(
-          fromAddress: address,
-          toAddress: toAddress,
-          amount: amount,
-          data: data,
-        );
-
+        await accountService.sendRawTransaction(tx.rawTx);
         autoreceiveService.resumeAutoreceive();
 
         Navigator.of(context).pop();
+
+        final sheet = tx.maybeMap(
+          sendTransfer: (_) => SendCompleteSheet(
+            amount: tx.amount,
+            toAddress: tx.toAddress,
+            data: tx.data,
+          ),
+          orElse: () => SendTxCompleteSheet(
+            tx: tx,
+          ),
+        );
 
         Sheets.showAppHeightNineSheet(
           context: context,
           theme: theme,
           closeOnTap: true,
           removeUntilHome: true,
-          widget: SendCompleteSheet(
-            amountRaw: amountRaw,
-            tokenInfo: tokenInfo,
-            destination: destination.viteAddress,
-            contactName: label,
-          ),
+          widget: sheet,
         );
       } catch (e, st) {
         final log = ref.read(loggerProvider);
@@ -102,14 +122,57 @@ class SendConfirmSheet extends HookConsumerWidget {
       }
     }
 
-    Future<void> onConfirm() async {
-      // Authenticate
-      final localization = ref.read(l10nProvider);
-      final authUtil = ref.read(authUtilProvider);
+    String authMessage() {
+      final uiUtil = ref.read(uiUtilProvider);
+      return tx.map(
+        sendTransfer: (_) {
+          final amountStr = NumberUtil.approx(amount: amount);
+          return '${l10n.sendConfirm} ${amountStr} ${amount.symbolLabel}';
+        },
+        callContract: (_) {
+          return uiUtil.authMessage(l10n.callContractConfirm, amount, fee);
+        },
+        createContract: (_) {
+          return uiUtil.authMessage(l10n.createContractConfirm, amount, fee);
+        },
+      );
+    }
 
-      final message = localization.sendAmountConfirm
-          .replaceAll('%1', amount.value.toString())
-          .replaceAll('%2', tokenInfo.symbolLabel);
+    String? checkMissingBalance() {
+      final balance = ref.read(balanceForTokenProvider(tx.tokenId));
+      if (balance < amount.raw) {
+        return tx.tokenInfo.symbolLabel;
+      }
+
+      if (fee != null && fee != BigInt.zero) {
+        if (tx.tokenId == viteTokenId) {
+          if (balance < amount.raw + fee) {
+            return TokenInfo.vite.symbolLabel;
+          }
+        } else {
+          final viteBalance = ref.read(balanceForTokenProvider(viteTokenId));
+          if (viteBalance < fee) {
+            return TokenInfo.vite.symbolLabel;
+          }
+        }
+      }
+      return null;
+    }
+
+    Future<void> onConfirm() async {
+      final symbolLabel = checkMissingBalance();
+      if (symbolLabel != null) {
+        AppDialogs.showInfoDialog(
+          context,
+          'Insufficient Balance',
+          'You don\'t have enough ${symbolLabel} for this transaction',
+        );
+        return;
+      }
+
+      // Authenticate
+      final authUtil = ref.read(authUtilProvider);
+      final message = authMessage();
       final auth = await authUtil.authenticate(context, message, message);
       if (auth) {
         await sendTransaction();
@@ -117,97 +180,55 @@ class SendConfirmSheet extends HookConsumerWidget {
     }
 
     return SheetWidget(
-      title: l10n.sending,
+      title: title,
       mainWidget: Stack(
         children: [
           SingleChildScrollView(
             padding: const EdgeInsets.only(top: 20, bottom: 20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AmountCard(amount: amount),
+                if (isSendTransfer) AmountCard(amount: amount),
                 // "TO" text
                 Container(
                   margin: const EdgeInsets.only(top: 30, bottom: 10),
                   child: Column(
                     children: [
                       Text(
-                        l10n.to.toUpperCase(),
+                        toTitle.toUpperCase(),
                         style: styles.textStyleSubHeader,
                       ),
                     ],
                   ),
                 ),
-                AddressCard(address: destination),
-
-                if (data != null) ...[
-                  // DATA
+                AddressCard(address: toAddress),
+                if (!isSendTransfer) ...[
                   Container(
                     margin: const EdgeInsets.only(top: 30, bottom: 10),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Data'.toUpperCase(),
-                          style: styles.textStyleSubHeader,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 15,
-                    ),
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.105,
-                        right: MediaQuery.of(context).size.width * 0.105),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: theme.backgroundDarkest,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
                     child: Text(
-                      data?.hex ?? '',
-                      textAlign: TextAlign.center,
-                      style: styles.textStyleAddressText90,
-                      maxLines: 3,
+                      'Amount'.toUpperCase(),
+                      style: styles.textStyleSubHeader,
                     ),
                   ),
-                ] else if (memo.isNotEmpty) ...[
-                  // MEMO
+                  AmountCard(amount: amount),
+                ],
+                if (fee != null && fee > BigInt.zero) ...[
                   Container(
                     margin: const EdgeInsets.only(top: 30, bottom: 10),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Memo'.toUpperCase(),
-                          style: styles.textStyleSubHeader,
-                        ),
-                      ],
+                    child: Text(
+                      'Fee'.toUpperCase(),
+                      style: styles.textStyleSubHeader,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 15,
-                    ),
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.105,
-                        right: MediaQuery.of(context).size.width * 0.105),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: theme.backgroundDarkest,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Text(
-                      memo,
-                      textAlign: TextAlign.center,
-                      style: styles.textStyleAddressText90,
-                      maxLines: 3,
-                    ),
+                  AmountCard(
+                    amount: Amount.raw(fee, tokenInfo: TokenInfo.vite),
                   ),
                 ],
+                if (data != null)
+                  TxDataWidget(
+                    data: data,
+                    contract: contract,
+                  ),
               ],
             ),
           ),
