@@ -76,7 +76,7 @@ class QuotaGetSheet extends HookConsumerWidget {
         return;
       }
 
-      final amount = Amount(value: value, tokenInfo: TokenInfo.vite);
+      final amount = Amount.value(value, tokenInfo: TokenInfo.vite);
       utpe.value = ViteUtil.utpeForAmount(
         amount,
         quotaStakeList: quotaStakeAmounts,
@@ -96,7 +96,7 @@ class QuotaGetSheet extends HookConsumerWidget {
         return false;
       }
 
-      final amount = Amount(value: value, tokenInfo: TokenInfo.vite);
+      final amount = Amount.value(value, tokenInfo: TokenInfo.vite);
       if (balance < amount.raw) {
         amountValidationText.value = l10n.insufficientBalance;
         return false;
@@ -132,7 +132,7 @@ class QuotaGetSheet extends HookConsumerWidget {
       if (value == null) {
         return;
       }
-      final amount = Amount(value: value, tokenInfo: TokenInfo.vite);
+      final amount = Amount.value(value, tokenInfo: TokenInfo.vite);
 
       AppDialogs.showInProgressDialog(
         context,
@@ -144,7 +144,7 @@ class QuotaGetSheet extends HookConsumerWidget {
         final service = ref.read(accountServiceProvider);
         await service.stakeForQuota(
           address: address,
-          rawAmount: amount.raw,
+          amount: amount.raw,
           beneficiary: Address.tryParse(beneficiary ?? ''),
         );
 
