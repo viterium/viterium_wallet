@@ -96,7 +96,8 @@ final currentQuotaLabelProvider = Provider.autoDispose((ref) {
   final ut = Decimal.fromInt(21000);
   final current = (Decimal.parse(quota.currentQuota) / ut)
       .toDecimal(scaleOnInfinitePrecision: 2);
-  final max = (Decimal.parse(quota.maxQuota) / ut).toDecimal();
+  final max = (Decimal.parse(quota.maxQuota) / ut)
+      .toDecimal(scaleOnInfinitePrecision: 2);
   if (max == Decimal.zero) {
     return 'PoW only';
   }
