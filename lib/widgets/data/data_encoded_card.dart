@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
-import '../core/core_providers.dart';
+import '../../app_providers.dart';
 
 class DataEncodedCard extends HookConsumerWidget {
   final Uint8List data;

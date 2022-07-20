@@ -1,10 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
-import '../core/core_providers.dart';
+import '../../app_providers.dart';
 
 class DataDecodedCard extends HookConsumerWidget {
   final Uint8List data;
@@ -21,8 +22,17 @@ class DataDecodedCard extends HookConsumerWidget {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final function = abi.findFunctionByData(data);
-    final inputs = abi.decodeFunction(data);
+    final function = useMemoized(() {
+      return abi.findFunctionByData(data);
+    }, [data, abi]);
+    final inputs = useMemoized(() {
+      if (function == null) return <Object>[];
+      try {
+        return abi.decodeFunction(data);
+      } catch (_) {
+        return <Object>[];
+      }
+    }, [abi, data]);
 
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -42,25 +52,17 @@ class DataDecodedCard extends HookConsumerWidget {
         children: [
           Text(
             'Message'.toUpperCase(),
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w200,
-              color: theme.text,
-            ),
+            style: styles.textStyleTransactionWelcome,
           ),
           Text(
             function?.name ?? 'unknown',
             style: styles.textStyleAddressPrimary,
           ),
-          const SizedBox(height: 16),
           if (function != null && inputs.isNotEmpty) ...[
+            const SizedBox(height: 16),
             Text(
               'Inputs'.toUpperCase(),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w200,
-                color: theme.text,
-              ),
+              style: styles.textStyleTransactionWelcome,
             ),
             for (int i = 0; i < inputs.length; ++i) ...[
               Row(
