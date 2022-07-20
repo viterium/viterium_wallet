@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/core.dart';
 
 import '../app_providers.dart';
+import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../widgets/address_card.dart';
 import '../widgets/amount_card.dart';
@@ -11,7 +12,7 @@ import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_widget.dart';
-import 'transaction_data_widget.dart';
+import '../widgets/tx_data_widget.dart';
 import 'viteconnect_providers.dart';
 import 'viteconnect_types.dart';
 
@@ -27,32 +28,31 @@ class ViteConnectTxSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
     final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
-    final theme = ref.watch(themeProvider);
 
     final response = this.response;
-    final tx = request.transaction;
 
-    final toAddress = tx.toAddress!;
-    final rawAmount = tx.amount!;
-    final amount = Amount.raw(rawAmount, tokenInfo: request.tokenInfo);
+    final tx = request.tx;
+    final toAddress = tx.toAddress;
+    final amount = tx.amount;
     final fee = tx.fee;
     final data = tx.data;
 
     final title = useMemoized(() {
-      return request.type.when(
-        transfer: () => 'Send',
-        create: () => 'Create Contract',
-        call: () => 'Call Contract',
+      return tx.map(
+        sendTransfer: (_) => l10n.sendConfirm,
+        createContract: (_) => l10n.createContractConfirm,
+        callContract: (_) => l10n.callContractConfirm,
       );
     }, [request]);
 
     final toTitle = useMemoized(() {
-      return request.type.when(
-        transfer: () => 'Destination Address',
-        create: () => 'New Contract Address',
-        call: () => 'Contract Address',
+      return tx.map(
+        sendTransfer: (_) => 'To Address',
+        createContract: (_) => 'New Contract Address',
+        callContract: (_) => 'Contract Address',
       );
     }, [request]);
 
@@ -62,12 +62,11 @@ class ViteConnectTxSheet extends HookConsumerWidget {
 
     Future<void> sendTransaction() async {
       final account = ref.read(selectedAccountProvider);
-      final address = account.address;
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
 
-      if (tx.address != address) {
-        UIUtil.showSnackbar('Error: Account mismatch', context);
+      if (tx.address != account.address) {
+        UIUtil.showSnackbar('Error: Address mismatch', context);
         return;
       }
 
@@ -75,56 +74,75 @@ class ViteConnectTxSheet extends HookConsumerWidget {
         AppDialogs.showInProgressDialog(
           context,
           'Sending Transaction',
-          'Please wait.',
+          'Please wait...',
         );
 
         await autoreceiveService.pauseAutoreceive();
+        final hash = await accountService.sendRawTransaction(tx.rawTx);
 
-        final hash = await accountService.sendTransaction(
-          address: address,
-          toAddress: toAddress,
-          token: request.tokenInfo.token,
-          rawAmount: tx.amount!,
-          data: data,
-        );
+        final client = accountService.client;
+        final accountBlock = await client.getAccountBlockByHash(hash);
 
-        autoreceiveService.resumeAutoreceive();
-
-        final accountBlock =
-            await accountService.client.getAccountBlockByHash(hash);
-
-        final viteConnect = ref.read(viteConnectProvider.notifier);
         final response = VCTxResponse.confirmed(accountBlock);
+        final viteConnect = ref.read(viteConnectProvider.notifier);
         viteConnect.onTxAction(request, response);
-
-        Navigator.of(context).popUntil(ModalRoute.withName('/vite_connect'));
       } catch (e, st) {
         final log = ref.read(loggerProvider);
         log.e('Failed to send transaction', e, st);
 
-        autoreceiveService.resumeAutoreceive();
-
         UIUtil.showSnackbar(l10n.sendError, context);
-
+      } finally {
+        autoreceiveService.resumeAutoreceive();
         Navigator.of(context).popUntil(ModalRoute.withName('/vite_connect'));
       }
     }
 
-    Future<void> onConfirm() async {
+    String? checkMissingBalance() {
       final balance = ref.read(balanceForTokenProvider(request.tokenId));
       if (balance < amount.raw) {
+        return request.tokenInfo.symbolLabel;
+      }
+
+      if (fee != null && fee != BigInt.zero) {
+        if (request.tokenId == viteTokenId) {
+          if (balance < amount.raw + fee) {
+            return TokenInfo.vite.symbolLabel;
+          }
+        } else {
+          final viteBalance = ref.read(balanceForTokenProvider(viteTokenId));
+          if (viteBalance < fee) {
+            return TokenInfo.vite.symbolLabel;
+          }
+        }
+      }
+      return null;
+    }
+
+    Future<void> onConfirm() async {
+      final symbolLabel = checkMissingBalance();
+      if (symbolLabel != null) {
         AppDialogs.showInfoDialog(
           context,
           'Insufficient Balance',
-          'You don\'t have enough ${request.tokenInfo.symbolLabel} for this transaction',
+          'You don\'t have enough ${symbolLabel} for this transaction',
         );
         return;
       }
+
       // Authenticate
       final authUtil = ref.read(authUtilProvider);
 
-      final message =
-          '$title\nAmount ${amount.value} ${request.tokenInfo.symbolLabel}';
+      final message = tx.maybeMap(
+        sendTransfer: (_) {
+          final amountStr = NumberUtil.approx(amount: amount);
+          return '$title $amountStr ${request.tokenInfo.symbolLabel}';
+        },
+        orElse: () {
+          final uiUtil = ref.read(uiUtilProvider);
+          return uiUtil.authMessage(title, amount, fee);
+        },
+      );
+
       final auth = await authUtil.authenticate(context, message, message);
       if (auth) {
         await sendTransaction();
@@ -197,10 +215,10 @@ class ViteConnectTxSheet extends HookConsumerWidget {
                     ),
                   ),
                   AmountCard(
-                      amount: Amount.raw(fee, tokenInfo: TokenInfo.vite)),
+                    amount: Amount.raw(fee, tokenInfo: TokenInfo.vite),
+                  ),
                 ],
-                if (data != null)
-                  TransactionDataWidget(data: data, contract: contract),
+                if (data != null) TxDataWidget(data: data, contract: contract),
                 const SizedBox(height: 20),
               ],
             ),

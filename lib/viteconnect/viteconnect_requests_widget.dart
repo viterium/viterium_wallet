@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../core/core_providers.dart';
@@ -8,7 +9,7 @@ import 'request_item_widget.dart';
 import 'viteconnect_providers.dart';
 import 'viteconnect_types.dart';
 
-class ViteConnectRequestsWidget extends ConsumerWidget {
+class ViteConnectRequestsWidget extends HookConsumerWidget {
   final void Function(VCHistoryItem item) onItemSelect;
 
   const ViteConnectRequestsWidget({
@@ -32,7 +33,7 @@ class ViteConnectRequestsWidget extends ConsumerWidget {
       );
     }
 
-    final formatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    final formatter = useRef(DateFormat('yyyy-MM-dd HH:mm:ss'));
 
     return Stack(
       children: [
@@ -60,10 +61,10 @@ class ViteConnectRequestsWidget extends ConsumerWidget {
                     );
                   },
                   tx: (request, response, timestamp) {
-                    final title = request.type.when(
-                      transfer: () => 'Send Transaction',
-                      create: () => 'Contract Create',
-                      call: () => 'Contract Call',
+                    final title = request.tx.map(
+                      sendTransfer: (_) => 'Send Transaction',
+                      createContract: (_) => 'Contract Create',
+                      callContract: (_) => 'Contract Call',
                     );
                     final action = response.when(
                       confirmed: (_) => 'Confirmed',
@@ -72,7 +73,7 @@ class ViteConnectRequestsWidget extends ConsumerWidget {
 
                     return RequestItemWidget(
                       title: title,
-                      subtitle: formatter.format(timestamp),
+                      subtitle: formatter.value.format(timestamp),
                       action: action,
                     );
                   },
@@ -83,14 +84,14 @@ class ViteConnectRequestsWidget extends ConsumerWidget {
                     );
                     return RequestItemWidget(
                       title: 'Sign Message',
-                      subtitle: formatter.format(timestamp),
+                      subtitle: formatter.value.format(timestamp),
                       action: action,
                     );
                   },
                   invalid: (request, error, timestamp) {
                     return RequestItemWidget(
                       title: 'Invalid Request',
-                      subtitle: formatter.format(timestamp),
+                      subtitle: formatter.value.format(timestamp),
                       action: 'Rejected',
                     );
                   },

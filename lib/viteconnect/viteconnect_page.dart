@@ -6,6 +6,7 @@ import 'package:vite/utils.dart';
 import '../app_providers.dart';
 import '../settings_drawer/account_widget.dart';
 import '../tokens/token_info_provider.dart';
+import '../transactions/send_tx.dart';
 import '../util/ui_util.dart';
 import '../widgets/app_icon_button.dart';
 import '../widgets/dialog.dart';
@@ -35,34 +36,21 @@ class ViteConnectPage extends HookConsumerWidget {
         transaction: (request) async {
           try {
             final block = request.params?.first['block'];
-            final tx = RawTransaction.fromJson(block);
+            final rawTx = RawTransaction.fromJson(block);
             final address = ref.read(selectedAddressProvider);
+
+            final tokenId = rawTx.token?.tokenId ?? viteTokenId;
+            final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
+
+            final tx = SendTx.validated(rawTx: rawTx, tokenInfo: tokenInfo);
+
             if (tx.address != address) {
               throw Exception('Address mismatch');
             }
 
-            final toAddress = tx.toAddress;
-            if (toAddress == null) {
-              throw Exception('Missing destination address');
-            }
-
-            final isCallType = toAddress.isContractAddress && tx.data != null;
-            final type = VCTxRequestType.fromBlockType(
-              tx.type,
-              isCallType: isCallType,
-            );
-            if (type == null) {
-              throw Exception('Invalid transaction request type');
-            }
-
-            final tokenId = tx.token?.tokenId ?? viteTokenId;
-            final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
-
             final txRequest = VCTxRequest(
               id: request.id,
-              type: type,
-              transaction: tx,
-              tokenInfo: tokenInfo,
+              tx: tx,
             );
 
             Sheets.showAppHeightNineSheet(
@@ -74,7 +62,7 @@ class ViteConnectPage extends HookConsumerWidget {
             final log = ref.read(loggerProvider);
             log.e('Invalid transaction request', e, st);
 
-            UIUtil.showSnackbar('Invalid transaction request', context);
+            UIUtil.showSnackbar(e.toString(), context);
 
             final viteConnect = ref.read(viteConnectProvider.notifier);
             viteConnect.onInvalidRequest(request, e);

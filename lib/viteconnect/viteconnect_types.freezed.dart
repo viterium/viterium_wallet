@@ -2468,438 +2468,13 @@ abstract class _VCRequestSignMessage extends VCRequest {
 }
 
 /// @nodoc
-class _$VCTxRequestTypeTearOff {
-  const _$VCTxRequestTypeTearOff();
-
-  _VCTxRequestTypeTransfer transfer() {
-    return const _VCTxRequestTypeTransfer();
-  }
-
-  _VCTxRequestTypeCreate create() {
-    return const _VCTxRequestTypeCreate();
-  }
-
-  _VCTxRequestTypeCall call() {
-    return const _VCTxRequestTypeCall();
-  }
-}
-
-/// @nodoc
-const $VCTxRequestType = _$VCTxRequestTypeTearOff();
-
-/// @nodoc
-mixin _$VCTxRequestType {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() transfer,
-    required TResult Function() create,
-    required TResult Function() call,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VCTxRequestTypeTransfer value) transfer,
-    required TResult Function(_VCTxRequestTypeCreate value) create,
-    required TResult Function(_VCTxRequestTypeCall value) call,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $VCTxRequestTypeCopyWith<$Res> {
-  factory $VCTxRequestTypeCopyWith(
-          VCTxRequestType value, $Res Function(VCTxRequestType) then) =
-      _$VCTxRequestTypeCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class _$VCTxRequestTypeCopyWithImpl<$Res>
-    implements $VCTxRequestTypeCopyWith<$Res> {
-  _$VCTxRequestTypeCopyWithImpl(this._value, this._then);
-
-  final VCTxRequestType _value;
-  // ignore: unused_field
-  final $Res Function(VCTxRequestType) _then;
-}
-
-/// @nodoc
-abstract class _$VCTxRequestTypeTransferCopyWith<$Res> {
-  factory _$VCTxRequestTypeTransferCopyWith(_VCTxRequestTypeTransfer value,
-          $Res Function(_VCTxRequestTypeTransfer) then) =
-      __$VCTxRequestTypeTransferCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$VCTxRequestTypeTransferCopyWithImpl<$Res>
-    extends _$VCTxRequestTypeCopyWithImpl<$Res>
-    implements _$VCTxRequestTypeTransferCopyWith<$Res> {
-  __$VCTxRequestTypeTransferCopyWithImpl(_VCTxRequestTypeTransfer _value,
-      $Res Function(_VCTxRequestTypeTransfer) _then)
-      : super(_value, (v) => _then(v as _VCTxRequestTypeTransfer));
-
-  @override
-  _VCTxRequestTypeTransfer get _value =>
-      super._value as _VCTxRequestTypeTransfer;
-}
-
-/// @nodoc
-
-class _$_VCTxRequestTypeTransfer implements _VCTxRequestTypeTransfer {
-  const _$_VCTxRequestTypeTransfer();
-
-  @override
-  String toString() {
-    return 'VCTxRequestType.transfer()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _VCTxRequestTypeTransfer);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() transfer,
-    required TResult Function() create,
-    required TResult Function() call,
-  }) {
-    return transfer();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-  }) {
-    return transfer?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-    required TResult orElse(),
-  }) {
-    if (transfer != null) {
-      return transfer();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VCTxRequestTypeTransfer value) transfer,
-    required TResult Function(_VCTxRequestTypeCreate value) create,
-    required TResult Function(_VCTxRequestTypeCall value) call,
-  }) {
-    return transfer(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-  }) {
-    return transfer?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-    required TResult orElse(),
-  }) {
-    if (transfer != null) {
-      return transfer(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VCTxRequestTypeTransfer implements VCTxRequestType {
-  const factory _VCTxRequestTypeTransfer() = _$_VCTxRequestTypeTransfer;
-}
-
-/// @nodoc
-abstract class _$VCTxRequestTypeCreateCopyWith<$Res> {
-  factory _$VCTxRequestTypeCreateCopyWith(_VCTxRequestTypeCreate value,
-          $Res Function(_VCTxRequestTypeCreate) then) =
-      __$VCTxRequestTypeCreateCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$VCTxRequestTypeCreateCopyWithImpl<$Res>
-    extends _$VCTxRequestTypeCopyWithImpl<$Res>
-    implements _$VCTxRequestTypeCreateCopyWith<$Res> {
-  __$VCTxRequestTypeCreateCopyWithImpl(_VCTxRequestTypeCreate _value,
-      $Res Function(_VCTxRequestTypeCreate) _then)
-      : super(_value, (v) => _then(v as _VCTxRequestTypeCreate));
-
-  @override
-  _VCTxRequestTypeCreate get _value => super._value as _VCTxRequestTypeCreate;
-}
-
-/// @nodoc
-
-class _$_VCTxRequestTypeCreate implements _VCTxRequestTypeCreate {
-  const _$_VCTxRequestTypeCreate();
-
-  @override
-  String toString() {
-    return 'VCTxRequestType.create()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _VCTxRequestTypeCreate);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() transfer,
-    required TResult Function() create,
-    required TResult Function() call,
-  }) {
-    return create();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-  }) {
-    return create?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-    required TResult orElse(),
-  }) {
-    if (create != null) {
-      return create();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VCTxRequestTypeTransfer value) transfer,
-    required TResult Function(_VCTxRequestTypeCreate value) create,
-    required TResult Function(_VCTxRequestTypeCall value) call,
-  }) {
-    return create(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-  }) {
-    return create?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-    required TResult orElse(),
-  }) {
-    if (create != null) {
-      return create(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VCTxRequestTypeCreate implements VCTxRequestType {
-  const factory _VCTxRequestTypeCreate() = _$_VCTxRequestTypeCreate;
-}
-
-/// @nodoc
-abstract class _$VCTxRequestTypeCallCopyWith<$Res> {
-  factory _$VCTxRequestTypeCallCopyWith(_VCTxRequestTypeCall value,
-          $Res Function(_VCTxRequestTypeCall) then) =
-      __$VCTxRequestTypeCallCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$VCTxRequestTypeCallCopyWithImpl<$Res>
-    extends _$VCTxRequestTypeCopyWithImpl<$Res>
-    implements _$VCTxRequestTypeCallCopyWith<$Res> {
-  __$VCTxRequestTypeCallCopyWithImpl(
-      _VCTxRequestTypeCall _value, $Res Function(_VCTxRequestTypeCall) _then)
-      : super(_value, (v) => _then(v as _VCTxRequestTypeCall));
-
-  @override
-  _VCTxRequestTypeCall get _value => super._value as _VCTxRequestTypeCall;
-}
-
-/// @nodoc
-
-class _$_VCTxRequestTypeCall implements _VCTxRequestTypeCall {
-  const _$_VCTxRequestTypeCall();
-
-  @override
-  String toString() {
-    return 'VCTxRequestType.call()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _VCTxRequestTypeCall);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() transfer,
-    required TResult Function() create,
-    required TResult Function() call,
-  }) {
-    return call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-  }) {
-    return call?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? transfer,
-    TResult Function()? create,
-    TResult Function()? call,
-    required TResult orElse(),
-  }) {
-    if (call != null) {
-      return call();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VCTxRequestTypeTransfer value) transfer,
-    required TResult Function(_VCTxRequestTypeCreate value) create,
-    required TResult Function(_VCTxRequestTypeCall value) call,
-  }) {
-    return call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-  }) {
-    return call?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VCTxRequestTypeTransfer value)? transfer,
-    TResult Function(_VCTxRequestTypeCreate value)? create,
-    TResult Function(_VCTxRequestTypeCall value)? call,
-    required TResult orElse(),
-  }) {
-    if (call != null) {
-      return call(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VCTxRequestTypeCall implements VCTxRequestType {
-  const factory _VCTxRequestTypeCall() = _$_VCTxRequestTypeCall;
-}
-
-/// @nodoc
 class _$VCTxRequestTearOff {
   const _$VCTxRequestTearOff();
 
-  _VCTxRequest call(
-      {required int id,
-      required VCTxRequestType type,
-      required RawTransaction transaction,
-      required TokenInfo tokenInfo}) {
+  _VCTxRequest call({required int id, required SendTx tx}) {
     return _VCTxRequest(
       id: id,
-      type: type,
-      transaction: transaction,
-      tokenInfo: tokenInfo,
+      tx: tx,
     );
   }
 }
@@ -2910,9 +2485,7 @@ const $VCTxRequest = _$VCTxRequestTearOff();
 /// @nodoc
 mixin _$VCTxRequest {
   int get id => throw _privateConstructorUsedError;
-  VCTxRequestType get type => throw _privateConstructorUsedError;
-  RawTransaction get transaction => throw _privateConstructorUsedError;
-  TokenInfo get tokenInfo => throw _privateConstructorUsedError;
+  SendTx get tx => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VCTxRequestCopyWith<VCTxRequest> get copyWith =>
@@ -2924,15 +2497,9 @@ abstract class $VCTxRequestCopyWith<$Res> {
   factory $VCTxRequestCopyWith(
           VCTxRequest value, $Res Function(VCTxRequest) then) =
       _$VCTxRequestCopyWithImpl<$Res>;
-  $Res call(
-      {int id,
-      VCTxRequestType type,
-      RawTransaction transaction,
-      TokenInfo tokenInfo});
+  $Res call({int id, SendTx tx});
 
-  $VCTxRequestTypeCopyWith<$Res> get type;
-  $RawTransactionCopyWith<$Res> get transaction;
-  $TokenInfoCopyWith<$Res> get tokenInfo;
+  $SendTxCopyWith<$Res> get tx;
 }
 
 /// @nodoc
@@ -2946,48 +2513,24 @@ class _$VCTxRequestCopyWithImpl<$Res> implements $VCTxRequestCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? type = freezed,
-    Object? transaction = freezed,
-    Object? tokenInfo = freezed,
+    Object? tx = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      type: type == freezed
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as VCTxRequestType,
-      transaction: transaction == freezed
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as RawTransaction,
-      tokenInfo: tokenInfo == freezed
-          ? _value.tokenInfo
-          : tokenInfo // ignore: cast_nullable_to_non_nullable
-              as TokenInfo,
+      tx: tx == freezed
+          ? _value.tx
+          : tx // ignore: cast_nullable_to_non_nullable
+              as SendTx,
     ));
   }
 
   @override
-  $VCTxRequestTypeCopyWith<$Res> get type {
-    return $VCTxRequestTypeCopyWith<$Res>(_value.type, (value) {
-      return _then(_value.copyWith(type: value));
-    });
-  }
-
-  @override
-  $RawTransactionCopyWith<$Res> get transaction {
-    return $RawTransactionCopyWith<$Res>(_value.transaction, (value) {
-      return _then(_value.copyWith(transaction: value));
-    });
-  }
-
-  @override
-  $TokenInfoCopyWith<$Res> get tokenInfo {
-    return $TokenInfoCopyWith<$Res>(_value.tokenInfo, (value) {
-      return _then(_value.copyWith(tokenInfo: value));
+  $SendTxCopyWith<$Res> get tx {
+    return $SendTxCopyWith<$Res>(_value.tx, (value) {
+      return _then(_value.copyWith(tx: value));
     });
   }
 }
@@ -2999,18 +2542,10 @@ abstract class _$VCTxRequestCopyWith<$Res>
           _VCTxRequest value, $Res Function(_VCTxRequest) then) =
       __$VCTxRequestCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {int id,
-      VCTxRequestType type,
-      RawTransaction transaction,
-      TokenInfo tokenInfo});
+  $Res call({int id, SendTx tx});
 
   @override
-  $VCTxRequestTypeCopyWith<$Res> get type;
-  @override
-  $RawTransactionCopyWith<$Res> get transaction;
-  @override
-  $TokenInfoCopyWith<$Res> get tokenInfo;
+  $SendTxCopyWith<$Res> get tx;
 }
 
 /// @nodoc
@@ -3026,27 +2561,17 @@ class __$VCTxRequestCopyWithImpl<$Res> extends _$VCTxRequestCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? type = freezed,
-    Object? transaction = freezed,
-    Object? tokenInfo = freezed,
+    Object? tx = freezed,
   }) {
     return _then(_VCTxRequest(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      type: type == freezed
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as VCTxRequestType,
-      transaction: transaction == freezed
-          ? _value.transaction
-          : transaction // ignore: cast_nullable_to_non_nullable
-              as RawTransaction,
-      tokenInfo: tokenInfo == freezed
-          ? _value.tokenInfo
-          : tokenInfo // ignore: cast_nullable_to_non_nullable
-              as TokenInfo,
+      tx: tx == freezed
+          ? _value.tx
+          : tx // ignore: cast_nullable_to_non_nullable
+              as SendTx,
     ));
   }
 }
@@ -3054,25 +2579,16 @@ class __$VCTxRequestCopyWithImpl<$Res> extends _$VCTxRequestCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_VCTxRequest extends _VCTxRequest {
-  const _$_VCTxRequest(
-      {required this.id,
-      required this.type,
-      required this.transaction,
-      required this.tokenInfo})
-      : super._();
+  const _$_VCTxRequest({required this.id, required this.tx}) : super._();
 
   @override
   final int id;
   @override
-  final VCTxRequestType type;
-  @override
-  final RawTransaction transaction;
-  @override
-  final TokenInfo tokenInfo;
+  final SendTx tx;
 
   @override
   String toString() {
-    return 'VCTxRequest(id: $id, type: $type, transaction: $transaction, tokenInfo: $tokenInfo)';
+    return 'VCTxRequest(id: $id, tx: $tx)';
   }
 
   @override
@@ -3081,19 +2597,14 @@ class _$_VCTxRequest extends _VCTxRequest {
         (other.runtimeType == runtimeType &&
             other is _VCTxRequest &&
             const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality()
-                .equals(other.transaction, transaction) &&
-            const DeepCollectionEquality().equals(other.tokenInfo, tokenInfo));
+            const DeepCollectionEquality().equals(other.tx, tx));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(transaction),
-      const DeepCollectionEquality().hash(tokenInfo));
+      const DeepCollectionEquality().hash(tx));
 
   @JsonKey(ignore: true)
   @override
@@ -3102,21 +2613,14 @@ class _$_VCTxRequest extends _VCTxRequest {
 }
 
 abstract class _VCTxRequest extends VCTxRequest {
-  const factory _VCTxRequest(
-      {required int id,
-      required VCTxRequestType type,
-      required RawTransaction transaction,
-      required TokenInfo tokenInfo}) = _$_VCTxRequest;
+  const factory _VCTxRequest({required int id, required SendTx tx}) =
+      _$_VCTxRequest;
   const _VCTxRequest._() : super._();
 
   @override
   int get id;
   @override
-  VCTxRequestType get type;
-  @override
-  RawTransaction get transaction;
-  @override
-  TokenInfo get tokenInfo;
+  SendTx get tx;
   @override
   @JsonKey(ignore: true)
   _$VCTxRequestCopyWith<_VCTxRequest> get copyWith =>

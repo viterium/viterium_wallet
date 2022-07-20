@@ -6,6 +6,8 @@ import 'package:json_converter/json_converter.dart';
 import 'package:vite/vite.dart';
 import 'package:viteconnect/viteconnect.dart';
 
+import '../transactions/send_tx.dart';
+
 part 'viteconnect_types.freezed.dart';
 part 'viteconnect_types.g.dart';
 
@@ -57,31 +59,7 @@ class VCRequest with _$VCRequest {
   const factory VCRequest.signMessage(JsonRpcRequest request) =
       _VCRequestSignMessage;
 
-  int get id => when(
-        transaction: (tx) => tx.id,
-        signMessage: (message) => message.id,
-      );
-}
-
-@freezed
-class VCTxRequestType with _$VCTxRequestType {
-  const factory VCTxRequestType.transfer() = _VCTxRequestTypeTransfer;
-  const factory VCTxRequestType.create() = _VCTxRequestTypeCreate;
-  const factory VCTxRequestType.call() = _VCTxRequestTypeCall;
-
-  static VCTxRequestType? fromBlockType(
-    BlockType type, {
-    required bool isCallType,
-  }) {
-    switch (type) {
-      case BlockType.createContractRequest:
-        return VCTxRequestType.create();
-      case BlockType.transferRequest:
-        return isCallType ? VCTxRequestType.call() : VCTxRequestType.transfer();
-      default:
-        return null;
-    }
-  }
+  int get id => request.id;
 }
 
 @freezed
@@ -89,11 +67,11 @@ class VCTxRequest with _$VCTxRequest {
   const VCTxRequest._();
   const factory VCTxRequest({
     required int id,
-    required VCTxRequestType type,
-    required RawTransaction transaction,
-    required TokenInfo tokenInfo,
+    required SendTx tx,
   }) = _VCTxRequest;
 
+  RawTransaction get transaction => tx.rawTx;
+  TokenInfo get tokenInfo => tx.tokenInfo;
   TokenId get tokenId => tokenInfo.tokenId;
 }
 

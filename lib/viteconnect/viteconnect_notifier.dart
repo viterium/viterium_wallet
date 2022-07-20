@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vite/vite.dart';
 import 'package:viteconnect/viteconnect.dart';
 
 import '../accounts/account.dart';
@@ -101,7 +102,7 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
   void onInvalidRequest(JsonRpcRequest request, Object error) {
     state.mapOrNull(connected: (value) {
       final id = request.id;
-      service.sendError(id: id, error: VCError.sessionRejected);
+      service.sendError(id: id, error: VCError.requestRejected);
 
       final currentRequest = value.currentRequest;
       if (currentRequest?.id == id) {
@@ -142,6 +143,18 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
       signAndSendTx: (request) {
         state.mapOrNull(connected: (prev) {
           final txRequest = VCRequest.transaction(request);
+          try {
+            final block = request.params?.first['block'];
+            final tx = RawTransaction.fromJson(block);
+            if (tx.type.isReceiveType) {
+              final id = request.id;
+              service.sendError(id: id, error: VCError.requestRejected);
+              return;
+            }
+          } catch (_) {
+            service.sendError(id: request.id, error: VCError.requestRejected);
+            return;
+          }
           if (prev.currentRequest == null) {
             state = prev.copyWith(currentRequest: txRequest);
           } else {
