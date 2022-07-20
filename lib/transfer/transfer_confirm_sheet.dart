@@ -52,8 +52,9 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
-        final localization = ref.watch(l10nProvider);
         final styles = ref.watch(stylesProvider);
+        final l10n = ref.watch(l10nProvider);
+
         return SafeArea(
           minimum: EdgeInsets.only(
             bottom: MediaQuery.of(context).size.height * 0.035,
@@ -67,7 +68,7 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
                 Container(
                   margin: const EdgeInsets.only(top: 30, left: 70, right: 70),
                   child: AutoSizeText(
-                    localization.transferHeader,
+                    l10n.transferHeader,
                     style: styles.textStyleHeader(context),
                     textAlign: TextAlign.center,
                     maxLines: 2,
@@ -86,7 +87,7 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
                         Container(
                             margin: EdgeInsets.symmetric(horizontal: 60),
                             child: Text(
-                              localization.transferConfirmInfo
+                              l10n.transferConfirmInfo
                                   .replaceAll("%1", totalAsReadableAmount),
                               style: styles.textStyleParagraphPrimary,
                               textAlign: TextAlign.start,
@@ -94,14 +95,14 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
                         Container(
                             margin: EdgeInsets.symmetric(horizontal: 60),
                             child: Text(
-                              localization.transferConfirmInfoSecond,
+                              l10n.transferConfirmInfoSecond,
                               style: styles.textStyleParagraph,
                               textAlign: TextAlign.start,
                             )),
                         Container(
                             margin: EdgeInsets.symmetric(horizontal: 60),
                             child: Text(
-                              localization.transferConfirmInfoThird,
+                              l10n.transferConfirmInfoThird,
                               style: styles.textStyleParagraph,
                               textAlign: TextAlign.start,
                             )),
@@ -114,7 +115,7 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
                   child: Column(
                     children: [
                       PrimaryButton(
-                        title: localization.confirm,
+                        title: l10n.confirm,
                         onPressed: () async {
                           final theme = ref.read(themeProvider);
                           animationOpen = true;
@@ -130,7 +131,7 @@ class _AppTransferConfirmSheetState extends State<AppTransferConfirmSheet> {
                       ),
                       const SizedBox(height: 16),
                       PrimaryOutlineButton(
-                        title: localization.cancel,
+                        title: l10n.cancel,
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                     ],

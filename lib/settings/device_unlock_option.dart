@@ -12,12 +12,12 @@ class UnlockSetting extends SettingSelectionItem {
   const UnlockSetting(this.setting);
 
   String getDisplayName(WidgetRef ref) {
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     switch (setting) {
       case UnlockOption.YES:
-        return localization.yes;
+        return l10n.yes;
       case UnlockOption.NO:
-        return localization.no;
+        return l10n.no;
     }
   }
 

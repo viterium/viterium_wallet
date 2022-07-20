@@ -170,11 +170,7 @@ class HomeScreenPage extends HookConsumerWidget {
                                         child: Text(
                                           l10n.tokens.toUpperCase(),
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w100,
-                                            color: theme.text,
-                                          ),
+                                          style: styles.textStyleTabLabel,
                                         ),
                                       ),
                                     ),
@@ -185,11 +181,7 @@ class HomeScreenPage extends HookConsumerWidget {
                                         child: Text(
                                           l10n.transactions.toUpperCase(),
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w100,
-                                            color: theme.text,
-                                          ),
+                                          style: styles.textStyleTabLabel,
                                         ),
                                       ),
                                     ),

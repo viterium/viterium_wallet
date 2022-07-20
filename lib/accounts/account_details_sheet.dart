@@ -46,7 +46,7 @@ class AccountDetailsSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
     final addressCopiedTimer = ref.watch(_timerProvider.notifier);
@@ -83,14 +83,14 @@ class AccountDetailsSheet extends HookConsumerWidget {
     void confirmDelete() {
       AppDialogs.showConfirmDialog(
         context,
-        localization.hideAccountHeader,
-        localization.hideAccountText.replaceAll(
+        l10n.hideAccountHeader,
+        l10n.hideAccountText.replaceAll(
           "%1",
-          localization.addAccount,
+          l10n.addAccount,
         ),
-        localization.YES,
+        l10n.YES,
         deleteAccount,
-        cancelText: localization.NO,
+        cancelText: l10n.NO,
       );
     }
 
@@ -101,7 +101,7 @@ class AccountDetailsSheet extends HookConsumerWidget {
 
     return TapOutsideUnfocus(
       child: SheetWidget(
-        title: localization.account.toUpperCase(),
+        title: l10n.account.toUpperCase(),
         leftWidget: TrashcanButton(
           visible: account.index != 0,
           onPressed: confirmDelete,
@@ -139,16 +139,16 @@ class AccountDetailsSheet extends HookConsumerWidget {
             Visibility(
               visible: !addressCopied.value,
               replacement: SuccessButton(
-                title: localization.addressCopied,
+                title: l10n.addressCopied,
               ),
               child: PrimaryButton(
-                title: localization.copyAddress,
+                title: l10n.copyAddress,
                 onPressed: copyAddress,
               ),
             ),
             const SizedBox(height: 16),
             PrimaryOutlineButton(
-              title: localization.close,
+              title: l10n.close,
               onPressed: () => Navigator.pop(context),
             ),
           ]),

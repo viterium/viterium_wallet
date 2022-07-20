@@ -14,8 +14,8 @@ class IntroBackupSafety extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     void goNext() {
       final intro = ref.read(introStateProvider.notifier);
@@ -56,7 +56,7 @@ class IntroBackupSafety extends ConsumerWidget {
                     margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
                     alignment: AlignmentDirectional(-1, 0),
                     child: AutoSizeText(
-                      localization.secretInfoHeader,
+                      l10n.secretInfoHeader,
                       style: styles.textStyleHeaderColored,
                       stepGranularity: 0.1,
                       maxLines: 1,
@@ -70,7 +70,7 @@ class IntroBackupSafety extends ConsumerWidget {
                     child: Column(
                       children: [
                         AutoSizeText(
-                          localization.secretInfo,
+                          l10n.secretInfo,
                           style: styles.textStyleParagraph,
                           maxLines: 5,
                           stepGranularity: 0.5,
@@ -78,7 +78,7 @@ class IntroBackupSafety extends ConsumerWidget {
                         Container(
                           margin: const EdgeInsetsDirectional.only(top: 15),
                           child: AutoSizeText(
-                            localization.secretWarning,
+                            l10n.secretWarning,
                             style: styles.textStyleParagraphPrimary,
                             maxLines: 4,
                             stepGranularity: 0.5,
@@ -91,7 +91,7 @@ class IntroBackupSafety extends ConsumerWidget {
               ),
             ),
             PrimaryButton(
-              title: localization.gotItButton,
+              title: l10n.gotItButton,
               margin: const EdgeInsets.fromLTRB(28, 0, 28, 8),
               onPressed: goNext,
             ),

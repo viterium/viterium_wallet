@@ -18,7 +18,7 @@ class VoteForSbpSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final address = ref.watch(selectedAddressProvider);
     final sbpList = ref.watch(sbpListProvider);
@@ -47,27 +47,26 @@ class VoteForSbpSheet extends ConsumerWidget {
       try {
         await accountService.cancelSbpVote(account.address);
         UIUtil.showSnackbar(
-          localization.revokeMessage,
+          l10n.revokeMessage,
           context,
         );
       } catch (e, st) {
         final logger = ref.read(loggerProvider);
         logger.e('Failed to cancel SBP vote', e, st);
-        UIUtil.showSnackbar(localization.sendError, context);
+        UIUtil.showSnackbar(l10n.sendError, context);
       }
     }
 
     void confirmRevokeVote() {
       AppDialogs.showConfirmDialog(
           context,
-          localization.revokeVoteHeader,
-          localization.revokeVoteText,
-          localization.revoke.toUpperCase(),
+          l10n.revokeVoteHeader,
+          l10n.revokeVoteText, l10n.revoke.toUpperCase(),
           revokeVote);
     }
 
     return SheetWidget(
-      title: localization.changeSbpAuthenticate,
+      title: l10n.changeSbpAuthenticate,
       rightWidget: SheetHeaderButton(
         icon: AppIcons.info,
         onPressed: showSbpInfo,
@@ -80,13 +79,13 @@ class VoteForSbpSheet extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(children: [
           PrimaryButton(
-            title: localization.changeVote,
+            title: l10n.changeVote,
             disabled: sbpList.isEmpty,
             onPressed: showSbpList,
           ),
           const SizedBox(height: 16),
           PrimaryOutlineButton(
-            title: localization.revokeVote,
+            title: l10n.revokeVote,
             disabled: votedSbp.value == null,
             onPressed: confirmRevokeVote,
           )

@@ -8,7 +8,7 @@ class AccountWidget extends ConsumerWidget {
   const AccountWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     final wallet = ref.watch(walletProvider);
     final account = ref.watch(selectedAccountProvider);
@@ -22,12 +22,7 @@ class AccountWidget extends ConsumerWidget {
           fit: BoxFit.scaleDown,
           child: Text(
             '${wallet.name} - ${account.name}',
-            style: TextStyle(
-              fontFamily: "NunitoSans",
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: theme.text,
-            ),
+            style: styles.textStyleAppTextFieldSimple,
           ),
         ),
         AddressTwoLineText(address: account.viteAddress),

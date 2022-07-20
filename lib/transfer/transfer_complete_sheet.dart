@@ -7,7 +7,7 @@ import '../app_icons.dart';
 import '../app_providers.dart';
 import '../widgets/buttons/success_outline_button.dart';
 
-class TransferCompleteSheet extends ConsumerStatefulWidget {
+class TransferCompleteSheet extends ConsumerWidget {
   final String transferAmount;
   const TransferCompleteSheet({
     Key? key,
@@ -15,15 +15,11 @@ class TransferCompleteSheet extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   @override
-  _TransferCompleteSheetState createState() => _TransferCompleteSheetState();
-}
-
-class _TransferCompleteSheetState extends ConsumerState<TransferCompleteSheet> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
+
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -61,8 +57,7 @@ class _TransferCompleteSheetState extends ConsumerState<TransferCompleteSheet> {
                     alignment: AlignmentDirectional(-1, 0),
                     margin: EdgeInsets.symmetric(horizontal: 60),
                     child: Text(
-                      localization.transferComplete
-                          .replaceAll("%1", widget.transferAmount),
+                      l10n.transferComplete.replaceAll("%1", transferAmount),
                       style: styles.textStyleParagraphSuccess,
                       textAlign: TextAlign.start,
                     ),
@@ -71,7 +66,7 @@ class _TransferCompleteSheetState extends ConsumerState<TransferCompleteSheet> {
                     alignment: AlignmentDirectional(-1, 0),
                     margin: EdgeInsets.symmetric(horizontal: 60),
                     child: Text(
-                      localization.transferClose,
+                      l10n.transferClose,
                       style: styles.textStyleParagraph,
                       textAlign: TextAlign.start,
                     ),
@@ -80,7 +75,7 @@ class _TransferCompleteSheetState extends ConsumerState<TransferCompleteSheet> {
               ),
             ),
             SuccessOutlineButton(
-              title: localization.close.toUpperCase(),
+              title: l10n.close.toUpperCase(),
               margin: const EdgeInsets.only(left: 28, right: 28, top: 8),
               onPressed: () => Navigator.of(context).pop(),
             ),

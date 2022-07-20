@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_icons.dart';
-import '../app_styles.dart';
 import '../core/core_providers.dart';
 import 'app_text_field.dart';
 
@@ -29,6 +28,7 @@ class QuotaSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     return Container(
       margin: EdgeInsets.only(
@@ -61,12 +61,7 @@ class QuotaSelector extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   '$value',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: theme.text,
-                    fontFamily: kFontFamily,
-                  ),
+                  style: styles.textStyleAppTextFieldSimple,
                 ),
               ),
               TextFieldButton(
@@ -81,12 +76,7 @@ class QuotaSelector extends ConsumerWidget {
           TextFieldButton(
             widget: Text(
               'UTPE',
-              style: TextStyle(
-                fontFamily: kFontFamily,
-                color: theme.primary,
-                fontSize: AppFontSizes.smallest,
-                fontWeight: FontWeight.w600,
-              ),
+              style: styles.textStyleDialogButtonText,
               maxLines: 1,
             ),
             onPressed: null,

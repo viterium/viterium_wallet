@@ -21,7 +21,7 @@ class AccountListItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final accounts = ref.watch(accountsProvider);
 
@@ -41,14 +41,14 @@ class AccountListItem extends ConsumerWidget {
     void confirmDeleteAccount() {
       AppDialogs.showConfirmDialog(
         context,
-        localization.hideAccountHeader,
-        localization.hideAccountText.replaceAll(
+        l10n.hideAccountHeader,
+        l10n.hideAccountText.replaceAll(
           "%1",
-          localization.addAccount,
+          l10n.addAccount,
         ),
-        localization.YES,
+        l10n.YES,
         removeAccount,
-        cancelText: localization.NO,
+        cancelText: l10n.NO,
       );
     }
 
@@ -116,11 +116,7 @@ class AccountListItem extends ConsumerWidget {
                             alignment: AlignmentDirectional(0, 0.3),
                             child: Text(
                               account.getShortName().toUpperCase(),
-                              style: TextStyle(
-                                color: theme.backgroundDark,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w800,
-                              ),
+                              style: styles.textStyleAccountShortName,
                             ),
                           ),
                         ),

@@ -26,7 +26,7 @@ class ReceiveSheet extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final account = ref.watch(selectedAccountProvider);
     final address = account.viteAddress;
@@ -157,16 +157,16 @@ class ReceiveSheet extends HookConsumerWidget {
               Visibility(
                 visible: !addressCopied.value,
                 replacement: SuccessButton(
-                  title: localization.addressCopied,
+                  title: l10n.addressCopied,
                 ),
                 child: PrimaryButton(
-                  title: localization.copyAddress,
+                  title: l10n.copyAddress,
                   onPressed: copyAddress,
                 ),
               ),
               const SizedBox(height: 16),
               PrimaryOutlineButton(
-                title: localization.addressShare,
+                title: l10n.addressShare,
                 disabled: showShareCard.value,
                 onPressed: shareAddress,
               ),

@@ -18,8 +18,8 @@ class PlainSeedDisplay extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final _obscuredSeed = useState('•' * seed.length);
     final _seedObscured = useState(true);
@@ -30,7 +30,7 @@ class PlainSeedDisplay extends HookConsumerWidget {
         margin: EdgeInsets.only(left: 40, right: 40, top: 15),
         alignment: Alignment.centerLeft,
         child: Text(
-          localization.seedDescription,
+          l10n.seedDescription,
           style: styles.textStyleParagraph,
           maxLines: 5,
         ),
@@ -64,8 +64,7 @@ class PlainSeedDisplay extends HookConsumerWidget {
               margin: EdgeInsetsDirectional.only(top: 8),
               child: Text(
                 _seedObscured.value
-                    ? localization.tapToReveal
-                    : localization.tapToHide,
+                    ? l10n.tapToReveal : l10n.tapToHide,
                 style: styles.textStyleParagraphThinPrimary,
               ),
             )

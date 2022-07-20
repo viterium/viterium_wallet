@@ -18,19 +18,20 @@ class TransactionDummyCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+    final l10n = ref.watch(l10nProvider);
+    final styles = ref.watch(stylesProvider);
+
     String text;
     IconData icon;
     Color iconColor;
-    final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
-    final styles = ref.watch(stylesProvider);
 
-    if (type == localization.sent) {
-      text = localization.sent;
+    if (type == l10n.sent) {
+      text = l10n.sent;
       icon = AppIcons.sent;
       iconColor = theme.text60;
     } else {
-      text = localization.received;
+      text = l10n.received;
       icon = AppIcons.received;
       iconColor = theme.primary60;
     }

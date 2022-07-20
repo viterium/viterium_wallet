@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/tap_outside_unfocus.dart';
@@ -17,8 +16,8 @@ class IntroPassword extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final createFocusNode = useFocusNode();
     final createController = useTextEditingController();
@@ -27,13 +26,9 @@ class IntroPassword extends HookConsumerWidget {
     final passwordError = useState('');
     final passwordsMatch = useState(false);
 
-    final textColor = passwordsMatch.value ? theme.primary : theme.text;
-    final textFieldStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 16,
-      color: textColor,
-      fontFamily: kFontFamily,
-    );
+    final textFieldStyle = passwordsMatch.value
+        ? styles.textStyleParagraphPrimary
+        : styles.textStyleParagraphText;
 
     void inputChanged(_) {
       passwordError.value = '';
@@ -42,10 +37,10 @@ class IntroPassword extends HookConsumerWidget {
 
     bool validateInputs() {
       if (createController.text.isEmpty || confirmController.text.isEmpty) {
-        passwordError.value = localization.passwordBlank;
+        passwordError.value = l10n.passwordBlank;
         return false;
       } else if (createController.text != confirmController.text) {
-        passwordError.value = localization.passwordsDontMatch;
+        passwordError.value = l10n.passwordsDontMatch;
         return false;
       }
       return true;
@@ -88,7 +83,7 @@ class IntroPassword extends HookConsumerWidget {
                     margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
                     alignment: const AlignmentDirectional(-1, 0),
                     child: AutoSizeText(
-                      localization.createAPasswordHeader,
+                      l10n.createAPasswordHeader,
                       maxLines: 3,
                       stepGranularity: 0.5,
                       style: styles.textStyleHeaderColored,
@@ -98,7 +93,7 @@ class IntroPassword extends HookConsumerWidget {
                     margin: const EdgeInsets.only(left: 40, right: 40, top: 16),
                     alignment: const AlignmentDirectional(-1, 0),
                     child: AutoSizeText(
-                      localization.passwordWillBeRequiredToOpenParagraph,
+                      l10n.passwordWillBeRequiredToOpenParagraph,
                       style: styles.textStyleParagraph,
                       maxLines: 5,
                       stepGranularity: 0.5,
@@ -115,7 +110,7 @@ class IntroPassword extends HookConsumerWidget {
                         maxLines: 1,
                         autocorrect: false,
                         onChanged: inputChanged,
-                        hintText: localization.createPasswordHint,
+                        hintText: l10n.createPasswordHint,
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         style: textFieldStyle,
@@ -131,7 +126,7 @@ class IntroPassword extends HookConsumerWidget {
                         maxLines: 1,
                         autocorrect: false,
                         onChanged: inputChanged,
-                        hintText: localization.confirmPasswordHint,
+                        hintText: l10n.confirmPasswordHint,
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         style: textFieldStyle,
@@ -142,12 +137,7 @@ class IntroPassword extends HookConsumerWidget {
                         margin: EdgeInsets.only(top: 3),
                         child: Text(
                           passwordError.value,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: theme.primary,
-                            fontFamily: kFontFamily,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: styles.textStyleParagraphThinPrimary,
                         ),
                       ),
                     ]),
@@ -159,12 +149,12 @@ class IntroPassword extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(children: [
                 PrimaryButton(
-                  title: localization.nextButton,
+                  title: l10n.nextButton,
                   onPressed: submitAndContinue,
                 ),
                 const SizedBox(height: 16),
                 PrimaryOutlineButton(
-                  title: localization.goBackButton,
+                  title: l10n.goBackButton,
                   onPressed: goBack,
                 ),
               ]),

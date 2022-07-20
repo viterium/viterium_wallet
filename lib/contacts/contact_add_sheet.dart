@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../app_styles.dart';
-import '../core/vite_uri.dart';
 import '../util/formatters.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
@@ -61,7 +60,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
       } else {
         setState(() {
           _showAddressHint = true;
-          if (ViteUri.tryParse(_addressController.text) != null) {
+          if (Address.tryParse(_addressController.text) != null) {
             _addressValidAndUnfocused = true;
           }
         });
@@ -79,13 +78,12 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
     return TapOutsideUnfocus(
       child: SheetWidget(
-        title: localization.addContact,
+        title: l10n.addContact,
         mainWidget: Column(
           children: [
             // Enter Name Container
@@ -97,14 +95,9 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
               textInputAction: widget.address != null
                   ? TextInputAction.done
                   : TextInputAction.next,
-              hintText: _showNameHint ? localization.contactNameHint : "",
+              hintText: _showNameHint ? l10n.contactNameHint : "",
               keyboardType: TextInputType.text,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                color: theme.text,
-                fontFamily: kFontFamily,
-              ),
+              style: styles.textStyleAppTextFieldSimple,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(20),
                 ContactInputFormatter()
@@ -128,12 +121,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
               margin: const EdgeInsets.only(top: 5, bottom: 5),
               child: Text(
                 _nameValidationText,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: theme.primary,
-                  fontFamily: kFontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: styles.textStyleParagraphThinPrimary,
               ),
             ),
             // Enter Address container
@@ -152,20 +140,20 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
               textInputAction: TextInputAction.done,
               maxLines: null,
               autocorrect: false,
-              hintText: _showAddressHint ? localization.addressHint : '',
+              hintText: _showAddressHint ? l10n.addressHint : '',
               prefixButton: TextFieldButton(
                 icon: AppIcons.scan,
                 onPressed: () async {
                   final scanResult = await UserDataUtil.scanQrCode(context);
                   if (scanResult?.code == null) {
-                    UIUtil.showSnackbar(localization.qrInvalidAddress, context);
+                    UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
                   } else {
                     final data = scanResult!.code!;
-                    final viteUri = ViteUri.tryParse(data);
+                    final address = Address.tryParse(data);
 
-                    if (mounted && viteUri != null) {
+                    if (mounted && address != null) {
                       setState(() {
-                        _addressController.text = viteUri.viteAddress;
+                        _addressController.text = address.viteAddress;
                         _addressValidationText = "";
                         _addressValid = true;
                         _addressValidAndUnfocused = true;
@@ -204,12 +192,12 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
               fadeSuffixOnCondition: true,
               suffixShowFirstCondition: _showPasteButton,
               onChanged: (text) {
-                final address = ViteUri.tryParse(text);
+                final address = Address.tryParse(text);
                 if (address != null) {
                   setState(() {
                     _addressValid = true;
                     _showPasteButton = false;
-                    _addressController.text = address.address.viteAddress;
+                    _addressController.text = address.viteAddress;
                   });
                   _addressFocusNode.unfocus();
                 } else {
@@ -246,12 +234,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
               margin: const EdgeInsets.only(top: 5, bottom: 5),
               child: Text(
                 _addressValidationText,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: theme.primary,
-                  fontFamily: kFontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: styles.textStyleParagraphThinPrimary,
               ),
             ),
           ],
@@ -261,12 +244,12 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
           child: Column(
             children: [
               PrimaryButton(
-                title: localization.addContact,
+                title: l10n.addContact,
                 onPressed: _addContact,
               ),
               const SizedBox(height: 16),
               PrimaryOutlineButton(
-                title: localization.close,
+                title: l10n.close,
                 onPressed: () => Navigator.pop(context),
               ),
             ],
@@ -288,16 +271,16 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
     );
     final contacts = ref.read(contactsProvider);
     await contacts.addContact(newContact);
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     UIUtil.showSnackbar(
-      localization.contactAdded.replaceAll("%1", newContact.name),
+      l10n.contactAdded.replaceAll("%1", newContact.name),
       context,
     );
     Navigator.of(context).pop();
   }
 
   Future<bool> _validateForm() async {
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     bool isValid = true;
     // Address Validations
     // Don't validate address if it came pre-filled in
@@ -305,12 +288,12 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
       if (_addressController.text.isEmpty) {
         isValid = false;
         setState(() {
-          _addressValidationText = localization.addressMising;
+          _addressValidationText = l10n.addressMising;
         });
-      } else if (ViteUri.tryParse(_addressController.text) == null) {
+      } else if (Address.tryParse(_addressController.text) == null) {
         isValid = false;
         setState(() {
-          _addressValidationText = localization.invalidAddress;
+          _addressValidationText = l10n.invalidAddress;
         });
       } else {
         _addressFocusNode.unfocus();
@@ -320,7 +303,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
         if (addressExists) {
           setState(() {
             isValid = false;
-            _addressValidationText = localization.contactExists;
+            _addressValidationText = l10n.contactExists;
           });
         }
       }
@@ -329,7 +312,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
     if (_nameController.text.isEmpty) {
       isValid = false;
       setState(() {
-        _nameValidationText = localization.contactNameMissing;
+        _nameValidationText = l10n.contactNameMissing;
       });
     } else {
       bool nameExists = await ref
@@ -338,7 +321,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
       if (nameExists) {
         setState(() {
           isValid = false;
-          _nameValidationText = localization.contactExists;
+          _nameValidationText = l10n.contactExists;
         });
       }
     }

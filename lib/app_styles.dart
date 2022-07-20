@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'themes/themes.dart';
 
-const kFontFamily = 'NunitoSans';
+const kDefaultFontFamily = 'NunitoSans';
 
 class AppFontSizes {
   static const smallest = 12.0;
@@ -21,7 +21,7 @@ class AppStyles {
   // Text style for paragraph text.
   TextStyle get textStyleParagraph {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w200,
       color: theme.text,
@@ -29,7 +29,7 @@ class AppStyles {
   }
 
   late final textStyleParagraphSmall = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     fontSize: AppFontSizes.small,
     fontWeight: FontWeight.w400,
     color: theme.text,
@@ -37,7 +37,7 @@ class AppStyles {
 
   TextStyle get textStyleParagraphBold {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w400,
       color: theme.text,
@@ -45,39 +45,46 @@ class AppStyles {
   }
 
   // Text style for paragraph text with primary color.
-  TextStyle get textStyleParagraphPrimary {
-    return TextStyle(
-      fontFamily: kFontFamily,
-      fontSize: AppFontSizes.medium,
-      fontWeight: FontWeight.w700,
-      color: theme.primary,
-    );
-  }
+  late final textStyleParagraphPrimary = TextStyle(
+    fontFamily: kDefaultFontFamily,
+    fontSize: AppFontSizes.medium,
+    fontWeight: FontWeight.w700,
+    color: theme.primary,
+  );
 
-  // Text style for thin paragraph text with primary color.
-  TextStyle get textStyleParagraphThinPrimary {
-    return TextStyle(
-      fontFamily: kFontFamily,
-      fontSize: AppFontSizes.small,
-      fontWeight: FontWeight.w600,
-      color: theme.primary,
-    );
-  }
+  late final textStyleParagraphPrimaryW100 =
+      textStyleParagraphPrimary.copyWith(fontWeight: FontWeight.w100);
+
+  // Text style for paragraph text with text color.
+  late final textStyleParagraphText =
+      textStyleParagraphPrimary.copyWith(color: theme.text);
 
   // Text style for paragraph text with primary color.
   TextStyle get textStyleParagraphSuccess {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w700,
       color: theme.success,
     );
   }
 
+  // Text style for thin paragraph text with primary color.
+  late final textStyleParagraphThinPrimary = TextStyle(
+    fontFamily: kDefaultFontFamily,
+    fontSize: AppFontSizes.small,
+    fontWeight: FontWeight.w600,
+    color: theme.primary,
+  );
+
+  // Text style for thin paragraph text with success color.
+  late final textStyleParagraphThinSuccess =
+      textStyleParagraphThinPrimary.copyWith(color: theme.success);
+
   // For snackbar/Toast text
   TextStyle get textStyleSnackbar {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w700,
       color: theme.background,
@@ -87,7 +94,7 @@ class AppStyles {
   // Text style for primary button
   TextStyle get textStyleButtonPrimary {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.background,
@@ -97,7 +104,7 @@ class AppStyles {
   // Green primary button
   TextStyle get textStyleButtonPrimaryGreen {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.successDark,
@@ -107,7 +114,7 @@ class AppStyles {
   // Text style for outline button
   TextStyle get textStyleButtonPrimaryOutline {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.primary,
@@ -117,7 +124,7 @@ class AppStyles {
   // Text style for small outline button
   TextStyle get textStyleButtonPrimarySmallOutline {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w700,
       color: theme.primary,
@@ -127,7 +134,7 @@ class AppStyles {
   // Text style for small success outline button
   TextStyle get textStyleButtonSuccessSmallOutline {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w700,
       color: theme.success,
@@ -136,7 +143,7 @@ class AppStyles {
 
   TextStyle get textStyleButtonPrimaryOutlineDisabled {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.primary60,
@@ -146,7 +153,7 @@ class AppStyles {
   // Text style for success outline button
   TextStyle get textStyleButtonSuccessOutline {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.success,
@@ -156,7 +163,7 @@ class AppStyles {
   // Text style for text outline button
   TextStyle get textStyleButtonTextOutline {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.text,
@@ -214,10 +221,55 @@ class AppStyles {
     );
   }
 
+  late final textStyleAccount = TextStyle(
+    color: theme.text60,
+    fontSize: 16,
+    fontWeight: FontWeight.w700,
+    fontFamily: kDefaultFontFamily,
+  );
+
+  late final textStyleAccountName = TextStyle(
+    fontFamily: kDefaultFontFamily,
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+    color: theme.text,
+  );
+
+  late final textStyleTotalValue = TextStyle(
+    fontFamily: kDefaultFontFamily,
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    color: theme.text,
+  );
+
+  late final textStyleDataTypeHeader = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 12,
+    color: theme.text30,
+    fontFamily: kDefaultFontFamily,
+  );
+
+  late final textStyleDataTypeHeaderHighlight = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 12,
+    color: theme.primary,
+    fontFamily: kDefaultFontFamily,
+  );
+
+  late final textStyleDataTypeHeaderSuccess =
+      textStyleDataTypeHeaderHighlight.copyWith(color: theme.success);
+
+  late final textStyleDataTypeHeaderSelected = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 12,
+    color: theme.text,
+    fontFamily: kDefaultFontFamily,
+  );
+
   // Text style for alternate currencies on home page
   TextStyle get textStyleCurrencyAlt {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w600,
       color: theme.text60,
@@ -226,7 +278,7 @@ class AppStyles {
 
   TextStyle get textStyleCurrencyAltHidden {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w600,
       color: Colors.transparent,
@@ -236,17 +288,24 @@ class AppStyles {
   // Text style for primary currency on home page
   TextStyle get textStyleCurrency {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.largest,
       fontWeight: FontWeight.w900,
       color: theme.primary,
     );
   }
 
+  late final textStyleHeaderSuccess = TextStyle(
+    fontSize: 28,
+    fontWeight: FontWeight.w700,
+    color: theme.success,
+    fontFamily: kDefaultFontFamily,
+  );
+
   // Text style for primary currency on home page
   TextStyle get textStyleCurrencySmaller {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: 22,
       fontWeight: FontWeight.w900,
       color: theme.primary,
@@ -257,7 +316,7 @@ class AppStyles {
   // Text style for transaction card "Received"/"Sent" text
   TextStyle get textStyleTransactionType {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w600,
       color: theme.text,
@@ -266,7 +325,7 @@ class AppStyles {
 
   // Amount
   late final textStyleTransactionAmount = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     color: theme.primary60,
     fontSize: AppFontSizes.smallest,
     fontWeight: FontWeight.w600,
@@ -278,18 +337,25 @@ class AppStyles {
   late final textStyleTransactionAmountMedium =
       textStyleTransactionAmount.copyWith(fontSize: AppFontSizes.medium);
 
-  // Unit (e.g. BAN)
+  // Unit (e.g. VITE)
   TextStyle get textStyleTransactionUnit {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       color: theme.primary60,
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
     );
   }
 
+  late final textStyleBalanceAmountSmall = TextStyle(
+    fontFamily: kDefaultFontFamily,
+    color: theme.primary60,
+    fontSize: AppFontSizes.small,
+    fontWeight: FontWeight.w700,
+  );
+
   late final textStyleTransactionUnitSmall = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     color: theme.primary60,
     fontSize: AppFontSizes.small,
     fontWeight: FontWeight.w100,
@@ -311,7 +377,7 @@ class AppStyles {
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w200,
       color: theme.text,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
     );
   }
 
@@ -321,14 +387,14 @@ class AppStyles {
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w200,
       color: theme.primary,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
     );
   }
 
   // Version info in settings
   TextStyle get textStyleVersion {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w100,
       color: theme.text60,
@@ -337,7 +403,7 @@ class AppStyles {
 
   TextStyle get textStyleVersionUnderline {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w100,
       color: theme.text60,
@@ -348,7 +414,7 @@ class AppStyles {
   // Text style for alert dialog header
   TextStyle get textStyleDialogHeader {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.primary,
@@ -358,7 +424,7 @@ class AppStyles {
   // Text style for dialog options
   TextStyle get textStyleDialogOptions {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: theme.primary,
@@ -368,15 +434,22 @@ class AppStyles {
   // Text style for app text field
   TextStyle get textStyleAppTextField {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: theme.primary,
     );
   }
 
+  late final textStyleAppTextFieldHint = TextStyle(
+    fontSize: AppFontSizes.medium,
+    fontWeight: FontWeight.w100,
+    fontFamily: kDefaultFontFamily,
+    color: theme.text60,
+  );
+
   late final textStyleAppTextFieldSimple = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     fontSize: AppFontSizes.medium,
     fontWeight: FontWeight.w600,
     color: theme.text,
@@ -385,7 +458,7 @@ class AppStyles {
   // Text style for dialog button text
   TextStyle get textStyleDialogButtonText {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w600,
       color: theme.primary,
@@ -393,7 +466,7 @@ class AppStyles {
   }
 
   late final textStyleDialogButtonTextSimple = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     fontSize: AppFontSizes.smallest,
     fontWeight: FontWeight.w600,
     color: theme.text,
@@ -459,7 +532,7 @@ class AppStyles {
   // Text style for general headers like sheet headers
   TextStyle textStyleHeader(BuildContext context) {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.larger,
       letterSpacing: 1.4,
       fontWeight: FontWeight.w700,
@@ -469,25 +542,25 @@ class AppStyles {
 
   // Text style for data sub headers
   late final textStyleSubHeader = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     fontSize: AppFontSizes.medium,
     letterSpacing: 1.4,
     fontWeight: FontWeight.w400,
     color: theme.text,
   );
 
-  late final textStyleSubHeaderUnselected = TextStyle(
-    fontFamily: kFontFamily,
-    fontSize: AppFontSizes.medium,
-    letterSpacing: 1.4,
-    fontWeight: FontWeight.w400,
+  late final textStyleSubHeaderUnselected = textStyleSubHeader.copyWith(
     color: theme.text.withOpacity(0.3),
+  );
+
+  late final textStyleSubHeaderSuccess = textStyleSubHeader.copyWith(
+    color: theme.success,
   );
 
   // Text style for settings headers
   TextStyle get textStyleSettingsHeader {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.largest,
       fontWeight: FontWeight.w700,
       color: theme.text,
@@ -497,7 +570,7 @@ class AppStyles {
   // Text style for primary color header
   TextStyle get textStyleHeaderColored {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.largest,
       fontWeight: FontWeight.w700,
       color: theme.primary,
@@ -507,7 +580,7 @@ class AppStyles {
   // Text style for primary color header
   TextStyle get textStyleHeader2Colored {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.larger,
       fontWeight: FontWeight.w700,
       color: theme.primary,
@@ -516,7 +589,7 @@ class AppStyles {
 
   TextStyle get textStylePinScreenHeaderColored {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.large,
       fontWeight: FontWeight.w700,
       color: theme.primary,
@@ -525,7 +598,7 @@ class AppStyles {
 
   TextStyle get textStyleLogoutButton {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.small,
       fontWeight: FontWeight.w600,
       color: theme.text,
@@ -535,7 +608,7 @@ class AppStyles {
   // Text style for setting item header
   TextStyle get textStyleSettingItemHeader {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: theme.text,
@@ -543,7 +616,7 @@ class AppStyles {
   }
 
   late final textStyleSettingItemHeaderLarge = TextStyle(
-    fontFamily: kFontFamily,
+    fontFamily: kDefaultFontFamily,
     fontSize: 18,
     fontWeight: FontWeight.w600,
     color: theme.text,
@@ -551,7 +624,7 @@ class AppStyles {
 
   TextStyle get textStyleSettingItemHeader60 {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: theme.text60,
@@ -560,7 +633,7 @@ class AppStyles {
 
   TextStyle get textStyleSettingItemHeader45 {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.medium,
       fontWeight: FontWeight.w600,
       color: theme.text45,
@@ -570,7 +643,7 @@ class AppStyles {
   // Text style for setting item subheader
   TextStyle get textStyleSettingItemSubheader {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
       color: theme.text60,
@@ -579,7 +652,7 @@ class AppStyles {
 
   TextStyle get textStyleSettingItemSubheader30 {
     return TextStyle(
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontSize: AppFontSizes.smallest,
       fontWeight: FontWeight.w100,
       color: theme.text30,
@@ -591,7 +664,7 @@ class AppStyles {
     return TextStyle(
       fontSize: AppFontSizes.small,
       color: theme.primary,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w600,
     );
   }
@@ -631,7 +704,7 @@ class AppStyles {
     return TextStyle(
       fontSize: 16,
       color: theme.primary,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w700,
     );
   }
@@ -640,16 +713,30 @@ class AppStyles {
     return TextStyle(
       fontSize: 16,
       color: theme.success,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w700,
     );
   }
+
+  late final textStyleApproxAmountSuccess = TextStyle(
+    fontSize: 16,
+    color: theme.success,
+    fontFamily: kDefaultFontFamily,
+    fontWeight: FontWeight.w700,
+  );
+
+  late final textStyleTokenSymbolSuccess = TextStyle(
+    color: theme.success,
+    fontSize: 16,
+    fontWeight: FontWeight.w100,
+    fontFamily: kDefaultFontFamily,
+  );
 
   TextStyle get addressText {
     return TextStyle(
       fontSize: 12,
       color: theme.text,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w400,
     );
   }
@@ -658,7 +745,7 @@ class AppStyles {
     return TextStyle(
       fontSize: 12,
       color: theme.text60,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w400,
     );
   }
@@ -667,7 +754,7 @@ class AppStyles {
     return TextStyle(
       fontSize: 20,
       color: theme.success,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w500,
     );
   }
@@ -676,7 +763,7 @@ class AppStyles {
     return TextStyle(
       fontSize: 14,
       color: theme.text,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w400,
     );
   }
@@ -685,7 +772,7 @@ class AppStyles {
     return TextStyle(
       fontSize: 12,
       color: theme.text60,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w400,
     );
   }
@@ -694,10 +781,58 @@ class AppStyles {
     return TextStyle(
       fontSize: 18,
       color: theme.background,
-      fontFamily: kFontFamily,
+      fontFamily: kDefaultFontFamily,
       fontWeight: FontWeight.w700,
     );
   }
+
+  late final textStyleAccountShortName = TextStyle(
+    color: theme.backgroundDark,
+    fontSize: 12,
+    fontWeight: FontWeight.w800,
+  );
+
+  late final textStyleAccountShortNameSelected = TextStyle(
+    color: theme.backgroundDark,
+    fontSize: 16,
+    fontFamily: kDefaultFontFamily,
+    fontWeight: FontWeight.w900,
+  );
+
+  late final textStyleNetworkBanner = TextStyle(
+    color: theme.text,
+    fontSize: 12 * 0.85,
+    fontWeight: FontWeight.w900,
+    height: 1.0,
+  );
+
+  late final textStyleTabLabel = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w100,
+    color: theme.text,
+  );
+
+  late final textStyleTextDefaultSmallThin = TextStyle(
+    color: theme.text,
+    fontFamily: kDefaultFontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w100,
+  );
+
+  late final textStylePrimaryDefaultSmallMedium = TextStyle(
+    color: theme.primary,
+    fontFamily: kDefaultFontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+  );
+
+  late final textStyleKeyboardKey = TextStyle(
+    fontWeight: FontWeight.bold,
+  );
+
+  late final textStyleKeyboardWord = TextStyle(
+    color: theme.primary,
+  );
 
   ButtonStyle get cardButtonStyle {
     return TextButton.styleFrom(

@@ -27,14 +27,15 @@ class IntroImportSeed extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final mnemonicIsValid = ref.watch(_mnemonicIsValidProvider);
 
     final mnemonicFocusNode = useFocusNode();
     final mnemonicController = useTextEditingController();
     final scaffoldKey = useRef(GlobalKey<ScaffoldState>());
+    final walletName = useRef<String?>(null);
 
     void updateFocus(int offset) {
       mnemonicController.selection = TextSelection.collapsed(offset: offset);
@@ -102,9 +103,10 @@ class IntroImportSeed extends HookConsumerWidget {
       final data = result!.code!.trim();
       final mnemonic = ViteUtil.mnemonicFromViteAppLink(data);
       if (mnemonic != null) {
+        walletName.value = ViteUtil.walletNameFromViteAppLink(data);
         ref.read(_mnemonicProvider.notifier).state = mnemonic + ' ';
         updateFocus(mnemonic.length + 1);
-        ref.read(wordPrefixProvider.notifier).update((state) => '');
+        ref.read(wordPrefixProvider.notifier).state = '';
         return;
       }
 
@@ -115,7 +117,7 @@ class IntroImportSeed extends HookConsumerWidget {
         return;
       }
       UIUtil.showSnackbar(
-        localization.qrMnemonicError,
+        l10n.qrMnemonicError,
         context,
       );
     }
@@ -140,7 +142,7 @@ class IntroImportSeed extends HookConsumerWidget {
         return;
       }
       UIUtil.showSnackbar(
-        localization.pasteMnemonicError,
+        l10n.pasteMnemonicError,
         context,
       );
     }
@@ -149,10 +151,8 @@ class IntroImportSeed extends HookConsumerWidget {
       final mnemonic = ref.read(_mnemonicProvider).trim();
       final intro = ref.read(introStateProvider.notifier);
 
-      //mnemonicFocusNode.unfocus();
-
       if (ViteUtil.isValidMnemonic(mnemonic)) {
-        intro.setMnemonic(mnemonic);
+        intro.setMnemonic(mnemonic, walletName: walletName.value);
       }
     }
 
@@ -184,7 +184,7 @@ class IntroImportSeed extends HookConsumerWidget {
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        localization.importSecretPhrase,
+                        l10n.importSecretPhrase,
                         style: styles.textStyleHeaderColored,
                         maxLines: 1,
                       ),
@@ -194,7 +194,7 @@ class IntroImportSeed extends HookConsumerWidget {
                     margin: const EdgeInsets.only(left: 40, right: 40, top: 15),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      localization.importSecretPhraseHint,
+                      l10n.importSecretPhraseHint,
                       style: styles.textStyleParagraph,
                       textAlign: TextAlign.start,
                     ),

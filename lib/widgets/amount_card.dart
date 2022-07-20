@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
-import '../app_styles.dart';
 import '../core/core_providers.dart';
 import '../tokens/token_icon_widget.dart';
 import '../util/numberutil.dart';
@@ -16,6 +15,7 @@ class AmountCard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     final amountRaw = amount.raw;
     final tokenInfo = amount.tokenInfo;
@@ -76,22 +76,12 @@ class AmountCard extends HookConsumerWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "$amountValue",
-                          style: TextStyle(
-                            color: theme.primary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: kFontFamily,
-                          ),
+                          text: '$amountValue',
+                          style: styles.textStyleParagraphPrimary,
                         ),
                         TextSpan(
                           text: ' ${tokenInfo.symbolLabel}',
-                          style: TextStyle(
-                            color: theme.primary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w100,
-                            fontFamily: kFontFamily,
-                          ),
+                          style: styles.textStyleParagraphPrimaryW100,
                         ),
                       ],
                     ),

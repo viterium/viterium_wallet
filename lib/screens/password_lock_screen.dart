@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../util/caseconverter.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
@@ -22,8 +21,8 @@ class PasswordLockScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final enterFocusNode = useFocusNode();
     final enterController = useTextEditingController();
@@ -47,7 +46,6 @@ class PasswordLockScreen extends HookConsumerWidget {
           Navigator.of(context).pop(true);
         }
       } catch (e) {
-        final l10n = ref.read(l10nProvider);
         passwordError.value = l10n.invalidPassword;
       }
     }
@@ -85,7 +83,7 @@ class PasswordLockScreen extends HookConsumerWidget {
                   ),
                   Container(
                     child: Text(
-                      CaseChange.toUpperCase(localization.locked, ref),
+                      CaseChange.toUpperCase(l10n.locked, ref),
                       style: styles.textStyleHeaderColored,
                     ),
                     margin: const EdgeInsets.only(top: 10),
@@ -109,28 +107,18 @@ class PasswordLockScreen extends HookConsumerWidget {
                           FocusScope.of(context).unfocus();
                           validateAndUnlock();
                         },
-                        hintText: localization.enterPasswordHint,
+                        hintText: l10n.enterPasswordHint,
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: theme.primary,
-                          fontFamily: kFontFamily,
-                        ),
+                        style: styles.textStyleParagraphPrimary,
                       ),
                       Container(
                         alignment: AlignmentDirectional(0, 0),
                         margin: const EdgeInsets.only(top: 3),
                         child: Text(
                           passwordError.value,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: theme.primary,
-                            fontFamily: kFontFamily,
-                            fontWeight: FontWeight.w600,
-                          ),
+                          style: styles.textStyleParagraphThinPrimary,
                         ),
                       ),
                     ]),
@@ -138,7 +126,7 @@ class PasswordLockScreen extends HookConsumerWidget {
                 ]),
               ),
               PrimaryButton(
-                title: localization.unlock,
+                title: l10n.unlock,
                 margin: const EdgeInsets.fromLTRB(28, 8, 28, 0),
                 onPressed: validateAndUnlock,
               ),

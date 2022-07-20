@@ -12,12 +12,12 @@ class NotificationSetting extends SettingSelectionItem {
   const NotificationSetting(this.setting);
 
   String getDisplayName(WidgetRef ref) {
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     switch (setting) {
       case NotificationOptions.ON:
-        return localization.onStr;
+        return l10n.onStr;
       case NotificationOptions.OFF:
-        return localization.off;
+        return l10n.off;
     }
   }
 

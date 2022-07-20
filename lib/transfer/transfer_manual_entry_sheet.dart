@@ -36,9 +36,9 @@ class _TransferManualEntrySheetState
 
   @override
   Widget build(BuildContext context) {
-    final localization = ref.watch(l10nProvider);
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     return TapOutsideUnfocus(
       child: SafeArea(
@@ -50,7 +50,7 @@ class _TransferManualEntrySheetState
             Container(
               margin: const EdgeInsets.only(top: 30, left: 70, right: 70),
               child: AutoSizeText(
-                localization.transferHeader,
+                l10n.transferHeader,
                 style: styles.textStyleHeader(context),
                 textAlign: TextAlign.center,
                 maxLines: 2,
@@ -70,7 +70,7 @@ class _TransferManualEntrySheetState
                     ),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      localization.transferManualHint,
+                      l10n.transferManualHint,
                       style: styles.textStyleParagraph,
                       textAlign: TextAlign.start,
                     ),
@@ -126,12 +126,12 @@ class _TransferManualEntrySheetState
                       Container(
                         margin: const EdgeInsets.only(top: 5),
                         child: Text(
-                          localization.seedInvalid,
+                          l10n.seedInvalid,
                           style: TextStyle(
                             fontSize: 14.0,
                             color:
                                 hasError ? theme.primary : Colors.transparent,
-                            fontFamily: kFontFamily,
+                            fontFamily: kDefaultFontFamily,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -145,7 +145,7 @@ class _TransferManualEntrySheetState
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(children: [
                 PrimaryButton(
-                  title: localization.transfer,
+                  title: l10n.transfer,
                   onPressed: () {
                     final seed = _seedInputController.text;
                     if (ViteUtil.isValidSeed(seed) &&
@@ -158,7 +158,7 @@ class _TransferManualEntrySheetState
                 ),
                 const SizedBox(height: 16),
                 PrimaryOutlineButton(
-                  title: localization.cancel,
+                  title: l10n.cancel,
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

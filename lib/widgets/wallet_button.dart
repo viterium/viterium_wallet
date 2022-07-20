@@ -41,11 +41,7 @@ class WalletButton extends ConsumerWidget {
             alignment: AlignmentDirectional(0, 0.3),
             child: Text(
               account.getShortName().toUpperCase(),
-              style: TextStyle(
-                color: theme.backgroundDark,
-                fontSize: 12,
-                fontWeight: FontWeight.w800,
-              ),
+              style: styles.textStyleAccountShortName,
             ),
           ),
         ),

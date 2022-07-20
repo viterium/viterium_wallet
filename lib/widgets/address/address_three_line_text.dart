@@ -20,11 +20,11 @@ class AddressThreeLineText extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String stringPartOne = address.substring(0, 11);
-    String stringPartTwo = address.substring(11, 20);
+    String stringPartOne = address.substring(0, 13);
+    String stringPartTwo = address.substring(13, 20);
     String stringPartThree = address.substring(20, 35);
-    String stringPartFour = address.substring(35, 49);
-    String stringPartFive = address.substring(49);
+    String stringPartFour = address.substring(35, 45);
+    String stringPartFive = address.substring(45);
 
     final styles = ref.watch(stylesProvider);
 

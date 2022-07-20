@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/utils.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 
 class SendDataWidget extends ConsumerWidget {
   final Uint8List data;
@@ -37,13 +36,8 @@ class SendDataWidget extends ConsumerWidget {
       child: Column(
         children: [
           Text(
-            'DATA',
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-              color: theme.primary,
-              fontFamily: kFontFamily,
-            ),
+            'Data'.toUpperCase(),
+            style: styles.textStyleDataTypeHeaderHighlight,
           ),
           Text(
             data.hex,

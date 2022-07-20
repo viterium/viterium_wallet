@@ -12,20 +12,20 @@ class LockTimeoutSetting extends SettingSelectionItem {
   const LockTimeoutSetting(this.setting);
 
   String getDisplayName(WidgetRef ref) {
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     switch (setting) {
       case LockTimeoutOption.ZERO:
-        return localization.instantly;
+        return l10n.instantly;
       case LockTimeoutOption.ONE:
-        return localization.xMinute.replaceAll("%1", "1");
+        return l10n.xMinute.replaceAll("%1", "1");
       case LockTimeoutOption.FIVE:
-        return localization.xMinutes.replaceAll("%1", "5");
+        return l10n.xMinutes.replaceAll("%1", "5");
       case LockTimeoutOption.FIFTEEN:
-        return localization.xMinutes.replaceAll("%1", "15");
+        return l10n.xMinutes.replaceAll("%1", "15");
       case LockTimeoutOption.THIRTY:
-        return localization.xMinutes.replaceAll("%1", "30");
+        return l10n.xMinutes.replaceAll("%1", "30");
       case LockTimeoutOption.SIXTY:
-        return localization.xMinutes.replaceAll("%1", "60");
+        return l10n.xMinutes.replaceAll("%1", "60");
     }
   }
 

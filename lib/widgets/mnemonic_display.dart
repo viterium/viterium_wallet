@@ -99,11 +99,11 @@ class MnemonicDisplay extends HookConsumerWidget {
           // Tap to reveal or hide
           if (obscured)
             Consumer(builder: (context, ref, _) {
-              final localization = ref.watch(l10nProvider);
               final styles = ref.watch(stylesProvider);
+              final l10n = ref.watch(l10nProvider);
+
               final text = isObscured.value
-                  ? localization.tapToReveal
-                  : localization.tapToHide;
+                  ? l10n.tapToReveal : l10n.tapToHide;
               return Container(
                 margin: EdgeInsetsDirectional.only(top: 8),
                 child: FittedBox(

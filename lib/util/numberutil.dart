@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:decimal/decimal.dart';
+import 'package:vite/vite.dart';
 
 class NumberUtil {
   static const int maxDecimalDigits = 6; // Max digits after decimal
@@ -69,7 +70,11 @@ class NumberUtil {
     return decimalRaw.toBigInt();
   }
 
-  static String approxAmount(
+  static String approx({required Amount amount, int precision = 6}) {
+    return approxAmountRaw(amount.raw, amount.tokenInfo.decimals);
+  }
+
+  static String approxAmountRaw(
     BigInt amountRaw,
     int decimals, [
     int precision = 6,

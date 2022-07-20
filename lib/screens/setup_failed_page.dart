@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:viterium_wallet/core/core_providers.dart';
 
+import '../core/core_providers.dart';
 import '../widgets/buttons.dart';
 
 class SetupFailedPage extends ConsumerWidget {

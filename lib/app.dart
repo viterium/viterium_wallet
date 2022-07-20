@@ -56,7 +56,7 @@ class App extends ConsumerWidget {
                       secondary: theme.primary10,
                     ),
                 backgroundColor: theme.backgroundDark,
-                fontFamily: kFontFamily,
+                fontFamily: kDefaultFontFamily,
                 brightness: Brightness.dark,
                 tooltipTheme: TooltipThemeData(
                   preferBelow: false,

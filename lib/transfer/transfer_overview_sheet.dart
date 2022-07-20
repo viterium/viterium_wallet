@@ -35,7 +35,8 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
   Widget build(BuildContext context) {
     //final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
+
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -60,7 +61,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
                       constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width - 140),
                       child: AutoSizeText(
-                        localization.transferHeader,
+                        l10n.transferHeader,
                         style: styles.textStyleHeader(context),
                         textAlign: TextAlign.center,
                         maxLines: 2,
@@ -110,8 +111,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
                       vertical: 20,
                     ),
                     child: AutoSizeText(
-                      localization.transferIntro
-                          .replaceAll("%1", localization.scanQrCode),
+                      l10n.transferIntro.replaceAll("%1", l10n.scanQrCode),
                       style: styles.textStyleParagraph,
                       textAlign: TextAlign.start,
                       maxLines: 6,
@@ -125,7 +125,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(children: [
                 PrimaryButton(
-                  title: localization.scanQrCode,
+                  title: l10n.scanQrCode,
                   onPressed: () async {
                     // UIUtil.cancelLockEvent();
                     final result = await UserDataUtil.scanQrCode(context);
@@ -139,7 +139,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
                 ),
                 const SizedBox(height: 16),
                 PrimaryOutlineButton(
-                  title: localization.manualEntry,
+                  title: l10n.manualEntry,
                   onPressed: () {
                     Sheets.showAppHeightNineSheet(
                       context: context,
@@ -168,7 +168,8 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
     bool manualEntry = false,
   }) async {
     final theme = ref.read(themeProvider);
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
+
     // Show loading overlay
     _animationOpen = true;
     AnimationType animation = manualEntry
@@ -203,7 +204,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
         privKeyBalanceMap.remove(account);
       });
       if (privKeyBalanceMap.length == 0) {
-        UIUtil.showSnackbar(localization.transferNoFunds, context);
+        UIUtil.showSnackbar(l10n.transferNoFunds, context);
         return;
       }
       // Go to confirmation screen
@@ -215,7 +216,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
       if (_animationOpen) {
         Navigator.of(context).pop();
       }
-      UIUtil.showSnackbar(localization.sendError, context);
+      UIUtil.showSnackbar(l10n.sendError, context);
     }
   }
 

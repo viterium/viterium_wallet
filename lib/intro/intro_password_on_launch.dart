@@ -13,8 +13,8 @@ class IntroPasswordOnLaunch extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     void skipPassword() {
       final intro = ref.read(introStateProvider.notifier);
@@ -49,7 +49,7 @@ class IntroPasswordOnLaunch extends ConsumerWidget {
                   margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
                   alignment: AlignmentDirectional(-1, 0),
                   child: AutoSizeText(
-                    localization.requireAPasswordToOpenHeader,
+                    l10n.requireAPasswordToOpenHeader,
                     maxLines: 3,
                     stepGranularity: 0.5,
                     style: styles.textStyleHeaderColored,
@@ -63,7 +63,7 @@ class IntroPasswordOnLaunch extends ConsumerWidget {
                   ),
                   alignment: AlignmentDirectional(-1, 0),
                   child: AutoSizeText(
-                    localization.createPasswordFirstParagraph,
+                    l10n.createPasswordFirstParagraph,
                     style: styles.textStyleParagraph,
                     maxLines: 5,
                     stepGranularity: 0.5,
@@ -73,7 +73,7 @@ class IntroPasswordOnLaunch extends ConsumerWidget {
                   margin: const EdgeInsets.only(left: 40, right: 40, top: 8),
                   alignment: AlignmentDirectional(-1, 0),
                   child: AutoSizeText(
-                    localization.createPasswordSecondParagraph,
+                    l10n.createPasswordSecondParagraph,
                     style: styles.textStyleParagraphPrimary,
                     maxLines: 4,
                     stepGranularity: 0.5,
@@ -86,12 +86,12 @@ class IntroPasswordOnLaunch extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: Column(children: [
               PrimaryButton(
-                title: localization.noSkipButton,
+                title: l10n.noSkipButton,
                 onPressed: skipPassword,
               ),
               const SizedBox(height: 16),
               PrimaryOutlineButton(
-                title: localization.yesButton,
+                title: l10n.yesButton,
                 onPressed: setPassword,
               ),
             ]),

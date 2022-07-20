@@ -54,13 +54,14 @@ class QuotaSheet extends ConsumerWidget {
       mainWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: const AccountWidget(),
             ),
+            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -88,7 +89,8 @@ class QuotaSheet extends ConsumerWidget {
                               (Decimal.parse(quota.currentQuota) / ut)
                                   .toDecimal(scaleOnInfinitePrecision: 2);
                           final max =
-                              (Decimal.parse(quota.maxQuota) / ut).toDecimal();
+                              (Decimal.parse(quota.maxQuota) / ut)
+                              .toDecimal(scaleOnInfinitePrecision: 2);
 
                           final digits = current.isInteger ? 0 : 2;
                           final currentLabel = current.toStringAsFixed(digits);

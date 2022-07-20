@@ -14,12 +14,12 @@ import '../util/ui_util.dart';
 import '../util/vite_util.dart';
 
 Future<void> exportContacts(WidgetRef ref, BuildContext context) async {
-  final localization = ref.read(l10nProvider);
+  final l10n = ref.read(l10nProvider);
 
   List<Contact> contacts = await ref.read(contactsProvider).contacts;
 
   if (contacts.length == 0) {
-    UIUtil.showSnackbar(localization.noContactsExport, context);
+    UIUtil.showSnackbar(l10n.noContactsExport, context);
     return;
   }
   List<Map<String, dynamic>> jsonList = [];
@@ -37,7 +37,7 @@ Future<void> exportContacts(WidgetRef ref, BuildContext context) async {
 }
 
 Future<void> importContacts(WidgetRef ref, BuildContext context) async {
-  final localization = ref.read(l10nProvider);
+  final l10n = ref.read(l10nProvider);
   //UIUtil.cancelLockEvent();
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     allowMultiple: false,
@@ -48,7 +48,7 @@ Future<void> importContacts(WidgetRef ref, BuildContext context) async {
     File f = File(result.files.single.path!);
 
     if (!await f.exists()) {
-      UIUtil.showSnackbar(localization.contactsImportErr, context);
+      UIUtil.showSnackbar(l10n.contactsImportErr, context);
       return;
     }
     try {
@@ -74,19 +74,20 @@ Future<void> importContacts(WidgetRef ref, BuildContext context) async {
       // Save all the new contacts and update states
       int numSaved = await contactsManager.saveContacts(contactsToAdd);
       if (numSaved > 0) {
-        final message = localization.contactsImportSuccess
+        final message =
+            l10n.contactsImportSuccess
             .replaceAll("%1", numSaved.toString());
         UIUtil.showSnackbar(message, context);
       } else {
-        UIUtil.showSnackbar(localization.noContactsImport, context);
+        UIUtil.showSnackbar(l10n.noContactsImport, context);
       }
     } catch (e) {
       ref.read(loggerProvider).e(e.toString(), e);
-      UIUtil.showSnackbar(localization.contactsImportErr, context);
+      UIUtil.showSnackbar(l10n.contactsImportErr, context);
     }
   } else {
     // Cancelled by user
     ref.read(loggerProvider).i("FilePicker cancelled by user");
-    UIUtil.showSnackbar(localization.contactsImportErr, context);
+    UIUtil.showSnackbar(l10n.contactsImportErr, context);
   }
 }

@@ -248,12 +248,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                   textAlign: TextAlign.start,
                   text: TextSpan(
                     text: account.name,
-                    style: TextStyle(
-                      color: theme.text60,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: kFontFamily,
-                    ),
+                    style: styles.textStyleAccount,
                   ),
                 ),
               ),
@@ -298,12 +293,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                                 margin: const EdgeInsets.only(top: 3),
                                 child: Text(
                                   _amountValidationText,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: theme.primary,
-                                    fontFamily: kFontFamily,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: styles.textStyleParagraphThinPrimary,
                                 ),
                               ),
                               // ******* Enter Amount Error Container End ******* //
@@ -373,12 +363,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                                 margin: const EdgeInsets.only(top: 3),
                                 child: Text(
                                   _addressValidationText,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: theme.primary,
-                                    fontFamily: kFontFamily,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: styles.textStyleParagraphThinPrimary,
                                 ),
                               ),
                               // ******* Enter Address Error Container End ******* //
@@ -638,6 +623,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
   Widget getEnterAmountContainer() {
     return Consumer(builder: (context, ref, _) {
       final theme = ref.watch(themeProvider);
+      final styles = ref.watch(stylesProvider);
       final l10n = ref.watch(l10nProvider);
 
       final tokenInfo = ref.watch(selectedTokenProvider);
@@ -660,12 +646,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         controller: _amountController,
         topMargin: 15,
         cursorColor: theme.primary,
-        style: TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 16,
-          color: theme.primary,
-          fontFamily: kFontFamily,
-        ),
+        style: styles.textStyleParagraphPrimary,
         inputFormatters: [
           CurrencyFormatter(maxDecimalDigits: tokenInfo.decimals),
           LocalCurrencyFormatter(

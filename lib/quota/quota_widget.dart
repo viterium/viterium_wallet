@@ -40,7 +40,8 @@ class QuotaWidget extends ConsumerWidget {
               final ut = Decimal.fromInt(21000);
               final current = (Decimal.parse(quota.currentQuota) / ut)
                   .toDecimal(scaleOnInfinitePrecision: 2);
-              final max = (Decimal.parse(quota.maxQuota) / ut).toDecimal();
+              final max = (Decimal.parse(quota.maxQuota) / ut)
+                  .toDecimal(scaleOnInfinitePrecision: 2);
               final digits = current.isInteger ? 0 : 2;
               final currentLabel = current.toStringAsFixed(digits);
               return Text(

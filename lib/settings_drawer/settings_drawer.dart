@@ -195,6 +195,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
   Widget buildMainSettings(BuildContext context) {
     return Consumer(builder: (context, ref, _) {
       final theme = ref.watch(themeProvider);
+      final styles = ref.watch(stylesProvider);
       final l10n = ref.watch(l10nProvider);
 
       final hasMnemonic = ref.watch(walletHasMnemonic);
@@ -228,11 +229,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                             EdgeInsetsDirectional.only(start: 30, bottom: 10),
                         child: Text(
                           l10n.preferences,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w100,
-                            color: theme.text60,
-                          ),
+                          style: styles.textStyleAppTextFieldHint,
                         ),
                       ),
                       Divider(height: 2, color: theme.text15),
@@ -292,11 +289,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                         ),
                         child: Text(
                           l10n.manage,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w100,
-                            color: theme.text60,
-                          ),
+                          style: styles.textStyleAppTextFieldHint,
                         ),
                       ),
                       Divider(height: 2, color: theme.text15),

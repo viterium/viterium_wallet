@@ -12,7 +12,7 @@ class SbpCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final address = ref.watch(selectedAddressProvider);
     final votedSbp = ref.watch(votedSbpProvider(address));
@@ -28,7 +28,7 @@ class SbpCard extends ConsumerWidget {
           Container(
             child: Center(
               child: Text(
-                localization.currentlyVotingFor,
+                l10n.currentlyVotingFor,
                 style: styles.textStyleParagraph,
               ),
             ),

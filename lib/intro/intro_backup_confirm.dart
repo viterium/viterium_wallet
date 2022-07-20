@@ -13,8 +13,8 @@ class IntroBackupConfirm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     void confirm() {
       final introData = ref.read(introDataProvider.notifier);
@@ -54,7 +54,7 @@ class IntroBackupConfirm extends ConsumerWidget {
                     margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
                     alignment: AlignmentDirectional(-1, 0),
                     child: AutoSizeText(
-                      localization.ackBackedUp,
+                      l10n.ackBackedUp,
                       maxLines: 4,
                       stepGranularity: 0.5,
                       style: styles.textStyleHeaderColored,
@@ -64,7 +64,7 @@ class IntroBackupConfirm extends ConsumerWidget {
                   Container(
                     margin: const EdgeInsets.only(left: 40, right: 40, top: 15),
                     child: AutoSizeText(
-                      localization.secretWarning,
+                      l10n.secretWarning,
                       style: styles.textStyleParagraph,
                       maxLines: 5,
                       stepGranularity: 0.5,
@@ -76,12 +76,12 @@ class IntroBackupConfirm extends ConsumerWidget {
             Column(
               children: [
                 PrimaryButton(
-                  title: localization.YES,
+                  title: l10n.YES,
                   margin: const EdgeInsets.fromLTRB(28, 0, 28, 8),
                   onPressed: confirm,
                 ),
                 PrimaryOutlineButton(
-                  title: localization.NO,
+                  title: l10n.NO,
                   margin: const EdgeInsets.fromLTRB(28, 8, 28, 0),
                   onPressed: goBack,
                 ),

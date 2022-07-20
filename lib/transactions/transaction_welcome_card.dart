@@ -58,24 +58,25 @@ class WelcomeTransactionCard extends ConsumerWidget {
   }
 
   TextSpan _getExampleHeaderSpan(BuildContext context, WidgetRef ref) {
-    String workingStr;
-    final accounts = ref.watch(accountsProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
+    final accounts = ref.watch(accountsProvider);
+
+    String workingStr;
     if (accounts.selected.index == 0) {
-      workingStr = localization.exampleCardIntro;
+      workingStr = l10n.exampleCardIntro;
     } else {
-      workingStr = localization.newAccountIntro;
+      workingStr = l10n.newAccountIntro;
     }
-    if (!workingStr.contains("VITE")) {
+    if (!workingStr.contains('VITE')) {
       return TextSpan(
         text: workingStr,
         style: styles.textStyleTransactionWelcome,
       );
     }
     // Colorize Vite
-    List<String> splitStr = workingStr.split("VITE");
+    List<String> splitStr = workingStr.split('VITE');
     if (splitStr.length != 2) {
       return TextSpan(
         text: workingStr,
@@ -89,7 +90,7 @@ class WelcomeTransactionCard extends ConsumerWidget {
           style: styles.textStyleTransactionWelcome,
         ),
         TextSpan(
-          text: "VITE",
+          text: 'VITE',
           style: styles.textStyleTransactionWelcomePrimary,
         ),
         TextSpan(

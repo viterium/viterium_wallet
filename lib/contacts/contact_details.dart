@@ -6,7 +6,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../send_sheet/send_sheet.dart';
 import '../util/ui_util.dart';
 import '../util/util.dart';
@@ -31,7 +30,8 @@ class ContactDetails extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final addressCopied = useState(false);
     final addressCopiedTimer = useRef<Timer?>(null);
@@ -39,7 +39,7 @@ class ContactDetails extends HookConsumerWidget {
     void deleteContact() {
       ref.read(contactsProvider).removeContact(contact);
       final message =
-          localization.contactRemoved.replaceAll("%1", contact.name);
+          l10n.contactRemoved.replaceAll("%1", contact.name);
       UIUtil.showSnackbar(message, context);
       Navigator.of(context).pop();
     }
@@ -47,11 +47,11 @@ class ContactDetails extends HookConsumerWidget {
     void confirmDeleteContact() {
       AppDialogs.showConfirmDialog(
         context,
-        localization.removeContact,
-        localization.removeContactConfirmation.replaceAll('%1', contact.name),
-        localization.YES,
+        l10n.removeContact,
+        l10n.removeContactConfirmation.replaceAll('%1', contact.name),
+        l10n.YES,
         deleteContact,
-        cancelText: localization.NO,
+        cancelText: l10n.NO,
       );
     }
 
@@ -97,7 +97,7 @@ class ContactDetails extends HookConsumerWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      localization.contactHeader,
+                      l10n.contactHeader,
                       style: ref.watch(stylesProvider).textStyleHeader(context),
                       textAlign: TextAlign.center,
                       maxLines: 1,
@@ -144,12 +144,7 @@ class ContactDetails extends HookConsumerWidget {
                   child: Text(
                     contact.name,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: theme.primary,
-                      fontFamily: kFontFamily,
-                    ),
+                    style: styles.textStyleDialogOptions,
                   ),
                 ),
                 // Contact Address
@@ -182,13 +177,8 @@ class ContactDetails extends HookConsumerWidget {
                 Container(
                   margin: const EdgeInsets.only(top: 5, bottom: 5),
                   child: Text(
-                    addressCopied.value ? localization.addressCopied : '',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: theme.success,
-                      fontFamily: kFontFamily,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    addressCopied.value ? l10n.addressCopied : '',
+                    style: styles.textStyleParagraphThinSuccess,
                   ),
                 ),
               ],
@@ -199,12 +189,12 @@ class ContactDetails extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 28),
           child: Column(children: [
             PrimaryButton(
-              title: localization.send,
+              title: l10n.send,
               onPressed: showSendSheet,
             ),
             const SizedBox(height: 16),
             PrimaryOutlineButton(
-              title: localization.close,
+              title: l10n.close,
               onPressed: () => Navigator.pop(context),
             ),
           ]),

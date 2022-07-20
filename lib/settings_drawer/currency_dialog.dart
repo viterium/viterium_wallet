@@ -11,13 +11,13 @@ class CurrencyDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final styles = ref.watch(stylesProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     return AppSimpleDialog(
       title: Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: Text(
-          localization.currency,
+          l10n.currency,
           style: styles.textStyleDialogHeader,
         ),
       ),

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 
 class TextFieldButton extends ConsumerWidget {
   final IconData? icon;
@@ -105,6 +104,7 @@ class AppTextField extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     return Container(
       margin: EdgeInsets.only(
@@ -150,12 +150,7 @@ class AppTextField extends ConsumerWidget {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: hintText,
-                    hintStyle: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w100,
-                      fontFamily: kFontFamily,
-                      color: theme.text60,
-                    ),
+                    hintStyle: styles.textStyleAppTextFieldHint,
                     prefixIcon: prefixButton == null
                         ? const SizedBox()
                         : const SizedBox(width: 48),

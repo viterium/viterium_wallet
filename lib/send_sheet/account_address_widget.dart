@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../widgets/one_or_three_address_text.dart';
 
 class AccountAddressWidget extends ConsumerWidget {
@@ -10,7 +9,8 @@ class AccountAddressWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
+
     final account = ref.watch(selectedAccountProvider);
 
     return Column(
@@ -22,12 +22,7 @@ class AccountAddressWidget extends ConsumerWidget {
               textAlign: TextAlign.start,
               text: TextSpan(
                 text: account.name,
-                style: TextStyle(
-                  color: theme.text60,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: kFontFamily,
-                ),
+                style: styles.textStyleAccount,
               ),
             ),
           ),

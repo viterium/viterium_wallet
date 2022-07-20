@@ -9,8 +9,24 @@ import 'package:vite/vite.dart' as vite;
 import '../encrypt/crypter.dart';
 import '../quota/quota_stake_amounts.dart';
 
+String getShortString(vite.ViteAddress address) {
+  assert(vite.Address.isValid(address));
+  return address.substring(0, 11) +
+      "..." +
+      address.substring(address.length - 6);
+}
+
+String getShorterString(vite.ViteAddress address) {
+  assert(vite.Address.isValid(address));
+  return address.substring(0, 9) +
+      "..." +
+      address.substring(address.length - 4);
+}
+
 class ViteUtil {
   const ViteUtil();
+
+  static final viteAddressRegex = RegExp(r'vite_[0-9a-h]{50}');
 
   static const viteTokenId = vite.viteTokenId;
   static const viteZeroAddress =
@@ -35,6 +51,17 @@ class ViteUtil {
     }
   }
 
+  static vite.ViteAddress? findAddressInString(String value) {
+    final match = viteAddressRegex.firstMatch(value);
+    if (match != null) {
+      final address = match.group(0);
+      if (address != null && vite.Address.isValid(address)) {
+        return address;
+      }
+    }
+    return null;
+  }
+
   static bool isValidAddress(String address) {
     return vite.Address.isValid(address);
   }
@@ -45,12 +72,29 @@ class ViteUtil {
     }
     try {
       final uri = Uri.parse(link);
+      final language = uri.queryParameters['language'];
+      if (language != 'en') {
+        return null;
+      }
       final entropy = uri.queryParameters['entropy'];
       if (entropy == null) {
         return null;
       }
       final mnemonic = mnemonicWordsFromEntropyHex(entropy).join(' ');
       return mnemonic;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static String? walletNameFromViteAppLink(String link) {
+    if (!link.startsWith('viteapp://backup-wallet?')) {
+      return null;
+    }
+    try {
+      final uri = Uri.parse(link);
+      final name = uri.queryParameters['name'];
+      return name;
     } catch (e) {
       return null;
     }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/utils.dart';
-import 'package:viterium_wallet/wallet/wallet_types.dart';
 
 import '../app_providers.dart';
 import '../intro/intro_providers.dart';
 import '../util/ui_util.dart';
 import '../util/vite_util.dart';
+import '../wallet/wallet_types.dart';
 import '../widgets/notice_dialog.dart';
 
 final _noticeShownProvider = StateProvider<bool>((ref) {

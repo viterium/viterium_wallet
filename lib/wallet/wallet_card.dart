@@ -17,8 +17,8 @@ class WalletCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final wallet = ref.watch(walletItemProvider);
 
@@ -49,9 +49,9 @@ class WalletCard extends ConsumerWidget {
     void areYouSureRemoveWallet() {
       AppDialogs.showConfirmDialog(
         context,
-        localization.areYouSure,
-        localization.removeWalletReassurance,
-        localization.YES,
+        l10n.areYouSure,
+        l10n.removeWalletReassurance,
+        l10n.YES,
         checkAuth,
       );
     }
@@ -59,9 +59,9 @@ class WalletCard extends ConsumerWidget {
     void confirmRemoveWallet() {
       AppDialogs.showConfirmDialog(
         context,
-        CaseChange.toUpperCase(localization.warning, ref),
-        localization.removeWalletDetail,
-        localization.removeWalletAction.toUpperCase(),
+        CaseChange.toUpperCase(l10n.warning, ref),
+        l10n.removeWalletDetail,
+        l10n.removeWalletAction.toUpperCase(),
         areYouSureRemoveWallet,
       );
     }

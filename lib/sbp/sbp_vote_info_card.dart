@@ -19,7 +19,8 @@ class SboVoteInfoCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
+
     final voteInfo = this.voteInfo;
     if (voteInfo == null) {
       return Container(
@@ -71,12 +72,7 @@ class SboVoteInfoCard extends ConsumerWidget {
                         fit: BoxFit.scaleDown,
                         child: Text(
                           voteInfo.blockProducerName,
-                          style: TextStyle(
-                            color: theme.text,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            fontFamily: 'Nunito Sans',
-                          ),
+                          style: styles.textStyleButtonTextOutline,
                         ),
                       ),
                       Visibility(
@@ -113,12 +109,7 @@ class SboVoteInfoCard extends ConsumerWidget {
                         child: Text(
                           '${index + 1}',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: theme.backgroundDark,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Nunito Sans',
-                          ),
+                          style: styles.textStyleAccountShortName,
                         ),
                       ),
                     ],
@@ -136,17 +127,12 @@ class SboVoteInfoCard extends ConsumerWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "${localization.sbpTotalVotes}: ",
+                          text: "${l10n.sbpTotalVotes}: ",
                           style: styles.textStyleSettingItemHeader,
                         ),
                         TextSpan(
                           text: ViteUtil.formatVotes(totalVotes),
-                          style: TextStyle(
-                            color: theme.primary,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            fontFamily: 'Nunito Sans',
-                          ),
+                          style: styles.textStylePrimaryDefaultSmallMedium,
                         ),
                       ],
                     ),
@@ -157,16 +143,12 @@ class SboVoteInfoCard extends ConsumerWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "${localization.sbpYourVotes}: ",
+                        text: "${l10n.sbpYourVotes}: ",
                         style: styles.textStyleSettingItemHeader,
                       ),
                       TextSpan(
                         text: ViteUtil.formatVotes(voteInfo.votes),
-                        style: TextStyle(
-                            color: theme.primary,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            fontFamily: 'Nunito Sans'),
+                        style: styles.textStylePrimaryDefaultSmallMedium,
                       ),
                     ],
                   ),

@@ -24,8 +24,8 @@ class ContactsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     Future<void> importContacts() =>
         contactsHelper.importContacts(ref, context);
@@ -72,24 +72,22 @@ class ContactsWidget extends ConsumerWidget {
                       ),
                     ),
                     Text(
-                      localization.contactsHeader,
+                      l10n.contactsHeader,
                       style: styles.textStyleSettingsHeader,
                     ),
                   ]),
-                  Row(
-                    children: [
-                      AppIconButton(
-                        icon: AppIcons.import_icon,
-                        onPressed: importContacts,
-                      ),
-                      const SizedBox(width: 4),
-                      AppIconButton(
-                        icon: AppIcons.export_icon,
-                        onPressed: exportContacts,
-                      ),
-                      const SizedBox(width: 12),
-                    ],
-                  ),
+                  Row(children: [
+                    AppIconButton(
+                      icon: AppIcons.import_icon,
+                      onPressed: importContacts,
+                    ),
+                    const SizedBox(width: 4),
+                    AppIconButton(
+                      icon: AppIcons.export_icon,
+                      onPressed: exportContacts,
+                    ),
+                    const SizedBox(width: 12),
+                  ]),
                 ],
               ),
             ),
@@ -103,7 +101,7 @@ class ContactsWidget extends ConsumerWidget {
             Container(
               margin: const EdgeInsets.only(top: 10),
               child: TextOutlineButton(
-                title: localization.addContact,
+                title: l10n.addContact,
                 margin: const EdgeInsets.only(left: 28, right: 28, top: 8),
                 onPressed: addContact,
               ),

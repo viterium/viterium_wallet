@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 
 final selectedTokenProvider = StateProvider<TokenInfo>((ref) => TokenInfo.vite);
 
@@ -12,7 +11,8 @@ class BalanceTextWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
+
     final tokenInfo = ref.watch(selectedTokenProvider);
     final tokenBalance =
         ref.watch(tokenBalanceDisplayProvider(tokenInfo.tokenId));
@@ -24,30 +24,15 @@ class BalanceTextWidget extends ConsumerWidget {
           children: [
             TextSpan(
               text: "(",
-              style: TextStyle(
-                color: theme.primary60,
-                fontSize: 14,
-                fontWeight: FontWeight.w100,
-                fontFamily: kFontFamily,
-              ),
+              style: styles.textStyleTransactionUnitSmall,
             ),
             TextSpan(
               text: tokenBalance,
-              style: TextStyle(
-                color: theme.primary60,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                fontFamily: kFontFamily,
-              ),
+              style: styles.textStyleBalanceAmountSmall,
             ),
             TextSpan(
               text: ' ${tokenInfo.tokenSymbol})',
-              style: TextStyle(
-                color: theme.primary60,
-                fontSize: 14,
-                fontWeight: FontWeight.w100,
-                fontFamily: kFontFamily,
-              ),
+              style: styles.textStyleTransactionUnitSmall,
             ),
           ],
         ),

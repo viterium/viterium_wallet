@@ -207,8 +207,11 @@ class AppLocalization {
   }
 
   String get nodeAddress {
-    return Intl.message('Vite Node',
-        desc: 'node_address', name: 'nodeAddress');
+    return Intl.message(
+      'Vite Node',
+      desc: 'node_address',
+      name: 'nodeAddress',
+    );
   }
 
   String get powSettings {
@@ -367,13 +370,49 @@ class AppLocalization {
     return Intl.message("To", desc: 'send_to', name: 'to');
   }
 
-  String get sendAmountConfirm {
-    return Intl.message("Send %1 %2",
-        desc: 'send_pin_description', name: 'sendAmountConfirm');
+  String get toAddress {
+    return Intl.message("To Address",
+        desc: 'send_to_address', name: 'toAddress');
   }
 
-  String get sendAmountConfirmPin {
-    return sendAmountConfirm;
+  String get sendConfirm {
+    return Intl.message(
+      "Send",
+      desc: 'send_auth_description',
+      name: 'sendConfirm',
+    );
+  }
+
+  String get callContractConfirm {
+    return Intl.message(
+      "Call Contract",
+      desc: 'call_contract_auth_description',
+      name: 'callContractConfirm',
+    );
+  }
+
+  String get createContractConfirm {
+    return Intl.message(
+      "Create Contract",
+      desc: 'create_contract_auth_description',
+      name: 'createContractConfirm',
+    );
+  }
+
+  String get amountConfirm {
+    return Intl.message(
+      "Amount %1 %2",
+      desc: 'auth_amount_description',
+      name: 'authAmountConfirm',
+    );
+  }
+
+  String get feeConfirm {
+    return Intl.message(
+      "Fee %1 %2",
+      desc: 'call_contract_fee_description',
+      name: 'callContractFeeConfirm',
+    );
   }
 
   String get sendError {
@@ -1215,10 +1254,11 @@ class AppLocalization {
 
   String get passwordNoLongerRequiredToOpenParagraph {
     return Intl.message(
-        "You will not need a password to open this wallet.",
-        desc:
-            'An info paragraph that tells the user a password will no longer be needed to open the wallet',
-        name: 'passwordNoLongerRequiredToOpenParagraph');
+      "You will not need a password to open this wallet.",
+      desc:
+          'An info paragraph that tells the user a password will no longer be needed to open the wallet',
+      name: 'passwordNoLongerRequiredToOpenParagraph',
+    );
   }
 
   String get createPasswordFirstParagraph {

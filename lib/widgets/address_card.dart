@@ -9,11 +9,13 @@ import 'address_widgets.dart';
 class AddressCard extends HookConsumerWidget {
   final Address address;
   final bool showLabel;
+  final AddressThreeLineTextType type;
 
   const AddressCard({
     Key? key,
     required this.address,
     this.showLabel = true,
+    this.type = AddressThreeLineTextType.PRIMARY,
   }) : super(key: key);
 
   @override
@@ -37,8 +39,9 @@ class AddressCard extends HookConsumerWidget {
         vertical: 15,
       ),
       margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.105,
-          right: MediaQuery.of(context).size.width * 0.105),
+        left: MediaQuery.of(context).size.width * 0.105,
+        right: MediaQuery.of(context).size.width * 0.105,
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
         color: theme.backgroundDarkest,
@@ -47,6 +50,7 @@ class AddressCard extends HookConsumerWidget {
       child: AddressThreeLineText(
         address: address.viteAddress,
         label: label,
+        type: type,
       ),
     );
   }

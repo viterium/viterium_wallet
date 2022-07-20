@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
-import 'package:viterium_wallet/transactions/transaction_history_notifier.dart';
-import 'package:viterium_wallet/transactions/unreceived_providers.dart';
 
 import '../accounts/account.dart';
 import '../app_providers.dart';
+import '../transactions/transaction_history_notifier.dart';
+import '../transactions/unreceived_providers.dart';
 import 'autoreceive_service.dart';
 
 final autoreceiveServiceProvider =

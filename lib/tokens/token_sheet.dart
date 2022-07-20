@@ -192,11 +192,7 @@ class TokenSheet extends ConsumerWidget {
                 child: Text(
                   CaseChange.toUpperCase(l10n.transactions, ref),
                   textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w100,
-                    color: theme.text,
-                  ),
+                  style: styles.textStyleTabLabel,
                 ),
               ),
               //),

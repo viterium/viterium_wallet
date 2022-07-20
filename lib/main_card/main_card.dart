@@ -31,8 +31,9 @@ class MainCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final account = ref.watch(selectedAccountProvider);
+    final styles = ref.watch(stylesProvider);
 
+    final account = ref.watch(selectedAccountProvider);
     final viteConnect = ref.watch(viteConnectProvider.notifier);
 
     ref.listen<VCState>(viteConnectProvider, (prev, state) {
@@ -143,12 +144,7 @@ class MainCard extends ConsumerWidget {
                       children: [
                         Text(
                           account.name,
-                          style: TextStyle(
-                            fontFamily: "NunitoSans",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: theme.text,
-                          ),
+                          style: styles.textStyleAccountName,
                         ),
                         AddressShortText(address: account.viteAddress),
                       ],
@@ -175,12 +171,7 @@ class MainCard extends ConsumerWidget {
               padding: const EdgeInsets.only(left: 14),
               child: Text(
                 'Total Value',
-                style: TextStyle(
-                  fontFamily: "NunitoSans",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: theme.text,
-                ),
+                style: styles.textStyleTotalValue,
               ),
             ),
             Padding(

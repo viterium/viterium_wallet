@@ -20,21 +20,18 @@ class NetworkBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     final network = ref.watch(_networkBannerProvider);
 
     if (network == null) {
       return child;
     }
+
     return Banner(
       message: network,
       location: BannerLocation.topEnd,
-      textStyle: TextStyle(
-        color: theme.text,
-        fontSize: 12 * 0.85,
-        fontWeight: FontWeight.w900,
-        height: 1.0,
-      ),
+      textStyle: styles.textStyleNetworkBanner,
       color: theme.background,
       child: child,
     );

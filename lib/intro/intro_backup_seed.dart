@@ -13,8 +13,8 @@ class IntroBackupSeed extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final introData = ref.watch(introDataProvider);
     final mnemonic = introData.mnemonic?.split(' ');
@@ -88,7 +88,7 @@ class IntroBackupSeed extends ConsumerWidget {
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
-                              localization.secretPhrase,
+                              l10n.secretPhrase,
                               style: styles.textStyleHeaderColored,
                               maxLines: 1,
                             ),
@@ -147,7 +147,7 @@ class IntroBackupSeed extends ConsumerWidget {
             ),
             // Next Screen Button
             PrimaryButton(
-              title: localization.backupConfirmButton,
+              title: l10n.backupConfirmButton,
               margin: const EdgeInsets.symmetric(horizontal: 28),
               onPressed: goNext,
             ),

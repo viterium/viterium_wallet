@@ -92,22 +92,12 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: "$amount",
-                                style: TextStyle(
-                                  color: theme.success,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: kFontFamily,
-                                ),
+                                text: amountApprox,
+                                style: styles.textStyleApproxAmountSuccess,
                               ),
                               TextSpan(
-                                text: " $tokenSymbol",
-                                style: TextStyle(
-                                  color: theme.success,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w100,
-                                  fontFamily: kFontFamily,
-                                ),
+                                text: ' $tokenSymbol',
+                                style: styles.textStyleTokenSymbolSuccess,
                               ),
                             ],
                           ),
@@ -124,12 +114,7 @@ class _SendCompleteSheetState extends ConsumerState<SendCompleteSheet> {
                       // "SENT TO" text
                       Text(
                         l10n.sentTo.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.w700,
-                          color: theme.success,
-                          fontFamily: kFontFamily,
-                        ),
+                        style: styles.textStyleHeaderSuccess,
                       ),
                     ],
                   ),

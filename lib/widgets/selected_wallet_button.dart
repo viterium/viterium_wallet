@@ -51,12 +51,7 @@ class SelectedWalletButton extends ConsumerWidget {
             child: Text(
               account.getShortName().toUpperCase(),
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: theme.backgroundDark,
-                fontSize: 16,
-                fontFamily: "NunitoSans",
-                fontWeight: FontWeight.w900,
-              ),
+              style: styles.textStyleAccountShortNameSelected,
             ),
           ),
         ),

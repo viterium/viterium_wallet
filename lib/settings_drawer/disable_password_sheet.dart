@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../util/ui_util.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
@@ -16,9 +15,8 @@ class DisablePasswordSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     final passwordFocusNode = useFocusNode();
     final passwordController = useTextEditingController();
@@ -27,28 +25,28 @@ class DisablePasswordSheet extends HookConsumerWidget {
     Future<void> submitAndDecrypt() async {
       final password = passwordController.text;
       if (password.isEmpty) {
-        passwordError.value = localization.passwordBlank;
+        passwordError.value = l10n.passwordBlank;
         return;
       }
       try {
         final auth = ref.read(walletAuthProvider.notifier);
         await auth.removePassword(password);
 
-        UIUtil.showSnackbar(localization.disablePasswordSuccess, context);
+        UIUtil.showSnackbar(l10n.disablePasswordSuccess, context);
         Navigator.of(context).pop();
       } catch (e) {
-        passwordError.value = localization.invalidPassword;
+        passwordError.value = l10n.invalidPassword;
       }
     }
 
     return TapOutsideUnfocus(
       child: SheetWidget(
-        title: localization.disablePasswordSheetHeader,
+        title: l10n.disablePasswordSheetHeader,
         mainWidget: Column(children: [
           Container(
             margin: EdgeInsetsDirectional.only(start: 40, end: 40, top: 16),
             child: AutoSizeText(
-              localization.passwordNoLongerRequiredToOpenParagraph,
+              l10n.passwordNoLongerRequiredToOpenParagraph,
               style: styles.textStyleParagraph,
               maxLines: 5,
               stepGranularity: 0.5,
@@ -66,27 +64,17 @@ class DisablePasswordSheet extends HookConsumerWidget {
               onChanged: (String newText) {
                 passwordError.value = '';
               },
-              hintText: localization.enterPasswordHint,
+              hintText: l10n.enterPasswordHint,
               keyboardType: TextInputType.text,
               obscureText: true,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: theme.text,
-                fontFamily: kFontFamily,
-              ),
+              style: styles.textStyleParagraphText,
             ),
             Container(
               alignment: AlignmentDirectional(0, 0),
               margin: EdgeInsets.only(top: 3),
               child: Text(
                 passwordError.value,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: theme.primary,
-                  fontFamily: kFontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: styles.textStyleParagraphThinPrimary,
               ),
             ),
           ]),
@@ -95,12 +83,12 @@ class DisablePasswordSheet extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 28),
           child: Column(children: [
             PrimaryButton(
-              title: localization.disablePasswordSheetHeader,
+              title: l10n.disablePasswordSheetHeader,
               onPressed: submitAndDecrypt,
             ),
             const SizedBox(height: 16),
             PrimaryOutlineButton(
-              title: localization.close,
+              title: l10n.close,
               onPressed: () => Navigator.pop(context),
             ),
           ]),

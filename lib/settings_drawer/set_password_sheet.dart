@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 import '../util/ui_util.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
@@ -16,7 +15,6 @@ class SetPasswordSheet extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
     final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
@@ -27,7 +25,9 @@ class SetPasswordSheet extends HookConsumerWidget {
     final passwordError = useState<String>('');
     final passwordsMatch = useState(false);
 
-    final textColor = passwordsMatch.value ? theme.primary : theme.text;
+    final textStyle = passwordsMatch.value
+        ? styles.textStyleParagraphPrimary
+        : styles.textStyleParagraphText;
 
     void inputChanged(_) {
       passwordError.value = '';
@@ -93,11 +93,7 @@ class SetPasswordSheet extends HookConsumerWidget {
               keyboardType: TextInputType.text,
               obscureText: true,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: textColor,
-              ),
+              style: textStyle,
               onSubmitted: (text) {
                 confirmFocusNode.requestFocus();
               },
@@ -119,12 +115,7 @@ class SetPasswordSheet extends HookConsumerWidget {
               keyboardType: TextInputType.text,
               obscureText: true,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: textColor,
-                fontFamily: kFontFamily,
-              ),
+              style: textStyle,
             ),
             // Error Text
             Container(
@@ -132,12 +123,7 @@ class SetPasswordSheet extends HookConsumerWidget {
               margin: EdgeInsets.only(top: 3),
               child: Text(
                 passwordError.value,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: theme.primary,
-                  fontFamily: kFontFamily,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: styles.textStyleParagraphThinPrimary,
               ),
             ),
           ],

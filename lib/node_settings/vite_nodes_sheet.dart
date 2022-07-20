@@ -37,7 +37,8 @@ class ViteNodesSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
+
     final items = ref.watch(viteNodeOptionsProvider);
     final title = 'Vite Nodes';
 
@@ -78,12 +79,12 @@ class ViteNodesSheet extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(children: [
           PrimaryButton(
-            title: localization.addNode,
+            title: l10n.addNode,
             onPressed: addNode,
           ),
           const SizedBox(height: 16),
           PrimaryOutlineButton(
-            title: localization.close,
+            title: l10n.close,
             onPressed: () => Navigator.pop(context),
           ),
         ]),

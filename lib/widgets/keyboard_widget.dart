@@ -60,6 +60,8 @@ class WordsWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
+
     final words = ref.watch(wordSuggestionsProvider);
     final prefix = ref.watch(wordPrefixProvider);
 
@@ -92,7 +94,7 @@ class WordsWidget extends ConsumerWidget {
                 TextSpan(children: [
                   TextSpan(
                     text: prefix,
-                    style: TextStyle(color: theme.primary),
+                    style: styles.textStyleKeyboardWord,
                   ),
                   TextSpan(text: word.substring(prefix.length)),
                 ]),
@@ -116,6 +118,8 @@ class KeyWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
+
     final enabled = ref.watch(enabledKeysProvider).contains(keyId);
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -139,7 +143,7 @@ class KeyWidget extends ConsumerWidget {
           child: Center(
             child: Text(
               keyId,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: styles.textStyleKeyboardKey,
             ),
           ),
           onPressed: !enabled

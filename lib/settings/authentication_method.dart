@@ -12,12 +12,12 @@ class AuthenticationMethod extends SettingSelectionItem {
   const AuthenticationMethod(this.method);
 
   String getDisplayName(WidgetRef ref) {
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     switch (method) {
       case AuthMethod.BIOMETRICS:
-        return localization.biometricsMethod;
+        return l10n.biometricsMethod;
       case AuthMethod.PIN:
-        return localization.pinMethod;
+        return l10n.pinMethod;
     }
   }
 

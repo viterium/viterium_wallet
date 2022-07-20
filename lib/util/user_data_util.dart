@@ -35,7 +35,11 @@ class UserDataUtil {
     } else if (type == DataType.ADDRESS) {
       final viteUri = ViteUri.tryParse(data);
       if (viteUri != null) {
-        return viteUri.address.viteAddress;
+        return viteUri.viteAddress;
+      }
+      final address = ViteUtil.findAddressInString(data);
+      if (address != null) {
+        return address;
       }
     } else if (type == DataType.SEED) {
       // Check if valid seed
@@ -48,10 +52,11 @@ class UserDataUtil {
 
   static Future<String?> getClipboardText(DataType type) async {
     ClipboardData? data = await Clipboard.getData("text/plain");
-    if (data == null || data.text == null) {
+    final text = data?.text;
+    if (text == null) {
       return null;
     }
-    return _parseData(data.text!, type);
+    return _parseData(text, type);
   }
 
   static Future<Barcode?> scanQrCode(BuildContext context) async {

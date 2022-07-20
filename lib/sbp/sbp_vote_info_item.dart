@@ -22,8 +22,8 @@ class SbpVoteInfoItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
     return Column(
       children: [
@@ -49,12 +49,7 @@ class SbpVoteInfoItem extends ConsumerWidget {
                           child: Text(
                             sbpVoteInfo.sbpName,
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                              color: theme.text,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 18,
-                              fontFamily: 'Nunito Sans',
-                            ),
+                            style: styles.textStyleSettingItemHeaderLarge,
                           ),
                         ),
                       ),
@@ -79,12 +74,7 @@ class SbpVoteInfoItem extends ConsumerWidget {
                               child: Text(
                                 '${index + 1}',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: theme.backgroundDark,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'Nunito Sans',
-                                ),
+                                style: styles.textStyleAccountShortName,
                               ),
                             ),
                           ],
@@ -98,22 +88,12 @@ class SbpVoteInfoItem extends ConsumerWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: "${localization.sbpVotes}: ",
-                            style: TextStyle(
-                              color: theme.text,
-                              fontWeight: FontWeight.w100,
-                              fontSize: 14,
-                              fontFamily: 'Nunito Sans',
-                            ),
+                            text: "${l10n.sbpVotes}: ",
+                            style: styles.textStyleTextDefaultSmallThin,
                           ),
                           TextSpan(
                             text: ViteUtil.formatVotes(sbpVoteInfo.votes),
-                            style: TextStyle(
-                              color: theme.primary,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                              fontFamily: 'Nunito Sans',
-                            ),
+                            style: styles.textStylePrimaryDefaultSmallMedium,
                           ),
                         ],
                       ),
@@ -124,13 +104,8 @@ class SbpVoteInfoItem extends ConsumerWidget {
                     child: Row(
                       children: [
                         Text(
-                          "${localization.blockProducingAddress}: ",
-                          style: TextStyle(
-                            color: theme.text,
-                            fontWeight: FontWeight.w100,
-                            fontSize: 14,
-                            fontFamily: 'Nunito Sans',
-                          ),
+                          "${l10n.blockProducingAddress}: ",
+                          style: styles.textStyleTabLabel,
                         ),
                         AddressOneLineText(
                           address: sbpVoteInfo.blockProducingAddress,

@@ -4,7 +4,7 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../core/vite_uri.dart';
+import '../util/vite_util.dart';
 import '../widgets/sheet_util.dart';
 import 'transaction_details_sheet.dart';
 import 'transaction_state_tag.dart';
@@ -131,7 +131,6 @@ class TransactionCard extends ConsumerWidget {
                         maxLines: 2,
                       ),
                     ),
-                    //if (kDebugMode) Text(item.height.toString()),
                     Consumer(builder: (context, ref, _) {
                       final txState = ref.watch(
                         confirmationStatusProvider(item),

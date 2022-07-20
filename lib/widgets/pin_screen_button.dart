@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
-import '../app_styles.dart';
 
 class PinScreenButton extends ConsumerWidget {
   final String text;
@@ -18,7 +17,8 @@ class PinScreenButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.read(themeProvider);
+    final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     return Container(
       height: size,
@@ -33,12 +33,7 @@ class PinScreenButton extends ConsumerWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              color: theme.primary,
-              fontFamily: kFontFamily,
-              fontWeight: FontWeight.w700,
-            ),
+            style: styles.textStyleButtonPrimaryOutline,
           ),
         ),
       ),

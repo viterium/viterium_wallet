@@ -27,10 +27,12 @@ class NetworkMenu extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
+
     final viteNodeConfig = ref.watch(viteNodeConfigProvider);
     final powSettingsConfig = ref.watch(powConfigProvider);
+
     final powConfig = powSettingsConfig.map(
       defaultNode: (config) => config.copyWith(name: viteNodeConfig.name),
       custom: (config) => config,
@@ -66,7 +68,7 @@ class NetworkMenu extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    localization.networkHeader,
+                    l10n.networkHeader,
                     style: styles.textStyleSettingsHeader,
                   ),
                 ],
@@ -84,17 +86,13 @@ class NetworkMenu extends ConsumerWidget {
                           bottom: 10,
                         ),
                         child: Text(
-                          localization.preferences,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w100,
-                            color: theme.text60,
-                          ),
+                          l10n.preferences,
+                          style: styles.textStyleAppTextFieldHint,
                         ),
                       ),
                       Divider(height: 2, color: theme.text15),
                       SettingsDoubleLineItem(
-                        heading: localization.nodeAddress,
+                        heading: l10n.nodeAddress,
                         defaultMethod: ViteNodeSetting(viteNodeConfig),
                         icon: Icons.settings_ethernet,
                         onPressed: () {
@@ -103,7 +101,7 @@ class NetworkMenu extends ConsumerWidget {
                       ),
                       Divider(height: 2, color: theme.text15),
                       SettingsDoubleLineItem(
-                        heading: localization.powSettings,
+                        heading: l10n.powSettings,
                         defaultMethod: PowSetting(powConfig),
                         icon: Icons.memory,
                         iconSize: 28,
@@ -113,7 +111,7 @@ class NetworkMenu extends ConsumerWidget {
                       Consumer(builder: (context, ref, _) {
                         final blockExplorer = ref.watch(blockExplorerProvider);
                         return SettingsDoubleLineItem(
-                          heading: localization.blockExplorer,
+                          heading: l10n.blockExplorer,
                           defaultMethod: BlockExplorerSetting(blockExplorer),
                           icon: AppIcons.search,
                           onPressed: () {

@@ -59,14 +59,14 @@ class _PinScreenState extends ConsumerState<PinScreen>
   @override
   void initState() {
     super.initState();
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
 
     // Initialize list all empty
     if (widget.type == PinOverlayType.ENTER_PIN) {
-      _header = localization.pinEnterTitle;
+      _header = l10n.pinEnterTitle;
       _pinLength = widget.expectedPin!.length;
     } else {
-      _header = localization.pinCreateTitle;
+      _header = l10n.pinCreateTitle;
     }
     _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
     _awaitingConfirmation = false;
@@ -188,7 +188,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
   Widget build(BuildContext context) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
-    final localization = ref.watch(l10nProvider);
+    final l10n = ref.watch(l10nProvider);
 
     void onKeyTap(String key) {
       if (_controller.status == AnimationStatus.forward ||
@@ -215,7 +215,7 @@ class _PinScreenState extends ConsumerState<PinScreen>
               setState(() {
                 _awaitingConfirmation = true;
                 _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
-                _header = localization.pinConfirmTitle;
+                _header = l10n.pinConfirmTitle;
               });
             } else {
               // First and second pins match

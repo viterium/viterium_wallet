@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:viterium_wallet/util/sharedprefsutil.dart';
 
 import '../database/boxes.dart';
+import '../util/sharedprefsutil.dart';
 import 'contact.dart';
 import 'contact_labels.dart';
 

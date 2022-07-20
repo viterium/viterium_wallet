@@ -17,8 +17,9 @@ class ViteNodeItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
+
     final item = ref.watch(viteNodeConfigItemProvider);
     final config = ref.watch(viteNodeConfigProvider);
 
@@ -39,9 +40,9 @@ class ViteNodeItem extends ConsumerWidget {
         context,
         title,
         content,
-        localization.YES,
+        l10n.YES,
         delete,
-        cancelText: localization.NO,
+        cancelText: l10n.NO,
       );
     }
 

@@ -108,10 +108,10 @@ class _LockScreenState extends ConsumerState<LockScreen> {
   }
 
   Future<void> authenticateWithBiometrics() async {
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     final biometricUtil = ref.read(biometricUtilProvider);
     final authenticated = await biometricUtil.authenticateWithBiometrics(
-      localization.unlockBiometrics,
+      l10n.unlockBiometrics,
     );
     if (authenticated) {
       _goHome();
@@ -124,13 +124,14 @@ class _LockScreenState extends ConsumerState<LockScreen> {
 
   Future<void> authenticateWithPin({bool useTransition = false}) async {
     final theme = ref.read(themeProvider);
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
+
     String? expectedPin = await ref.read(vaultProvider).getPin();
 
     final pinScreen = PinScreen(
       PinOverlayType.ENTER_PIN,
       expectedPin: expectedPin,
-      description: localization.unlockPin,
+      description: l10n.unlockPin,
       pinScreenBackgroundColor: theme.backgroundDark,
     );
 

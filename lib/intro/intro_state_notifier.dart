@@ -45,7 +45,10 @@ class IntroStateNotifier extends StateNotifier<IntroState> {
     }
   }
 
-  void setMnemonic(String mnemonic) {
+  void setMnemonic(String mnemonic, {String? walletName}) {
+    if (walletName != null) {
+      introData.setName(walletName);
+    }
     introData.setMnemonic(mnemonic);
     _goToPage(IntroPage.walletName);
   }

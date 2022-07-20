@@ -60,10 +60,12 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
   @override
   Widget build(BuildContext context) {
     final theme = ref.watch(themeProvider);
-    final localization = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
+
     final walletAuth = ref.watch(walletAuthProvider);
     final encryptedSecret = walletAuth.encryptedSecret;
+
     return Container(
       decoration: BoxDecoration(
         color: theme.backgroundDark,
@@ -97,7 +99,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                       ),
                       //Security Header Text
                       Text(
-                        localization.securityHeader,
+                        l10n.securityHeader,
                         style: styles.textStyleSettingsHeader,
                       ),
                     ],
@@ -117,19 +119,15 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                         bottom: 10,
                       ),
                       child: Text(
-                        localization.preferences,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w100,
-                          color: theme.text60,
-                        ),
+                        l10n.preferences,
+                        style: styles.textStyleAppTextFieldHint,
                       ),
                     ),
                     // Authentication Method
                     if (_hasBiometrics) ...[
                       Divider(height: 2, color: theme.text15),
                       SettingsDoubleLineItem(
-                        heading: localization.authMethod,
+                        heading: l10n.authMethod,
                         defaultMethod: _curAuthMethod,
                         icon: AppIcons.fingerprint,
                         onPressed: _authMethodDialog,
@@ -139,7 +137,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     if (encryptedSecret == null) ...[
                       Divider(height: 2, color: theme.text15),
                       SettingsDoubleLineItem(
-                        heading: localization.lockAppSetting,
+                        heading: l10n.lockAppSetting,
                         defaultMethod: _curUnlockSetting,
                         icon: AppIcons.lock,
                         onPressed: _lockDialog,
@@ -148,7 +146,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     // Authentication Timer
                     Divider(height: 2, color: theme.text15),
                     SettingsDoubleLineItem(
-                      heading: localization.autoLockHeader,
+                      heading: l10n.autoLockHeader,
                       defaultMethod: _curTimeoutSetting,
                       icon: AppIcons.timer,
                       onPressed: _lockTimeoutDialog,
@@ -159,7 +157,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     if (encryptedSecret == null) ...[
                       Divider(height: 2, color: theme.text15),
                       SingleLineItem(
-                        heading: localization.setWalletPassword,
+                        heading: l10n.setWalletPassword,
                         settingIcon: AppIcons.walletpassword,
                         onPressed: () {
                           Sheets.showAppHeightNineSheet(
@@ -172,7 +170,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     ] else ...[
                       Divider(height: 2, color: theme.text15),
                       SingleLineItem(
-                        heading: localization.disableWalletPassword,
+                        heading: l10n.disableWalletPassword,
                         settingIcon: AppIcons.walletpassworddisabled,
                         onPressed: () {
                           Sheets.showAppHeightNineSheet(
@@ -198,15 +196,16 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
   Future<void> _authMethodDialog() async {
     final theme = ref.read(themeProvider);
     final styles = ref.read(stylesProvider);
-    final localization = ref.read(l10nProvider);
+    final l10n = ref.read(l10nProvider);
     final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
+
     switch (await showDialog<AuthMethod>(
         context: context,
         barrierColor: theme.barrier,
         builder: (BuildContext context) {
           return AppSimpleDialog(
             title: Text(
-              localization.authMethod,
+              l10n.authMethod,
               style: styles.textStyleDialogHeader,
             ),
             children: [
@@ -217,7 +216,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    localization.biometricsMethod,
+                    l10n.biometricsMethod,
                     style: styles.textStyleDialogOptions,
                   ),
                 ),
@@ -229,7 +228,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    localization.pinMethod,
+                    l10n.pinMethod,
                     style: styles.textStyleDialogOptions,
                   ),
                 ),
@@ -261,17 +260,18 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
   }
 
   Future<void> _lockDialog() async {
-    final localization = ref.read(l10nProvider);
-    final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
     final theme = ref.read(themeProvider);
     final styles = ref.read(stylesProvider);
+    final l10n = ref.read(l10nProvider);
+    final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
+
     switch (await showDialog<UnlockOption>(
         context: context,
         barrierColor: theme.barrier,
         builder: (BuildContext context) {
           return AppSimpleDialog(
             title: Text(
-              localization.lockAppSetting,
+              l10n.lockAppSetting,
               style: styles.textStyleDialogHeader,
             ),
             children: [
@@ -282,7 +282,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    localization.no,
+                    l10n.no,
                     style: styles.textStyleDialogOptions,
                   ),
                 ),
@@ -294,7 +294,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Text(
-                    localization.yes,
+                    l10n.yes,
                     style: styles.textStyleDialogOptions,
                   ),
                 ),
