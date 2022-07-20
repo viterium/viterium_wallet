@@ -17,26 +17,17 @@ class AmountCard extends HookConsumerWidget {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final amountRaw = amount.raw;
-    final tokenInfo = amount.tokenInfo;
-    final decimals = tokenInfo.decimals;
-
     final amountValue = useMemoized(() {
-      if (NumberUtil.getStringFromRaw(amountRaw, decimals)
-              .replaceAll(',', '') ==
-          NumberUtil.getDecimalFromRaw(amountRaw, decimals).toString()) {
-        return NumberUtil.getStringFromRaw(amountRaw, decimals);
-      } else {
-        return '~' +
-            NumberUtil.getDecimalFromRaw(amountRaw, decimals)
-                .toStringAsFixed(6);
-      }
-    }, [amountRaw, decimals]);
+      return NumberUtil.approx(amount: amount);
+    }, [amount]);
 
     final amountAll = useMemoized(() {
-      return NumberUtil.getStringFromRaw(amountRaw, decimals, decimals) +
-          ' ${tokenInfo.symbolLabel}';
-    }, [amountRaw, decimals, tokenInfo.symbolLabel]);
+      return NumberUtil.approx(
+            amount: amount,
+            precision: amount.decimals,
+          ) +
+          ' ${amount.symbolLabel}';
+    }, [amount]);
 
     return Container(
       margin: EdgeInsets.only(
@@ -61,7 +52,7 @@ class AmountCard extends HookConsumerWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(4),
-              child: TokenIconWidget(tokenId: tokenInfo.tokenId),
+              child: TokenIconWidget(tokenId: amount.tokenId),
             ),
           ),
           Expanded(
@@ -80,7 +71,7 @@ class AmountCard extends HookConsumerWidget {
                           style: styles.textStyleParagraphPrimary,
                         ),
                         TextSpan(
-                          text: ' ${tokenInfo.symbolLabel}',
+                          text: ' ${amount.symbolLabel}',
                           style: styles.textStyleParagraphPrimaryW100,
                         ),
                       ],
