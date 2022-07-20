@@ -71,7 +71,7 @@ class NumberUtil {
   }
 
   static String approx({required Amount amount, int precision = 6}) {
-    return approxAmountRaw(amount.raw, amount.tokenInfo.decimals);
+    return approxAmountRaw(amount.raw, amount.decimals, precision);
   }
 
   static String approxAmountRaw(
@@ -82,7 +82,7 @@ class NumberUtil {
     // Indicate that this is a special amount if some digits are not displayed
     if (getStringFromRaw(amountRaw, decimals, precision) ==
         getDecimalFromRaw(amountRaw, decimals).toString()) {
-      final amount = getStringFromRaw(amountRaw, decimals);
+      final amount = getStringFromRaw(amountRaw, decimals, precision);
       return amount;
     } else {
       final amount =
