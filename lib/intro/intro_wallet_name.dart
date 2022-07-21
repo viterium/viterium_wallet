@@ -23,6 +23,11 @@ class IntroWalletName extends HookConsumerWidget {
     final nameController = useTextEditingController();
 
     final nameError = useState('');
+    useEffect(() {
+      final introData = ref.read(introDataProvider);
+      nameController.text = introData.name ?? '';
+      return null;
+    }, const []);
 
     void inputChanged(_) {
       nameError.value = '';
