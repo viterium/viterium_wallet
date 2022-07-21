@@ -42,6 +42,7 @@ class SetupWalletScreen extends HookConsumerWidget {
 
         final auth = ref.read(walletAuthNotifierProvider);
         if (auth == null) throw Exception('No active wallet');
+        await auth.checkEncryptedState();
         await auth.unlock(password: walletData.password);
 
         Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
