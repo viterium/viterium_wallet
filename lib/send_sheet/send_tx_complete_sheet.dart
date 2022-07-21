@@ -84,6 +84,7 @@ class SendTxCompleteSheet extends HookConsumerWidget {
                     data: data,
                     contract: contract,
                   ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
