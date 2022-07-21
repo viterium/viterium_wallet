@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vite/core.dart';
 import 'package:viteconnect/viteconnect.dart';
@@ -26,29 +25,22 @@ class ViteConnectService implements SessionStorage {
   });
 
   void _onSessionRequest(VCSessionRequest sessionRequest) {
-    debugPrint('SessionRequest: $sessionRequest');
     delegate.onEvent(VCEvent.sessionRequest(sessionRequest));
   }
 
   void _onConnect(SessionStatus sessionStatus) {
-    debugPrint('Connected: $sessionStatus');
     delegate.onEvent(VCEvent.connected(sessionStatus));
   }
 
   void _onDisconnect(Map<String, dynamic> map) {
-    debugPrint('Disconnected: ${map['message']}');
-    delegate.onEvent(
-      VCEvent.disconnected(map['message']),
-    );
+    delegate.onEvent(VCEvent.disconnected(map['message']));
   }
 
   void _onSignAndSendTx(JsonRpcRequest request) {
-    debugPrint('SignAndSendTx: $request');
     delegate.onEvent(VCEvent.signAndSendTx(request));
   }
 
   void _onSignMessage(JsonRpcRequest request) {
-    debugPrint('SignMessage: $request');
     delegate.onEvent(VCEvent.signMessage(request));
   }
 
@@ -93,12 +85,10 @@ class ViteConnectService implements SessionStorage {
   }
 
   Future<void> disconnect() async {
-    debugPrint('disconnect');
     await connector?.killSession();
   }
 
   Future<void> close() async {
-    debugPrint('close connection');
     await connector?.close(forceClose: true);
   }
 
