@@ -12,6 +12,7 @@ class SettingsDoubleLineItem extends ConsumerWidget {
   final IconData icon;
   final double iconSize;
   final VoidCallback onPressed;
+  final VoidCallback? onLongPress;
   final bool disabled;
 
   const SettingsDoubleLineItem({
@@ -21,6 +22,7 @@ class SettingsDoubleLineItem extends ConsumerWidget {
     required this.icon,
     this.iconSize = 24,
     required this.onPressed,
+    this.onLongPress,
     this.disabled = false,
   }) : super(key: key);
 
@@ -34,6 +36,7 @@ class SettingsDoubleLineItem extends ConsumerWidget {
       child: TextButton(
         style: styles.defaultTextButtonStyle,
         onPressed: onPressed,
+        onLongPress: onLongPress,
         child: Container(
           height: 60,
           margin: const EdgeInsetsDirectional.only(start: 30),

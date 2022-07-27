@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
+import '../util/ui_util.dart';
 import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
@@ -81,6 +82,13 @@ class AccountDetailsSheet extends HookConsumerWidget {
     }
 
     void confirmDelete() {
+      final pushSettings = ref.read(pushSettingsForAccountProvider(account));
+      if (pushSettings.pushEnabled) {
+        UIUtil.showSnackbar(
+            'First turn off Notifications for this account', context);
+        return;
+      }
+
       AppDialogs.showConfirmDialog(
         context,
         l10n.hideAccountHeader,

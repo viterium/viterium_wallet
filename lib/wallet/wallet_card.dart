@@ -5,6 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../app_providers.dart';
 import '../util/caseconverter.dart';
+import '../util/ui_util.dart';
 import '../widgets/dialog.dart';
 import 'wallet_types.dart';
 
@@ -66,6 +67,16 @@ class WalletCard extends ConsumerWidget {
       );
     }
 
+    void checkNotifications() {
+      final repository = ref.read(pushInfoRepositoryProvider);
+      if (repository.anyPushEnabledForWalletId(wallet.wid)) {
+        UIUtil.showSnackbar(
+            'First turn off Notifications of wallet accounts', context);
+        return;
+      }
+      confirmRemoveWallet();
+    }
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 6),
       child: Slidable(
@@ -73,7 +84,7 @@ class WalletCard extends ConsumerWidget {
         secondaryActions: [
           SlideAction(
             child: Center(child: Icon(Icons.delete, color: theme.text)),
-            onTap: confirmRemoveWallet,
+            onTap: checkNotifications,
           )
         ],
         actionPane: const SlidableBehindActionPane(),

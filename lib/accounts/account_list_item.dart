@@ -39,6 +39,13 @@ class AccountListItem extends ConsumerWidget {
     }
 
     void confirmDeleteAccount() {
+      final pushSettings = ref.read(pushSettingsForAccountProvider(account));
+      if (pushSettings.pushEnabled) {
+        UIUtil.showSnackbar(
+            'First turn off Notifications for this account', context);
+        return;
+      }
+
       AppDialogs.showConfirmDialog(
         context,
         l10n.hideAccountHeader,

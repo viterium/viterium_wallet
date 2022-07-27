@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../accounts/account.dart';
 import '../app_providers.dart';
 import '../main_card/main_card.dart';
+import '../push_notifications/push_types.dart';
 import '../receive/receive_sheet.dart';
 import '../send_sheet/send_sheet.dart';
 import '../settings_drawer/settings_drawer.dart';
@@ -14,6 +15,7 @@ import '../tokens/tokens_widget.dart';
 import '../transactions/transaction_history_widget.dart';
 import '../transactions/unreceived_providers.dart';
 import '../util/ui_util.dart';
+import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/network_banner.dart';
 import '../widgets/sheet_util.dart';
@@ -104,6 +106,8 @@ final _homePageWatcherProvider =
   ref.watch(unreceivedProvider(account.address));
   ref.watch(unreceivedSubscriptionProvider(account.address));
   ref.watch(autoreceiveServiceProvider(account));
+  ref.watch(pushSettingsForAccountProvider(account));
+  ref.watch(quotaProvider(account.address));
 });
 
 class HomeScreenPage extends HookConsumerWidget {
@@ -117,6 +121,78 @@ class HomeScreenPage extends HookConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     ref.watch(_homePageWatcherProvider(account));
+
+    Future<void> publishToken(PushTokenSettings settings) async {
+      try {
+        AppDialogs.showInProgressDialog(
+          context,
+          'Updating Notifications Token',
+          'Please wait...',
+        );
+
+        final accountService = ref.read(accountServiceProvider);
+        final service = ref.read(pushServiceProvider);
+        final notifier = ref.read(pushTokenSettingsProvider.notifier);
+        await notifier.publishToken(
+          address: account.address,
+          accountService: accountService,
+          service: service,
+        );
+      } catch (e, st) {
+        final log = ref.read(loggerProvider);
+        log.e(e, st);
+
+        UIUtil.showSnackbar('Failed to update Notifications Token', context);
+      } finally {
+        Navigator.of(context).pop();
+      }
+    }
+
+    Future<void> authPublishToken(PushTokenSettings settings) async {
+      final authUtil = ref.read(authUtilProvider);
+      final auth = await authUtil.authenticate(
+        context,
+        'Enter PIN to Update Notifications Token',
+        'Authenticate to Update Notifications Token',
+      );
+
+      if (auth) {
+        publishToken(settings);
+      }
+    }
+
+    Future<void> confirmPublishToken(PushTokenSettings settings) async {
+      final pushSettings = ref.read(pushInfoRepositoryProvider);
+      final anyPushEnabled = pushSettings.anyPushEnabled;
+      if (settings.published || !anyPushEnabled) {
+        return;
+      }
+
+      AppDialogs.showConfirmDialog(
+        context,
+        'Update Notifications Token',
+        'The Push Notifications Token for your device changed. Please update to continue receiving notifications.',
+        'UPDATE',
+        () => authPublishToken(settings),
+      );
+    }
+
+    ref.listen<PushTokenSettings>(
+      pushTokenSettingsProvider,
+      (_, settings) => confirmPublishToken(settings),
+      onError: (e, st) {
+        final log = ref.read(loggerProvider);
+        log.e(e, st);
+      },
+    );
+
+    useEffect(() {
+      Future.delayed(Duration.zero, () {
+        final settings = ref.read(pushTokenSettingsProvider);
+        confirmPublishToken(settings);
+      });
+      return null;
+    }, const []);
 
     final scaffoldKey = useRef(GlobalKey<ScaffoldState>());
 

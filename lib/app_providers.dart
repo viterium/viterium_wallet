@@ -3,6 +3,7 @@ export 'autoreceive/autoreceive_providers.dart';
 export 'contacts/contacts_providers.dart';
 export 'contracts/contracts_providers.dart';
 export 'core/core_providers.dart';
+export 'push_notifications/push_providers.dart';
 export 'quota/quota_providers.dart';
 export 'sbp/sbp_providers.dart';
 export 'settings/settings_providers.dart';

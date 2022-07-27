@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50531297920",
+    "project_id": "viterium-74d31",
+    "storage_bucket": "viterium-74d31.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50531297920:android:903c6a5710adc863ea1465",
+        "android_client_info": {
+          "package_name": "io.viterium.viteriumwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50531297920-6ve3l4pcoj9eptk2cfggmggsokabepse.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn9CYZfD2W9JFkHCQtVvhshMjgXyjfIsM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50531297920-6ve3l4pcoj9eptk2cfggmggsokabepse.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

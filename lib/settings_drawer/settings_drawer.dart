@@ -7,11 +7,11 @@ import 'package:share_plus/share_plus.dart';
 import '../app_icons.dart';
 import '../app_providers.dart';
 import '../contacts/contacts_widget.dart';
+import '../node_settings/node_types.dart';
 import '../quota/quota_sheet.dart';
 import '../sbp/sbp_sheet.dart';
 import '../settings/available_currency.dart';
 import '../settings/available_themes.dart';
-import '../settings/setting_item.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
@@ -20,20 +20,13 @@ import 'accounts_area.dart';
 import 'currency_dialog.dart';
 import 'double_line_item.dart';
 import 'network_menu.dart';
+import 'push_settings_item.dart';
 import 'security_menu.dart';
 import 'seed_backup_sheet.dart';
+import 'selection_item.dart';
 import 'single_line_item.dart';
 import 'theme_dialog.dart';
 import 'version_widget.dart';
-
-class SelectionItem extends SettingSelectionItem {
-  late final String displayName;
-
-  SelectionItem(this.displayName) {}
-
-  @override
-  String getDisplayName(WidgetRef ref) => displayName;
-}
 
 class SettingsSheet extends ConsumerStatefulWidget {
   const SettingsSheet({Key? key}) : super(key: key);
@@ -280,6 +273,13 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                           _networkController.forward();
                         },
                       ),
+                      Consumer(builder: (context, ref, _) {
+                        final network = ref.watch(viteNetworkProvider);
+                        if (network != ViteNetwork.devnet) {
+                          return const SizedBox();
+                        }
+                        return const PushSettingsItem();
+                      }),
                       Divider(height: 2, color: theme.text15),
                       Container(
                         margin: const EdgeInsetsDirectional.only(

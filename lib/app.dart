@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:push/push.dart';
 
 import 'app_localization.dart';
 import 'app_providers.dart';
@@ -42,9 +43,62 @@ class App extends HookConsumerWidget {
         }
       });
       return null;
+    });
+
+    useEffect(() {
+      final onNewTokenSubscription = Push.instance.onNewToken.listen((token) {
+        print('Just got a new token: $token');
+        final notifier = ref.read(pushTokenSettingsProvider.notifier);
+        notifier.updateToken(token);
+      });
+
+      Push.instance.token.then((token) {
+        if (token == null) {
+          return;
+        }
+        print('Current token: $token');
+        final notifier = ref.read(pushTokenSettingsProvider.notifier);
+        // FIXME
+        //notifier.resetTokenPublished();
+        notifier.updateToken(token);
+      });
+
+      Push.instance.notificationTapWhichLaunchedAppFromTerminated.then((data) {
+        print(data);
+      });
+
+      final onNotificationTapSubscription =
+          Push.instance.onNotificationTap.listen((data) {
+        print('Notification was tapped:\n'
+            'Data: $data \n');
+      });
+
+      final onMessageSubscription = Push.instance.onMessage.listen((message) {
+        print('RemoteMessage received while app is in foreground:\n'
+            'RemoteMessage.Notification: ${message.notification} \n'
+            ' title: ${message.notification?.title.toString()}\n'
+            ' body: ${message.notification?.body.toString()}\n'
+            'RemoteMessage.Data: ${message.data}');
+      });
+
+      final onBackgroundMessageSubscription =
+          Push.instance.onBackgroundMessage.listen((message) {
+        print('RemoteMessage received while app is in background:\n'
+            'RemoteMessage.Notification: ${message.notification} \n'
+            ' title: ${message.notification?.title.toString()}\n'
+            ' body: ${message.notification?.body.toString()}\n'
+            'RemoteMessage.Data: ${message.data}');
+      });
+
+      return () {
+        onNewTokenSubscription.cancel();
+        onNotificationTapSubscription.cancel();
+        onMessageSubscription.cancel();
+        onBackgroundMessageSubscription.cancel();
+      };
     }, const []);
 
-    ref.listen<BaseTheme>(themeProvider, (previous, theme) {
+    ref.listen<BaseTheme>(themeProvider, (_, theme) {
       SystemChrome.setSystemUIOverlayStyle(theme.statusBar);
     });
 

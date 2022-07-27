@@ -6,6 +6,7 @@ import 'package:vite/vite.dart' hide TypeFactory;
 import '../accounts/account.dart';
 import '../contacts/contact.dart';
 import '../core/vault.dart';
+import '../push_notifications/push_types.dart';
 import '../tokens/token_types.dart';
 import '../util/random_util.dart';
 import 'boxes.dart';
@@ -16,6 +17,7 @@ typedef BoxKey = String;
 late final BoxKey kContactsBox;
 late final BoxKey kTokenInfoBox;
 late final BoxKey kTokenIconBox;
+late final BoxKey kPushInfoBox;
 late final BoxKey kSettingsBox;
 
 int _getTypeId<T>() {
@@ -30,6 +32,8 @@ int _getTypeId<T>() {
       return 3;
     case CachedTokenIcon:
       return 4;
+    case PushInfo:
+      return 5;
   }
   throw 'Unknown type $T';
 }
@@ -53,6 +57,10 @@ final tokenInfoAdapter = JsonTypeAdapter(
 final cachedTokenIconAdapter = JsonTypeAdapter(
   typeId: _getTypeId<CachedTokenIcon>(),
   fromJson: CachedTokenIcon.fromJson,
+);
+final pushInfoAdapter = JsonTypeAdapter(
+  typeId: _getTypeId<PushInfo>(),
+  fromJson: PushInfo.fromJson,
 );
 
 class Database {
@@ -82,6 +90,7 @@ class Database {
     const kTokenInfoBoxId = '_tokenInfoBox';
     const kTokenIconBoxId = '_tokenIconBox';
     const kSettingsBoxId = '_settingsBox';
+    const kPushInfoBoxId = '_pushInfoBox';
 
     kContactsBox =
         digest(data: stringToBytesUtf8('$kContactsBoxId#$secureKey')).hex;
@@ -91,26 +100,31 @@ class Database {
         digest(data: stringToBytesUtf8('$kTokenIconBoxId#$secureKey')).hex;
     kSettingsBox =
         digest(data: stringToBytesUtf8('$kSettingsBoxId#$secureKey')).hex;
+    kPushInfoBox =
+        digest(data: stringToBytesUtf8('$kPushInfoBoxId#$secureKey')).hex;
 
     Hive.registerAdapter(accountAdapter);
     Hive.registerAdapter(accountInfoAdapter);
     Hive.registerAdapter(contactAdapter);
     Hive.registerAdapter(tokenInfoAdapter);
     Hive.registerAdapter(cachedTokenIconAdapter);
+    Hive.registerAdapter(pushInfoAdapter);
+
+    Future<Box> _openBox<T>(String box, {bool encrypted = false}) async {
+      return Hive.openBox<T>(
+        box,
+        encryptionCipher: encrypted ? await _getBoxCipher(box, vault) : null,
+      );
+    }
 
     await Future.wait([
       // typed boxes
-      Hive.openBox<Contact>(
-        kContactsBox,
-        encryptionCipher: await _getBoxCipher(kContactsBox, vault),
-      ),
-      Hive.openBox<TokenInfo>(kTokenInfoBox),
-      Hive.openBox<CachedTokenIcon>(kTokenIconBox),
+      _openBox<Contact>(kContactsBox, encrypted: true),
+      _openBox<TokenInfo>(kTokenInfoBox),
+      _openBox<CachedTokenIcon>(kTokenIconBox),
+      _openBox<PushInfo>(kPushInfoBox, encrypted: true),
       // generic boxes
-      Hive.openBox(
-        kSettingsBox,
-        encryptionCipher: await _getBoxCipher(kSettingsBox, vault),
-      ),
+      _openBox(kSettingsBox, encrypted: true),
     ]);
   }
 

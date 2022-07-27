@@ -1,5 +1,6 @@
 import 'package:vite/contract.dart';
 
+import '../push_notifications/push_contract.dart';
 import 'dex_fund.dart';
 import 'dex_trade.dart';
 import 's1_aliens.dart';
@@ -20,5 +21,6 @@ final knownContracts = Map.fromEntries(
     vivaStakingV4Contract,
     vitePunksContract,
     s1AliensContract,
+    pushNotificationsContract,
   ].map((e) => MapEntry(e.contractAddress, e)),
 );
