@@ -47,7 +47,7 @@ class App extends HookConsumerWidget {
 
     useEffect(() {
       final onNewTokenSubscription = Push.instance.onNewToken.listen((token) {
-        print('Just got a new token: $token');
+        //print('Just got a new token: $token');
         final notifier = ref.read(pushTokenSettingsProvider.notifier);
         notifier.updateToken(token);
       });
@@ -56,38 +56,36 @@ class App extends HookConsumerWidget {
         if (token == null) {
           return;
         }
-        print('Current token: $token');
+        //print('Current token: $token');
         final notifier = ref.read(pushTokenSettingsProvider.notifier);
-        // FIXME
-        //notifier.resetTokenPublished();
         notifier.updateToken(token);
       });
 
       Push.instance.notificationTapWhichLaunchedAppFromTerminated.then((data) {
-        print(data);
+        //print(data);
       });
 
       final onNotificationTapSubscription =
           Push.instance.onNotificationTap.listen((data) {
-        print('Notification was tapped:\n'
-            'Data: $data \n');
+        // print('Notification was tapped:\n'
+        //     'Data: $data \n');
       });
 
       final onMessageSubscription = Push.instance.onMessage.listen((message) {
-        print('RemoteMessage received while app is in foreground:\n'
-            'RemoteMessage.Notification: ${message.notification} \n'
-            ' title: ${message.notification?.title.toString()}\n'
-            ' body: ${message.notification?.body.toString()}\n'
-            'RemoteMessage.Data: ${message.data}');
+        // print('RemoteMessage received while app is in foreground:\n'
+        //     'RemoteMessage.Notification: ${message.notification} \n'
+        //     ' title: ${message.notification?.title.toString()}\n'
+        //     ' body: ${message.notification?.body.toString()}\n'
+        //     'RemoteMessage.Data: ${message.data}');
       });
 
       final onBackgroundMessageSubscription =
           Push.instance.onBackgroundMessage.listen((message) {
-        print('RemoteMessage received while app is in background:\n'
-            'RemoteMessage.Notification: ${message.notification} \n'
-            ' title: ${message.notification?.title.toString()}\n'
-            ' body: ${message.notification?.body.toString()}\n'
-            'RemoteMessage.Data: ${message.data}');
+        // print('RemoteMessage received while app is in background:\n'
+        //     'RemoteMessage.Notification: ${message.notification} \n'
+        //     ' title: ${message.notification?.title.toString()}\n'
+        //     ' body: ${message.notification?.body.toString()}\n'
+        //     'RemoteMessage.Data: ${message.data}');
       });
 
       return () {
