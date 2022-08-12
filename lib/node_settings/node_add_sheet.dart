@@ -177,7 +177,7 @@ class NodeAddSheet extends HookConsumerWidget {
       }
     }
 
-    void scanHttp() async {
+    Future<void> scanHttp() async {
       FocusManager.instance.primaryFocus?.unfocus();
       final scanResult = await UserDataUtil.scanQrCode(context);
       if (scanResult?.code == null) {
@@ -186,14 +186,14 @@ class NodeAddSheet extends HookConsumerWidget {
       httpController.text = scanResult!.code!;
     }
 
-    void pasteHttp() async {
+    Future<void> pasteHttp() async {
       final data = await UserDataUtil.getClipboardText(DataType.RAW);
       if (data != null) {
         httpController.text = data;
       }
     }
 
-    void scanWs() async {
+    Future<void> scanWs() async {
       FocusManager.instance.primaryFocus?.unfocus();
       final scanResult = await UserDataUtil.scanQrCode(context);
       if (scanResult?.code == null) {
@@ -202,7 +202,7 @@ class NodeAddSheet extends HookConsumerWidget {
       wsController.text = scanResult!.code!;
     }
 
-    void pasteWs() async {
+    Future<void> pasteWs() async {
       final data = await UserDataUtil.getClipboardText(DataType.RAW);
       if (data != null) {
         wsController.text = data;
