@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vite/vite.dart';
 
 import '../accounts/account.dart';
 import '../app_providers.dart';
@@ -186,6 +187,32 @@ class HomeScreenPage extends HookConsumerWidget {
         log.e(e, st);
       },
     );
+
+    ref.listen<Hash?>(notificationIdProvider, (_, id) {
+      // FIXME - duplicate code
+      if (id == null) {
+        return;
+      }
+      final repository = ref.read(pushInfoRepositoryProvider);
+      final pushInfo = repository.pushInfoForId(id);
+      if (pushInfo == null) {
+        return;
+      }
+
+      final wallet = ref.read(selectedWalletProvider);
+      if (wallet == null || wallet.wid != pushInfo.walletId) {
+        // different wallet - let splash screen handle it
+        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+        return;
+      }
+      // same wallet, select account
+      final index = pushInfo.index;
+      final accounts = ref.read(accountsProvider);
+      final account = accounts.getAccountWithIndex(index);
+      if (account != null) {
+        accounts.selectAccount(account);
+      }
+    });
 
     useEffect(() {
       Future.delayed(Duration.zero, () {

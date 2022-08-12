@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
 import '../intro/intro_providers.dart';
+import '../push_notifications/push_types.dart';
 import '../util/ui_util.dart';
 import '../wallet/wallet_types.dart';
 import '../widgets/notice_dialog.dart';
@@ -14,12 +15,46 @@ final _noticeShownProvider = StateProvider<bool>((ref) {
   return shown || false;
 });
 
+final _pushInfoProvider = StateProvider<PushInfo?>((ref) => null);
+
 class SplashScreen extends HookConsumerWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+
+    Future<void> handleNotificationId() async {
+      final id = ref.read(notificationIdProvider);
+      if (id == null) {
+        return;
+      }
+      final repository = ref.read(pushInfoRepositoryProvider);
+      final pushInfo = repository.pushInfoForId(id);
+      if (pushInfo == null) {
+        return;
+      }
+
+      ref.read(_pushInfoProvider.notifier).state = pushInfo;
+      final wallet = ref.read(selectedWalletProvider);
+      if (wallet == null || wallet.wid != pushInfo.walletId) {
+        final walletId = pushInfo.walletId;
+        final wallets = ref.read(walletsProvider);
+        try {
+          final newWallet = wallets.firstWhere((w) => w.wid == walletId);
+          final notifier = ref.read(walletBundleProvider.notifier);
+          await notifier.logout();
+
+          await notifier.selectWallet(newWallet);
+        } catch (e) {
+          final log = ref.read(loggerProvider);
+          log.e('Failed to find wallet with id $walletId', e);
+        }
+      }
+      // reset notification id
+      final notifier = ref.read(notificationIdProvider.notifier);
+      notifier.state = null;
+    }
 
     Future<void> checkNotice() async {
       final noticeShown = ref.read(_noticeShownProvider.notifier);
@@ -36,6 +71,8 @@ class SplashScreen extends HookConsumerWidget {
     }
 
     Future<void> checkWalletStatus() async {
+      await handleNotificationId();
+
       final bundle = ref.read(walletBundleProvider);
 
       final nav = Navigator.of(context);
@@ -95,12 +132,27 @@ class SplashScreen extends HookConsumerWidget {
           nav.pushReplacementNamed('/lock_screen');
           return;
         } else {
-          walletAuthNotifier.unlock();
+          await walletAuthNotifier.unlock();
         }
       }
       // open database boxes for selected wallet
       final walletRepository = ref.read(walletRepositoryProvider);
       await walletRepository.openWallet(wallet);
+
+      // handle possible notification
+      final pushInfo = ref.read(_pushInfoProvider);
+      if (pushInfo != null) {
+        ref.read(_pushInfoProvider.notifier).state = null;
+        final index = pushInfo.index;
+        if (pushInfo.walletId == wallet.wid) {
+          final accounts = ref.read(accountsProvider);
+          final account = accounts.getAccountWithIndex(index);
+          if (account != null) {
+            await accounts.selectAccountAsync(account);
+          }
+        }
+      }
+
       Future.delayed(Duration.zero, () {
         nav.pushReplacementNamed('/home');
       });

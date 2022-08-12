@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:push/push.dart';
+import 'package:vite/vite.dart';
 
 import 'app_localization.dart';
 import 'app_providers.dart';
@@ -47,7 +48,6 @@ class App extends HookConsumerWidget {
 
     useEffect(() {
       final onNewTokenSubscription = Push.instance.onNewToken.listen((token) {
-        //print('Just got a new token: $token');
         final notifier = ref.read(pushTokenSettingsProvider.notifier);
         notifier.updateToken(token);
       });
@@ -56,37 +56,37 @@ class App extends HookConsumerWidget {
         if (token == null) {
           return;
         }
-        //print('Current token: $token');
         final notifier = ref.read(pushTokenSettingsProvider.notifier);
         notifier.updateToken(token);
       });
 
       Push.instance.notificationTapWhichLaunchedAppFromTerminated.then((data) {
-        //print(data);
+        if (data == null) {
+          return;
+        }
+        final id = Hash.tryParse(data['id'] as String? ?? '');
+        if (id == null) {
+          return;
+        }
+        final notifier = ref.read(notificationIdProvider.notifier);
+        notifier.state = id;
       });
 
       final onNotificationTapSubscription =
           Push.instance.onNotificationTap.listen((data) {
-        // print('Notification was tapped:\n'
-        //     'Data: $data \n');
+        final id = Hash.tryParse(data['id'] as String? ?? '');
+        if (id == null) {
+          return;
+        }
+        final notifier = ref.read(notificationIdProvider.notifier);
+        notifier.state = id;
       });
 
-      final onMessageSubscription = Push.instance.onMessage.listen((message) {
-        // print('RemoteMessage received while app is in foreground:\n'
-        //     'RemoteMessage.Notification: ${message.notification} \n'
-        //     ' title: ${message.notification?.title.toString()}\n'
-        //     ' body: ${message.notification?.body.toString()}\n'
-        //     'RemoteMessage.Data: ${message.data}');
-      });
+      final onMessageSubscription =
+          Push.instance.onMessage.listen((message) {});
 
       final onBackgroundMessageSubscription =
-          Push.instance.onBackgroundMessage.listen((message) {
-        // print('RemoteMessage received while app is in background:\n'
-        //     'RemoteMessage.Notification: ${message.notification} \n'
-        //     ' title: ${message.notification?.title.toString()}\n'
-        //     ' body: ${message.notification?.body.toString()}\n'
-        //     'RemoteMessage.Data: ${message.data}');
-      });
+          Push.instance.onBackgroundMessage.listen((message) {});
 
       return () {
         onNewTokenSubscription.cancel();

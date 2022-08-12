@@ -23,6 +23,7 @@ class AccountsNotifier extends ChangeNotifier {
   Account get selected => _accounts[_recents.selected] ?? _mainAccount;
   Account? get recentLast => _accounts[_recents.recentLast];
   Account? get recentSecondLast => _accounts[_recents.recentSecondLast];
+  Account? getAccountWithIndex(int index) => _accounts[index];
 
   IList<Account> get accounts => IList(_accounts.values).sort(
         (a1, a2) => a1.index.compareTo(a2.index),
@@ -95,6 +96,21 @@ class AccountsNotifier extends ChangeNotifier {
 
     _recents.select(account.index);
     _accountSelection.set(_recents);
+
+    notifyListeners();
+  }
+
+  Future<void> selectAccountAsync(Account account) async {
+    if (account == selected) {
+      return;
+    }
+
+    if (_accounts[account.index] == null) {
+      _addAccount(account);
+    }
+
+    _recents.select(account.index);
+    await _accountSelection.set(_recents);
 
     notifyListeners();
   }

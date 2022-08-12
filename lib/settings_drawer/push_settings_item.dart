@@ -1,5 +1,9 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:push/push.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
@@ -89,6 +93,21 @@ class PushSettingsItem extends ConsumerWidget {
       }
     }
 
+    Future<bool> iOSCheckPermissions() async {
+      if (!kIsWeb && Platform.isIOS) {
+        final permission = await Push.instance.requestPermission();
+        if (permission == false) {
+          AppDialogs.showInfoDialog(
+            context,
+            'Notifications Disabled',
+            'Please enable notifications fron iOS settings',
+          );
+          return false;
+        }
+      }
+      return true;
+    }
+
     Future<void> showPushSettingsDialog() async {
       final selection = await showAppDialog<bool>(
         context: context,
@@ -98,6 +117,11 @@ class PushSettingsItem extends ConsumerWidget {
         return;
       }
 
+      if (selection) {
+        if (!await iOSCheckPermissions()) {
+          return;
+        }
+      }
       await authChangePushSettings(selection);
     }
 

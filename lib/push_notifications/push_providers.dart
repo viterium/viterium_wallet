@@ -99,3 +99,5 @@ final pushEnabledProvider = Provider.autoDispose((ref) {
   final pushInfo = ref.watch(pushSettingsForAccountProvider(account));
   return pushInfo.pushEnabled;
 });
+
+final notificationIdProvider = StateProvider<Hash?>((ref) => null);

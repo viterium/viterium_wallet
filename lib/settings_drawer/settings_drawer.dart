@@ -254,6 +254,14 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                           onPressed: _showThemeDialog,
                         );
                       }),
+                      Consumer(builder: (context, ref, _) {
+                        final network = ref.watch(viteNetworkProvider);
+                        final token = ref.read(pushTokenProvider);
+                        if (network != ViteNetwork.mainnet || token.isEmpty) {
+                          return const SizedBox();
+                        }
+                        return const PushSettingsItem();
+                      }),
                       Divider(height: 2, color: theme.text15),
                       SingleLineItem(
                         heading: l10n.securityHeader,
@@ -273,13 +281,6 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                           _networkController.forward();
                         },
                       ),
-                      Consumer(builder: (context, ref, _) {
-                        final network = ref.watch(viteNetworkProvider);
-                        if (network != ViteNetwork.mainnet) {
-                          return const SizedBox();
-                        }
-                        return const PushSettingsItem();
-                      }),
                       Divider(height: 2, color: theme.text15),
                       Container(
                         margin: const EdgeInsetsDirectional.only(

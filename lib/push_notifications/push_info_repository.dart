@@ -20,6 +20,8 @@ class PushInfoRepository {
     return box.get(id.hex, defaultValue: create(id));
   }
 
+  PushInfo? pushInfoForId(Hash id) => box.tryGet(id.hex);
+
   Future<void> setPushInfo(PushInfo pushInfo, {required Hash id}) async {
     await box.set(id.hex, pushInfo);
   }

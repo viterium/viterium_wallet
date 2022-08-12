@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../intro/intro.dart';
@@ -91,6 +92,12 @@ class IntroScreen extends HookConsumerWidget {
         },
         pop: () => Navigator.of(context).pop(),
       );
+    });
+
+    ref.listen<Hash?>(notificationIdProvider, (_, id) {
+      if (id != null) {
+        Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+      }
     });
 
     if (walletBundle.wallets.isNotEmpty) {
