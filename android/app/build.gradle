@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         applicationId "io.viterium.viteriumwallet"
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion 26
+        targetSdkVersion 31
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
