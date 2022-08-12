@@ -63,8 +63,8 @@ final labeledAddresses = Map.fromEntries(
       address: 'vite_378cb82adabb8608836883bd4d3720df7a5188b4c6bd0e7b75',
     ),
     Contact(
-      name: '#ViteriumNotifications',
-      address: 'vite_6de9ac74c89c8493b55246ee9bf12cb5b7805a0257db93f297',
+      name: '#Notifications',
+      address: 'vite_47920b3e8a019d532addca410115690c44b8f2999bea55ef5b',
     ),
   ].map((e) => MapEntry(e.address, e)),
 );
