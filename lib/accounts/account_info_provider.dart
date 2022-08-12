@@ -5,6 +5,8 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import '../core/generic_state_notifier.dart';
 import '../tokens/token_order_notifier.dart';
+import '../tokens/token_state_notifier.dart';
+import '../tokens/token_types.dart';
 import '../util/numberutil.dart';
 import 'account.dart';
 
@@ -120,6 +122,20 @@ final tokenBalanceDisplayProvider =
   );
 });
 
+final _tokenStateKeyProvider = Provider.family<String, Account>((ref, account) {
+  final network = ref.watch(viteNetworkProvider);
+  final data = stringToBytesUtf8(
+      'tokenStateMapping#${account.address}#${network.index}');
+  return digest(data: data, digestSize: 8).hex;
+});
+
+final tokenStateMappingProvider = StateNotifierProvider.family<
+    TokenStateNotifier, TokenStateMapping, Account>((ref, account) {
+  final repository = ref.watch(settingsRepositoryProvider);
+  final key = ref.watch(_tokenStateKeyProvider(account));
+  return TokenStateNotifier(repository, key);
+});
+
 final _tokenOrderKeyProvider = Provider.family<String, Account>((ref, account) {
   final network = ref.watch(viteNetworkProvider);
   final data = stringToBytesUtf8('${account.address}#${network.index}');
@@ -138,18 +154,31 @@ final sortedBalancesForAccountProvider =
     Provider.autoDispose.family<IList<BalanceInfo>, Account>((ref, account) {
   final accountInfo = ref.watch(accountInfoProvider(account));
   final sortedIds = ref.watch(tokenOrderProvider(account));
-  final remainingBalances = Map.of(accountInfo.balances);
+  final mapping = ref.watch(tokenStateMappingProvider(account));
+  final remainingBalances =
+      mapping.states.where((key, value) => value.enabled).map((key, value) {
+    final balanceInfo = BalanceInfo(
+      balance: BigInt.zero,
+      transactionCount: 0,
+      tokenInfo: value.tokenInfo ?? TokenInfo.unknownToken(Token.parse(key)),
+    );
+    return MapEntry(key, balanceInfo);
+  }).unlock;
+  remainingBalances.addAll(accountInfo.balances);
 
   final balances = sortedIds.map((id) {
-    remainingBalances.remove(id);
-    return accountInfo.balances[id];
+    final balance = remainingBalances.remove(id);
+    return balance;
   });
 
   final sortedBalances = balances
       .where((balance) => balance != null)
       .cast<BalanceInfo>()
       .toIList()
-      .addAll(remainingBalances.values);
-
+      .addAll(remainingBalances.values)
+      .removeWhere((balance) {
+    final state = mapping.states[balance.tokenInfo.tokenId];
+    return state?.enabled == false;
+  });
   return sortedBalances;
 });
