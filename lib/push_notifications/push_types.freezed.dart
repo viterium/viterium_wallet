@@ -380,11 +380,11 @@ abstract class _PushTokenSettings implements PushTokenSettings {
 }
 
 /// @nodoc
-class _$PushSettingsPayloadTearOff {
-  const _$PushSettingsPayloadTearOff();
+class _$PushIdLinkPayloadTearOff {
+  const _$PushIdLinkPayloadTearOff();
 
-  _PushSettingsPayload call({required Hash clientId, required Hash id}) {
-    return _PushSettingsPayload(
+  _PushIdLinkPayload call({required Hash clientId, required Hash id}) {
+    return _PushIdLinkPayload(
       clientId: clientId,
       id: id,
     );
@@ -392,23 +392,23 @@ class _$PushSettingsPayloadTearOff {
 }
 
 /// @nodoc
-const $PushSettingsPayload = _$PushSettingsPayloadTearOff();
+const $PushIdLinkPayload = _$PushIdLinkPayloadTearOff();
 
 /// @nodoc
-mixin _$PushSettingsPayload {
+mixin _$PushIdLinkPayload {
   Hash get clientId => throw _privateConstructorUsedError;
   Hash get id => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PushSettingsPayloadCopyWith<PushSettingsPayload> get copyWith =>
+  $PushIdLinkPayloadCopyWith<PushIdLinkPayload> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PushSettingsPayloadCopyWith<$Res> {
-  factory $PushSettingsPayloadCopyWith(
-          PushSettingsPayload value, $Res Function(PushSettingsPayload) then) =
-      _$PushSettingsPayloadCopyWithImpl<$Res>;
+abstract class $PushIdLinkPayloadCopyWith<$Res> {
+  factory $PushIdLinkPayloadCopyWith(
+          PushIdLinkPayload value, $Res Function(PushIdLinkPayload) then) =
+      _$PushIdLinkPayloadCopyWithImpl<$Res>;
   $Res call({Hash clientId, Hash id});
 
   $HashCopyWith<$Res> get clientId;
@@ -416,13 +416,13 @@ abstract class $PushSettingsPayloadCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PushSettingsPayloadCopyWithImpl<$Res>
-    implements $PushSettingsPayloadCopyWith<$Res> {
-  _$PushSettingsPayloadCopyWithImpl(this._value, this._then);
+class _$PushIdLinkPayloadCopyWithImpl<$Res>
+    implements $PushIdLinkPayloadCopyWith<$Res> {
+  _$PushIdLinkPayloadCopyWithImpl(this._value, this._then);
 
-  final PushSettingsPayload _value;
+  final PushIdLinkPayload _value;
   // ignore: unused_field
-  final $Res Function(PushSettingsPayload) _then;
+  final $Res Function(PushIdLinkPayload) _then;
 
   @override
   $Res call({
@@ -457,11 +457,11 @@ class _$PushSettingsPayloadCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$PushSettingsPayloadCopyWith<$Res>
-    implements $PushSettingsPayloadCopyWith<$Res> {
-  factory _$PushSettingsPayloadCopyWith(_PushSettingsPayload value,
-          $Res Function(_PushSettingsPayload) then) =
-      __$PushSettingsPayloadCopyWithImpl<$Res>;
+abstract class _$PushIdLinkPayloadCopyWith<$Res>
+    implements $PushIdLinkPayloadCopyWith<$Res> {
+  factory _$PushIdLinkPayloadCopyWith(
+          _PushIdLinkPayload value, $Res Function(_PushIdLinkPayload) then) =
+      __$PushIdLinkPayloadCopyWithImpl<$Res>;
   @override
   $Res call({Hash clientId, Hash id});
 
@@ -472,22 +472,22 @@ abstract class _$PushSettingsPayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PushSettingsPayloadCopyWithImpl<$Res>
-    extends _$PushSettingsPayloadCopyWithImpl<$Res>
-    implements _$PushSettingsPayloadCopyWith<$Res> {
-  __$PushSettingsPayloadCopyWithImpl(
-      _PushSettingsPayload _value, $Res Function(_PushSettingsPayload) _then)
-      : super(_value, (v) => _then(v as _PushSettingsPayload));
+class __$PushIdLinkPayloadCopyWithImpl<$Res>
+    extends _$PushIdLinkPayloadCopyWithImpl<$Res>
+    implements _$PushIdLinkPayloadCopyWith<$Res> {
+  __$PushIdLinkPayloadCopyWithImpl(
+      _PushIdLinkPayload _value, $Res Function(_PushIdLinkPayload) _then)
+      : super(_value, (v) => _then(v as _PushIdLinkPayload));
 
   @override
-  _PushSettingsPayload get _value => super._value as _PushSettingsPayload;
+  _PushIdLinkPayload get _value => super._value as _PushIdLinkPayload;
 
   @override
   $Res call({
     Object? clientId = freezed,
     Object? id = freezed,
   }) {
-    return _then(_PushSettingsPayload(
+    return _then(_PushIdLinkPayload(
       clientId: clientId == freezed
           ? _value.clientId
           : clientId // ignore: cast_nullable_to_non_nullable
@@ -502,8 +502,8 @@ class __$PushSettingsPayloadCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PushSettingsPayload extends _PushSettingsPayload {
-  const _$_PushSettingsPayload({required this.clientId, required this.id})
+class _$_PushIdLinkPayload extends _PushIdLinkPayload {
+  const _$_PushIdLinkPayload({required this.clientId, required this.id})
       : super._();
 
   @override
@@ -513,14 +513,14 @@ class _$_PushSettingsPayload extends _PushSettingsPayload {
 
   @override
   String toString() {
-    return 'PushSettingsPayload(clientId: $clientId, id: $id)';
+    return 'PushIdLinkPayload(clientId: $clientId, id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PushSettingsPayload &&
+            other is _PushIdLinkPayload &&
             const DeepCollectionEquality().equals(other.clientId, clientId) &&
             const DeepCollectionEquality().equals(other.id, id));
   }
@@ -533,15 +533,14 @@ class _$_PushSettingsPayload extends _PushSettingsPayload {
 
   @JsonKey(ignore: true)
   @override
-  _$PushSettingsPayloadCopyWith<_PushSettingsPayload> get copyWith =>
-      __$PushSettingsPayloadCopyWithImpl<_PushSettingsPayload>(
-          this, _$identity);
+  _$PushIdLinkPayloadCopyWith<_PushIdLinkPayload> get copyWith =>
+      __$PushIdLinkPayloadCopyWithImpl<_PushIdLinkPayload>(this, _$identity);
 }
 
-abstract class _PushSettingsPayload extends PushSettingsPayload {
-  const factory _PushSettingsPayload(
-      {required Hash clientId, required Hash id}) = _$_PushSettingsPayload;
-  const _PushSettingsPayload._() : super._();
+abstract class _PushIdLinkPayload extends PushIdLinkPayload {
+  const factory _PushIdLinkPayload({required Hash clientId, required Hash id}) =
+      _$_PushIdLinkPayload;
+  const _PushIdLinkPayload._() : super._();
 
   @override
   Hash get clientId;
@@ -549,7 +548,7 @@ abstract class _PushSettingsPayload extends PushSettingsPayload {
   Hash get id;
   @override
   @JsonKey(ignore: true)
-  _$PushSettingsPayloadCopyWith<_PushSettingsPayload> get copyWith =>
+  _$PushIdLinkPayloadCopyWith<_PushIdLinkPayload> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

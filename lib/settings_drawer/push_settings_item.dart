@@ -20,6 +20,18 @@ class PushSettingsItem extends ConsumerWidget {
 
     final pushEnabled = ref.watch(pushEnabledProvider);
 
+    // FIXME - workaround
+    Future<void> checkUnreceived() async {
+      final txHistory = ref.read(selectedTxHistoryProvider);
+      await Future.doWhile(
+        () => Future.delayed(
+          const Duration(seconds: 1),
+          () => txHistory.hasUnconfirmed,
+        ),
+      );
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
     Future<void> changePushSettings(bool enable) async {
       AppDialogs.showInProgressDialog(
         context,
@@ -33,15 +45,24 @@ class PushSettingsItem extends ConsumerWidget {
           final accountService = ref.read(accountServiceProvider);
           final service = ref.read(pushServiceProvider);
           final pushToken = ref.read(pushTokenSettingsProvider.notifier);
-          await pushToken.publishToken(
+          final published = await pushToken.publishToken(
             address: account.address,
             accountService: accountService,
             service: service,
           );
+          if (published) {
+            await checkUnreceived();
+          }
         }
 
         final pushSettingsProvider = pushSettingsForAccountProvider(account);
         final pushSettings = ref.read(pushSettingsProvider.notifier);
+        if (enable) {
+          final linked = await pushSettings.linkId();
+          if (linked) {
+            await checkUnreceived();
+          }
+        }
         await pushSettings.setPush(enabled: enable);
       } catch (e, st) {
         final log = ref.read(loggerProvider);

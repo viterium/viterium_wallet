@@ -1,7 +1,7 @@
 import 'package:vite/contract.dart';
 
 const pushNotificationsContract = Contract(
-  contractAddress: 'vite_6de9ac74c89c8493b55246ee9bf12cb5b7805a0257db93f297',
+  contractAddress: 'vite_47920b3e8a019d532addca410115690c44b8f2999bea55ef5b',
   abi: [
     {
       "inputs": [
@@ -62,6 +62,12 @@ const pushNotificationsContract = Contract(
           "internalType": "uint256",
           "name": "settings",
           "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "hash",
+          "type": "bytes32"
         }
       ],
       "name": "SettingsChanged",

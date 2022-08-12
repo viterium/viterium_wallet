@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../accounts/account.dart';
+import 'payload_encrypter.dart';
 import 'push_info_repository.dart';
 import 'push_service.dart';
 import 'push_types.dart';
-import 'push_util.dart';
 
 class PushSettingsNotifier extends StateNotifier<PushInfo> {
   final Account account;
@@ -34,31 +34,34 @@ class PushSettingsNotifier extends StateNotifier<PushInfo> {
     }).catchError((e) {});
   }
 
-  Future<void> _linkId() async {
+  Future<bool> linkId() async {
+    if (state.idLinked) {
+      return false;
+    }
+
     final publicKey = await pushService.getPublicKey();
-    final settingsPayload = PushSettingsPayload(clientId: clientId, id: id);
-    final payload = encryptPushSettingsPayload(
-      settingsPayload,
-      publicKey: publicKey,
-    );
+    final encrypter = PayloadEncrypter(publicKey);
+    final settingsPayload = PushIdLinkPayload(clientId: clientId, id: id);
+    final payload = encrypter.encryptPushSettingsPayload(settingsPayload);
 
     await pushService.linkId(
       address: account.address,
       accountService: accountService,
       payload: payload,
     );
+
+    final pushInfo = state.copyWith(idLinked: true);
+    await repository.setPushInfo(pushInfo, id: id);
+    state = pushInfo;
+    return true;
   }
 
-  Future<void> setPush({required bool enabled}) async {
+  Future<bool> setPush({required bool enabled}) async {
     if (state.pushEnabled == enabled) {
-      return;
+      return false;
     }
 
     final settings = PushSettings(enabled: enabled);
-    if (enabled && !state.idLinked) {
-      await _linkId();
-    }
-
     await pushService.changeSettings(
       address: account.address,
       accountService: accountService,
@@ -68,17 +71,17 @@ class PushSettingsNotifier extends StateNotifier<PushInfo> {
 
     final pushInfo = state.copyWith(
       settings: settings.encoded,
-      idLinked: true,
     );
 
     await repository.setPushInfo(pushInfo, id: id);
-
     state = pushInfo;
+    return true;
   }
 
   Future<void> resetSettings() async {
     final publicKey = await pushService.getPublicKey();
-    final payload = encryptCliendId(clientId, publicKey: publicKey);
+    final encrypter = PayloadEncrypter(publicKey);
+    final payload = encrypter.encryptCliendId(clientId);
     await pushService.reset(
       address: account.address,
       accountService: accountService,

@@ -31,19 +31,19 @@ class PushTokenSettings with _$PushTokenSettings {
 }
 
 @freezed
-class PushSettingsPayload with _$PushSettingsPayload {
-  const PushSettingsPayload._();
-  const factory PushSettingsPayload({
+class PushIdLinkPayload with _$PushIdLinkPayload {
+  const PushIdLinkPayload._();
+  const factory PushIdLinkPayload({
     required Hash clientId,
     required Hash id,
-  }) = _PushSettingsPayload;
+  }) = _PushIdLinkPayload;
 
-  factory PushSettingsPayload.decode(Uint8List data) {
+  factory PushIdLinkPayload.decode(Uint8List data) {
     assert(data.lengthInBytes == kHashSize * 2);
 
     final clientId = Hash(data.sublist(0, kHashSize));
     final id = Hash(data.sublist(kHashSize));
-    return PushSettingsPayload(clientId: clientId, id: id);
+    return PushIdLinkPayload(clientId: clientId, id: id);
   }
 
   Uint8List get encodeed => Uint8List.fromList(clientId.bytes + id.bytes);

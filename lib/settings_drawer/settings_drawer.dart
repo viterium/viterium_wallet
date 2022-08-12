@@ -275,7 +275,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                       ),
                       Consumer(builder: (context, ref, _) {
                         final network = ref.watch(viteNetworkProvider);
-                        if (network != ViteNetwork.devnet) {
+                        if (network != ViteNetwork.mainnet) {
                           return const SizedBox();
                         }
                         return const PushSettingsItem();
