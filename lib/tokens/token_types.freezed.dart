@@ -596,7 +596,7 @@ TokenState _$TokenStateFromJson(Map<String, dynamic> json) {
 class _$TokenStateTearOff {
   const _$TokenStateTearOff();
 
-  _TokenState call({bool enabled = false, TokenInfo? tokenInfo}) {
+  _TokenState call({bool enabled = false, required TokenInfo? tokenInfo}) {
     return _TokenState(
       enabled: enabled,
       tokenInfo: tokenInfo,
@@ -712,7 +712,7 @@ class __$TokenStateCopyWithImpl<$Res> extends _$TokenStateCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_TokenState implements _TokenState {
-  const _$_TokenState({this.enabled = false, this.tokenInfo});
+  const _$_TokenState({this.enabled = false, required this.tokenInfo});
 
   factory _$_TokenState.fromJson(Map<String, dynamic> json) =>
       _$$_TokenStateFromJson(json);
@@ -755,7 +755,7 @@ class _$_TokenState implements _TokenState {
 }
 
 abstract class _TokenState implements TokenState {
-  const factory _TokenState({bool enabled, TokenInfo? tokenInfo}) =
+  const factory _TokenState({bool enabled, required TokenInfo? tokenInfo}) =
       _$_TokenState;
 
   factory _TokenState.fromJson(Map<String, dynamic> json) =

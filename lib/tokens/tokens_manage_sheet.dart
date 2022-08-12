@@ -17,9 +17,6 @@ import 'token_info_provider.dart';
 import 'token_state_card.dart';
 import 'token_types.dart';
 
-final _pageStoregeKeyProvider =
-    Provider((ref) => const PageStorageKey('ManageTokensWidget'));
-
 final _searchTermProvider = StateProvider((ref) => '');
 
 final _searchProvider = StreamProvider.autoDispose
@@ -68,10 +65,11 @@ final _tokenInfoListProvider = StateNotifierProvider.autoDispose<
     AsyncValue<IList<TokenInfo>>>((ref) {
   final notifier =
       GenericStateNotifier<AsyncValue<IList<TokenInfo>>>(AsyncValue.loading());
-  ref.listen<AsyncValue<IList<TokenInfo>>>(_tokenInfoListStreamProvider,
-      (previous, next) {
-    next.mapOrNull(data: (data) => notifier.updateState(data));
-  }, fireImmediately: true);
+  ref.listen<AsyncValue<IList<TokenInfo>>>(
+    _tokenInfoListStreamProvider,
+    (_, next) => next.mapOrNull(data: (data) => notifier.updateState(data)),
+    fireImmediately: true,
+  );
   return notifier;
 });
 
@@ -83,14 +81,13 @@ class TokensManageSheet extends HookConsumerWidget {
     final theme = ref.watch(themeProvider);
     final l10n = ref.watch(l10nProvider);
 
-    final pageStorageKey = ref.watch(_pageStoregeKeyProvider);
-
     final tokenInfoList = ref.watch(_tokenInfoListProvider);
     final account = ref.watch(selectedAccountProvider);
     final mapping = ref.watch(tokenStateMappingProvider(account));
     final accountInfo = ref.watch(accountInfoProvider(account));
 
-    final searchController = useTextEditingController(text: '');
+    final searchTerm = useMemoized(() => ref.read(_searchTermProvider));
+    final searchController = useTextEditingController(text: searchTerm);
 
     void updateState(String tokenId, TokenState newState) {
       final notifier = ref.read(tokenStateMappingProvider(account).notifier);
@@ -167,7 +164,6 @@ class TokensManageSheet extends HookConsumerWidget {
                     data: (data) => ListView.builder(
                       keyboardDismissBehavior:
                           ScrollViewKeyboardDismissBehavior.onDrag,
-                      key: pageStorageKey,
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
                       itemCount: data.length,
                       itemBuilder: (context, index) {
@@ -189,10 +185,16 @@ class TokensManageSheet extends HookConsumerWidget {
                       },
                     ),
                     error: (e, st) {
-                      return Text('Error');
+                      return Container(
+                          padding: const EdgeInsets.only(top: 16),
+                          alignment: Alignment.topCenter,
+                          child: Text('Error Loading Tokens'));
                     },
                     loading: () {
-                      return CupertinoActivityIndicator();
+                      return Container(
+                          padding: const EdgeInsets.only(top: 16),
+                          alignment: Alignment.topCenter,
+                          child: CupertinoActivityIndicator());
                     },
                   ),
                   const TopGradientWidget(),
