@@ -53,7 +53,7 @@ class AutoreceiveService {
       return;
     }
 
-    final blocked = txNotifier.hasUncofirmed ||
+    final blocked = txNotifier.hasUnconfirmed ||
         snapshotHeight <= txNotifier.lastSnapshotHeight;
     if (blocked) {
       return;

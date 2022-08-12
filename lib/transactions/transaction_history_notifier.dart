@@ -16,7 +16,7 @@ class TransactionHistoryNotifier extends ChangeNotifier {
   final _accountHashes = <Hash>{};
   final _unconfirmedHashes = <Hash>{};
   bool _refreshingUnconfirmed = false;
-  bool get hasUncofirmed => _unconfirmedHashes.isNotEmpty;
+  bool get hasUnconfirmed => _unconfirmedHashes.isNotEmpty;
 
   bool disposed = false;
 
