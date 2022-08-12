@@ -5,6 +5,7 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
+import '../core/vite_uri.dart';
 import '../util/formatters.dart';
 import '../util/ui_util.dart';
 import '../util/user_data_util.dart';
@@ -145,11 +146,12 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
                 icon: AppIcons.scan,
                 onPressed: () async {
                   final scanResult = await UserDataUtil.scanQrCode(context);
-                  if (scanResult?.code == null) {
+                  final data = scanResult?.code;
+                  if (data == null) {
                     UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
                   } else {
-                    final data = scanResult!.code!;
-                    final address = Address.tryParse(data);
+                    final address = Address.tryParse(data) ??
+                        ViteUri.tryParse(data)?.address;
 
                     if (mounted && address != null) {
                       setState(() {

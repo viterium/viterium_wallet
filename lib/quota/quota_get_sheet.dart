@@ -8,6 +8,7 @@ import 'package:vite/vite.dart';
 import '../accounts/accounts_providers.dart';
 import '../app_icons.dart';
 import '../core/core_providers.dart';
+import '../core/vite_uri.dart';
 import '../tokens/token_icon_widget.dart';
 import '../util/formatters.dart';
 import '../util/ui_util.dart';
@@ -218,11 +219,13 @@ class QuotaGetSheet extends HookConsumerWidget {
     Future<void> scanAddress() async {
       FocusManager.instance.primaryFocus?.unfocus();
       final scanResult = await UserDataUtil.scanQrCode(context);
-      if (scanResult?.code == null) {
+      final data = scanResult?.code;
+      if (data == null) {
         return;
       }
 
-      final address = Address.tryParse(scanResult!.code!);
+      final viteUri = ViteUri.tryParse(data);
+      final address = viteUri?.address ?? Address.tryParse(data);
       if (address != null) {
         beneficiaryController.text = address.viteAddress;
         beneficiaryAddress.value = address.viteAddress;
