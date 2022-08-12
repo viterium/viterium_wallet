@@ -38,3 +38,46 @@ Map<String, dynamic> _$$_TokenIconUrlToJson(_$_TokenIconUrl instance) =>
       'url': instance.url,
       'runtimeType': instance.$type,
     };
+
+_$_TokenState _$$_TokenStateFromJson(Map json) => _$_TokenState(
+      enabled: json['enabled'] as bool? ?? false,
+      tokenInfo: json['tokenInfo'] == null
+          ? null
+          : TokenInfo.fromJson(
+              Map<String, dynamic>.from(json['tokenInfo'] as Map)),
+    );
+
+Map<String, dynamic> _$$_TokenStateToJson(_$_TokenState instance) {
+  final val = <String, dynamic>{
+    'enabled': instance.enabled,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('tokenInfo', instance.tokenInfo?.toJson());
+  return val;
+}
+
+_$_TokenStateMapping _$$_TokenStateMappingFromJson(Map json) =>
+    _$_TokenStateMapping(
+      states: json['states'] == null
+          ? const IMapConst({})
+          : IMap<String, TokenState>.fromJson(
+              Map<String, Object?>.from(json['states'] as Map),
+              (value) => value as String,
+              (value) =>
+                  TokenState.fromJson(Map<String, dynamic>.from(value as Map))),
+    );
+
+Map<String, dynamic> _$$_TokenStateMappingToJson(
+        _$_TokenStateMapping instance) =>
+    <String, dynamic>{
+      'states': instance.states.toJson(
+        (value) => value,
+        (value) => value.toJson(),
+      ),
+    };

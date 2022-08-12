@@ -587,3 +587,509 @@ abstract class _TokenIconUrl implements TokenIcon {
   _$TokenIconUrlCopyWith<_TokenIconUrl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+TokenState _$TokenStateFromJson(Map<String, dynamic> json) {
+  return _TokenState.fromJson(json);
+}
+
+/// @nodoc
+class _$TokenStateTearOff {
+  const _$TokenStateTearOff();
+
+  _TokenState call({bool enabled = false, TokenInfo? tokenInfo}) {
+    return _TokenState(
+      enabled: enabled,
+      tokenInfo: tokenInfo,
+    );
+  }
+
+  TokenState fromJson(Map<String, Object?> json) {
+    return TokenState.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $TokenState = _$TokenStateTearOff();
+
+/// @nodoc
+mixin _$TokenState {
+  bool get enabled => throw _privateConstructorUsedError;
+  TokenInfo? get tokenInfo => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TokenStateCopyWith<TokenState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TokenStateCopyWith<$Res> {
+  factory $TokenStateCopyWith(
+          TokenState value, $Res Function(TokenState) then) =
+      _$TokenStateCopyWithImpl<$Res>;
+  $Res call({bool enabled, TokenInfo? tokenInfo});
+
+  $TokenInfoCopyWith<$Res>? get tokenInfo;
+}
+
+/// @nodoc
+class _$TokenStateCopyWithImpl<$Res> implements $TokenStateCopyWith<$Res> {
+  _$TokenStateCopyWithImpl(this._value, this._then);
+
+  final TokenState _value;
+  // ignore: unused_field
+  final $Res Function(TokenState) _then;
+
+  @override
+  $Res call({
+    Object? enabled = freezed,
+    Object? tokenInfo = freezed,
+  }) {
+    return _then(_value.copyWith(
+      enabled: enabled == freezed
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tokenInfo: tokenInfo == freezed
+          ? _value.tokenInfo
+          : tokenInfo // ignore: cast_nullable_to_non_nullable
+              as TokenInfo?,
+    ));
+  }
+
+  @override
+  $TokenInfoCopyWith<$Res>? get tokenInfo {
+    if (_value.tokenInfo == null) {
+      return null;
+    }
+
+    return $TokenInfoCopyWith<$Res>(_value.tokenInfo!, (value) {
+      return _then(_value.copyWith(tokenInfo: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$TokenStateCopyWith<$Res> implements $TokenStateCopyWith<$Res> {
+  factory _$TokenStateCopyWith(
+          _TokenState value, $Res Function(_TokenState) then) =
+      __$TokenStateCopyWithImpl<$Res>;
+  @override
+  $Res call({bool enabled, TokenInfo? tokenInfo});
+
+  @override
+  $TokenInfoCopyWith<$Res>? get tokenInfo;
+}
+
+/// @nodoc
+class __$TokenStateCopyWithImpl<$Res> extends _$TokenStateCopyWithImpl<$Res>
+    implements _$TokenStateCopyWith<$Res> {
+  __$TokenStateCopyWithImpl(
+      _TokenState _value, $Res Function(_TokenState) _then)
+      : super(_value, (v) => _then(v as _TokenState));
+
+  @override
+  _TokenState get _value => super._value as _TokenState;
+
+  @override
+  $Res call({
+    Object? enabled = freezed,
+    Object? tokenInfo = freezed,
+  }) {
+    return _then(_TokenState(
+      enabled: enabled == freezed
+          ? _value.enabled
+          : enabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tokenInfo: tokenInfo == freezed
+          ? _value.tokenInfo
+          : tokenInfo // ignore: cast_nullable_to_non_nullable
+              as TokenInfo?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_TokenState implements _TokenState {
+  const _$_TokenState({this.enabled = false, this.tokenInfo});
+
+  factory _$_TokenState.fromJson(Map<String, dynamic> json) =>
+      _$$_TokenStateFromJson(json);
+
+  @JsonKey()
+  @override
+  final bool enabled;
+  @override
+  final TokenInfo? tokenInfo;
+
+  @override
+  String toString() {
+    return 'TokenState(enabled: $enabled, tokenInfo: $tokenInfo)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TokenState &&
+            const DeepCollectionEquality().equals(other.enabled, enabled) &&
+            const DeepCollectionEquality().equals(other.tokenInfo, tokenInfo));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(enabled),
+      const DeepCollectionEquality().hash(tokenInfo));
+
+  @JsonKey(ignore: true)
+  @override
+  _$TokenStateCopyWith<_TokenState> get copyWith =>
+      __$TokenStateCopyWithImpl<_TokenState>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TokenStateToJson(this);
+  }
+}
+
+abstract class _TokenState implements TokenState {
+  const factory _TokenState({bool enabled, TokenInfo? tokenInfo}) =
+      _$_TokenState;
+
+  factory _TokenState.fromJson(Map<String, dynamic> json) =
+      _$_TokenState.fromJson;
+
+  @override
+  bool get enabled;
+  @override
+  TokenInfo? get tokenInfo;
+  @override
+  @JsonKey(ignore: true)
+  _$TokenStateCopyWith<_TokenState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+TokenStateMapping _$TokenStateMappingFromJson(Map<String, dynamic> json) {
+  return _TokenStateMapping.fromJson(json);
+}
+
+/// @nodoc
+class _$TokenStateMappingTearOff {
+  const _$TokenStateMappingTearOff();
+
+  _TokenStateMapping call(
+      {IMap<String, TokenState> states = const IMapConst({})}) {
+    return _TokenStateMapping(
+      states: states,
+    );
+  }
+
+  TokenStateMapping fromJson(Map<String, Object?> json) {
+    return TokenStateMapping.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $TokenStateMapping = _$TokenStateMappingTearOff();
+
+/// @nodoc
+mixin _$TokenStateMapping {
+  IMap<String, TokenState> get states => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TokenStateMappingCopyWith<TokenStateMapping> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TokenStateMappingCopyWith<$Res> {
+  factory $TokenStateMappingCopyWith(
+          TokenStateMapping value, $Res Function(TokenStateMapping) then) =
+      _$TokenStateMappingCopyWithImpl<$Res>;
+  $Res call({IMap<String, TokenState> states});
+}
+
+/// @nodoc
+class _$TokenStateMappingCopyWithImpl<$Res>
+    implements $TokenStateMappingCopyWith<$Res> {
+  _$TokenStateMappingCopyWithImpl(this._value, this._then);
+
+  final TokenStateMapping _value;
+  // ignore: unused_field
+  final $Res Function(TokenStateMapping) _then;
+
+  @override
+  $Res call({
+    Object? states = freezed,
+  }) {
+    return _then(_value.copyWith(
+      states: states == freezed
+          ? _value.states
+          : states // ignore: cast_nullable_to_non_nullable
+              as IMap<String, TokenState>,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$TokenStateMappingCopyWith<$Res>
+    implements $TokenStateMappingCopyWith<$Res> {
+  factory _$TokenStateMappingCopyWith(
+          _TokenStateMapping value, $Res Function(_TokenStateMapping) then) =
+      __$TokenStateMappingCopyWithImpl<$Res>;
+  @override
+  $Res call({IMap<String, TokenState> states});
+}
+
+/// @nodoc
+class __$TokenStateMappingCopyWithImpl<$Res>
+    extends _$TokenStateMappingCopyWithImpl<$Res>
+    implements _$TokenStateMappingCopyWith<$Res> {
+  __$TokenStateMappingCopyWithImpl(
+      _TokenStateMapping _value, $Res Function(_TokenStateMapping) _then)
+      : super(_value, (v) => _then(v as _TokenStateMapping));
+
+  @override
+  _TokenStateMapping get _value => super._value as _TokenStateMapping;
+
+  @override
+  $Res call({
+    Object? states = freezed,
+  }) {
+    return _then(_TokenStateMapping(
+      states: states == freezed
+          ? _value.states
+          : states // ignore: cast_nullable_to_non_nullable
+              as IMap<String, TokenState>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_TokenStateMapping implements _TokenStateMapping {
+  const _$_TokenStateMapping({this.states = const IMapConst({})});
+
+  factory _$_TokenStateMapping.fromJson(Map<String, dynamic> json) =>
+      _$$_TokenStateMappingFromJson(json);
+
+  @JsonKey()
+  @override
+  final IMap<String, TokenState> states;
+
+  @override
+  String toString() {
+    return 'TokenStateMapping(states: $states)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TokenStateMapping &&
+            const DeepCollectionEquality().equals(other.states, states));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(states));
+
+  @JsonKey(ignore: true)
+  @override
+  _$TokenStateMappingCopyWith<_TokenStateMapping> get copyWith =>
+      __$TokenStateMappingCopyWithImpl<_TokenStateMapping>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_TokenStateMappingToJson(this);
+  }
+}
+
+abstract class _TokenStateMapping implements TokenStateMapping {
+  const factory _TokenStateMapping({IMap<String, TokenState> states}) =
+      _$_TokenStateMapping;
+
+  factory _TokenStateMapping.fromJson(Map<String, dynamic> json) =
+      _$_TokenStateMapping.fromJson;
+
+  @override
+  IMap<String, TokenState> get states;
+  @override
+  @JsonKey(ignore: true)
+  _$TokenStateMappingCopyWith<_TokenStateMapping> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+class _$TokenInfoStateTearOff {
+  const _$TokenInfoStateTearOff();
+
+  _TokenInfoState call({required TokenInfo info, required TokenState state}) {
+    return _TokenInfoState(
+      info: info,
+      state: state,
+    );
+  }
+}
+
+/// @nodoc
+const $TokenInfoState = _$TokenInfoStateTearOff();
+
+/// @nodoc
+mixin _$TokenInfoState {
+  TokenInfo get info => throw _privateConstructorUsedError;
+  TokenState get state => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TokenInfoStateCopyWith<TokenInfoState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TokenInfoStateCopyWith<$Res> {
+  factory $TokenInfoStateCopyWith(
+          TokenInfoState value, $Res Function(TokenInfoState) then) =
+      _$TokenInfoStateCopyWithImpl<$Res>;
+  $Res call({TokenInfo info, TokenState state});
+
+  $TokenInfoCopyWith<$Res> get info;
+  $TokenStateCopyWith<$Res> get state;
+}
+
+/// @nodoc
+class _$TokenInfoStateCopyWithImpl<$Res>
+    implements $TokenInfoStateCopyWith<$Res> {
+  _$TokenInfoStateCopyWithImpl(this._value, this._then);
+
+  final TokenInfoState _value;
+  // ignore: unused_field
+  final $Res Function(TokenInfoState) _then;
+
+  @override
+  $Res call({
+    Object? info = freezed,
+    Object? state = freezed,
+  }) {
+    return _then(_value.copyWith(
+      info: info == freezed
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as TokenInfo,
+      state: state == freezed
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as TokenState,
+    ));
+  }
+
+  @override
+  $TokenInfoCopyWith<$Res> get info {
+    return $TokenInfoCopyWith<$Res>(_value.info, (value) {
+      return _then(_value.copyWith(info: value));
+    });
+  }
+
+  @override
+  $TokenStateCopyWith<$Res> get state {
+    return $TokenStateCopyWith<$Res>(_value.state, (value) {
+      return _then(_value.copyWith(state: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$TokenInfoStateCopyWith<$Res>
+    implements $TokenInfoStateCopyWith<$Res> {
+  factory _$TokenInfoStateCopyWith(
+          _TokenInfoState value, $Res Function(_TokenInfoState) then) =
+      __$TokenInfoStateCopyWithImpl<$Res>;
+  @override
+  $Res call({TokenInfo info, TokenState state});
+
+  @override
+  $TokenInfoCopyWith<$Res> get info;
+  @override
+  $TokenStateCopyWith<$Res> get state;
+}
+
+/// @nodoc
+class __$TokenInfoStateCopyWithImpl<$Res>
+    extends _$TokenInfoStateCopyWithImpl<$Res>
+    implements _$TokenInfoStateCopyWith<$Res> {
+  __$TokenInfoStateCopyWithImpl(
+      _TokenInfoState _value, $Res Function(_TokenInfoState) _then)
+      : super(_value, (v) => _then(v as _TokenInfoState));
+
+  @override
+  _TokenInfoState get _value => super._value as _TokenInfoState;
+
+  @override
+  $Res call({
+    Object? info = freezed,
+    Object? state = freezed,
+  }) {
+    return _then(_TokenInfoState(
+      info: info == freezed
+          ? _value.info
+          : info // ignore: cast_nullable_to_non_nullable
+              as TokenInfo,
+      state: state == freezed
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as TokenState,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TokenInfoState implements _TokenInfoState {
+  const _$_TokenInfoState({required this.info, required this.state});
+
+  @override
+  final TokenInfo info;
+  @override
+  final TokenState state;
+
+  @override
+  String toString() {
+    return 'TokenInfoState(info: $info, state: $state)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _TokenInfoState &&
+            const DeepCollectionEquality().equals(other.info, info) &&
+            const DeepCollectionEquality().equals(other.state, state));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(info),
+      const DeepCollectionEquality().hash(state));
+
+  @JsonKey(ignore: true)
+  @override
+  _$TokenInfoStateCopyWith<_TokenInfoState> get copyWith =>
+      __$TokenInfoStateCopyWithImpl<_TokenInfoState>(this, _$identity);
+}
+
+abstract class _TokenInfoState implements TokenInfoState {
+  const factory _TokenInfoState(
+      {required TokenInfo info, required TokenState state}) = _$_TokenInfoState;
+
+  @override
+  TokenInfo get info;
+  @override
+  TokenState get state;
+  @override
+  @JsonKey(ignore: true)
+  _$TokenInfoStateCopyWith<_TokenInfoState> get copyWith =>
+      throw _privateConstructorUsedError;
+}

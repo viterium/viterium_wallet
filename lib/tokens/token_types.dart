@@ -1,4 +1,6 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vite/core.dart';
 
 import 'token_constants.dart';
 
@@ -29,4 +31,33 @@ class TokenIcon with _$TokenIcon {
 
   factory TokenIcon.fromJson(Map<String, dynamic> json) =>
       _$TokenIconFromJson(json);
+}
+
+@freezed
+class TokenState with _$TokenState {
+  const factory TokenState({
+    @Default(false) bool enabled,
+    required TokenInfo? tokenInfo,
+  }) = _TokenState;
+
+  factory TokenState.fromJson(Map<String, dynamic> json) =>
+      _$TokenStateFromJson(json);
+}
+
+@freezed
+class TokenStateMapping with _$TokenStateMapping {
+  const factory TokenStateMapping({
+    @Default(IMapConst({})) IMap<String, TokenState> states,
+  }) = _TokenStateMapping;
+
+  factory TokenStateMapping.fromJson(Map<String, dynamic> json) =>
+      _$TokenStateMappingFromJson(json);
+}
+
+@freezed
+class TokenInfoState with _$TokenInfoState {
+  const factory TokenInfoState({
+    required TokenInfo info,
+    required TokenState state,
+  }) = _TokenInfoState;
 }

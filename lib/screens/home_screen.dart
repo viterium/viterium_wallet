@@ -11,6 +11,7 @@ import '../push_notifications/push_types.dart';
 import '../receive/receive_sheet.dart';
 import '../send_sheet/send_sheet.dart';
 import '../settings_drawer/settings_drawer.dart';
+import '../tokens/tokens_manage_sheet.dart';
 import '../tokens/tokens_widget.dart';
 import '../transactions/transaction_history_widget.dart';
 import '../transactions/unreceived_providers.dart';
@@ -195,6 +196,16 @@ class HomeScreenPage extends HookConsumerWidget {
     }, const []);
 
     final scaffoldKey = useRef(GlobalKey<ScaffoldState>());
+    final lastTabIndex = useRef(0);
+
+    void manageTokens() {
+      Sheets.showAppHeightNineSheet(
+        context: context,
+        theme: theme,
+        backgroundColor: theme.backgroundDarkest,
+        widget: TokensManageSheet(),
+      );
+    }
 
     return Scaffold(
       drawerEdgeDragWidth: 60,
@@ -238,11 +249,19 @@ class HomeScreenPage extends HookConsumerWidget {
                                     left: 20,
                                     right: 20,
                                   ),
+                                  onTap: (index) {
+                                    if (lastTabIndex.value == index &&
+                                        index == 0) {
+                                      manageTokens();
+                                    }
+                                    lastTabIndex.value = index;
+                                  },
                                   tabs: [
                                     Tab(
                                       child: Container(
-                                        margin: const EdgeInsetsDirectional
+                                        padding: const EdgeInsetsDirectional
                                             .fromSTEB(0, 20, 0, 0),
+                                        width: double.infinity,
                                         child: Text(
                                           l10n.tokens.toUpperCase(),
                                           textAlign: TextAlign.center,
