@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -75,6 +76,8 @@ final exchangeRateForTokenIdProvider =
   return exchangeRates[tokenId] ?? VitexExchangeRate.zero(tokenId: tokenId);
 });
 
+// TODO - move to own file
+
 final totalBtcValueProvider = Provider.autoDispose((ref) {
   final accountInfo = ref.watch(selectedAccountInfoProvider);
   final exchangeRates = ref.watch(exchangeRatesProvider);
@@ -128,43 +131,40 @@ final formatedFiatValueForTokenProvider =
     Provider.autoDispose.family<String, TokenId>((ref, tokenId) {
   final balance = ref.watch(fiatValueForTokenProvider(tokenId));
   final currency = ref.watch(currencyProvider);
-  final locale = ref.watch(currencyLocaleProvider);
 
   return NumberFormat.currency(
-    locale: locale,
     symbol: currency.getCurrencySymbol(),
-  ).format(balance.toDouble());
+    name: currency.getIso4217Code(),
+  ).format(DecimalIntl(balance));
 });
 
 final totalBtcFormatedProvider = Provider.autoDispose((ref) {
   final btcBalance = ref.watch(totalBtcValueProvider);
-  // Show 4 decimal places for BTC price if its >= 0.0001 BTC, otherwise 6 decimals
-  if (btcBalance >= Decimal.parse('0.001')) {
-    return NumberFormat('#,##0.0000', 'en_US').format(btcBalance.toDouble());
-  } else {
-    return NumberFormat('#,##0.000000', 'en_US').format(btcBalance.toDouble());
-  }
+  final decimals = btcBalance >= Decimal.parse('0.001') ? 4 : 6;
+  return NumberFormat.currency(
+    name: '',
+    symbol: '',
+    decimalDigits: decimals,
+  ).format(DecimalIntl(btcBalance));
 });
 
 final fiatFormatedForTotalValueProvider =
     Provider.autoDispose.family<String, AccountInfo>((ref, accountInfo) {
   final balance = ref.watch(totalFiatValueForAccountInfoProvider(accountInfo));
   final currency = ref.watch(currencyProvider);
-  final locale = ref.watch(currencyLocaleProvider);
 
   return NumberFormat.currency(
-    locale: locale,
     symbol: currency.getCurrencySymbol(),
-  ).format(balance.toDouble());
+    name: currency.getIso4217Code(),
+  ).format(DecimalIntl(balance));
 });
 
 final totalFiatFormatedProvider = Provider.autoDispose((ref) {
-  final currency = ref.watch(currencyProvider);
   final balance = ref.watch(totalFiatValueProvider);
-  final locale = ref.watch(currencyLocaleProvider);
+  final currency = ref.watch(currencyProvider);
 
   return NumberFormat.currency(
-    locale: locale,
     symbol: currency.getCurrencySymbol(),
-  ).format(balance.toDouble());
+    name: currency.getIso4217Code(),
+  ).format(DecimalIntl(balance));
 });

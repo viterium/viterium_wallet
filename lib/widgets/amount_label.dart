@@ -16,11 +16,11 @@ class AmountLabel extends HookConsumerWidget {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final amountValue = useMemoized(() {
-      return NumberUtil.approx(amount: amount);
+    final formatedAmount = useMemoized(() {
+      return NumberUtil.formatedAmount(amount, showApprox: true);
     }, [amount]);
 
-    final amountAll = useMemoized(() {
+    final exactAmount = useMemoized(() {
       return NumberUtil.approx(
             amount: amount,
             precision: amount.decimals,
@@ -44,7 +44,7 @@ class AmountLabel extends HookConsumerWidget {
       ),
       // Amount text
       child: Tooltip(
-        message: amountAll,
+        message: exactAmount,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: FittedBox(
@@ -54,7 +54,7 @@ class AmountLabel extends HookConsumerWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: amountValue,
+                    text: formatedAmount,
                     style: styles.textStyleApproxAmountSuccess,
                   ),
                   TextSpan(

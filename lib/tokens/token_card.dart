@@ -4,6 +4,7 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../send_sheet/balance_text_widget.dart';
+import '../util/numberutil.dart';
 import '../widgets/sheet_util.dart';
 import 'token_icon_widget.dart';
 import 'token_sheet.dart';
@@ -23,6 +24,7 @@ class TokenCard extends ConsumerWidget {
     final tokenId = item.tokenInfo.tokenId;
     final symbolLabel = item.tokenInfo.symbolLabel;
 
+    final formatedBalance = NumberUtil.formatedBalance(item);
     final fiatValue = ref.watch(formatedFiatValueForTokenProvider(tokenId));
 
     return Container(
@@ -88,8 +90,7 @@ class TokenCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        item.value
-                            .toStringAsFixed(item.value.isInteger ? 0 : 4),
+                        formatedBalance,
                         textAlign: TextAlign.end,
                         style: styles.textStyleTransactionAddress,
                       ),

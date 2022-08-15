@@ -109,17 +109,29 @@ final selectedAccountInfoProvider = Provider.autoDispose((ref) {
   return accountInfo;
 });
 
-final tokenBalanceDisplayProvider =
+final formatedTokenBalanceProvider =
     Provider.autoDispose.family<String, TokenId>((ref, tokenId) {
   final accountInfo = ref.watch(selectedAccountInfoProvider);
   final balance = accountInfo.balances[tokenId];
   if (balance == null) {
     return '0';
   }
-  return NumberUtil.getStringFromRaw(
-    balance.balance,
-    balance.tokenInfo.decimals,
-  );
+  return NumberUtil.formatedBalance(balance);
+});
+
+final exactTokenBalanceProvider =
+    Provider.autoDispose.family<String, TokenId>((ref, tokenId) {
+  final accountInfo = ref.watch(selectedAccountInfoProvider);
+  final balance = accountInfo.balances[tokenId];
+  if (balance == null) {
+    return '0';
+  }
+  final amount = balance.amount;
+  return NumberUtil.approx(
+        amount: amount,
+        precision: amount.decimals,
+      ) +
+      ' ${balance.tokenInfo.symbolLabel}';
 });
 
 final _tokenStateKeyProvider = Provider.family<String, Account>((ref, account) {

@@ -1,10 +1,46 @@
 import 'dart:math';
 
 import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
+import 'package:intl/intl.dart';
 import 'package:vite/vite.dart';
+
+extension BalanceInfoExt on BalanceInfo {
+  Amount get amount => Amount.raw(balance, tokenInfo: tokenInfo);
+}
 
 class NumberUtil {
   static const int maxDecimalDigits = 6; // Max digits after decimal
+  static final min6DigitsValue = Decimal.parse('0.000001');
+  static final min4DigitsValue = Decimal.parse('0.0001');
+
+  static String formatedAmount(Amount amount, {bool showApprox: false}) {
+    var value = amount.value;
+    if (value == Decimal.zero) {
+      return '0';
+    }
+    if (value < min6DigitsValue) {
+      return '<0.000001';
+    }
+    final valueScale = value.scale;
+    final scale = min(valueScale, value < min4DigitsValue ? 6 : 4);
+    value = value.truncate(scale: scale);
+
+    final formatter = NumberFormat.currency(
+      name: '',
+      symbol: '',
+      decimalDigits: scale,
+    );
+    final formated = formatter.format(DecimalIntl(value));
+    if (showApprox && amount.value != value) {
+      return '~$formated';
+    }
+    return formated;
+  }
+
+  static String formatedBalance(BalanceInfo balance) {
+    return formatedAmount(balance.amount);
+  }
 
   static BigInt getRawFromDecimal(Decimal value, int decimals) {
     final rawDecimal = value * Decimal.ten.pow(decimals);

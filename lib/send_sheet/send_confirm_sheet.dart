@@ -126,8 +126,11 @@ class SendConfirmSheet extends HookConsumerWidget {
       final uiUtil = ref.read(uiUtilProvider);
       return tx.map(
         sendTransfer: (_) {
-          final amountStr = NumberUtil.approx(amount: amount);
-          return '${l10n.sendConfirm} ${amountStr} ${amount.symbolLabel}';
+          final formatedAmount = NumberUtil.formatedAmount(
+            amount,
+            showApprox: true,
+          );
+          return '${l10n.sendConfirm} ${formatedAmount} ${amount.symbolLabel}';
         },
         callContract: (_) {
           return uiUtil.authMessage(l10n.callContractConfirm, amount, fee);

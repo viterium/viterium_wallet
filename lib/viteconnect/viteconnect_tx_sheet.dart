@@ -134,7 +134,7 @@ class ViteConnectTxSheet extends HookConsumerWidget {
 
       final message = tx.maybeMap(
         sendTransfer: (_) {
-          final amountStr = NumberUtil.approx(amount: amount);
+          final amountStr = NumberUtil.formatedAmount(amount, showApprox: true);
           return '$title $amountStr ${request.tokenInfo.symbolLabel}';
         },
         orElse: () {

@@ -14,8 +14,8 @@ class BalanceTextWidget extends ConsumerWidget {
     final styles = ref.watch(stylesProvider);
 
     final tokenInfo = ref.watch(selectedTokenProvider);
-    final tokenBalance =
-        ref.watch(tokenBalanceDisplayProvider(tokenInfo.tokenId));
+    final tokenId = tokenInfo.tokenId;
+    final tokenBalance = ref.watch(formatedTokenBalanceProvider(tokenId));
 
     return Container(
       child: RichText(

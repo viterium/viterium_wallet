@@ -725,7 +725,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             final tokenInfo = ref.read(selectedTokenProvider);
             amountRaw = ref.read(balanceForTokenProvider(tokenInfo.tokenId));
             _amountController.text =
-                ref.read(tokenBalanceDisplayProvider(tokenInfo.tokenId));
+                ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
 
             _addressController.selection = TextSelection.fromPosition(
               TextPosition(offset: _addressController.text.length),

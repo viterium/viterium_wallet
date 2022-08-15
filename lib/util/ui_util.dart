@@ -30,7 +30,7 @@ class UIUtil {
 
   String authMessage(String action, Amount amount, BigInt? fee) {
     if (amount.raw != BigInt.zero) {
-      final amountStr = NumberUtil.approx(amount: amount);
+      final amountStr = NumberUtil.formatedAmount(amount, showApprox: true);
       final amountConfirm = l10n.amountConfirm
           .replaceAll('%1', amountStr)
           .replaceAll('%2', amount.symbolLabel);

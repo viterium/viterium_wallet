@@ -33,18 +33,16 @@ class TokenSheet extends ConsumerWidget {
     final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
-    final balance = ref.watch(tokenBalanceDisplayProvider(tokenId));
+    final balance = ref.watch(formatedTokenBalanceProvider(tokenId));
+    final exactBalance = ref.watch(exactTokenBalanceProvider(tokenId));
     final fiatValue = ref.watch(formatedFiatValueForTokenProvider(tokenId));
 
     final unreceivedBalance =
         ref.watch(unreceivedBalanceForTokenProvider(tokenId));
-    String unreceivedBalanceDisplay = '0';
-    String unreceivedCount = '';
+    var unreceivedBalanceDisplay = '0';
+    var unreceivedCount = '';
     if (unreceivedBalance != null) {
-      unreceivedBalanceDisplay = NumberUtil.getStringFromRaw(
-        unreceivedBalance.balance,
-        tokenInfo.decimals,
-      );
+      unreceivedBalanceDisplay = NumberUtil.formatedBalance(unreceivedBalance);
       unreceivedCount = '(${unreceivedBalance.transactionCount})';
     }
 
@@ -138,13 +136,16 @@ class TokenSheet extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 8),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                balance,
-                                textAlign: TextAlign.end,
-                                style: styles.textStyleHeader(context),
-                                maxLines: 1,
+                            Tooltip(
+                              message: exactBalance,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  balance,
+                                  textAlign: TextAlign.end,
+                                  style: styles.textStyleHeader(context),
+                                  maxLines: 1,
+                                ),
                               ),
                             ),
                             FittedBox(
@@ -219,7 +220,10 @@ class TokenSheet extends ConsumerWidget {
                 // Stack(
                 child: Stack(
                   children: [
-                    TransactionHistoryWidget(token: token),
+                    TransactionHistoryWidget(
+                      token: token,
+                      tokenSymbol: tokenInfo.symbolLabel,
+                    ),
                     const TopGradientWidget(),
                     const BottomGradientWidget(),
                   ],

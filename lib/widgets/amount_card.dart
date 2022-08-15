@@ -17,11 +17,11 @@ class AmountCard extends HookConsumerWidget {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final amountValue = useMemoized(() {
-      return NumberUtil.approx(amount: amount);
+    final formatedAmount = useMemoized(() {
+      return NumberUtil.formatedAmount(amount, showApprox: true);
     }, [amount]);
 
-    final amountAll = useMemoized(() {
+    final exactAmount = useMemoized(() {
       return NumberUtil.approx(
             amount: amount,
             precision: amount.decimals,
@@ -57,7 +57,7 @@ class AmountCard extends HookConsumerWidget {
           ),
           Expanded(
             child: Tooltip(
-              message: amountAll,
+              message: exactAmount,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: FittedBox(
@@ -67,7 +67,7 @@ class AmountCard extends HookConsumerWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: '$amountValue',
+                          text: '$formatedAmount',
                           style: styles.textStyleParagraphPrimary,
                         ),
                         TextSpan(

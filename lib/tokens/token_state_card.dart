@@ -25,7 +25,7 @@ class TokenStateCard extends ConsumerWidget {
     final tokenId = item.info.tokenId;
     final symbolLabel = item.info.symbolLabel;
 
-    final balance = ref.watch(tokenBalanceDisplayProvider(tokenId));
+    final balance = ref.watch(formatedTokenBalanceProvider(tokenId));
 
     return Container(
       margin: const EdgeInsetsDirectional.fromSTEB(14, 4, 14, 4),

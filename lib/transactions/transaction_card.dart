@@ -4,6 +4,7 @@ import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
+import '../util/numberutil.dart';
 import '../util/vite_util.dart';
 import '../widgets/sheet_util.dart';
 import 'transaction_details_sheet.dart';
@@ -23,6 +24,8 @@ class TransactionCard extends ConsumerWidget {
     final l10n = ref.watch(l10nProvider);
     final styles = ref.watch(stylesProvider);
 
+    final amount = Amount.raw(item.amount, tokenInfo: item.tokenInfo);
+    final formatedValue = NumberUtil.formatedAmount(amount);
     final contacts = ref.watch(contactsProvider);
     final address = item.otherAddress.viteAddress;
     var displayName = getShortString(address);
@@ -99,8 +102,7 @@ class TransactionCard extends ConsumerWidget {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: item.value.toStringAsFixed(
-                                        item.value.isInteger ? 0 : 4),
+                                    text: formatedValue,
                                     style: styles.textStyleTransactionAmount,
                                   ),
                                   TextSpan(
@@ -109,7 +111,6 @@ class TransactionCard extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-
                             ),
                           ],
                         ),
