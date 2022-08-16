@@ -6,7 +6,11 @@ import 'transaction_dummy_card.dart';
 import 'transaction_welcome_card.dart';
 
 class TransactionEmptyList extends ConsumerWidget {
-  const TransactionEmptyList({Key? key}) : super(key: key);
+  final String tokenSymbol;
+  const TransactionEmptyList({
+    Key? key,
+    required this.tokenSymbol,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,11 +24,13 @@ class TransactionEmptyList extends ConsumerWidget {
           type: l10n.sent,
           amount: l10n.exampleCardLittle,
           address: l10n.exampleCardTo,
+          tokenSymbol: tokenSymbol,
         ),
         TransactionDummyCard(
           type: l10n.received,
           amount: l10n.exampleCardLot,
           address: l10n.exampleCardFrom,
+          tokenSymbol: tokenSymbol,
         ),
       ],
     );

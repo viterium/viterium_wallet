@@ -8,12 +8,14 @@ class TransactionDummyCard extends ConsumerWidget {
   final String type;
   final String amount;
   final String address;
+  final String tokenSymbol;
 
   const TransactionDummyCard({
     Key? key,
     required this.type,
     required this.amount,
     required this.address,
+    required this.tokenSymbol,
   }) : super(key: key);
 
   @override
@@ -76,7 +78,7 @@ class TransactionDummyCard extends ConsumerWidget {
                                 style: styles.textStyleTransactionAmount,
                               ),
                               TextSpan(
-                                text: " Vite",
+                                text: ' $tokenSymbol',
                                 style: styles.textStyleTransactionUnit,
                               ),
                             ],

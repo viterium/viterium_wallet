@@ -30,10 +30,12 @@ final _txListItemsProvider = Provider.autoDispose
 
 class TransactionHistoryWidget extends HookConsumerWidget {
   final Token? token;
+  final String tokenSymbol;
 
   const TransactionHistoryWidget({
     Key? key,
     this.token,
+    this.tokenSymbol = 'VITE',
   }) : super(key: key);
 
   @override
@@ -83,7 +85,7 @@ class TransactionHistoryWidget extends HookConsumerWidget {
         isRefreshing: isRefreshing.value,
         onRefresh: refresh,
         child: !isLoading && items.length == 1
-            ? const TransactionEmptyList()
+            ? TransactionEmptyList(tokenSymbol: tokenSymbol)
             : AutomaticAnimatedList<TxListItem>(
                 key: ValueKey(account),
                 physics: AlwaysScrollableScrollPhysics(),
