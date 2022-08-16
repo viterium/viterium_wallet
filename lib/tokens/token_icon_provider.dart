@@ -37,7 +37,7 @@ class TokenIconNotifier extends StateNotifier<TokenIcon> {
     if (cache != null) {
       state = cache.icon;
       final now = DateTime.now();
-      if (now.difference(cache.cacheDate) < const Duration(days: 1)) {
+      if (now.difference(cache.cacheDate) < const Duration(days: 2)) {
         // do not refetch icon url from remote
         return;
       }
