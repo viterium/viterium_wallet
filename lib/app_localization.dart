@@ -929,6 +929,33 @@ class AppLocalization {
 
   /// -- END LOCK SCREEN
 
+  /// -- ADVANCED MENU
+  String get advancedHeader {
+    return Intl.message(
+      "Advanced",
+      desc: 'advanced_header',
+      name: 'advancedHeader',
+    );
+  }
+
+  String get manageTokens {
+    return Intl.message(
+      "Manage Tokens",
+      desc: 'manage_tokens_menu_item',
+      name: 'manageTokens',
+    );
+  }
+
+  String get tokenSort {
+    return Intl.message(
+      "Sort Token By",
+      desc: 'token_order_menu_item',
+      name: 'tokenOrder',
+    );
+  }
+
+  /// -- END ADVANCED MENU
+
   /// -- SECURITY SETTINGS SUBMENU
 
   String get securityHeader {

@@ -4,6 +4,8 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../core/generic_state_notifier.dart';
+import '../settings_advanced/tokens_settings.dart';
+import '../settings_advanced/tokens_settings_provider.dart';
 import '../tokens/token_order_notifier.dart';
 import '../tokens/token_state_notifier.dart';
 import '../tokens/token_types.dart';
@@ -165,8 +167,9 @@ final tokenOrderProvider =
 final sortedBalancesForAccountProvider =
     Provider.autoDispose.family<IList<BalanceInfo>, Account>((ref, account) {
   final accountInfo = ref.watch(accountInfoProvider(account));
-  final sortedIds = ref.watch(tokenOrderProvider(account));
   final mapping = ref.watch(tokenStateMappingProvider(account));
+  final sortOption = ref.watch(tokensSettingsProvider(account)).sortOption;
+  final sortedIds = ref.watch(tokenOrderProvider(account));
   final remainingBalances =
       mapping.states.where((key, value) => value.enabled).map((key, value) {
     final balanceInfo = BalanceInfo(
@@ -178,19 +181,50 @@ final sortedBalancesForAccountProvider =
   }).unlock;
   remainingBalances.addAll(accountInfo.balances);
 
-  final balances = sortedIds.map((id) {
-    final balance = remainingBalances.remove(id);
-    return balance;
-  });
+  if (sortOption == TokenSortOption.custom) {
+    final balances = sortedIds.map((id) {
+      final balance = remainingBalances.remove(id);
+      return balance;
+    });
 
-  final sortedBalances = balances
-      .where((balance) => balance != null)
-      .cast<BalanceInfo>()
-      .toIList()
-      .addAll(remainingBalances.values)
-      .removeWhere((balance) {
-    final state = mapping.states[balance.tokenInfo.tokenId];
-    return state?.enabled == false;
+    final sortedBalances = balances
+        .where((balance) => balance != null)
+        .cast<BalanceInfo>()
+        .toIList()
+        .addAll(remainingBalances.values)
+        .removeWhere((balance) {
+      final state = mapping.states[balance.tokenInfo.tokenId];
+      return state?.enabled == false;
+    });
+    return sortedBalances;
+  }
+
+  final sortedBalances =
+      remainingBalances.values.toIList().sortOrdered((b1, b2) {
+    switch (sortOption) {
+      case TokenSortOption.custom:
+        return b1.tokenInfo.tokenId.compareTo(b2.tokenInfo.tokenId);
+      case TokenSortOption.nameAscending:
+        return b1.tokenInfo.tokenName.compareTo(b2.tokenInfo.tokenName);
+      case TokenSortOption.nameDescending:
+        return b2.tokenInfo.tokenName.compareTo(b1.tokenInfo.tokenName);
+      case TokenSortOption.valueAscending:
+        final v1 = ref.read(fiatValueForTokenProvider(b1.tokenInfo.tokenId));
+        final v2 = ref.read(fiatValueForTokenProvider(b2.tokenInfo.tokenId));
+        final result = v1.compareTo(v2);
+        if (result != 0) {
+          return result;
+        }
+        return b1.tokenInfo.tokenName.compareTo(b2.tokenInfo.tokenName);
+      case TokenSortOption.valueDescending:
+        final v1 = ref.read(fiatValueForTokenProvider(b1.tokenInfo.tokenId));
+        final v2 = ref.read(fiatValueForTokenProvider(b2.tokenInfo.tokenId));
+        final result = v2.compareTo(v1);
+        if (result != 0) {
+          return result;
+        }
+        return b1.tokenInfo.tokenName.compareTo(b2.tokenInfo.tokenName);
+    }
   });
   return sortedBalances;
 });

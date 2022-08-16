@@ -94,8 +94,6 @@ class TokensManageSheet extends HookConsumerWidget {
       notifier.updateTokenState(tokenId, newState);
     }
 
-    //void showSortDialog() {}
-
     void updateSearchTerm(String term) {
       searchController.text = term;
       final searchTerm = ref.read(_searchTermProvider.notifier);
@@ -112,10 +110,6 @@ class TokensManageSheet extends HookConsumerWidget {
     return TapOutsideUnfocus(
       child: SheetWidget(
         title: 'Manage Tokens',
-        // leftWidget: SheetHeaderButton(
-        //   icon: Icons.sort_outlined,
-        //   onPressed: showSortDialog,
-        // ),
         mainWidget: Column(
           children: [
             const SizedBox(height: 4),
