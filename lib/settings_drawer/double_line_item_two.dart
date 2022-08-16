@@ -5,14 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
 
-class SettingsDoubleLineItemTwo extends ConsumerWidget {
+class DoubleLineItemTwo extends ConsumerWidget {
   final String heading;
   final String text;
   final IconData icon;
   final VoidCallback onPressed;
   final bool disabled;
 
-  const SettingsDoubleLineItemTwo({
+  const DoubleLineItemTwo({
     Key? key,
     required this.heading,
     required this.text,

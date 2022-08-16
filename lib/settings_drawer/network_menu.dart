@@ -91,7 +91,7 @@ class NetworkMenu extends ConsumerWidget {
                         ),
                       ),
                       Divider(height: 2, color: theme.text15),
-                      SettingsDoubleLineItem(
+                      DoubleLineItem(
                         heading: l10n.nodeAddress,
                         defaultMethod: ViteNodeSetting(viteNodeConfig),
                         icon: Icons.settings_ethernet,
@@ -100,7 +100,7 @@ class NetworkMenu extends ConsumerWidget {
                         },
                       ),
                       Divider(height: 2, color: theme.text15),
-                      SettingsDoubleLineItem(
+                      DoubleLineItem(
                         heading: l10n.powSettings,
                         defaultMethod: PowSetting(powConfig),
                         icon: Icons.memory,
@@ -110,7 +110,7 @@ class NetworkMenu extends ConsumerWidget {
                       Divider(height: 2, color: theme.text15),
                       Consumer(builder: (context, ref, _) {
                         final blockExplorer = ref.watch(blockExplorerProvider);
-                        return SettingsDoubleLineItem(
+                        return DoubleLineItem(
                           heading: l10n.blockExplorer,
                           defaultMethod: BlockExplorerSetting(blockExplorer),
                           icon: AppIcons.search,

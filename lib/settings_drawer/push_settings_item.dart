@@ -200,7 +200,7 @@ class PushSettingsItem extends ConsumerWidget {
     return Column(
       children: [
         Divider(height: 2, color: theme.text15),
-        SettingsDoubleLineItem(
+        DoubleLineItem(
           heading: l10n.notifications,
           defaultMethod: SelectionItem(pushEnabled ? 'ON' : 'OFF'),
           icon: AppIcons.notifications,

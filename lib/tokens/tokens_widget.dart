@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -7,6 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
+import '../settings_advanced/tokens_settings.dart';
+import '../settings_advanced/tokens_settings_provider.dart';
 import '../util/ui_util.dart';
 import '../widgets/reactive_refresh.dart';
 import 'token_card.dart';
@@ -20,6 +23,7 @@ class TokensWidget extends HookConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     final items = ref.watch(sortedBalancesForAccountProvider(account));
+    final sortOption = ref.watch(tokensSettingsProvider(account)).sortOption;
 
     final isRefreshing = useState(false);
 
@@ -55,7 +59,10 @@ class TokensWidget extends HookConsumerWidget {
     }
 
     Widget proxyDecorator(
-        Widget child, int index, Animation<double> animation) {
+      Widget child,
+      int index,
+      Animation<double> animation,
+    ) {
       return AnimatedBuilder(
         animation: animation,
         builder: (BuildContext context, Widget? child) {
@@ -72,6 +79,9 @@ class TokensWidget extends HookConsumerWidget {
       );
     }
 
+    final buildDefaultDragHandles = (Platform.isIOS || Platform.isAndroid) &&
+        sortOption == TokenSortOption.custom;
+
     return ReactiveRefreshIndicator(
       backgroundColor: theme.backgroundDark,
       isRefreshing: isRefreshing.value,
@@ -79,6 +89,7 @@ class TokensWidget extends HookConsumerWidget {
       child: ReorderableListView.builder(
         key: const PageStorageKey('TokensWidget'),
         padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
+        buildDefaultDragHandles: buildDefaultDragHandles,
         proxyDecorator: proxyDecorator,
         itemCount: items.length,
         itemBuilder: (context, index) {

@@ -126,7 +126,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     // Authentication Method
                     if (_hasBiometrics) ...[
                       Divider(height: 2, color: theme.text15),
-                      SettingsDoubleLineItem(
+                      DoubleLineItem(
                         heading: l10n.authMethod,
                         defaultMethod: _curAuthMethod,
                         icon: AppIcons.fingerprint,
@@ -136,7 +136,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     // Authenticate on Launch
                     if (encryptedSecret == null) ...[
                       Divider(height: 2, color: theme.text15),
-                      SettingsDoubleLineItem(
+                      DoubleLineItem(
                         heading: l10n.lockAppSetting,
                         defaultMethod: _curUnlockSetting,
                         icon: AppIcons.lock,
@@ -145,7 +145,7 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
                     ],
                     // Authentication Timer
                     Divider(height: 2, color: theme.text15),
-                    SettingsDoubleLineItem(
+                    DoubleLineItem(
                       heading: l10n.autoLockHeader,
                       defaultMethod: _curTimeoutSetting,
                       icon: AppIcons.timer,

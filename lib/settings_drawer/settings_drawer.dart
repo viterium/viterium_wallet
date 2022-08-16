@@ -228,7 +228,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                       Divider(height: 2, color: theme.text15),
                       Consumer(builder: (context, ref, _) {
                         final currency = ref.watch(currencyProvider);
-                        return SettingsDoubleLineItem(
+                        return DoubleLineItem(
                           heading: l10n.currency,
                           defaultMethod: currency,
                           icon: AppIcons.currency,
@@ -247,7 +247,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                       Divider(height: 2, color: theme.text15),
                       Consumer(builder: (context, ref, _) {
                         final themeSetting = ref.watch(themeSettingProvider);
-                        return SettingsDoubleLineItem(
+                        return DoubleLineItem(
                           heading: l10n.themeHeader,
                           defaultMethod: themeSetting,
                           icon: AppIcons.theme,
@@ -306,7 +306,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
                       Divider(height: 2, color: theme.text15),
                       Consumer(builder: (context, ref, _) {
                         final quota = ref.watch(currentQuotaLabelProvider);
-                        return SettingsDoubleLineItem(
+                        return DoubleLineItem(
                           heading: 'Quota',
                           defaultMethod: SelectionItem(quota),
                           icon: Icons.pie_chart_sharp,

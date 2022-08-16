@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app_providers.dart';
 import '../settings/setting_item.dart';
 
-class SettingsDoubleLineItem extends ConsumerWidget {
+class DoubleLineItem extends ConsumerWidget {
   final String heading;
   final SettingSelectionItem defaultMethod;
   final IconData icon;
@@ -15,7 +15,7 @@ class SettingsDoubleLineItem extends ConsumerWidget {
   final VoidCallback? onLongPress;
   final bool disabled;
 
-  const SettingsDoubleLineItem({
+  const DoubleLineItem({
     Key? key,
     required this.heading,
     required this.defaultMethod,
