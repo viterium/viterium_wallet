@@ -24,7 +24,7 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
     state = state.copyWith(wallets: wallets);
   }
 
-  Future<void> selectWallet(WalletInfo wallet) => _updateSelectedWallet(wallet);
+  Future<void> selectWallet(WalletInfo wallet) => switchWallet(wallet);
 
   Future<void> logout() async {
     final wallet = state.selected;
@@ -32,9 +32,16 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
       return;
     }
 
-    await repository.closeWallet(wallet);
-    // clear selection
     await _updateSelectedWallet(null);
+    await repository.closeWallet(wallet);
+  }
+
+  Future<void> switchWallet(WalletInfo wallet) async {
+    final oldWallet = state.selected;
+    await _updateSelectedWallet(wallet);
+    if (oldWallet != null) {
+      await repository.closeWallet(oldWallet);
+    }
   }
 
   Future<void> addWallet(WalletInfo wallet) async {
@@ -43,7 +50,7 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
       throw Exception('Wallet already exists');
     }
 
-    await _updateWallets(wallets + [wallet]);
+    await _updateWallets(wallets.add(wallet));
   }
 
   static WalletInfo generateWalletInfo(WalletData walletData) {

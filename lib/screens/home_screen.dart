@@ -76,7 +76,7 @@ class HomeScreen extends HookConsumerWidget {
           setAppLockEvent();
           break;
         case AppLifecycleState.resumed:
-          cancelLockEvent();
+          await cancelLockEvent();
 
           final inBackground = ref.read(inBackgroundProvider.notifier);
           Future.delayed(const Duration(milliseconds: 1000), () {
@@ -123,6 +123,8 @@ class HomeScreenPage extends HookConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     ref.watch(_homePageWatcherProvider(account));
+
+    final isMounted = useIsMounted();
 
     Future<void> publishToken(PushTokenSettings settings) async {
       try {
@@ -188,7 +190,7 @@ class HomeScreenPage extends HookConsumerWidget {
       },
     );
 
-    ref.listen<Hash?>(notificationIdProvider, (_, id) {
+    ref.listen<Hash?>(notificationIdProvider, (_, id) async {
       // FIXME - duplicate code
       if (id == null) {
         return;
@@ -196,6 +198,17 @@ class HomeScreenPage extends HookConsumerWidget {
       final repository = ref.read(pushInfoRepositoryProvider);
       final pushInfo = repository.pushInfoForId(id);
       if (pushInfo == null) {
+        return;
+      }
+
+      await Future.delayed(const Duration(milliseconds: 100));
+      if (!isMounted()) {
+        return;
+      }
+
+      final authNotifier = ref.read(walletAuthNotifierProvider);
+      final locked = authNotifier?.walletLocked ?? false;
+      if (locked) {
         return;
       }
 
@@ -210,8 +223,10 @@ class HomeScreenPage extends HookConsumerWidget {
       final accounts = ref.read(accountsProvider);
       final account = accounts.getAccountWithIndex(index);
       if (account != null) {
-        accounts.selectAccount(account);
+        await accounts.selectAccountAsync(account);
       }
+      final notifier = ref.read(notificationIdProvider.notifier);
+      notifier.state = null;
     });
 
     useEffect(() {
@@ -230,7 +245,7 @@ class HomeScreenPage extends HookConsumerWidget {
         context: context,
         theme: theme,
         backgroundColor: theme.backgroundDarkest,
-        widget: TokensManageSheet(),
+        widget: const TokensManageSheet(),
       );
     }
 

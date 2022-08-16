@@ -12,7 +12,7 @@ import '../widgets/notice_dialog.dart';
 final _noticeShownProvider = StateProvider<bool>((ref) {
   final sharedPrefsUtil = ref.watch(sharedPrefsUtilProvider);
   final shown = sharedPrefsUtil.getNoticeShown();
-  return shown || false;
+  return shown;
 });
 
 final _pushInfoProvider = StateProvider<PushInfo?>((ref) => null);
@@ -39,13 +39,11 @@ class SplashScreen extends HookConsumerWidget {
       final wallet = ref.read(selectedWalletProvider);
       if (wallet == null || wallet.wid != pushInfo.walletId) {
         final walletId = pushInfo.walletId;
-        final wallets = ref.read(walletsProvider);
         try {
+          final wallets = ref.read(walletsProvider);
           final newWallet = wallets.firstWhere((w) => w.wid == walletId);
           final notifier = ref.read(walletBundleProvider.notifier);
-          await notifier.logout();
-
-          await notifier.selectWallet(newWallet);
+          await notifier.switchWallet(newWallet);
         } catch (e) {
           final log = ref.read(loggerProvider);
           log.e('Failed to find wallet with id $walletId', e);
@@ -73,15 +71,13 @@ class SplashScreen extends HookConsumerWidget {
     Future<void> checkWalletStatus() async {
       await handleNotificationId();
 
-      final bundle = ref.read(walletBundleProvider);
-
-      final nav = Navigator.of(context);
-      final wallet = bundle.selected;
+      final wallets = ref.read(walletBundleProvider);
+      final wallet = wallets.selected;
       if (wallet == null) {
         final vault = ref.read(vaultProvider);
         final pinIsSet = await vault.pinIsSet;
         // if pin is set but no wallets
-        if (pinIsSet && bundle.wallets.isEmpty) {
+        if (pinIsSet && wallets.wallets.isEmpty) {
           final seedKey = 'fviterium_seed';
           final mnemonicKey = 'fviterium_mnemonic';
           // check for alpha version seed
@@ -108,14 +104,14 @@ class SplashScreen extends HookConsumerWidget {
         }
 
         ref.read(introDataProvider.notifier).clear();
-        nav.pushReplacementNamed('/intro');
+        Navigator.of(context).pushReplacementNamed('/intro');
         return;
       }
 
-      var walletAuthNotifier = ref.read(walletAuthNotifierProvider);
+      final walletAuthNotifier = ref.read(walletAuthNotifierProvider);
       if (walletAuthNotifier == null) {
         UIUtil.showSnackbar('Something went wrong', context);
-        nav.pushReplacementNamed('/intro');
+        Navigator.of(context).pushReplacementNamed('/intro');
         return;
       }
 
@@ -123,13 +119,13 @@ class SplashScreen extends HookConsumerWidget {
 
       if (walletAuthNotifier.walletLocked) {
         if (walletAuthNotifier.walletEncrypted) {
-          nav.pushReplacementNamed('/password_lock_screen');
+          Navigator.of(context).pushReplacementNamed('/password_lock_screen');
           return;
         }
         final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
         final authOnLaunch = sharedPrefsUtil.getLock();
         if (authOnLaunch) {
-          nav.pushReplacementNamed('/lock_screen');
+          Navigator.of(context).pushReplacementNamed('/lock_screen');
           return;
         } else {
           await walletAuthNotifier.unlock();
@@ -153,9 +149,7 @@ class SplashScreen extends HookConsumerWidget {
         }
       }
 
-      Future.delayed(Duration.zero, () {
-        nav.pushReplacementNamed('/home');
-      });
+      Navigator.of(context).pushReplacementNamed('/home');
     }
 
     useOnAppLifecycleStateChange((previous, current) {
