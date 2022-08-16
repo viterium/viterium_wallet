@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +26,6 @@ import 'settings/available_language.dart';
 import 'supported_locales.dart';
 import 'themes/themes.dart';
 import 'util/routes.dart';
-import 'util/ui_util.dart';
 
 class App extends HookConsumerWidget {
   const App({Key? key}) : super(key: key);
@@ -36,15 +37,18 @@ class App extends HookConsumerWidget {
 
     useEffect(() {
       if (kIsWeb) return null;
-      Future.delayed(Duration.zero, () {
-        try {
-          FlutterDisplayMode.setHighRefreshRate();
-        } catch (e) {
-          UIUtil.showSnackbar(e.toString(), context);
-        }
-      });
+      if (Platform.isAndroid) {
+        Future.delayed(Duration.zero, () {
+          try {
+            FlutterDisplayMode.setHighRefreshRate();
+          } catch (e) {
+            final log = ref.read(loggerProvider);
+            log.e('Failed to set high refresh rate', e);
+          }
+        });
+      }
       return null;
-    });
+    }, const []);
 
     useEffect(() {
       final onNewTokenSubscription = Push.instance.onNewToken.listen((token) {
