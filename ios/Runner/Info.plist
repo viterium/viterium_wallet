@@ -42,19 +42,24 @@
 	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Photo library access is required for saving the account QR code.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera permission is required for QR codes scanning.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>App needs to authenticate using faces.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Photo library access is required for saving the account QR code.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo library access is required for saving the account QR code.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
