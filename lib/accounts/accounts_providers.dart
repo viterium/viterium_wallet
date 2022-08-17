@@ -40,12 +40,18 @@ final accountsProvider = ChangeNotifierProvider.autoDispose((ref) {
   final mainAddress = Address.fromPublicKey(hexToBytes(wallet.publicKey));
   final maxAccounts = ref.watch(maxAccountsProvider);
 
-  return AccountsNotifier(
+  final notifier = AccountsNotifier(
     accountsBox: accountsBox,
     selection: selection,
     mainAddress: mainAddress,
     maxAccounts: maxAccounts,
   );
+
+  ref.onDispose(() {
+    notifier.disposed = true;
+  });
+
+  return notifier;
 });
 
 final selectedAccountProvider = Provider.autoDispose((ref) {

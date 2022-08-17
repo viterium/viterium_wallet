@@ -38,6 +38,17 @@ class AccountsNotifier extends ChangeNotifier {
     return null;
   }
 
+  // TODO - fix workaround
+  bool disposed = false;
+
+  @override
+  void notifyListeners() {
+    if (disposed) {
+      return;
+    }
+    super.notifyListeners();
+  }
+
   AccountsNotifier({
     required TypedBox<Account> accountsBox,
     required AccountSelection selection,
