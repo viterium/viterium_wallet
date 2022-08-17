@@ -27,9 +27,6 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // watch inBackground state
-    ref.watch(inBackgroundProvider);
-
     // whether we should avoid locking the app
     final lockDisabled = ref.watch(lockDisabledProvider);
     // To lock and unlock the app
@@ -46,14 +43,10 @@ class HomeScreen extends HookConsumerWidget {
         final timeout = sharedPrefsUtil.getLockTimeout();
         Future<void> delayed = Future.delayed(timeout.getDuration());
         lockStreamListener.value = delayed.asStream().listen((_) {
-          try {
-            ref.read(walletAuthNotifierProvider)?.lock();
-          } catch (e) {
-            final log = ref.read(loggerProvider);
-            log.w("Failed to lock wallet ${e}");
-          } finally {
-            Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
-          }
+          final notifier = ref.read(walletAuthNotifierProvider);
+          notifier?.lock();
+
+          Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
         });
       }
     }
@@ -69,9 +62,7 @@ class HomeScreen extends HookConsumerWidget {
       switch (state) {
         case AppLifecycleState.paused:
           final inBackground = ref.read(inBackgroundProvider.notifier);
-          Future.delayed(const Duration(milliseconds: 10), () {
-            inBackground.state = true;
-          });
+          inBackground.state = true;
 
           setAppLockEvent();
           break;
@@ -79,7 +70,7 @@ class HomeScreen extends HookConsumerWidget {
           await cancelLockEvent();
 
           final inBackground = ref.read(inBackgroundProvider.notifier);
-          Future.delayed(const Duration(milliseconds: 1000), () {
+          Future.delayed(const Duration(milliseconds: 100), () {
             inBackground.state = false;
           });
 
@@ -96,11 +87,6 @@ class HomeScreen extends HookConsumerWidget {
 // FIXME - aggregate provider to keep alive
 final _homePageWatcherProvider =
     Provider.autoDispose.family<void, Account>((ref, account) {
-  final inBackground = ref.watch(inBackgroundProvider);
-  if (inBackground) {
-    return;
-  }
-
   ref.watch(accountsProvider);
   ref.watch(snapshotTickerProvider);
 

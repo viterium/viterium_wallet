@@ -40,6 +40,7 @@ class SplashScreen extends HookConsumerWidget {
       if (wallet == null || wallet.wid != pushInfo.walletId) {
         final walletId = pushInfo.walletId;
         try {
+          await Future.delayed(const Duration(milliseconds: 1000));
           final wallets = ref.read(walletsProvider);
           final newWallet = wallets.firstWhere((w) => w.wid == walletId);
           final notifier = ref.read(walletBundleProvider.notifier);
