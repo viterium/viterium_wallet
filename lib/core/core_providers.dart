@@ -37,11 +37,11 @@ final lastUpdateProvider = Provider.autoDispose<DateTime>((ref) {
 
 final networkErrorProvider = Provider.autoDispose<bool>((ref) {
   final inBackground = ref.watch(inBackgroundProvider);
+  final lastUpdate = ref.watch(lastUpdateProvider);
+  final timer = ref.watch(timeProvider).asData?.value ?? DateTime.now();
   if (inBackground) {
     return false;
   }
-  final lastUpdate = ref.watch(lastUpdateProvider);
-  final timer = ref.watch(timeProvider).asData?.value ?? DateTime.now();
 
   return timer.difference(lastUpdate) > Duration(seconds: 10);
 });
