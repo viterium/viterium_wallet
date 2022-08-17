@@ -948,7 +948,7 @@ class AppLocalization {
 
   String get tokenSort {
     return Intl.message(
-      "Sort Token By",
+      "Sort Tokens By",
       desc: 'token_order_menu_item',
       name: 'tokenOrder',
     );
