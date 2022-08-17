@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:vite/vite.dart' hide TypeFactory;
@@ -15,7 +16,9 @@ import 'json_type_adapter.dart';
 typedef BoxKey = String;
 
 late final BoxKey kContactsBox;
-late final BoxKey kTokenInfoBox;
+late final BoxKey kTokenInfoBoxMainnet;
+final BoxKey kTokenInfoBoxTestnet = 'tokenInfoBoxTestnet';
+final BoxKey kTokenInfoBoxDevnet = 'tokenInfoBoxDevnet';
 late final BoxKey kTokenIconBox;
 late final BoxKey kPushInfoBox;
 late final BoxKey kSettingsBox;
@@ -94,8 +97,10 @@ class Database {
 
     kContactsBox =
         digest(data: stringToBytesUtf8('$kContactsBoxId#$secureKey')).hex;
-    kTokenInfoBox =
-        digest(data: stringToBytesUtf8('$kTokenInfoBoxId#$secureKey')).hex;
+    kTokenInfoBoxMainnet = digest(
+        data: stringToBytesUtf8(
+      '$kTokenInfoBoxId#mainnet#$secureKey',
+    )).hex;
     kTokenIconBox =
         digest(data: stringToBytesUtf8('$kTokenIconBoxId#$secureKey')).hex;
     kSettingsBox =
@@ -120,7 +125,9 @@ class Database {
     await Future.wait([
       // typed boxes
       _openBox<Contact>(kContactsBox, encrypted: true),
-      _openBox<TokenInfo>(kTokenInfoBox),
+      _openBox<TokenInfo>(kTokenInfoBoxMainnet),
+      Hive.openBox<TokenInfo>(kTokenInfoBoxTestnet, bytes: Uint8List(0)),
+      Hive.openBox<TokenInfo>(kTokenInfoBoxDevnet, bytes: Uint8List(0)),
       _openBox<CachedTokenIcon>(kTokenIconBox),
       _openBox<PushInfo>(kPushInfoBox, encrypted: true),
       // generic boxes

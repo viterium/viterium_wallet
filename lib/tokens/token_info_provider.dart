@@ -4,10 +4,24 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../database/database.dart';
+import '../node_settings/node_types.dart';
 
 final tokenInfoBoxProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
-  return db.getTypedBox<TokenInfo>(kTokenInfoBox);
+  final network = ref.watch(viteNetworkProvider);
+  String boxId;
+  switch (network) {
+    case ViteNetwork.mainnet:
+      boxId = kTokenInfoBoxMainnet;
+      break;
+    case ViteNetwork.testnet:
+      boxId = kTokenInfoBoxTestnet;
+      break;
+    case ViteNetwork.devnet:
+      boxId = kTokenInfoBoxDevnet;
+      break;
+  }
+  return db.getTypedBox<TokenInfo>(boxId);
 });
 
 final tokenInfoListProvider = FutureProvider<IList<TokenInfo>>((ref) async {
@@ -36,7 +50,7 @@ final tokenInfoListProvider = FutureProvider<IList<TokenInfo>>((ref) async {
     }
   }
 
-  await updateTokens(0, 100);
+  await updateTokens(0, 30);
 
   return IList(allTokens.values).sort(
     (a, b) {
