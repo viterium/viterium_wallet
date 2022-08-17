@@ -200,7 +200,10 @@ final sortedBalancesForAccountProvider =
   }
 
   final sortedBalances =
-      remainingBalances.values.toIList().sortOrdered((b1, b2) {
+      remainingBalances.values.toIList().removeWhere((balance) {
+    final state = mapping.states[balance.tokenInfo.tokenId];
+    return state?.enabled == false;
+  }).sortOrdered((b1, b2) {
     switch (sortOption) {
       case TokenSortOption.custom:
         return b1.tokenInfo.tokenId.compareTo(b2.tokenInfo.tokenId);
