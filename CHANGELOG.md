@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.2.1
+
+* Sort tokens by name or value
+* Bug fixes
+
+## 1.2.0
+
+* Push Notifications
+* Show / hide tokens
+
 ## 1.1.1
 
 * Bug fixes and improvements

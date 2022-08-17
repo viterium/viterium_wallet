@@ -2,7 +2,7 @@ name: viterium_wallet
 description: Viterium - a Non-Custodial Wallet for Vite Blockchain.
 publish_to: "none"
 
-version: 1.1.1+5
+version: 1.2.1+7
 
 environment:
   sdk: '>=2.16.0 <3.0.0'
