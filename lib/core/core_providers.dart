@@ -244,7 +244,7 @@ final lastKnownSnapshotProvider =
     StateProvider<RpcSnapshotBlockMessage?>((ref) => null);
 
 final snapshotTickerProvider =
-    StreamProvider.autoDispose<RpcSnapshotBlockMessage>((ref) async* {
+    StreamProvider<RpcSnapshotBlockMessage>((ref) async* {
   final lastKnownMessage = ref.read(lastKnownSnapshotProvider);
   if (lastKnownMessage != null) {
     yield lastKnownMessage;
@@ -293,8 +293,9 @@ final snapshotTickerProvider =
   yield* controller.stream;
 });
 
-final unreceivedSubscriptionProvider = StreamProvider.autoDispose
-    .family<RpcUnreceivedBlockMessage, Address>((ref, address) async* {
+final unreceivedSubscriptionProvider =
+    StreamProvider.family<RpcUnreceivedBlockMessage, Address>(
+        (ref, address) async* {
   final wsClient = ref.watch(wsRpcClientProvider);
   final controller = StreamController<RpcUnreceivedBlockMessage>();
 
@@ -332,8 +333,9 @@ final unreceivedSubscriptionProvider = StreamProvider.autoDispose
   yield* controller.stream;
 });
 
-final newAccountBlockProvider = StreamProvider.autoDispose
-    .family<RpcAccountBlockWithHeightMessage, Address>((ref, address) async* {
+final newAccountBlockProvider =
+    StreamProvider.family<RpcAccountBlockWithHeightMessage, Address>(
+        (ref, address) async* {
   final wsClient = ref.watch(wsRpcClientProvider);
   final controller = StreamController<RpcAccountBlockWithHeightMessage>();
 
