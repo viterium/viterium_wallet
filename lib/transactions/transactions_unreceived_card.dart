@@ -13,8 +13,8 @@ final _topBalanceByValueProvider =
   final exchangeRates = ref.watch(exchangeRatesProvider);
   final tokenIds = accountInfo.balances.keys;
   double valueForTokenId(TokenId tokenId) =>
-      exchangeRates[tokenId]?.usdRate ??
-      0 * (accountInfo.balances[tokenId]?.value.toDouble() ?? 0);
+      (exchangeRates[tokenId]?.usdRate ?? 0) *
+      (accountInfo.balances[tokenId]?.value.toDouble() ?? 0);
 
   var topTokenId = tokenIds.first;
   var topValue = valueForTokenId(topTokenId);
