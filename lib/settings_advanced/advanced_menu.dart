@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_icons.dart';
+import '../app_icons_custom.dart';
 import '../app_providers.dart';
 import '../settings_drawer/double_line_item.dart';
 import '../settings_drawer/single_line_item.dart';
@@ -10,6 +11,8 @@ import '../widgets/app_icon_button.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
+import 'defi_enabled_dialog.dart';
+import 'setting_enabled_item.dart';
 import 'setting_token_sort_option.dart';
 import 'token_sort_dialog.dart';
 import 'tokens_settings.dart';
@@ -46,6 +49,17 @@ class AdvancedMenu extends ConsumerWidget {
         final account = ref.read(selectedAccountProvider);
         final notifier = ref.read(tokensSettingsProvider(account).notifier);
         return notifier.updateTokenSortOption(selection);
+      }
+    }
+
+    Future<void> changeDefiEnabled() async {
+      final enabled = await showAppDialog<bool>(
+        context: context,
+        builder: (_) => const DefiEnabledDialog(),
+      );
+      if (enabled != null) {
+        final notifier = ref.read(advancedSettingsProvider.notifier);
+        return notifier.updateDefiEnabled(enabled);
       }
     }
 
@@ -120,6 +134,18 @@ class AdvancedMenu extends ConsumerWidget {
                           icon: Icons.sort,
                           iconSize: 28,
                           onPressed: changeTokenOrder,
+                        );
+                      }),
+                      Divider(height: 2, color: theme.text15),
+                      Consumer(builder: (context, ref, _) {
+                        final settings = ref.watch(advancedSettingsProvider);
+                        return DoubleLineItem(
+                          heading: 'DeFi Center',
+                          defaultMethod:
+                              SettingEnabledItem(settings.defiEnabled),
+                          icon: AppIconsCustom.defi,
+                          iconSize: 28,
+                          onPressed: changeDefiEnabled,
                         );
                       }),
                     ],
