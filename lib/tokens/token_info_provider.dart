@@ -24,7 +24,8 @@ final tokenInfoBoxProvider = Provider((ref) {
   return db.getTypedBox<TokenInfo>(boxId);
 });
 
-final tokenInfoListProvider = FutureProvider<IList<TokenInfo>>((ref) async {
+final tokenInfoMapProvider =
+    FutureProvider<Map<TokenId, TokenInfo>>((ref) async {
   final client = ref.watch(rpcClientProvider);
 
   final tokenInfoBox = ref.watch(tokenInfoBoxProvider);
@@ -50,7 +51,18 @@ final tokenInfoListProvider = FutureProvider<IList<TokenInfo>>((ref) async {
     }
   }
 
-  await updateTokens(0, 30);
+  try {
+    await updateTokens(0, 30);
+  } catch (e) {
+    final log = ref.read(loggerProvider);
+    log.e('Failed to update tokens list', e);
+  }
+
+  return allTokens;
+});
+
+final tokenInfoListProvider = FutureProvider<IList<TokenInfo>>((ref) async {
+  final allTokens = await ref.watch(tokenInfoMapProvider.future);
 
   return IList(allTokens.values).sort(
     (a, b) {
