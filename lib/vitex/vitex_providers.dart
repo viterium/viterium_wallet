@@ -70,6 +70,23 @@ final exchangeRatesProvider = Provider.autoDispose((ref) {
   return remote.asData?.value ?? notifier.state;
 });
 
+final aprExchangeRateForTokenIdProvider =
+    Provider.autoDispose.family<VitexExchangeRate, TokenId>((ref, tokenId) {
+  final cache = ref.watch(_vitexExchangeRatesCacheProvider.notifier);
+
+  final rate = cache.state[tokenId];
+  if (rate != null) {
+    return rate;
+  }
+
+  final remote = ref.watch(_vitexExchangeRatesRemoteProvider([tokenId].lock));
+  remote.whenOrNull(data: (data) {
+    cache.update((state) => state.addAll(data));
+  });
+  return remote.asData?.value[tokenId] ??
+      VitexExchangeRate.zero(tokenId: tokenId);
+});
+
 final exchangeRateForTokenIdProvider =
     Provider.autoDispose.family<VitexExchangeRate, TokenId>((ref, tokenId) {
   final exchangeRates = ref.watch(exchangeRatesProvider);
