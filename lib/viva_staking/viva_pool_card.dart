@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../tokens/token_icon_widget.dart';
+import '../main_card/main_card.dart';
+import '../tokens/token_pair_widget.dart';
+import '../util/numberutil.dart';
 import '../widgets/sheet_util.dart';
+import 'viva_staking_providers.dart';
 import 'viva_staking_sheet.dart';
 import 'viva_staking_types.dart';
 
 class VivaPoolCard extends ConsumerWidget {
-  final VivaPoolInfo poolInfo;
+  final VivaPoolInfoAll poolInfo;
   const VivaPoolCard({Key? key, required this.poolInfo}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
+
+    final stakingSymbol = poolInfo.stakingTokenInfo.tokenSymbol;
+
+    final hasLockTime = poolInfo.lockTime != BigInt.zero;
+    final lockTime = Duration(seconds: poolInfo.lockTime.toInt());
+    final lockTimeStr = lockTime.inDays > 1
+        ? '${lockTime.inDays} Days'
+        : lockTime.inHours > 0
+            ? '${lockTime.inHours} Hours'
+            : '${lockTime.inMinutes} Minutes';
+
+    final minDeposit = Amount.raw(
+      poolInfo.minimumDeposit,
+      tokenInfo: poolInfo.stakingTokenInfo,
+    );
+
+    final hasMinDeposit = minDeposit.raw != BigInt.zero;
+    final minDepositStr = NumberUtil.formatedAmount(minDeposit);
+
     return Container(
       margin: EdgeInsetsDirectional.fromSTEB(14, 4, 14, 4),
       decoration: BoxDecoration(
@@ -25,8 +48,9 @@ class VivaPoolCard extends ConsumerWidget {
       child: TextButton(
         style: styles.cardButtonStyle,
         onPressed: () {
+          final scaffold = ref.read(homePageScaffoldKeyProvider);
           Sheets.showAppHeightEightSheet(
-            context: context,
+            context: scaffold.currentContext ?? context,
             theme: theme,
             widget: VivaStakingSheet(poolInfo: poolInfo),
             backgroundColor: theme.background,
@@ -39,32 +63,93 @@ class VivaPoolCard extends ConsumerWidget {
               horizontal: 12,
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(children: [
-                  TokenIconWidget(tokenId: poolInfo.rewardToken.tokenId),
-                  const SizedBox(width: 16),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 4,
+                TokenPairWidget(
+                  mainTokenId: poolInfo.rewardTokenId,
+                  secondaryTokenId: poolInfo.stakingTokenId,
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Earn ${poolInfo.rewardToken.tokenSymbol}',
+                          'Earn ${poolInfo.rewardTokenInfo.tokenName}',
                           textAlign: TextAlign.start,
                           style: styles.textStyleTransactionType,
                         ),
                         RichText(
                           textAlign: TextAlign.start,
                           text: TextSpan(
-                            text: 'Stake ${poolInfo.stakingToken.tokenSymbol}',
+                            text:
+                                'Stake ${poolInfo.stakingTokenInfo.tokenName}',
                             style: styles.textStyleTransactionUnit,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 2),
+                          child: Row(
+                            children: [
+                              if (hasLockTime) ...[
+                                Icon(
+                                  Icons.lock_clock_outlined,
+                                  color: theme.text60,
+                                  size: 19,
+                                ),
+                                const SizedBox(width: 4),
+                                Text(
+                                  lockTimeStr,
+                                  style: styles.textStyleTransactionUnit
+                                      .copyWith(color: theme.text60),
+                                ),
+                              ],
+                              if (hasMinDeposit) ...[
+                                const SizedBox(width: 16),
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: theme.text60,
+                                  size: 23,
+                                ),
+                                Text(
+                                  '$minDepositStr $stakingSymbol',
+                                  style: styles.textStyleTransactionUnit
+                                      .copyWith(color: theme.text60),
+                                ),
+                              ],
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                ]),
+                ),
+                Consumer(builder: (context, ref, _) {
+                  final apr = ref.watch(vivaAprForPoolInfoProvider(poolInfo));
+                  return apr.maybeWhen(
+                    data: (data) {
+                      if (data.isEmpty) {
+                        return const SizedBox();
+                      }
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            'APR',
+                            textAlign: TextAlign.end,
+                            style: styles.textStyleTransactionType,
+                          ),
+                          Text(
+                            data,
+                            textAlign: TextAlign.end,
+                            style: styles.textStyleAddressPrimary,
+                          ),
+                        ],
+                      );
+                    },
+                    orElse: () => const SizedBox(),
+                  );
+                }),
               ],
             ),
           ),

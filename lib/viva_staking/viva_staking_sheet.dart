@@ -3,27 +3,182 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/core.dart';
 
 import '../app_providers.dart';
-import '../tokens/token_pair_widget.dart';
+import '../util/numberutil.dart';
+import '../util/ui_util.dart';
+import '../widgets/app_simpledialog.dart';
 import '../widgets/buttons.dart';
+import '../widgets/dialog.dart';
 import '../widgets/sheet_handle.dart';
+import 'viva_pool_details_card.dart';
 import 'viva_staking_providers.dart';
+import 'viva_staking_stake_dialog.dart';
 import 'viva_staking_types.dart';
+import 'viva_staking_withdraw_dialog.dart';
 
 class VivaStakingSheet extends ConsumerWidget {
-  final VivaPoolInfo poolInfo;
-  const VivaStakingSheet({Key? key, required this.poolInfo}) : super(key: key);
+  final VivaPoolInfoAll poolInfo;
+
+  const VivaStakingSheet({
+    Key? key,
+    required this.poolInfo,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    final styles = ref.watch(stylesProvider);
+    final l10n = ref.watch(l10nProvider);
 
-    final rewardTokenId = poolInfo.rewardToken.tokenId;
-    final stakingTokenId = poolInfo.stakingToken.tokenId;
-    final rewardTokenInfo = poolInfo.rewardToken;
-    final stakingTokenInfo = poolInfo.stakingToken;
-
+    // FIXME
     ref.watch(vivaPoolInfoForPoolIdProvider(poolInfo.poolId));
+
+    final rewardTokenInfo = poolInfo.rewardTokenInfo;
+
+    Future<void> claim() async {
+      final service = ref.read(vivaStakingServiceV4Provider);
+      final account = ref.read(selectedAccountProvider);
+      final accountService = ref.read(accountServiceProvider);
+      final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
+
+      final authUtil = ref.read(authUtilProvider);
+      final message = 'Claim  ${poolInfo.rewardTokenInfo.symbolLabel} Rewards';
+      final auth = await authUtil.authenticate(context, message, message);
+      if (auth != true) {
+        return;
+      }
+
+      try {
+        AppDialogs.showInProgressDialog(
+          context,
+          'Viva Staking Pools',
+          'Sending claim request',
+        );
+
+        await autoreceiveService.pauseAutoreceive();
+        await service.claimRewards(
+          poolId: poolInfo.poolId,
+          address: account.address,
+          accountService: accountService,
+        );
+        autoreceiveService.resumeAutoreceive();
+        Navigator.of(context).pop();
+
+        UIUtil.showSnackbar('Claim request sent', context);
+      } catch (e, st) {
+        final log = ref.read(loggerProvider);
+        log.e('Failed to send transaction', e, st);
+
+        autoreceiveService.resumeAutoreceive();
+
+        UIUtil.showSnackbar(l10n.sendError, context);
+
+        Navigator.of(context).pop();
+      }
+    }
+
+    Future<void> withdraw() async {
+      final service = ref.read(vivaStakingServiceV4Provider);
+      final account = ref.read(selectedAccountProvider);
+      final accountService = ref.read(accountServiceProvider);
+      final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
+
+      final amount = await showAppDialog<Amount>(
+        context: context,
+        builder: (_) => VivaStakingWithdrawDialog(poolInfo: poolInfo),
+      );
+
+      if (amount == null) {
+        return;
+      }
+
+      final authUtil = ref.read(authUtilProvider);
+      final message =
+          'Withdraw ${NumberUtil.formatedAmount(amount)} ${poolInfo.rewardTokenInfo.symbolLabel}';
+      final auth = await authUtil.authenticate(context, message, message);
+      if (auth != true) {
+        return;
+      }
+
+      try {
+        AppDialogs.showInProgressDialog(
+          context,
+          'Viva Staking Pools',
+          'Sending withdraw request',
+        );
+        await autoreceiveService.pauseAutoreceive();
+        await service.withdraw(
+          poolId: poolInfo.poolId,
+          address: account.address,
+          rawValue: amount.raw,
+          accountService: accountService,
+        );
+        autoreceiveService.resumeAutoreceive();
+
+        Navigator.of(context).pop();
+
+        UIUtil.showSnackbar('Withdraw request sent', context);
+      } catch (e) {
+        final log = ref.read(loggerProvider);
+        log.e('Failed to withdraw', e);
+
+        autoreceiveService.resumeAutoreceive();
+
+        Navigator.of(context).pop();
+
+        UIUtil.showSnackbar('Failed to send withdraw request', context);
+      }
+    }
+
+    Future<void> stake() async {
+      final service = ref.read(vivaStakingServiceV4Provider);
+      final account = ref.read(selectedAccountProvider);
+      final accountService = ref.read(accountServiceProvider);
+      final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
+
+      final amount = await showAppDialog<Amount>(
+        context: context,
+        builder: (_) => VivaStakingStakeDialog(poolInfo: poolInfo),
+      );
+
+      if (amount == null) {
+        return;
+      }
+
+      final authUtil = ref.read(authUtilProvider);
+      final message =
+          'Stake ${NumberUtil.formatedAmount(amount)} ${poolInfo.stakingTokenInfo.symbolLabel}';
+      final auth = await authUtil.authenticate(context, message, message);
+      if (auth != true) {
+        return;
+      }
+
+      try {
+        AppDialogs.showInProgressDialog(
+          context,
+          'Viva Staking Pools',
+          'Sending stake request',
+        );
+        await autoreceiveService.pauseAutoreceive();
+        await service.deposit(
+          poolId: poolInfo.poolId,
+          address: account.address,
+          amount: amount,
+          accountService: accountService,
+        );
+        autoreceiveService.resumeAutoreceive();
+
+        Navigator.of(context).pop();
+
+        UIUtil.showSnackbar('Stake request sent', context);
+      } catch (e) {
+        final log = ref.read(loggerProvider);
+        log.e('Failed to stake', e);
+
+        autoreceiveService.resumeAutoreceive();
+
+        Navigator.of(context).pop();
+
+        UIUtil.showSnackbar('Failed to send stake request', context);
+      }
+    }
 
     return SafeArea(
       minimum: EdgeInsets.only(
@@ -38,188 +193,7 @@ class VivaStakingSheet extends ConsumerWidget {
             Column(
               children: [
                 const SheetHandle(),
-                Container(
-                  margin: const EdgeInsets.only(left: 14, right: 14, top: 10),
-                  decoration: BoxDecoration(
-                    color: theme.backgroundDark,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [theme.boxShadow],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 12,
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(children: [
-                              TokenPairWidget(
-                                mainTokenId: rewardTokenId,
-                                secondaryTokenId: stakingTokenId,
-                              ),
-                              const SizedBox(width: 16),
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Earn ${rewardTokenInfo.tokenName}',
-                                      style: styles.textStyleTransactionType,
-                                    ),
-                                    Text(
-                                      'Stake ${stakingTokenInfo.tokenName}',
-                                      textAlign: TextAlign.start,
-                                      style: styles.textStyleTransactionUnit,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ]),
-                          ],
-                        ),
-                        Consumer(builder: (context, ref, _) {
-                          final userInfo =
-                              ref.watch(vivaUserInfoProvider(poolInfo.poolId));
-                          final newInfo = ref.watch(
-                              vivaPoolInfoForPoolIdProvider(poolInfo.poolId));
-                          final latestBlock = ref.watch(snapshotTickerProvider);
-                          final stakingSymbol = stakingTokenInfo.tokenSymbol;
-                          final rewardSymbol = rewardTokenInfo.tokenSymbol;
-                          final heightStr = latestBlock.asData?.value.height;
-                          var height = BigInt.parse(heightStr!);
-                          if (height > newInfo!.endBlock) {
-                            height = newInfo.endBlock;
-                          }
-                          var blocks = '-';
-
-                          final end = poolInfo.endBlock - height;
-                          var blockDelta = height - newInfo.latestRewardBlock;
-                          if (end.sign > 0) {
-                            blocks = '$end';
-                          } else {
-                            blockDelta = BigInt.zero;
-                          }
-                          final totalStaked = Amount.raw(
-                              newInfo.totalStakingBalance,
-                              tokenInfo: stakingTokenInfo);
-                          final totalEarnedRaw = (height - newInfo.startBlock) *
-                              newInfo.rewardPerPeriod;
-                          final totalEarned = Amount.raw(totalEarnedRaw,
-                              tokenInfo: rewardTokenInfo);
-
-                          var rewards = Amount.raw(
-                            BigInt.zero,
-                            tokenInfo: rewardTokenInfo,
-                          );
-                          final staked = Amount.raw(
-                            userInfo.stakingBalance,
-                            tokenInfo: stakingTokenInfo,
-                          );
-                          final rewardFactor = BigInt.from(10).pow(36);
-
-                          if (userInfo.stakingBalance > BigInt.zero &&
-                              blockDelta > BigInt.zero) {
-                            final rewardPerToken = newInfo.rewardPerToken +
-                                (newInfo.rewardPerPeriod *
-                                    blockDelta *
-                                    rewardFactor ~/
-                                    newInfo.totalStakingBalance);
-                            final pendingAmount = userInfo.stakingBalance *
-                                    rewardPerToken ~/
-                                    rewardFactor -
-                                userInfo.rewardDebt;
-                            rewards = Amount.raw(
-                              pendingAmount,
-                              tokenInfo: rewardTokenInfo,
-                            );
-                          }
-
-                          return Container(
-                            padding: const EdgeInsets.only(top: 20),
-                            width: double.infinity,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          children: [
-                                            Text(
-                                              'Pool total $rewardSymbol earned',
-                                              style: styles
-                                                  .textStyleTransactionType,
-                                            ),
-                                            Text(
-                                              '${totalEarned.value.toStringAsFixed(4)}',
-                                              style: styles
-                                                  .textStyleAddressPrimary,
-                                            ),
-                                          ]),
-                                    ),
-                                    Expanded(
-                                      flex: 1,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            'Pool total $stakingSymbol staked',
-                                            style:
-                                                styles.textStyleTransactionType,
-                                          ),
-                                          Text(
-                                            '${totalStaked.value.toStringAsFixed(4)}',
-                                            style:
-                                                styles.textStyleAddressPrimary,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 20),
-                                Text(
-                                  'Pool ends in ',
-                                  style: styles.textStyleTransactionType,
-                                ),
-                                Text(
-                                  '$blocks Blocks',
-                                  style: styles.textStyleAddressPrimary,
-                                ),
-                                const SizedBox(height: 40),
-                                Text(
-                                  '$stakingSymbol staked',
-                                  style: styles.textStyleTransactionType,
-                                ),
-                                Text(
-                                  '${staked.value.toStringAsFixed(2)}',
-                                  style: styles.textStyleAddressPrimary,
-                                ),
-                                const SizedBox(height: 20),
-                                Text(
-                                  '$rewardSymbol earned since last claim',
-                                  style: styles.textStyleTransactionType,
-                                ),
-                                Text(
-                                  '${rewards.value.toStringAsFixed(8)}',
-                                  style: styles.textStyleAddressPrimary,
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                      ],
-                    ),
-                  ),
-                ),
+                VivaPoolDetailsCard(poolInfo: poolInfo),
               ],
             ),
             Padding(
@@ -227,15 +201,8 @@ class VivaStakingSheet extends ConsumerWidget {
               child: Column(
                 children: [
                   PrimaryButton(
-                    title: 'Claim ${poolInfo.rewardToken.tokenSymbol}',
-                    onPressed: () {
-                      final service = ref.read(vivaStakingServiceProvider);
-                      final account = ref.read(selectedAccountProvider);
-                      service.claimRewards(
-                        poolId: poolInfo.poolId,
-                        address: account.address,
-                      );
-                    },
+                    title: 'Claim ${rewardTokenInfo.tokenSymbol}',
+                    onPressed: claim,
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -244,7 +211,7 @@ class VivaStakingSheet extends ConsumerWidget {
                         flex: 1,
                         child: PrimaryOutlineButton(
                           title: 'Stake',
-                          onPressed: () {},
+                          onPressed: stake,
                         ),
                       ),
                       const SizedBox(width: 16),
@@ -252,23 +219,7 @@ class VivaStakingSheet extends ConsumerWidget {
                         flex: 1,
                         child: PrimaryOutlineButton(
                           title: 'Withdraw',
-                          onPressed: () {
-                            final userInfo =
-                                ref.read(vivaUserInfoProvider(poolInfo.poolId));
-                            final newInfo = ref.read(
-                                vivaPoolInfoForPoolIdProvider(poolInfo.poolId));
-                            if (newInfo == null) {
-                              return;
-                            }
-                            final service =
-                                ref.read(vivaStakingServiceProvider);
-                            final account = ref.read(selectedAccountProvider);
-                            service.withdraw(
-                              poolId: newInfo.poolId,
-                              address: account.address,
-                              rawValue: userInfo.stakingBalance,
-                            );
-                          },
+                          onPressed: withdraw,
                         ),
                       ),
                     ],
