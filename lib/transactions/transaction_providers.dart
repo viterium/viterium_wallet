@@ -18,14 +18,11 @@ final transactionHistoryProvider = ChangeNotifierProvider.autoDispose
     log: log,
   );
 
-  ref.listen<AsyncValue<RpcAccountBlockWithHeightMessage>>(
+  ref.listen<AsyncValue<AccountBlockWithHeightMessage>>(
       newAccountBlockProvider(pair.account.address), (_, next) {
     final message = next.asData?.value;
     if (message != null && message.removed) {
-      final hash = Hash.tryParse(message.hash);
-      if (hash != null) {
-        notifier.remove(hash);
-      }
+      notifier.remove(message.hash);
     }
     notifier.refresh();
   });
@@ -55,8 +52,8 @@ final selectedTxHistoryProvider = Provider.autoDispose((ref) {
 
 final confirmationStatusProvider =
     Provider.autoDispose.family<TxState, AccountBlock>((ref, accountBlock) {
-  const kNoConfirmations = 150;
-  if ((accountBlock.confirmations?.toInt() ?? 0) > kNoConfirmations) {
+  final kNoConfirmations = BigInt.from(150);
+  if ((accountBlock.confirmations ?? BigInt.zero) > kNoConfirmations) {
     return const TxState.confirmed();
   }
   final asyncValue = ref.watch(snapshotTickerProvider);
@@ -64,9 +61,9 @@ final confirmationStatusProvider =
   if (message == null) {
     return const TxState.unknown();
   }
-  final snapshotHeight = int.tryParse(message.height);
+  final snapshotHeight = message.height;
   final height = accountBlock.firstSnapshotHeight;
-  if (snapshotHeight == null || height == null) {
+  if (height == null) {
     return const TxState.unconfirmed();
   }
 
@@ -75,7 +72,7 @@ final confirmationStatusProvider =
   if (confirmed) {
     return const TxState.confirmed();
   }
-  if (confirmations < 2) {
+  if (confirmations < BigInt.two) {
     return const TxState.unconfirmed();
   }
   return TxState.confirming(confirmations);

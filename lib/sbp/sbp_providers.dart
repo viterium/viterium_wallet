@@ -42,11 +42,12 @@ final votedSbpProvider =
 });
 
 final consensusContractChanged = StreamProvider.autoDispose((ref) async* {
-  final wsClient = ref.watch(wsRpcClientProvider);
-  final controller = StreamController<RpcAccountBlockWithHeightMessage>();
+  final client = ref.watch(wsViteClientProvider);
+  final controller = StreamController<AccountBlockWithHeightMessage>();
 
-  void callback(RpcFilterResponse response) async {
-    final messages = response.typedMessages<RpcAccountBlockWithHeightMessage>();
+  void callback(CallbackParam response) async {
+    final messages =
+        response.typedMessages(AccountBlockWithHeightMessage.fromJson);
     await Future.delayed(const Duration(seconds: 1));
     if (controller.isClosed) {
       return;
@@ -56,19 +57,16 @@ final consensusContractChanged = StreamProvider.autoDispose((ref) async* {
     }
   }
 
-  final subscriptionId =
-      await wsClient.subscribe.createAccountBlockSubscriptionByAddress(
-    Contract.consensusContract.contractAddress,
-    callback,
-  );
+  final subscriptionId = await client.onNewAccountBlockByAddress(
+      consensusContract.address, callback);
 
   ref.onDispose(() {
     try {
       if (!controller.isClosed) {
         controller.close();
       }
-      if (!wsClient.isClosed) {
-        wsClient.unsubscribe(subscriptionId);
+      if (!client.isClosed) {
+        client.unsubscribe(subscriptionId);
       }
     } catch (e) {
       ref.read(loggerProvider).e(e);

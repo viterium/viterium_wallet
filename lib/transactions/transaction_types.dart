@@ -11,7 +11,7 @@ part 'transaction_types.g.dart';
 class TxState with _$TxState {
   const factory TxState.unknown() = _TxStateUnknown;
   const factory TxState.unconfirmed() = _TxStateUnconfirmed;
-  const factory TxState.confirming(int confirmations) = _TxStateConfirming;
+  const factory TxState.confirming(BigInt confirmations) = _TxStateConfirming;
   const factory TxState.confirmed() = _TxStateConfirmed;
 }
 

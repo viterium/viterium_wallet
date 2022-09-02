@@ -20,9 +20,9 @@ final autoreceiveServiceProvider =
   );
   bool disposed = false;
 
-  ref.listen<AsyncValue<RpcSnapshotBlockMessage>>(snapshotTickerProvider,
+  ref.listen<AsyncValue<SnapshotBlockMessage>>(snapshotTickerProvider,
       (_, message) {
-    final snapshotHeight = int.tryParse(message.asData?.value.height ?? '');
+    final snapshotHeight = message.asData?.value.height;
     if (snapshotHeight == null) {
       return;
     }

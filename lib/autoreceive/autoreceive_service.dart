@@ -45,7 +45,7 @@ class AutoreceiveService {
     return _completer.future;
   }
 
-  Future<void> processNext(int snapshotHeight) async {
+  Future<void> processNext(BigInt snapshotHeight) async {
     if (_inProgress ||
         _paused ||
         unreceived.blockCount == 0 ||

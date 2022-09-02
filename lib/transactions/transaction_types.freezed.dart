@@ -26,7 +26,7 @@ class _$TxStateTearOff {
     return const _TxStateUnconfirmed();
   }
 
-  _TxStateConfirming confirming(int confirmations) {
+  _TxStateConfirming confirming(BigInt confirmations) {
     return _TxStateConfirming(
       confirmations,
     );
@@ -46,7 +46,7 @@ mixin _$TxState {
   TResult when<TResult extends Object?>({
     required TResult Function() unknown,
     required TResult Function() unconfirmed,
-    required TResult Function(int confirmations) confirming,
+    required TResult Function(BigInt confirmations) confirming,
     required TResult Function() confirmed,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,7 +54,7 @@ mixin _$TxState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,7 +62,7 @@ mixin _$TxState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
     required TResult orElse(),
   }) =>
@@ -151,7 +151,7 @@ class _$_TxStateUnknown implements _TxStateUnknown {
   TResult when<TResult extends Object?>({
     required TResult Function() unknown,
     required TResult Function() unconfirmed,
-    required TResult Function(int confirmations) confirming,
+    required TResult Function(BigInt confirmations) confirming,
     required TResult Function() confirmed,
   }) {
     return unknown();
@@ -162,7 +162,7 @@ class _$_TxStateUnknown implements _TxStateUnknown {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
   }) {
     return unknown?.call();
@@ -173,7 +173,7 @@ class _$_TxStateUnknown implements _TxStateUnknown {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
     required TResult orElse(),
   }) {
@@ -268,7 +268,7 @@ class _$_TxStateUnconfirmed implements _TxStateUnconfirmed {
   TResult when<TResult extends Object?>({
     required TResult Function() unknown,
     required TResult Function() unconfirmed,
-    required TResult Function(int confirmations) confirming,
+    required TResult Function(BigInt confirmations) confirming,
     required TResult Function() confirmed,
   }) {
     return unconfirmed();
@@ -279,7 +279,7 @@ class _$_TxStateUnconfirmed implements _TxStateUnconfirmed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
   }) {
     return unconfirmed?.call();
@@ -290,7 +290,7 @@ class _$_TxStateUnconfirmed implements _TxStateUnconfirmed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
     required TResult orElse(),
   }) {
@@ -347,7 +347,7 @@ abstract class _$TxStateConfirmingCopyWith<$Res> {
   factory _$TxStateConfirmingCopyWith(
           _TxStateConfirming value, $Res Function(_TxStateConfirming) then) =
       __$TxStateConfirmingCopyWithImpl<$Res>;
-  $Res call({int confirmations});
+  $Res call({BigInt confirmations});
 }
 
 /// @nodoc
@@ -368,7 +368,7 @@ class __$TxStateConfirmingCopyWithImpl<$Res> extends _$TxStateCopyWithImpl<$Res>
       confirmations == freezed
           ? _value.confirmations
           : confirmations // ignore: cast_nullable_to_non_nullable
-              as int,
+              as BigInt,
     ));
   }
 }
@@ -379,7 +379,7 @@ class _$_TxStateConfirming implements _TxStateConfirming {
   const _$_TxStateConfirming(this.confirmations);
 
   @override
-  final int confirmations;
+  final BigInt confirmations;
 
   @override
   String toString() {
@@ -409,7 +409,7 @@ class _$_TxStateConfirming implements _TxStateConfirming {
   TResult when<TResult extends Object?>({
     required TResult Function() unknown,
     required TResult Function() unconfirmed,
-    required TResult Function(int confirmations) confirming,
+    required TResult Function(BigInt confirmations) confirming,
     required TResult Function() confirmed,
   }) {
     return confirming(confirmations);
@@ -420,7 +420,7 @@ class _$_TxStateConfirming implements _TxStateConfirming {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
   }) {
     return confirming?.call(confirmations);
@@ -431,7 +431,7 @@ class _$_TxStateConfirming implements _TxStateConfirming {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
     required TResult orElse(),
   }) {
@@ -480,9 +480,9 @@ class _$_TxStateConfirming implements _TxStateConfirming {
 }
 
 abstract class _TxStateConfirming implements TxState {
-  const factory _TxStateConfirming(int confirmations) = _$_TxStateConfirming;
+  const factory _TxStateConfirming(BigInt confirmations) = _$_TxStateConfirming;
 
-  int get confirmations;
+  BigInt get confirmations;
   @JsonKey(ignore: true)
   _$TxStateConfirmingCopyWith<_TxStateConfirming> get copyWith =>
       throw _privateConstructorUsedError;
@@ -530,7 +530,7 @@ class _$_TxStateConfirmed implements _TxStateConfirmed {
   TResult when<TResult extends Object?>({
     required TResult Function() unknown,
     required TResult Function() unconfirmed,
-    required TResult Function(int confirmations) confirming,
+    required TResult Function(BigInt confirmations) confirming,
     required TResult Function() confirmed,
   }) {
     return confirmed();
@@ -541,7 +541,7 @@ class _$_TxStateConfirmed implements _TxStateConfirmed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
   }) {
     return confirmed?.call();
@@ -552,7 +552,7 @@ class _$_TxStateConfirmed implements _TxStateConfirmed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? unknown,
     TResult Function()? unconfirmed,
-    TResult Function(int confirmations)? confirming,
+    TResult Function(BigInt confirmations)? confirming,
     TResult Function()? confirmed,
     required TResult orElse(),
   }) {

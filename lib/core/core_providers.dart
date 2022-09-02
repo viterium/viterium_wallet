@@ -120,46 +120,7 @@ final httpServiceProvider = Provider((ref) {
   return service;
 });
 
-// final wsServiceStateProvider = Provider<void>((ref) {
-//   final ws = ref.watch(wsServiceProvider);
-//   ws.done.then((_) {
-//     final logger = ref.read(loggerProvider);
-//     logger.i('WS client done!');
-//     Future.microtask(() => ref.refresh(wsServiceProvider));
-//   });
-// });
-
 final inBackgroundProvider = StateProvider<bool>((ref) => false);
-
-// final suspendServiceProvider = StateProvider<bool>((ref) {
-//   return false;
-// });
-
-// final backgroundMonitorProvider = Provider<bool>((ref) {
-//   final inBackground = ref.watch(inBackgroundProvider);
-
-//   ref.read(loggerProvider).d('InBackground state $inBackground');
-//   if (inBackground) {
-//     StreamSubscription<void>? listener;
-
-//     listener = Future.delayed(
-//       const Duration(seconds: 10),
-//     ).asStream().listen((event) {
-//       ref.read(suspendServiceProvider.notifier).state = true;
-//     });
-
-//     // ref.onDispose(() {
-//     //   listener?.cancel();
-//     // });
-//   } else {
-//     ref.read(suspendServiceProvider.notifier).state = false;
-//   }
-//   return inBackground;
-// });
-
-// final bkTestProvider = Provider<bool>((ref) {
-//   return ref.watch(backgroundMonitorProvider);
-// });
 
 final wsServiceProvider = Provider<RpcService>((ref) {
   final logger = ref.read(loggerProvider);
@@ -186,9 +147,9 @@ final wsServiceProvider = Provider<RpcService>((ref) {
   return service;
 });
 
-final wsRpcClientProvider = Provider((ref) {
+final wsViteClientProvider = Provider((ref) {
   final service = ref.watch(wsServiceProvider);
-  return RpcClient(service);
+  return ViteClient(service);
 });
 
 final rpcClientProvider = Provider((ref) {
@@ -241,10 +202,15 @@ final currencyLocaleProvider = Provider((ref) {
 // });
 
 final lastKnownSnapshotProvider =
-    StateProvider<RpcSnapshotBlockMessage?>((ref) => null);
+    StateProvider<SnapshotBlockMessage?>((ref) => null);
+
+final lastKnownSnapshotHeightProvider = Provider((ref) {
+  final last = ref.watch(lastKnownSnapshotProvider);
+  return last?.height ?? BigInt.zero;
+});
 
 final snapshotTickerProvider =
-    StreamProvider<RpcSnapshotBlockMessage>((ref) async* {
+    StreamProvider<SnapshotBlockMessage>((ref) async* {
   final lastKnownMessage = ref.read(lastKnownSnapshotProvider);
   if (lastKnownMessage != null) {
     yield lastKnownMessage;
@@ -255,14 +221,14 @@ final snapshotTickerProvider =
     return;
   }
 
-  final wsClient = ref.watch(wsRpcClientProvider);
-  final controller = StreamController<RpcSnapshotBlockMessage>();
+  final client = ref.watch(wsViteClientProvider);
+  final controller = StreamController<SnapshotBlockMessage>();
 
-  void callback(RpcFilterResponse response) {
+  void callback(CallbackParam response) {
     if (controller.isClosed) {
       return;
     }
-    final messages = response.typedMessages<RpcSnapshotBlockMessage>();
+    final messages = response.typedMessages(SnapshotBlockMessage.fromJson);
 
     if (messages.isNotEmpty) {
       final notifier = ref.read(lastKnownSnapshotProvider.notifier);
@@ -273,13 +239,12 @@ final snapshotTickerProvider =
     }
   }
 
-  final subscriptionId =
-      await wsClient.subscribe.createSnapshotBlockSubscription(callback);
+  final subscriptionId = await client.onNewSnapshotBlock(callback);
 
   ref.onDispose(() {
     try {
-      if (!wsClient.isClosed) {
-        wsClient.unsubscribe(subscriptionId);
+      if (!client.isClosed) {
+        client.unsubscribe(subscriptionId);
       }
       if (!controller.isClosed) {
         controller.sink.close();
@@ -294,31 +259,30 @@ final snapshotTickerProvider =
 });
 
 final unreceivedSubscriptionProvider =
-    StreamProvider.family<RpcUnreceivedBlockMessage, Address>(
+    StreamProvider.family<UnreceivedBlockMessage, Address>(
         (ref, address) async* {
-  final wsClient = ref.watch(wsRpcClientProvider);
-  final controller = StreamController<RpcUnreceivedBlockMessage>();
+  final client = ref.watch(wsViteClientProvider);
+  final controller = StreamController<UnreceivedBlockMessage>();
 
-  void callback(RpcFilterResponse response) async {
+  void callback(CallbackParam response) async {
     final log = ref.read(loggerProvider);
     log.d('Unreceived block subscription - $response');
     if (controller.isClosed) {
       return;
     }
-    final messages = response.typedMessages<RpcUnreceivedBlockMessage>();
+    final messages = response.typedMessages(UnreceivedBlockMessage.fromJson);
     for (final message in messages) {
       controller.sink.add(message);
     }
   }
 
-  final subscriptionId = await wsClient.subscribe
-      .createUnreceivedBlockSubscriptionByAddress(
-          address.viteAddress, callback);
+  final subscriptionId =
+      await client.onNewUnreceivedBlockByAddress(address, callback);
 
   ref.onDispose(() {
     try {
-      if (!wsClient.isClosed) {
-        wsClient.unsubscribe(subscriptionId);
+      if (!client.isClosed) {
+        client.unsubscribe(subscriptionId);
       }
       if (!controller.isClosed) {
         controller.sink.close();
@@ -334,30 +298,29 @@ final unreceivedSubscriptionProvider =
 });
 
 final newAccountBlockProvider =
-    StreamProvider.family<RpcAccountBlockWithHeightMessage, Address>(
+    StreamProvider.family<AccountBlockWithHeightMessage, Address>(
         (ref, address) async* {
-  final wsClient = ref.watch(wsRpcClientProvider);
-  final controller = StreamController<RpcAccountBlockWithHeightMessage>();
+  final client = ref.watch(wsViteClientProvider);
+  final controller = StreamController<AccountBlockWithHeightMessage>();
 
-  void callback(RpcFilterResponse response) {
+  void callback(CallbackParam response) {
     if (controller.isClosed) {
       return;
     }
-    final messages = response.typedMessages<RpcAccountBlockWithHeightMessage>();
+    final messages =
+        response.typedMessages(AccountBlockWithHeightMessage.fromJson);
     for (final message in messages) {
       controller.sink.add(message);
     }
   }
 
-  final subscriptionId = await wsClient.createAccountBlockSubscriptionByAddress(
-    address.viteAddress,
-    callback,
-  );
+  final subscriptionId =
+      await client.onNewAccountBlockByAddress(address, callback);
 
   ref.onDispose(() {
     try {
-      if (!wsClient.isClosed) {
-        wsClient.unsubscribe(subscriptionId);
+      if (!client.isClosed) {
+        client.unsubscribe(subscriptionId);
       }
       if (!controller.isClosed) {
         controller.sink.close();

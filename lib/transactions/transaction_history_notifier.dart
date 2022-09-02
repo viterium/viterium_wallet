@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
@@ -20,8 +19,8 @@ class TransactionHistoryNotifier extends ChangeNotifier {
 
   bool disposed = false;
 
-  int _lastSnapshotHeight = 0;
-  int get lastSnapshotHeight => _lastSnapshotHeight;
+  BigInt _lastSnapshotHeight = BigInt.zero;
+  BigInt get lastSnapshotHeight => _lastSnapshotHeight;
 
   Hash? _lastHash;
 
@@ -181,8 +180,10 @@ class TransactionHistoryNotifier extends ChangeNotifier {
   }
 
   void updateSnapshotHeight(AccountBlock block) {
-    final snapshotHeight = block.firstSnapshotHeight ?? 0;
-    _lastSnapshotHeight = max(_lastSnapshotHeight, snapshotHeight);
+    final snapshotHeight = block.firstSnapshotHeight ?? BigInt.zero;
+    if (snapshotHeight > _lastSnapshotHeight) {
+      _lastSnapshotHeight = snapshotHeight;
+    }
   }
 
   void addUnconfirmedHash(Hash hash) => _unconfirmedHashes.add(hash);
