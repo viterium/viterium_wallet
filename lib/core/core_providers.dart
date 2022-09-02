@@ -339,6 +339,8 @@ final remoteRefreshProvider = StateProvider((ref) => 0);
 enum TokenCardAction {
   showTokenSheet,
   selectToken,
+  vitcSwapSelectFromToken,
+  vitcSwapSelectToToken,
 }
 
 final tokenCardActionProvider =

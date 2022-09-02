@@ -24,10 +24,11 @@ import '../widgets/balance_widget.dart';
 import '../widgets/dialog.dart';
 import '../widgets/sheet_util.dart';
 
-class MainCard extends ConsumerWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey;
+final homePageScaffoldKeyProvider =
+    Provider((ref) => GlobalKey<ScaffoldState>());
 
-  const MainCard({Key? key, required this.scaffoldKey}) : super(key: key);
+class MainCard extends ConsumerWidget {
+  const MainCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,6 +37,7 @@ class MainCard extends ConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     final viteConnect = ref.watch(viteConnectProvider.notifier);
+    final scaffoldKey = ref.watch(homePageScaffoldKeyProvider);
 
     ref.listen<VCState>(viteConnectProvider, (prev, state) {
       state.mapOrNull(

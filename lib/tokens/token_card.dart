@@ -53,6 +53,18 @@ class TokenCard extends ConsumerWidget {
 
               Navigator.of(context).pop();
               break;
+            case TokenCardAction.vitcSwapSelectFromToken:
+              final settings = ref.read(vitcSwapSettingsProvider.notifier);
+              settings.updateFromToken(item.tokenInfo);
+
+              Navigator.of(context).pop();
+              break;
+            case TokenCardAction.vitcSwapSelectToToken:
+              final settings = ref.read(vitcSwapSettingsProvider.notifier);
+              settings.updateToToken(item.tokenInfo);
+
+              Navigator.of(context).pop();
+              break;
           }
         },
         child: Center(

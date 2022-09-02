@@ -25,8 +25,6 @@ class VitcStakeSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
     // FIXME

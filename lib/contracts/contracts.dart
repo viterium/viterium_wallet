@@ -11,9 +11,9 @@ import 'viva_staking_v4.dart';
 
 final knownContracts = Map.fromEntries(
   const [
-    Contract.quotaContract,
-    Contract.consensusContract,
-    Contract.tokenIssuanceContract,
+    quotaContract,
+    consensusContract,
+    tokenIssuanceContract,
     dexFundContract,
     dexTradeContract,
     vitcSwapContract,

@@ -18,7 +18,7 @@ class VitcStakePoolCard extends ConsumerWidget {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final stakingSymbol = poolInfo.stakingTokenInfo.tokenSymbol;
+    //final stakingSymbol = poolInfo.stakingTokenInfo.tokenSymbol;
 
     final hasLockTime = poolInfo.timelock != BigInt.zero;
     final lockTime = Duration(seconds: poolInfo.timelock.toInt());
