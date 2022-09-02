@@ -89,7 +89,7 @@ class TransactionHistoryWidget extends HookConsumerWidget {
             : AutomaticAnimatedList<TxListItem>(
                 key: ValueKey(account),
                 physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 28),
                 insertDuration: const Duration(milliseconds: 500),
                 removeDuration: const Duration(milliseconds: 500),
                 keyingFunction: (item) => Key(item.id),
