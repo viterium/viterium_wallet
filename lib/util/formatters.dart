@@ -1,34 +1,105 @@
+import 'dart:math';
+
+import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 import 'numberutil.dart';
 
+class PercentFormatter extends TextInputFormatter {
+  final decimalSeparator;
+
+  final symbols = <String>{};
+
+  PercentFormatter({
+    required this.decimalSeparator,
+  }) {
+    symbols.addAll([decimalSeparator]);
+    symbols.addAll('0123456789'.split(''));
+  }
+
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final inputSymbols = newValue.text.trim().split('');
+    if (!symbols.containsAll(inputSymbols)) {
+      return oldValue;
+    }
+
+    if (!inputSymbols.contains(decimalSeparator) &&
+        (inputSymbols.length > 3 ||
+            (inputSymbols.length == 3 && inputSymbols[0] != '1'))) {
+      return oldValue;
+    }
+
+    String workingText = newValue.text;
+    while (workingText.length > 1 && workingText[0] == '0') {
+      workingText = workingText.substring(1);
+    }
+    if (workingText.startsWith(decimalSeparator)) {
+      workingText = '0$workingText';
+    }
+    final splitStrs = workingText.split(decimalSeparator);
+    if (splitStrs.length > 1 &&
+        (splitStrs[1].length > 2 || splitStrs[0].length == 3)) {
+      return oldValue;
+    }
+
+    workingText = workingText.replaceAll(decimalSeparator, '');
+
+    if (workingText.length > 5 ||
+        (workingText.length == 5 && workingText[0] != '1')) {
+      return oldValue;
+    }
+
+    return newValue;
+  }
+}
+
 /// Input formatter for Crpto/Fiat amounts
 class CurrencyFormatter extends TextInputFormatter {
-  String commaSeparator;
+  String groupSeparator;
   String decimalSeparator;
   int maxDecimalDigits;
 
-  CurrencyFormatter(
-      {this.commaSeparator = ',',
-      this.decimalSeparator = '.',
-      this.maxDecimalDigits = NumberUtil.maxDecimalDigits});
+  final numberFormat = NumberFormat.currency(decimalDigits: 0, name: '');
+  final symbols = <String>{};
+
+  CurrencyFormatter({
+    required this.groupSeparator,
+    required this.decimalSeparator,
+    this.maxDecimalDigits = NumberUtil.maxDecimalDigits,
+  }) {
+    symbols.addAll([groupSeparator, decimalSeparator]);
+    symbols.addAll('0123456789'.split(''));
+  }
+
+  String _formatNumber(String numberStr) {
+    final number = Decimal.tryParse(numberStr);
+    if (number != null) {
+      return numberFormat.format(DecimalIntl(number));
+    }
+    return numberStr;
+  }
 
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    bool returnOriginal = true;
-    if (newValue.text.contains(decimalSeparator) ||
-        newValue.text.contains(commaSeparator)) {
-      returnOriginal = false;
+    //bool returnOriginal = true;
+
+    // Only allow digits and separators
+    final inputSymbols = newValue.text.split('');
+    if (!symbols.containsAll(inputSymbols)) {
+      return oldValue;
     }
 
-    // If no text, or text doesnt contain a period of comma, no work to do here
-    if (newValue.selection.baseOffset == 0 || returnOriginal) {
-      return newValue;
-    }
+    // if (newValue.text.contains(decimalSeparator) ||
+    //     newValue.text.contains(groupSeparator)) {
+    //   returnOriginal = false;
+    // }
 
-    String workingText =
-        newValue.text.replaceAll(commaSeparator, decimalSeparator);
+    String workingText = newValue.text.replaceAll(groupSeparator, '');
     // if contains more than 2 decimals in newValue, return oldValue
     if (decimalSeparator.allMatches(workingText).length > 1) {
       return newValue.copyWith(
@@ -41,79 +112,79 @@ class CurrencyFormatter extends TextInputFormatter {
     List<String> splitStr = workingText.split(decimalSeparator);
     // If this string contains more than 1 decimal, move all characters to after the first decimal
     if (splitStr.length > 2) {
-      returnOriginal = false;
+      //returnOriginal = false;
       splitStr.forEach((val) {
         if (splitStr.indexOf(val) > 1) {
           splitStr[1] += val;
         }
       });
     }
-    if (splitStr[1].length <= maxDecimalDigits) {
-      if (workingText == newValue.text) {
-        return newValue;
-      } else {
-        return newValue.copyWith(
-            text: workingText,
-            selection: TextSelection.collapsed(offset: workingText.length));
-      }
+
+    if (splitStr.length == 1) {
+      final newText = _formatNumber(splitStr.first);
+      return newValue.copyWith(
+        text: newText,
+        selection: TextSelection.collapsed(offset: newText.length),
+      );
     }
-    String newText = splitStr[0] +
+
+    final String newText = _formatNumber(splitStr.first) +
         decimalSeparator +
-        splitStr[1].substring(0, maxDecimalDigits);
+        splitStr[1].substring(0, min(splitStr[1].length, maxDecimalDigits));
     return newValue.copyWith(
         text: newText,
         selection: TextSelection.collapsed(offset: newText.length));
   }
 }
 
-class LocalCurrencyFormatter extends TextInputFormatter {
-  NumberFormat currencyFormat;
-  bool active;
-  int maxDeciamlDigits;
+// class LocalCurrencyFormatter extends TextInputFormatter {
+//   NumberFormat currencyFormat;
+//   bool active;
+//   int maxDeciamlDigits;
 
-  LocalCurrencyFormatter({
-    required this.currencyFormat,
-    required this.active,
-    required this.maxDeciamlDigits,
-  });
+//   LocalCurrencyFormatter({
+//     required this.currencyFormat,
+//     required this.active,
+//     required this.maxDeciamlDigits,
+//   });
 
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.trim() == currencyFormat.currencySymbol.trim() ||
-        newValue.text.isEmpty) {
-      // Return empty string
-      return newValue.copyWith(
-          text: '', selection: TextSelection.collapsed(offset: 0));
-    }
-    // Ensure our input is in the right formatting here
-    if (active) {
-      // Make local currency = symbol + amount with correct decimal separator
-      String curText = newValue.text;
-      String shouldBeText =
-          NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
-      shouldBeText = currencyFormat.currencySymbol +
-          shouldBeText.replaceAll('.', currencyFormat.symbols.DECIMAL_SEP);
-      if (shouldBeText != curText) {
-        return newValue.copyWith(
-            text: shouldBeText,
-            selection: TextSelection.collapsed(offset: shouldBeText.length));
-      }
-    } else {
-      // Make crypto amount have no symbol and formatted as US locale
-      String curText = newValue.text;
-      String shouldBeText = NumberUtil.sanitizeNumber(
-        curText.replaceAll(',', '.'),
-        maxDecimalDigits: maxDeciamlDigits,
-      );
-      if (shouldBeText != curText) {
-        return newValue.copyWith(
-            text: shouldBeText,
-            selection: TextSelection.collapsed(offset: shouldBeText.length));
-      }
-    }
-    return newValue;
-  }
-}
+//   TextEditingValue formatEditUpdate(
+//       TextEditingValue oldValue, TextEditingValue newValue) {
+//     if (newValue.text.trim() == currencyFormat.currencySymbol.trim() ||
+//         newValue.text.isEmpty) {
+//       // Return empty string
+//       return newValue.copyWith(
+//           text: '', selection: TextSelection.collapsed(offset: 0));
+//     }
+//     // Ensure our input is in the right formatting here
+//     if (active) {
+//       // Make local currency = symbol + amount with correct decimal separator
+//       String curText = newValue.text;
+//       String shouldBeText = curText;
+//       NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
+//       shouldBeText = currencyFormat.currencySymbol +
+//           shouldBeText.replaceAll('.', currencyFormat.symbols.DECIMAL_SEP);
+//       if (shouldBeText != curText) {
+//         return newValue.copyWith(
+//             text: shouldBeText,
+//             selection: TextSelection.collapsed(offset: shouldBeText.length));
+//       }
+//     } else {
+//       // Make crypto amount have no symbol and formatted as US locale
+//       String curText = newValue.text;
+//       String shouldBeText = NumberUtil.sanitizeNumber(
+//         curText.replaceAll(',', '.'),
+//         maxDecimalDigits: maxDeciamlDigits,
+//       );
+//       if (shouldBeText != curText) {
+//         return newValue.copyWith(
+//             text: shouldBeText,
+//             selection: TextSelection.collapsed(offset: shouldBeText.length));
+//       }
+//     }
+//     return newValue;
+//   }
+// }
 
 /// Input formatter that ensures text starts with @
 class ContactInputFormatter extends TextInputFormatter {

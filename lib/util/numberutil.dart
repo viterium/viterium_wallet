@@ -14,16 +14,30 @@ class NumberUtil {
   static final min6DigitsValue = Decimal.parse('0.000001');
   static final min4DigitsValue = Decimal.parse('0.0001');
 
-  static String formatedAmount(Amount amount, {bool showApprox: false}) {
+  static String textFieldFormatedAmount(Amount amount) {
+    return formatedAmount(amount, showApprox: false, showLessThan: false);
+  }
+
+  static String formatedAmount(
+    Amount amount, {
+    bool showApprox: false,
+    bool showLessThan: true,
+  }) {
     var value = amount.value;
     if (value == Decimal.zero) {
       return '0';
     }
-    if (value < min6DigitsValue) {
+    if (showLessThan && value < min6DigitsValue) {
       return '<0.000001';
     }
     final valueScale = value.scale;
-    final scale = min(valueScale, value < min4DigitsValue ? 6 : 4);
+    final scale = min(
+        valueScale,
+        value < min6DigitsValue
+            ? amount.tokenInfo.decimals
+            : value < min4DigitsValue
+                ? 6
+                : 4);
     value = value.truncate(scale: scale);
 
     final formatter = NumberFormat.currency(
@@ -122,8 +136,7 @@ class NumberUtil {
       return amount;
     } else {
       final amount =
-          getDecimalFromRaw(amountRaw, decimals)
-          .toStringAsFixed(precision);
+          getDecimalFromRaw(amountRaw, decimals).toStringAsFixed(precision);
       return '~' + amount;
     }
   }

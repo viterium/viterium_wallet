@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:vite/vite.dart';
 
 import '../accounts/accounts_providers.dart';
@@ -52,6 +53,16 @@ class QuotaGetSheet extends HookConsumerWidget {
     final beneficiaryShowHint = useState(true);
     final beneficiaryAddress = useState<String?>(null);
 
+    final currencyFormatter = useMemoized(() {
+      final formatter = NumberFormat.currency(name: '');
+
+      return CurrencyFormatter(
+        groupSeparator: formatter.symbols.GROUP_SEP,
+        decimalSeparator: formatter.symbols.DECIMAL_SEP,
+        maxDecimalDigits: tokenInfo.decimals,
+      );
+    }, const []);
+
     useEffect(() {
       final listener = () {
         amountShowHint.value = !amountFocusNode.hasFocus;
@@ -71,6 +82,9 @@ class QuotaGetSheet extends HookConsumerWidget {
     final utpe = useState(1);
 
     void updateUTPE(String source) {
+      source = source
+          .replaceAll(currencyFormatter.groupSeparator, '')
+          .replaceAll(currencyFormatter.decimalSeparator, '.');
       final value = Decimal.tryParse(source);
       if (value == null) {
         utpe.value = 1;
@@ -85,6 +99,9 @@ class QuotaGetSheet extends HookConsumerWidget {
     }
 
     bool validateAmount(String source) {
+      source = source
+          .replaceAll(currencyFormatter.groupSeparator, '')
+          .replaceAll(currencyFormatter.decimalSeparator, '.');
       final value = Decimal.tryParse(source);
 
       if (value == null) {
@@ -124,7 +141,9 @@ class QuotaGetSheet extends HookConsumerWidget {
     }
 
     Future<void> stakeForQuota() async {
-      final amountText = amountController.text;
+      final amountText = amountController.text
+          .replaceAll(currencyFormatter.groupSeparator, '')
+          .replaceAll(currencyFormatter.decimalSeparator, '.');
       final beneficiary = beneficiaryAddress.value;
 
       final address = ref.read(selectedAddressProvider);
@@ -262,7 +281,7 @@ class QuotaGetSheet extends HookConsumerWidget {
             style: styles.textStyleAppTextFieldSimple,
             inputFormatters: [
               LengthLimitingTextInputFormatter(24),
-              CurrencyFormatter(maxDecimalDigits: tokenInfo.decimals),
+              currencyFormatter,
             ],
             onChanged: (text) {
               updateUTPE(text);

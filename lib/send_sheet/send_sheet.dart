@@ -655,8 +655,17 @@ class _SendSheetState extends ConsumerState<SendSheet> {
       final balance = ref.watch(balanceForTokenProvider(tokenInfo.tokenId));
       final isMaxSend = amountRaw == balance;
 
+      final formatter = NumberFormat.currency(name: '');
+      final currencyFormatter = CurrencyFormatter(
+        groupSeparator: formatter.symbols.GROUP_SEP,
+        decimalSeparator: formatter.symbols.DECIMAL_SEP,
+        maxDecimalDigits: tokenInfo.decimals,
+      );
+
       ref.listen<TokenInfo>(selectedTokenProvider, (_, tokenInfo) {
-        final text = _amountController.text;
+        final text = _amountController.text
+            .replaceAll(currencyFormatter.groupSeparator, '')
+            .replaceAll(currencyFormatter.decimalSeparator, '.');
         final amountDecimal = Decimal.tryParse(text);
         if (amountDecimal == null) {
           amountRaw = null;
@@ -673,17 +682,12 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         cursorColor: theme.primary,
         style: styles.textStyleParagraphPrimary,
         inputFormatters: [
-          CurrencyFormatter(maxDecimalDigits: tokenInfo.decimals),
-          LocalCurrencyFormatter(
-            active: false,
-            maxDeciamlDigits: tokenInfo.decimals,
-            currencyFormat: NumberFormat.currency(
-              locale: 'en',
-              symbol: '\$',
-            ),
-          )
+          currencyFormatter,
         ],
         onChanged: (text) {
+          text = text
+              .replaceAll(currencyFormatter.groupSeparator, '')
+              .replaceAll(currencyFormatter.decimalSeparator, '.');
           final amountDecimal = Decimal.tryParse(text);
           if (amountDecimal == null) {
             amountRaw = null;
@@ -724,8 +728,11 @@ class _SendSheetState extends ConsumerState<SendSheet> {
             }
             final tokenInfo = ref.read(selectedTokenProvider);
             amountRaw = ref.read(balanceForTokenProvider(tokenInfo.tokenId));
-            _amountController.text =
-                ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
+
+            final amount =
+                Amount.raw(amountRaw ?? BigInt.zero, tokenInfo: tokenInfo);
+            _amountController.text = NumberUtil.textFieldFormatedAmount(amount);
+            ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
 
             _addressController.selection = TextSelection.fromPosition(
               TextPosition(offset: _addressController.text.length),
