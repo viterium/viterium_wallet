@@ -7,6 +7,7 @@ export 'push_notifications/push_providers.dart';
 export 'quota/quota_providers.dart';
 export 'sbp/sbp_providers.dart';
 export 'settings/settings_providers.dart';
+export 'settings_advanced/advanced_settings_provider.dart';
 export 'transactions/transaction_providers.dart';
 export 'util/util_providers.dart';
 export 'vitex/vitex_providers.dart';

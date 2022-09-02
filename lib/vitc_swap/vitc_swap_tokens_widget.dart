@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
 import '../tokens/token_card.dart';
+import 'vitc_swap_providers.dart';
 
 class VitcSwapTokensWidget extends HookConsumerWidget {
   const VitcSwapTokensWidget({Key? key}) : super(key: key);

@@ -21,6 +21,7 @@ import '../widgets/dialog.dart';
 import '../widgets/sheet_handle.dart';
 import '../widgets/sheet_util.dart';
 import '../widgets/tap_outside_unfocus.dart';
+import 'vitc_swap_providers.dart';
 import 'vitc_swap_slippage_dialog.dart';
 import 'vitc_swap_token_select_sheet.dart';
 
