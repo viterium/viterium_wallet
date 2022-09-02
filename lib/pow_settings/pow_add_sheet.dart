@@ -154,8 +154,9 @@ class PowAddSheet extends HookConsumerWidget {
     return SheetWidget(
       title: title,
       mainWidget: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(height: 50),
           AppTextField(
             controller: nameController,
             focusNode: nameFocusNode,

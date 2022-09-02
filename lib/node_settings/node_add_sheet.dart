@@ -212,8 +212,9 @@ class NodeAddSheet extends HookConsumerWidget {
     return SheetWidget(
       title: l10n.addNode,
       mainWidget: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(height: 50),
           AppTextField(
             controller: nameController,
             focusNode: nameFocusNode,
