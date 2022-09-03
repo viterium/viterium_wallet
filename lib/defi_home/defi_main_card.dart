@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +6,7 @@ import '../app_providers.dart';
 import '../main_card/main_card.dart';
 import '../widgets/address_widgets.dart';
 import '../widgets/app_icon_button.dart';
+import 'defi_info.widget.dart';
 
 class DefiMainCard extends ConsumerWidget {
   const DefiMainCard({Key? key}) : super(key: key);
@@ -18,6 +18,14 @@ class DefiMainCard extends ConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     final scaffoldKey = ref.watch(homePageScaffoldKeyProvider);
+
+    void showDefiInfo() {
+      showDialog(
+        barrierColor: theme.barrier,
+        context: context,
+        builder: (_) => const DefiInfoWidget(),
+      );
+    }
 
     return GestureDetector(
       onTap: () {
@@ -67,7 +75,10 @@ class DefiMainCard extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 40, height: 40),
+                  AppIconButton(
+                    icon: AppIcons.info,
+                    onPressed: showDefiInfo,
+                  ),
                 ],
               ),
             ),
