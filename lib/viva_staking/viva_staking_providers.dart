@@ -7,6 +7,7 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../contracts/viva_staking_v4.dart';
+import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
 import '../tokens/token_info_provider.dart';
 import 'viva_staking_service.dart';
@@ -18,8 +19,7 @@ final _vivaPoolsCacheProvider = StateProvider<IList<VivaPoolInfoAll>>((ref) {
 
 final _vivaPoolsRemoteProvider =
     FutureProvider.autoDispose<IList<VivaPoolInfoAll>>((ref) async {
-  // FIXME
-  ref.watch(vivaEventProvider);
+  ref.watch(vivaLastEventProvider);
 
   final service = ref.watch(vivaStakingServiceV4Provider);
 
@@ -87,9 +87,13 @@ final filteredVivaPoolsProvider =
           poolId: pool.poolId,
           address: address,
         );
-        ref.read(_vivaUserInfoCacheProvider.notifier).update(
-              (state) => state.add(pool.poolId, remoteUserInfo),
-            );
+        final notifier = ref.read(_vivaUserInfoCacheProvider.notifier);
+        notifier.update(
+          (state) => state.add(
+            pool.poolId,
+            remoteUserInfo,
+          ),
+        );
         userInfo = remoteUserInfo;
       }
       if (userInfo.stakingBalance == BigInt.zero) {
@@ -117,29 +121,30 @@ final vivaPoolInfoForPoolIdProvider =
 final _vivaUserInfoChangedEventProvider =
     StreamProvider.autoDispose.family<VivaEvent, BigInt>((ref, poolId) async* {
   final address = ref.watch(selectedAddressProvider);
-  final message = ref.watch(vivaEventProvider);
-  final userEvent = message.mapOrNull(data: (data) {
-    final service = ref.read(vivaStakingServiceV4Provider);
+  final event = ref.watch(vivaLastEventProvider);
 
-    final event = service.decodeEvent(data.value.vmLog);
-    return event.mapOrNull(
-      withdraw: (event) => event.poolId == poolId &&
-              event.address == address &&
-              event.amount > BigInt.zero
-          ? event
-          : null,
-      deposit: (event) => event.poolId == poolId &&
-              event.address == address &&
-              event.amount > BigInt.zero
-          ? event
-          : null,
-      emergencyWithdraw: (event) => event.poolId == poolId &&
-              event.address == address &&
-              event.amount > BigInt.zero
-          ? event
-          : null,
-    );
-  });
+  if (event == null) {
+    return;
+  }
+
+  final userEvent = event.mapOrNull(
+    withdraw: (event) => event.poolId == poolId &&
+            event.address == address &&
+            event.amount > BigInt.zero
+        ? event
+        : null,
+    deposit: (event) => event.poolId == poolId &&
+            event.address == address &&
+            event.amount > BigInt.zero
+        ? event
+        : null,
+    emergencyWithdraw: (event) => event.poolId == poolId &&
+            event.address == address &&
+            event.amount > BigInt.zero
+        ? event
+        : null,
+  );
+
   if (userEvent != null) {
     yield userEvent;
   }
@@ -183,7 +188,8 @@ final vivaUserInfoProvider =
 
 // VivaEvent
 
-final vivaEventProvider = StreamProvider<VmLogMessage>((ref) async* {
+final vivaEventProvider =
+    StreamProvider.autoDispose<VmLogMessage>((ref) async* {
   final client = ref.watch(wsViteClientProvider);
   final controller = StreamController<VmLogMessage>();
 
@@ -217,6 +223,26 @@ final vivaEventProvider = StreamProvider<VmLogMessage>((ref) async* {
   });
 
   yield* controller.stream;
+});
+
+// does not update on Claim events
+final vivaLastEventProvider = StateNotifierProvider.autoDispose<
+    GenericStateNotifier<VivaEvent?>, VivaEvent?>((ref) {
+  final notifier = GenericStateNotifier<VivaEvent?>(null);
+
+  ref.listen<AsyncValue<VmLogMessage>>(vivaEventProvider, (_, event) {
+    event.mapOrNull(data: (data) {
+      final service = ref.read(vivaStakingServiceV4Provider);
+      final event = service.decodeEvent(data.value.vmLog);
+      // ignore claim events
+      event.maybeMap(
+        claim: (_) {},
+        orElse: () => notifier.updateState(event),
+      );
+    });
+  });
+
+  return notifier;
 });
 
 final vivaStakingServiceProvider =

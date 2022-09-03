@@ -13,6 +13,7 @@ class VivaStakingWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final styles = ref.watch(stylesProvider);
 
     final data = ref.watch(filteredVivaPoolsProvider);
     final filter = ref.watch(vivaPoolsFilterProvider);
@@ -22,32 +23,47 @@ class VivaStakingWidget extends ConsumerWidget {
       orElse: () => 2,
     );
 
+    void setStakedOnlyFilter(bool? value) {
+      final notifier = ref.read(vivaPoolsFilterProvider.notifier);
+      notifier.update((state) => state.copyWith(stakedOnly: value ?? false));
+    }
+
     return ListView.builder(
       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 30),
       itemCount: itemCount,
       itemBuilder: (context, index) {
         if (index == 0) {
           return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
                 Expanded(
                   flex: 1,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 4),
-                      Checkbox(
-                        value: filter.stakedOnly,
-                        checkColor: theme.text,
-                        activeColor: theme.primary,
-                        onChanged: (value) {
-                          final notifier =
-                              ref.read(vivaPoolsFilterProvider.notifier);
-                          notifier.update((state) =>
-                              state.copyWith(stakedOnly: value ?? false));
-                        },
+                      const SizedBox(width: 8),
+                      TextButton(
+                        style: styles.defaultTextButtonStyle,
+                        onPressed: () =>
+                            setStakedOnlyFilter(!filter.stakedOnly),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Checkbox(
+                              value: filter.stakedOnly,
+                              checkColor: theme.text,
+                              activeColor: theme.primary,
+                              onChanged: setStakedOnlyFilter,
+                            ),
+                            Text(
+                              'Staked Only',
+                              style: styles.textStyleTransactionType,
+                            ),
+                            const SizedBox(width: 12),
+                          ],
+                        ),
                       ),
-                      Text('Staked Only'),
                     ],
                   ),
                 ),
@@ -56,7 +72,10 @@ class VivaStakingWidget extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text('Ended'),
+                      Text(
+                        'Ended',
+                        style: styles.textStyleTransactionType,
+                      ),
                       Switch.adaptive(
                           activeColor: theme.primary,
                           value: !filter.ended,
@@ -66,7 +85,10 @@ class VivaStakingWidget extends ConsumerWidget {
                             notifier.update(
                                 (state) => state.copyWith(ended: !value));
                           }),
-                      Text('Live'),
+                      Text(
+                        'Live',
+                        style: styles.textStyleTransactionType,
+                      ),
                       const SizedBox(width: 20),
                     ],
                   ),
@@ -82,7 +104,10 @@ class VivaStakingWidget extends ConsumerWidget {
               return Container(
                 padding: const EdgeInsets.only(top: 20),
                 alignment: Alignment.topCenter,
-                child: Text('No pools found'),
+                child: Text(
+                  'No pools found',
+                  style: styles.textStyleTransactionType,
+                ),
               );
             }
             return VivaPoolCard(poolInfo: pools[index]);
@@ -91,14 +116,17 @@ class VivaStakingWidget extends ConsumerWidget {
             return Container(
               padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
-              child: Text('Loading...'),
+              child: Text(
+                'Loading...',
+                style: styles.textStyleTransactionType,
+              ),
             );
           },
           error: (e, st) {
             return Container(
               padding: const EdgeInsets.only(top: 20),
               alignment: Alignment.topCenter,
-              child: Text('$e'),
+              child: Text('Failed to load pools'),
             );
           },
         );

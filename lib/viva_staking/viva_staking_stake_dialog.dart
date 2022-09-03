@@ -50,87 +50,100 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
       Navigator.of(context).pop(amount);
     }
 
-    return AppSimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      title: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Text(
-          'Enter Amount',
-          style: styles.textStyleDialogHeader,
-        ),
-      ),
-      children: [
-        Container(
-          alignment: Alignment.center,
-          child: RichText(
-            textAlign: TextAlign.start,
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: '(',
-                  style: styles.textStyleTransactionUnitSmall,
-                ),
-                TextSpan(
-                  text: tokenBalance,
-                  style: styles.textStyleBalanceAmountSmall,
-                ),
-                TextSpan(
-                  text: ' ${poolInfo.stakingTokenInfo.symbolLabel})',
-                  style: styles.textStyleTransactionUnitSmall,
-                ),
-              ],
-            ),
+    return LayoutBuilder(builder: (context, constraints) {
+      return AppSimpleDialog(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        title: Padding(
+          padding: const EdgeInsets.only(bottom: 10),
+          child: Text(
+            'Stake Amount',
+            style: styles.textStyleDialogHeader,
           ),
         ),
-        const SizedBox(height: 8),
-        AppTextField(
-          leftMargin: 0,
-          rightMargin: 0,
-          controller: controller,
-          cursorColor: theme.primary,
-          textInputAction: TextInputAction.done,
-          maxLines: null,
-          autocorrect: false,
-          hintText: l10n.enterAmount,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          textAlign: TextAlign.center,
-          inputFormatters: [
-            currencyFormatter,
-          ],
-          prefixButton: TextFieldButton(
-            icon: AppIcons.swapcurrency,
-            widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
-          ),
-          suffixButton: TextFieldButton(
-            icon: AppIcons.max,
-            onPressed: () {
-              final amount = Amount.raw(
-                balance,
-                tokenInfo: poolInfo.stakingTokenInfo,
-              );
-              final text = NumberUtil.textFieldFormatedAmount(amount);
-              controller.value = TextEditingValue(
-                text: text,
-                selection: TextSelection.collapsed(offset: text.length),
-              );
-            },
-          ),
-          onSubmitted: onResult,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              style: styles.dialogButtonStyle,
-              child: Text(
-                'STAKE',
-                style: styles.textStyleDialogButtonText,
+        children: [
+          Container(
+            alignment: Alignment.center,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: '(',
+                    style: styles.textStyleTransactionUnitSmall,
+                  ),
+                  TextSpan(
+                    text: tokenBalance,
+                    style: styles.textStyleBalanceAmountSmall,
+                  ),
+                  TextSpan(
+                    text: ' ${poolInfo.stakingTokenInfo.symbolLabel})',
+                    style: styles.textStyleTransactionUnitSmall,
+                  ),
+                ],
               ),
-              onPressed: () => onResult(controller.text),
             ),
-          ],
-        ),
-      ],
-    );
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: constraints.maxWidth * 0.7,
+            child: AppTextField(
+              leftMargin: 0,
+              rightMargin: 0,
+              controller: controller,
+              cursorColor: theme.primary,
+              textInputAction: TextInputAction.done,
+              maxLines: null,
+              autocorrect: false,
+              hintText: l10n.enterAmount,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              textAlign: TextAlign.center,
+              inputFormatters: [currencyFormatter],
+              prefixButton: TextFieldButton(
+                icon: AppIcons.swapcurrency,
+                widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+              ),
+              suffixButton: TextFieldButton(
+                icon: AppIcons.max,
+                onPressed: () {
+                  final amount = Amount.raw(
+                    balance,
+                    tokenInfo: poolInfo.stakingTokenInfo,
+                  );
+                  final text = NumberUtil.textFieldFormatedAmount(amount);
+                  controller.value = TextEditingValue(
+                    text: text,
+                    selection: TextSelection.collapsed(offset: text.length),
+                  );
+                },
+              ),
+              onSubmitted: onResult,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                style: styles.dialogButtonStyle,
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  'CLOSE',
+                  style: styles.textStyleDialogButtonText,
+                ),
+              ),
+              TextButton(
+                style: styles.dialogButtonStyle,
+                child: Text(
+                  'STAKE',
+                  style: styles.textStyleDialogButtonText,
+                ),
+                onPressed: () => onResult(controller.text),
+              ),
+            ],
+          ),
+        ],
+      );
+    });
   }
 }
