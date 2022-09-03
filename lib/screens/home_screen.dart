@@ -86,18 +86,18 @@ class HomeScreen extends HookConsumerWidget {
       duration: const Duration(milliseconds: 250),
     );
 
-    final pageController = useRef(PageController());
+    final pageController = usePageController();
 
     void showTabWithIndex(int index) {
-      pageController.value.jumpToPage(index);
+      pageController.jumpToPage(index);
     }
 
     final scaffoldKey = ref.watch(homePageScaffoldKeyProvider);
     final defiEnabled = ref.watch(defiEnabledProvider);
 
-    if (!defiEnabled) {
-      pageController.value.jumpToPage(0);
-    }
+    ref.listen(defiEnabledProvider, (_, next) {
+      pageController.jumpToPage(0);
+    });
 
     //final _walletNavigatorKey = useRef(GlobalKey<NavigatorState>());
     final _defiNavigatorKey = useRef(GlobalKey<NavigatorState>());
@@ -127,11 +127,8 @@ class HomeScreen extends HookConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: PageView(
-                    controller: pageController.value,
+                    controller: pageController,
                     physics: NeverScrollableScrollPhysics(),
-                    onPageChanged: (page) {
-                      print('Page $page');
-                    },
                     children: [
                       // WillPopScope(
                       //   onWillPop: () async {
