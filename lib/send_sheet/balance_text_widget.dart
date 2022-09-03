@@ -31,7 +31,7 @@ class BalanceTextWidget extends ConsumerWidget {
               style: styles.textStyleBalanceAmountSmall,
             ),
             TextSpan(
-              text: ' ${tokenInfo.tokenSymbol})',
+              text: ' ${tokenInfo.symbolLabel})',
               style: styles.textStyleTransactionUnitSmall,
             ),
           ],
