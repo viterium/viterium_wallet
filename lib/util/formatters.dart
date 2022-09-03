@@ -85,55 +85,47 @@ class CurrencyFormatter extends TextInputFormatter {
   }
 
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    //bool returnOriginal = true;
-
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     // Only allow digits and separators
     final inputSymbols = newValue.text.split('');
     if (!symbols.containsAll(inputSymbols)) {
       return oldValue;
     }
 
-    // if (newValue.text.contains(decimalSeparator) ||
-    //     newValue.text.contains(groupSeparator)) {
-    //   returnOriginal = false;
-    // }
-
     String workingText = newValue.text.replaceAll(groupSeparator, '');
-    // if contains more than 2 decimals in newValue, return oldValue
+    if (workingText.isEmpty) {
+      return newValue;
+    }
+    // If contains more than 2 decimal separators in newValue, return oldValue
     if (decimalSeparator.allMatches(workingText).length > 1) {
-      return newValue.copyWith(
-          text: oldValue.text,
-          selection: TextSelection.collapsed(offset: oldValue.text.length));
+      return oldValue;
     } else if (workingText.startsWith(decimalSeparator)) {
       workingText = '0' + workingText;
     }
 
     List<String> splitStr = workingText.split(decimalSeparator);
-    // If this string contains more than 1 decimal, move all characters to after the first decimal
-    if (splitStr.length > 2) {
-      //returnOriginal = false;
-      splitStr.forEach((val) {
-        if (splitStr.indexOf(val) > 1) {
-          splitStr[1] += val;
-        }
-      });
-    }
 
     if (splitStr.length == 1) {
-      final newText = _formatNumber(splitStr.first);
+      final newText = _formatNumber(splitStr[0]);
       return newValue.copyWith(
         text: newText,
         selection: TextSelection.collapsed(offset: newText.length),
       );
     }
 
-    final String newText = _formatNumber(splitStr.first) +
+    final newText = _formatNumber(splitStr[0]) +
         decimalSeparator +
         splitStr[1].substring(0, min(splitStr[1].length, maxDecimalDigits));
+
+    if (newValue.text == newText) {
+      return newValue;
+    }
     return newValue.copyWith(
-        text: newText,
-        selection: TextSelection.collapsed(offset: newText.length));
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
   }
 }
 
