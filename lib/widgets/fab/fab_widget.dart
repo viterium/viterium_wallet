@@ -45,7 +45,7 @@ class FabWidget extends HookConsumerWidget {
             controller.reverse().then((_) => notifier.state = false);
           }
         },
-        child: Icon(Icons.currency_exchange),
+        child: Icon(Icons.currency_exchange, color: theme.text),
         backgroundColor: theme.backgroundDark,
         elevation: 10.0,
       ),
