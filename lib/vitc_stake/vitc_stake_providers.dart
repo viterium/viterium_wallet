@@ -7,6 +7,7 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../contracts/vitc_stake_v2.dart';
+import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
 import '../tokens/token_info_provider.dart';
 import '../viva_staking/viva_staking_types.dart';
@@ -18,9 +19,9 @@ final _vitcPoolsCacheProvider = StateProvider<IList<VitcPoolInfoAll>>((ref) {
 });
 
 final _vitcPoolsRemoteProvider =
-    FutureProvider<IList<VitcPoolInfoAll>>((ref) async {
-  // FIXME
-  ref.watch(vitcStakeEventProvider);
+    FutureProvider.autoDispose<IList<VitcPoolInfoAll>>((ref) async {
+  // update on new events (except Claim)
+  ref.watch(vitcStakeLastEventProvider);
 
   final service = ref.watch(vitcStakeServiceV2Provider);
 
@@ -47,13 +48,13 @@ final _vitcPoolsRemoteProvider =
   return poolInfoAllList.lock;
 });
 
-final vitcPoolsProvider = Provider<IList<VitcPoolInfoAll>>((ref) {
+final vitcPoolsProvider = Provider.autoDispose<IList<VitcPoolInfoAll>>((ref) {
   final notifier = ref.watch(_vitcPoolsCacheProvider.notifier);
   final remote = ref.watch(_vitcPoolsRemoteProvider);
 
   remote.whenData((value) => notifier.state = value);
 
-  return remote.value ?? notifier.state;
+  return remote.asData?.value ?? notifier.state;
 });
 
 final vitcPoolsFilterProvider = StateProvider((ref) => PoolFilter());
@@ -116,24 +117,25 @@ final vitcPoolInfoForPoolIdProvider =
 final _vivaUserInfoChangedEventProvider = StreamProvider.autoDispose
     .family<VitcStakeEvent, BigInt>((ref, poolId) async* {
   final address = ref.watch(selectedAddressProvider);
-  final message = ref.watch(vitcStakeEventProvider);
-  final userEvent = message.mapOrNull(data: (data) {
-    final service = ref.read(vitcStakeServiceV2Provider);
+  final event = ref.watch(vitcStakeLastEventProvider);
 
-    final event = service.decodeEvent(data.value.vmLog);
-    return event.mapOrNull(
-      withdraw: (event) => event.poolId == poolId &&
-              event.address == address &&
-              event.amount > BigInt.zero
-          ? event
-          : null,
-      deposit: (event) => event.poolId == poolId &&
-              event.address == address &&
-              event.amount > BigInt.zero
-          ? event
-          : null,
-    );
-  });
+  if (event == null) {
+    return;
+  }
+
+  final userEvent = event.mapOrNull(
+    withdraw: (event) => event.poolId == poolId &&
+            event.address == address &&
+            event.amount > BigInt.zero
+        ? event
+        : null,
+    deposit: (event) => event.poolId == poolId &&
+            event.address == address &&
+            event.amount > BigInt.zero
+        ? event
+        : null,
+  );
+
   if (userEvent != null) {
     yield userEvent;
   }
@@ -177,7 +179,8 @@ final vitcStakeUserInfoProvider =
 
 // VitcStakeEvent
 
-final vitcStakeEventProvider = StreamProvider<VmLogMessage>((ref) async* {
+final vitcStakeEventProvider =
+    StreamProvider.autoDispose<VmLogMessage>((ref) async* {
   final client = ref.watch(wsViteClientProvider);
   final controller = StreamController<VmLogMessage>();
 
@@ -211,6 +214,26 @@ final vitcStakeEventProvider = StreamProvider<VmLogMessage>((ref) async* {
   });
 
   yield* controller.stream;
+});
+
+// does not update on Claim events
+final vitcStakeLastEventProvider = StateNotifierProvider.autoDispose<
+    GenericStateNotifier<VitcStakeEvent?>, VitcStakeEvent?>((ref) {
+  final notifier = GenericStateNotifier<VitcStakeEvent?>(null);
+
+  ref.listen<AsyncValue<VmLogMessage>>(vitcStakeEventProvider, (_, event) {
+    event.mapOrNull(data: (data) {
+      final service = ref.read(vitcStakeServiceV2Provider);
+      final event = service.decodeEvent(data.value.vmLog);
+      // ignore claim events
+      event.maybeMap(
+        claim: (_) {},
+        orElse: () => notifier.updateState(event),
+      );
+    });
+  });
+
+  return notifier;
 });
 
 final vitcStakeServiceProvider =
