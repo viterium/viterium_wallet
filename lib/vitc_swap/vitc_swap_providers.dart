@@ -5,8 +5,9 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import '../contracts/vitc_swap.dart';
 import '../tokens/token_info_provider.dart';
-import 'vitc_swap_notifier.dart';
 import 'vitc_swap_service.dart';
+import 'vitc_swap_settings_notifier.dart';
+import 'vitc_swap_state_notifier.dart';
 import 'vitc_swap_types.dart';
 
 final vitcSwapServiceProvider = Provider((ref) {
@@ -21,11 +22,11 @@ final vitcSwapServiceProvider = Provider((ref) {
 });
 
 final vitcSwapSettingsProvider =
-    StateNotifierProvider<VitcSwapNotifier, VitcSwapSettings>((ref) {
+    StateNotifierProvider<VitcSwapSettingsNotifier, VitcSwapSettings>((ref) {
   final repository = ref.watch(settingsRepositoryProvider);
   final service = ref.watch(vitcSwapServiceProvider);
 
-  final notifier = VitcSwapNotifier(
+  final notifier = VitcSwapSettingsNotifier(
     repository: repository,
     service: service,
   );
@@ -62,4 +63,25 @@ final vitcSwapTradingBalancesProvider =
     error: (e) => AsyncValue.error(e.error),
     loading: (_) => AsyncValue.loading(),
   );
+});
+
+final vitcSwapStateProvider =
+    StateNotifierProvider<VitcSwapStateNotifier, VitcSwapState>((ref) {
+  final service = ref.watch(vitcSwapServiceProvider);
+  final settings = ref.read(vitcSwapSettingsProvider);
+
+  final state = VitcSwapState.initial(
+    fromToken: settings.fromToken,
+    toToken: settings.toToken,
+    slippage: settings.slippage,
+  );
+
+  final notifier = VitcSwapStateNotifier(service: service, state: state);
+
+  ref.listen<double>(
+    vitcSwapSettingsProvider.select((value) => value.slippage),
+    (_, slippage) => notifier.updateSlippage(slippage),
+  );
+
+  return notifier;
 });

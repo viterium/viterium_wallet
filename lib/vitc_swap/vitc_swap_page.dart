@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:rate_limiter/rate_limiter.dart';
 import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
@@ -36,36 +35,67 @@ class VitcSwapPage extends HookConsumerWidget {
     final account = ref.watch(selectedAccountProvider);
     final settings = ref.watch(vitcSwapSettingsProvider);
 
-    final fromTokenInfo = settings.fromToken;
-    final toTokenInfo = settings.toToken;
+    final state = ref.watch(vitcSwapStateProvider);
 
-    final fromBalance =
-        ref.watch(balanceForTokenProvider(fromTokenInfo.tokenId));
+    final fromAmount = state.fromAmount;
+    final toAmount = state.toAmount;
+
+    final fromToken = state.fromToken;
+    final toToken = state.toToken;
+
+    final fromBalance = ref.watch(balanceForTokenProvider(fromToken.tokenId));
 
     final fromAmountController = useTextEditingController();
     final toAmountController = useTextEditingController();
 
-    final fromAmountRaw = useState(BigInt.zero);
-    final toAmountRaw = useState(BigInt.zero);
+    bool fromTokenChanged = false;
+    useEffect(() {
+      if (settings.fromToken == state.fromToken) {
+        return;
+      }
+      fromTokenChanged = true;
+      Future.delayed(Duration.zero, () {
+        final notifier = ref.read(vitcSwapStateProvider.notifier);
+        if (settings.fromToken == state.toToken) {
+          final text = NumberUtil.textFieldFormatedAmount(state.toAmount);
+          fromAmountController.value = TextEditingValue(
+            text: text,
+            selection: TextSelection.collapsed(offset: text.length),
+          );
+        }
+        notifier.updateFromToken(
+          settings.fromToken,
+          onRemoteAmount: (amount) {
+            final text = NumberUtil.textFieldFormatedAmount(amount);
+            toAmountController.value = TextEditingValue(
+              text: text,
+              selection: TextSelection.collapsed(offset: text.length),
+            );
+          },
+        );
+      });
+      return null;
+    }, [settings.fromToken]);
 
     useEffect(() {
-      fromAmountRaw.value = BigInt.zero;
-      toAmountRaw.value = BigInt.zero;
+      if (fromTokenChanged || settings.toToken == state.toToken) {
+        return;
+      }
+      Future.delayed(Duration.zero, () {
+        final notifier = ref.read(vitcSwapStateProvider.notifier);
+        notifier.updateToToken(
+          settings.toToken,
+          onRemoteAmount: (amount) {
+            final text = NumberUtil.textFieldFormatedAmount(amount);
+            toAmountController.text = text;
+          },
+        );
+      });
       return null;
-    }, [fromTokenInfo, toTokenInfo]);
-
-    final fromAmount = useMemoized(() {
-      return Amount.raw(fromAmountRaw.value, tokenInfo: fromTokenInfo);
-    }, [fromAmountRaw.value, fromTokenInfo]);
-
-    final toAmount = useMemoized(() {
-      return Amount.raw(toAmountRaw.value, tokenInfo: toTokenInfo);
-    }, [toAmountRaw.value, toTokenInfo]);
-
-    final onUpdate = useState(0);
+    }, [settings.toToken]);
 
     final rate = useMemoized(() {
-      if (toAmount.value == Decimal.zero) {
+      if (toAmount.raw == BigInt.zero || fromAmount.raw == BigInt.zero) {
         return Decimal.zero;
       }
 
@@ -73,135 +103,69 @@ class VitcSwapPage extends HookConsumerWidget {
               .toDecimal(scaleOnInfinitePrecision: 8) *
           Decimal.ten.pow(8);
       return NumberUtil.getStringFromRaw(value.toBigInt(), 8, 8);
-    }, [onUpdate.value]);
+    }, [state.callId]);
+
+    final formatter = useMemoized(
+      () => NumberFormat.currency(name: ''),
+      const [],
+    );
 
     final fromCurrencyFormatter = useMemoized(() {
-      final formatter = NumberFormat.currency(name: '');
       return CurrencyFormatter(
         groupSeparator: formatter.symbols.GROUP_SEP,
         decimalSeparator: formatter.symbols.DECIMAL_SEP,
-        maxDecimalDigits: fromTokenInfo.decimals,
+        maxDecimalDigits: fromToken.decimals,
       );
-    }, [fromTokenInfo]);
+    }, [fromToken]);
 
     final toCurrencyFormatter = useMemoized(() {
-      final formatter = NumberFormat.currency(name: '');
       return CurrencyFormatter(
         groupSeparator: formatter.symbols.GROUP_SEP,
         decimalSeparator: formatter.symbols.DECIMAL_SEP,
-        maxDecimalDigits: toTokenInfo.decimals,
+        maxDecimalDigits: toToken.decimals,
       );
-    }, [toTokenInfo]);
+    }, [toToken]);
 
     final isMaxSwap = useMemoized(() {
-      return fromBalance == fromAmountRaw.value;
-    }, [fromBalance, fromAmountRaw.value]);
-
-    Future<void> updatedFromAmount(Amount amount) async {
-      final service = ref.read(vitcSwapServiceProvider);
-      debounce(() async {
-        try {
-          final toAmount = await service.getConversion(
-            fromAmount: amount,
-            to: toTokenInfo,
-          );
-
-          toAmountRaw.value = toAmount.raw;
-
-          final text = NumberUtil.textFieldFormatedAmount(toAmount);
-          toAmountController.value = TextEditingValue(
-            text: text,
-            selection: TextSelection.collapsed(offset: text.length),
-          );
-          onUpdate.value += 1;
-        } catch (e) {
-          // TODO - show message
-        }
-      }, const Duration(milliseconds: 10))();
-    }
-
-    useEffect(() {
-      if (fromAmountRaw.value == BigInt.zero) {
-        return;
-      }
-      Future.delayed(Duration.zero, () {
-        final amount = Amount.raw(
-          fromAmountRaw.value,
-          tokenInfo: fromTokenInfo,
-        );
-        final text = NumberUtil.textFieldFormatedAmount(amount);
-        fromAmountController.value = TextEditingValue(
-          text: text,
-          selection: TextSelection.collapsed(offset: text.length),
-        );
-        updatedFromAmount(amount);
-      });
-      return;
-    }, [fromTokenInfo, toTokenInfo]);
-
-    Future<void> updatedToAmount(Amount amount) async {
-      final service = ref.read(vitcSwapServiceProvider);
-
-      debounce(() async {
-        try {
-          final fromAmount = await service.getInversedConversion(
-            from: fromTokenInfo,
-            toAmount: amount,
-          );
-
-          fromAmountRaw.value = fromAmount.raw;
-
-          final text = NumberUtil.textFieldFormatedAmount(fromAmount);
-          fromAmountController.value = TextEditingValue(
-            text: text,
-            selection: TextSelection.collapsed(offset: text.length),
-          );
-          onUpdate.value += 1;
-        } catch (e) {
-          // TODO - show message
-        }
-      }, const Duration(milliseconds: 30))();
-    }
+      return fromBalance == fromAmount.raw;
+    }, [fromBalance, fromAmount]);
 
     void onFromChanged(String text) {
       text = text
           .replaceAll(fromCurrencyFormatter.groupSeparator, '')
           .replaceAll(fromCurrencyFormatter.decimalSeparator, '.');
+
+      final notifier = ref.read(vitcSwapStateProvider.notifier);
       final value = Decimal.tryParse(text);
       if (value == null) {
-        toAmountRaw.value = BigInt.zero;
-        fromAmountRaw.value = BigInt.zero;
-        toAmountController.text = '';
+        notifier.updateFromValue(null);
+        toAmountController.value = TextEditingValue.empty;
         return;
       }
 
-      final amount = Amount.value(value, tokenInfo: fromTokenInfo);
-
-      if (fromAmountRaw.value == amount.raw) {
-        return;
-      }
-      fromAmountRaw.value = amount.raw;
-      updatedFromAmount(amount);
+      notifier.updateFromValue(value, onRemoteAmount: (amount) {
+        final text = NumberUtil.textFieldFormatedAmount(amount);
+        toAmountController.text = text;
+      });
     }
 
     void onToChanged(String text) {
       text = text
           .replaceAll(toCurrencyFormatter.groupSeparator, '')
-          .replaceAll(fromCurrencyFormatter.decimalSeparator, '.');
+          .replaceAll(toCurrencyFormatter.decimalSeparator, '.');
       final value = Decimal.tryParse(text);
+
+      final notifier = ref.read(vitcSwapStateProvider.notifier);
       if (value == null) {
-        toAmountRaw.value = BigInt.zero;
-        fromAmountRaw.value = BigInt.zero;
-        fromAmountController.text = '';
+        notifier.updateToValue(null);
+        fromAmountController.value = TextEditingValue.empty;
         return;
       }
 
-      final amount = Amount.value(value, tokenInfo: toTokenInfo);
-      if (toAmountRaw.value == amount.raw) {
-        return;
-      }
-      toAmountRaw.value = amount.raw;
-      updatedToAmount(amount);
+      notifier.updateToValue(value, onRemoteAmount: (amount) {
+        final text = NumberUtil.textFieldFormatedAmount(amount);
+        fromAmountController.text = text;
+      });
     }
 
     void onMaxPressed() {
@@ -209,38 +173,31 @@ class VitcSwapPage extends HookConsumerWidget {
         return;
       }
 
-      final amount = Amount.raw(fromBalance, tokenInfo: fromTokenInfo);
-      if (fromAmountRaw.value == amount.raw) {
+      final amount = Amount.raw(fromBalance, tokenInfo: fromToken);
+      if (fromAmount.raw == amount.raw) {
         return;
       }
-      fromAmountRaw.value = amount.raw;
       final text = NumberUtil.textFieldFormatedAmount(amount);
       fromAmountController.value = TextEditingValue(
         text: text,
         selection: TextSelection.collapsed(offset: text.length),
       );
-      updatedFromAmount(amount);
+
+      final notifier = ref.read(vitcSwapStateProvider.notifier);
+      notifier.updateFromValue(amount.value, onRemoteAmount: (amount) {
+        final text = NumberUtil.textFieldFormatedAmount(amount);
+        toAmountController.text = text;
+      });
     }
 
-    void onSwapTokens() {
+    void onSwitchTokens() {
       final notifier = ref.read(vitcSwapSettingsProvider.notifier);
-
-      fromAmountRaw.value = toAmountRaw.value;
-      notifier.updateFromToken(toTokenInfo);
+      notifier.updateFromToken(settings.toToken);
     }
 
-    Amount getMinimum() {
-      final slippage = Decimal.parse(settings.slippage.toStringAsFixed(2));
-      final minimum = Amount.value(
-        toAmount.value * (Decimal.one - slippage),
-        tokenInfo: toTokenInfo,
-      );
-      return minimum;
-    }
-
-    Future<void> swap() async {
+    Future<void> performSwap() async {
       final account = ref.read(selectedAccountProvider);
-      final service = ref.read(vitcSwapServiceProvider);
+      final notifier = ref.read(vitcSwapStateProvider.notifier);
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
 
@@ -252,18 +209,14 @@ class VitcSwapPage extends HookConsumerWidget {
         );
 
         await autoreceiveService.pauseAutoreceive();
-        final minimum = getMinimum();
-        await service.swap(
+        await notifier.performSwap(
           address: account.address,
           accountService: accountService,
-          amount: fromAmount,
-          minimum: minimum,
         );
         autoreceiveService.resumeAutoreceive();
         Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Swap request sent', context);
-        fromAmountRaw.value = BigInt.zero;
       } catch (e, st) {
         final log = ref.read(loggerProvider);
         log.e('Failed to send swap request', e, st);
@@ -277,23 +230,40 @@ class VitcSwapPage extends HookConsumerWidget {
     }
 
     Future<void> confirmSwap() async {
+      final fromValue = NumberUtil.formatedAmount(fromAmount);
+      final fromSymbol = fromToken.symbolLabel;
+      final toValue = NumberUtil.formatedAmount(toAmount);
+      final toSymbol = toToken.symbolLabel;
+
       if (fromBalance < fromAmount.raw) {
         AppDialogs.showInfoDialog(
           context,
           'Insufficient Balance',
-          'You don\'t have enough ${fromTokenInfo.symbolLabel} for this swap',
+          'You don\'t have enough ${fromSymbol} for this swap',
         );
         return;
       }
 
       final authUtil = ref.read(authUtilProvider);
-
-      final message =
-          'Swap ${NumberUtil.formatedAmount(fromAmount)} ${fromTokenInfo.symbolLabel}\nFor ${NumberUtil.formatedAmount(toAmount)} ${toTokenInfo.symbolLabel}';
+      final message = 'Swap $fromValue $fromSymbol\nFor $toValue $toSymbol';
       final auth = await authUtil.authenticate(context, message, message);
 
       if (auth == true) {
-        swap();
+        performSwap();
+      }
+    }
+
+    Future<void> changeSlippage() async {
+      final slippage = await showAppDialog<double>(
+        context: context,
+        builder: (_) => VitcSwapSlippageDialog(
+          slippage: settings.slippage,
+        ),
+      );
+
+      if (slippage != null) {
+        final notifier = ref.read(vitcSwapSettingsProvider.notifier);
+        notifier.updateSlippage(slippage / 100.0);
       }
     }
 
@@ -378,7 +348,8 @@ class VitcSwapPage extends HookConsumerWidget {
                       hintText: l10n.enterAmount,
                       prefixButton: TextFieldButton(
                         icon: AppIcons.swapcurrency,
-                        widget: TokenIconWidget(tokenId: fromTokenInfo.tokenId),
+                        widget:
+                            TokenIconWidget(tokenId: state.fromToken.tokenId),
                         onPressed: () {
                           Sheets.showAppHeightEightSheet(
                             context: context,
@@ -415,7 +386,7 @@ class VitcSwapPage extends HookConsumerWidget {
                           Icons.swap_vert,
                           color: theme.text,
                         ),
-                        onPressed: onSwapTokens,
+                        onPressed: onSwitchTokens,
                       ),
                     ),
                     AppTextField(
@@ -431,7 +402,7 @@ class VitcSwapPage extends HookConsumerWidget {
                       hintText: l10n.enterAmount,
                       prefixButton: TextFieldButton(
                         icon: AppIcons.swapcurrency,
-                        widget: TokenIconWidget(tokenId: toTokenInfo.tokenId),
+                        widget: TokenIconWidget(tokenId: state.toToken.tokenId),
                         onPressed: () {
                           Sheets.showAppHeightEightSheet(
                             context: context,
@@ -455,13 +426,13 @@ class VitcSwapPage extends HookConsumerWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
-                    if (fromAmountRaw.value != BigInt.zero) ...[
+                    if (fromAmount.raw != BigInt.zero) ...[
                       Text(
                         'Rate:',
                         style: styles.textStyleTransactionType,
                       ),
                       Text(
-                        '$rate ${fromTokenInfo.symbolLabel} per ${toTokenInfo.symbolLabel}',
+                        '$rate ${fromToken.symbolLabel} per ${toToken.symbolLabel}',
                         style: styles.textStyleAddressPrimary,
                       ),
                       const SizedBox(height: 12),
@@ -480,20 +451,7 @@ class VitcSwapPage extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      onPressed: () async {
-                        final slippage = await showAppDialog<double>(
-                          context: context,
-                          builder: (_) => VitcSwapSlippageDialog(
-                            slippage: settings.slippage,
-                          ),
-                        );
-
-                        if (slippage != null) {
-                          final notifier =
-                              ref.read(vitcSwapSettingsProvider.notifier);
-                          notifier.updateSlippage(slippage / 100.0);
-                        }
-                      },
+                      onPressed: changeSlippage,
                     ),
                   ],
                 ),
@@ -509,7 +467,12 @@ class VitcSwapPage extends HookConsumerWidget {
                     const SizedBox(height: 16),
                     PrimaryOutlineButton(
                       title: l10n.close,
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        final notifier =
+                            ref.read(vitcSwapStateProvider.notifier);
+                        notifier.updateFromValue(null);
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
                 ),

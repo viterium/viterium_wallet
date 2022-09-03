@@ -37,10 +37,11 @@ extension VitcSwapSettingsExtension on SettingsRepository {
       box.set(_kVitcSwapSettingsKey, settings);
 }
 
-class VitcSwapNotifier extends StateNotifier<VitcSwapSettings> {
+class VitcSwapSettingsNotifier extends StateNotifier<VitcSwapSettings> {
   final SettingsRepository repository;
   final VitcSwapService service;
-  VitcSwapNotifier({
+
+  VitcSwapSettingsNotifier({
     required this.repository,
     required this.service,
   }) : super(repository.getVitcSwapSettings()) {

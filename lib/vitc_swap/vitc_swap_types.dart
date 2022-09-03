@@ -17,3 +17,31 @@ class VitcSwapSettings with _$VitcSwapSettings {
   factory VitcSwapSettings.fromJson(Map<String, dynamic> json) =>
       _$VitcSwapSettingsFromJson(json);
 }
+
+@freezed
+class VitcSwapState with _$VitcSwapState {
+  const VitcSwapState._();
+  const factory VitcSwapState({
+    required Amount fromAmount,
+    required Amount toAmount,
+    required double slippage,
+    required int requestId,
+    required int callId,
+  }) = _VitcSwapState;
+
+  factory VitcSwapState.initial({
+    required TokenInfo fromToken,
+    required TokenInfo toToken,
+    required double slippage,
+  }) =>
+      VitcSwapState(
+        fromAmount: Amount.raw(BigInt.zero, tokenInfo: fromToken),
+        toAmount: Amount.raw(BigInt.zero, tokenInfo: toToken),
+        slippage: slippage,
+        requestId: 0,
+        callId: 0,
+      );
+
+  TokenInfo get fromToken => fromAmount.tokenInfo;
+  TokenInfo get toToken => toAmount.tokenInfo;
+}

@@ -262,3 +262,255 @@ abstract class _VitcSwapSettings implements VitcSwapSettings {
   _$VitcSwapSettingsCopyWith<_VitcSwapSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+class _$VitcSwapStateTearOff {
+  const _$VitcSwapStateTearOff();
+
+  _VitcSwapState call(
+      {required Amount fromAmount,
+      required Amount toAmount,
+      required double slippage,
+      required int requestId,
+      required int callId}) {
+    return _VitcSwapState(
+      fromAmount: fromAmount,
+      toAmount: toAmount,
+      slippage: slippage,
+      requestId: requestId,
+      callId: callId,
+    );
+  }
+}
+
+/// @nodoc
+const $VitcSwapState = _$VitcSwapStateTearOff();
+
+/// @nodoc
+mixin _$VitcSwapState {
+  Amount get fromAmount => throw _privateConstructorUsedError;
+  Amount get toAmount => throw _privateConstructorUsedError;
+  double get slippage => throw _privateConstructorUsedError;
+  int get requestId => throw _privateConstructorUsedError;
+  int get callId => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $VitcSwapStateCopyWith<VitcSwapState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VitcSwapStateCopyWith<$Res> {
+  factory $VitcSwapStateCopyWith(
+          VitcSwapState value, $Res Function(VitcSwapState) then) =
+      _$VitcSwapStateCopyWithImpl<$Res>;
+  $Res call(
+      {Amount fromAmount,
+      Amount toAmount,
+      double slippage,
+      int requestId,
+      int callId});
+
+  $AmountCopyWith<$Res> get fromAmount;
+  $AmountCopyWith<$Res> get toAmount;
+}
+
+/// @nodoc
+class _$VitcSwapStateCopyWithImpl<$Res>
+    implements $VitcSwapStateCopyWith<$Res> {
+  _$VitcSwapStateCopyWithImpl(this._value, this._then);
+
+  final VitcSwapState _value;
+  // ignore: unused_field
+  final $Res Function(VitcSwapState) _then;
+
+  @override
+  $Res call({
+    Object? fromAmount = freezed,
+    Object? toAmount = freezed,
+    Object? slippage = freezed,
+    Object? requestId = freezed,
+    Object? callId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      fromAmount: fromAmount == freezed
+          ? _value.fromAmount
+          : fromAmount // ignore: cast_nullable_to_non_nullable
+              as Amount,
+      toAmount: toAmount == freezed
+          ? _value.toAmount
+          : toAmount // ignore: cast_nullable_to_non_nullable
+              as Amount,
+      slippage: slippage == freezed
+          ? _value.slippage
+          : slippage // ignore: cast_nullable_to_non_nullable
+              as double,
+      requestId: requestId == freezed
+          ? _value.requestId
+          : requestId // ignore: cast_nullable_to_non_nullable
+              as int,
+      callId: callId == freezed
+          ? _value.callId
+          : callId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+
+  @override
+  $AmountCopyWith<$Res> get fromAmount {
+    return $AmountCopyWith<$Res>(_value.fromAmount, (value) {
+      return _then(_value.copyWith(fromAmount: value));
+    });
+  }
+
+  @override
+  $AmountCopyWith<$Res> get toAmount {
+    return $AmountCopyWith<$Res>(_value.toAmount, (value) {
+      return _then(_value.copyWith(toAmount: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$VitcSwapStateCopyWith<$Res>
+    implements $VitcSwapStateCopyWith<$Res> {
+  factory _$VitcSwapStateCopyWith(
+          _VitcSwapState value, $Res Function(_VitcSwapState) then) =
+      __$VitcSwapStateCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {Amount fromAmount,
+      Amount toAmount,
+      double slippage,
+      int requestId,
+      int callId});
+
+  @override
+  $AmountCopyWith<$Res> get fromAmount;
+  @override
+  $AmountCopyWith<$Res> get toAmount;
+}
+
+/// @nodoc
+class __$VitcSwapStateCopyWithImpl<$Res>
+    extends _$VitcSwapStateCopyWithImpl<$Res>
+    implements _$VitcSwapStateCopyWith<$Res> {
+  __$VitcSwapStateCopyWithImpl(
+      _VitcSwapState _value, $Res Function(_VitcSwapState) _then)
+      : super(_value, (v) => _then(v as _VitcSwapState));
+
+  @override
+  _VitcSwapState get _value => super._value as _VitcSwapState;
+
+  @override
+  $Res call({
+    Object? fromAmount = freezed,
+    Object? toAmount = freezed,
+    Object? slippage = freezed,
+    Object? requestId = freezed,
+    Object? callId = freezed,
+  }) {
+    return _then(_VitcSwapState(
+      fromAmount: fromAmount == freezed
+          ? _value.fromAmount
+          : fromAmount // ignore: cast_nullable_to_non_nullable
+              as Amount,
+      toAmount: toAmount == freezed
+          ? _value.toAmount
+          : toAmount // ignore: cast_nullable_to_non_nullable
+              as Amount,
+      slippage: slippage == freezed
+          ? _value.slippage
+          : slippage // ignore: cast_nullable_to_non_nullable
+              as double,
+      requestId: requestId == freezed
+          ? _value.requestId
+          : requestId // ignore: cast_nullable_to_non_nullable
+              as int,
+      callId: callId == freezed
+          ? _value.callId
+          : callId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_VitcSwapState extends _VitcSwapState {
+  const _$_VitcSwapState(
+      {required this.fromAmount,
+      required this.toAmount,
+      required this.slippage,
+      required this.requestId,
+      required this.callId})
+      : super._();
+
+  @override
+  final Amount fromAmount;
+  @override
+  final Amount toAmount;
+  @override
+  final double slippage;
+  @override
+  final int requestId;
+  @override
+  final int callId;
+
+  @override
+  String toString() {
+    return 'VitcSwapState(fromAmount: $fromAmount, toAmount: $toAmount, slippage: $slippage, requestId: $requestId, callId: $callId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _VitcSwapState &&
+            const DeepCollectionEquality()
+                .equals(other.fromAmount, fromAmount) &&
+            const DeepCollectionEquality().equals(other.toAmount, toAmount) &&
+            const DeepCollectionEquality().equals(other.slippage, slippage) &&
+            const DeepCollectionEquality().equals(other.requestId, requestId) &&
+            const DeepCollectionEquality().equals(other.callId, callId));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(fromAmount),
+      const DeepCollectionEquality().hash(toAmount),
+      const DeepCollectionEquality().hash(slippage),
+      const DeepCollectionEquality().hash(requestId),
+      const DeepCollectionEquality().hash(callId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$VitcSwapStateCopyWith<_VitcSwapState> get copyWith =>
+      __$VitcSwapStateCopyWithImpl<_VitcSwapState>(this, _$identity);
+}
+
+abstract class _VitcSwapState extends VitcSwapState {
+  const factory _VitcSwapState(
+      {required Amount fromAmount,
+      required Amount toAmount,
+      required double slippage,
+      required int requestId,
+      required int callId}) = _$_VitcSwapState;
+  const _VitcSwapState._() : super._();
+
+  @override
+  Amount get fromAmount;
+  @override
+  Amount get toAmount;
+  @override
+  double get slippage;
+  @override
+  int get requestId;
+  @override
+  int get callId;
+  @override
+  @JsonKey(ignore: true)
+  _$VitcSwapStateCopyWith<_VitcSwapState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
