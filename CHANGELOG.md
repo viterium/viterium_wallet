@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.3.0
+
+* DeFi Center
+* Direct access to Viva Staking Pools
+* Direct access to VITCStake
+* Direct access to VITCSwap
+
 ## 1.2.1
 
 * Sort tokens by name or value
