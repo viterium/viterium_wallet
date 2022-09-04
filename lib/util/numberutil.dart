@@ -45,7 +45,7 @@ class NumberUtil {
       symbol: '',
       decimalDigits: scale,
     );
-    final formated = formatter.format(DecimalIntl(value));
+    final formated = formatter.format(DecimalIntl(value)).trim();
     if (showApprox && amount.value != value) {
       return '~$formated';
     }

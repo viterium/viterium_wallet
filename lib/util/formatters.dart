@@ -64,7 +64,7 @@ class CurrencyFormatter extends TextInputFormatter {
   String decimalSeparator;
   int maxDecimalDigits;
 
-  final numberFormat = NumberFormat.currency(decimalDigits: 0, name: '');
+  final numberFormat = NumberFormat.decimalPattern();
   final symbols = <String>{};
 
   CurrencyFormatter({
