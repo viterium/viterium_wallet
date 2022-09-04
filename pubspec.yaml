@@ -48,7 +48,7 @@ dependencies:
   fast_immutable_collections: 7.3.1
   extended_image: 6.0.1
   #go_router: ^3.0.4
-  vite: 0.1.3
+  vite: 0.2.0
   viteconnect: 0.0.1
   #google_fonts: ^2.3.2
   cupertino_icons: 1.0.4
