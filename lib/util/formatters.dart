@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'numberutil.dart';
 
 class PercentFormatter extends TextInputFormatter {
-  final decimalSeparator;
+  final String decimalSeparator;
 
   final symbols = <String>{};
 
@@ -94,7 +94,16 @@ class CurrencyFormatter extends TextInputFormatter {
       return oldValue;
     }
 
-    String workingText = newValue.text.replaceAll(groupSeparator, '');
+    String workingText = newValue.text;
+    // Workaround for iOS Number Keyboard missmatch
+    if (workingText.endsWith(groupSeparator)) {
+      workingText = workingText.substring(
+            0,
+            workingText.length - groupSeparator.length,
+          ) +
+          decimalSeparator;
+    }
+    workingText = workingText.replaceAll(groupSeparator, '');
     if (workingText.isEmpty) {
       return newValue;
     }
