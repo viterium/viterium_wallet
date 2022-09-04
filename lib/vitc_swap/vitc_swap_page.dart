@@ -320,7 +320,7 @@ class VitcSwapPage extends HookConsumerWidget {
                   top: 10,
                   left: 30,
                   right: 30,
-                  bottom: 30,
+                  bottom: 10,
                 ),
                 child: Container(
                   child: Column(
@@ -338,127 +338,130 @@ class VitcSwapPage extends HookConsumerWidget {
                 ),
               ),
               Expanded(
-                child: Column(
-                  children: [
-                    AppTextField(
-                      style: styles.textStyleParagraphPrimary,
-                      controller: fromAmountController,
-                      inputFormatters: [
-                        fromCurrencyFormatter,
-                      ],
-                      onChanged: onFromChanged,
-                      textInputAction: TextInputAction.done,
-                      maxLines: null,
-                      autocorrect: false,
-                      hintText: l10n.enterAmount,
-                      prefixButton: TextFieldButton(
-                        icon: AppIcons.swapcurrency,
-                        widget:
-                            TokenIconWidget(tokenId: state.fromToken.tokenId),
-                        onPressed: () {
-                          Sheets.showAppHeightEightSheet(
-                            context: context,
-                            widget: ProviderScope(
-                              overrides: [
-                                tokenCardActionProvider.overrideWithValue(
-                                  TokenCardAction.vitcSwapSelectFromToken,
-                                ),
-                              ],
-                              child: VitcSwapTokenSelectSheet(
-                                title: 'Swap from',
-                              ),
-                            ),
-                            theme: theme,
-                            backgroundColor: theme.background,
-                          );
-                        },
-                      ),
-                      suffixButton: TextFieldButton(
-                        icon: AppIcons.max,
-                        onPressed: onMaxPressed,
-                      ),
-                      fadeSuffixOnCondition: true,
-                      suffixShowFirstCondition: !isMaxSwap,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      textAlign: TextAlign.center,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: TextButton(
-                        style: styles.appIconButtonStyle,
-                        child: Icon(
-                          Icons.swap_vert,
-                          color: theme.text,
-                        ),
-                        onPressed: onSwitchTokens,
-                      ),
-                    ),
-                    AppTextField(
-                      style: styles.textStyleParagraphPrimary,
-                      controller: toAmountController,
-                      inputFormatters: [
-                        toCurrencyFormatter,
-                      ],
-                      onChanged: onToChanged,
-                      textInputAction: TextInputAction.done,
-                      maxLines: null,
-                      autocorrect: false,
-                      hintText: l10n.enterAmount,
-                      prefixButton: TextFieldButton(
-                        icon: AppIcons.swapcurrency,
-                        widget: TokenIconWidget(tokenId: state.toToken.tokenId),
-                        onPressed: () {
-                          Sheets.showAppHeightEightSheet(
-                            context: context,
-                            widget: ProviderScope(
-                              overrides: [
-                                tokenCardActionProvider.overrideWithValue(
-                                  TokenCardAction.vitcSwapSelectToToken,
-                                ),
-                              ],
-                              child: VitcSwapTokenSelectSheet(
-                                title: 'Swap To',
-                              ),
-                            ),
-                            theme: theme,
-                            backgroundColor: theme.background,
-                          );
-                        },
-                      ),
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 24),
-                    if (fromAmount.raw != BigInt.zero) ...[
-                      Text(
-                        'Rate:',
-                        style: styles.textStyleTransactionType,
-                      ),
-                      Text(
-                        '$rate ${fromToken.symbolLabel} per ${toToken.symbolLabel}',
-                        style: styles.textStyleAddressPrimary,
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                    TextButton(
-                      style: styles.dialogButtonStyle,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Slippage Tolerance:',
-                            style: styles.textStyleTransactionType,
-                          ),
-                          Text(
-                            '${(settings.slippage * 100).toStringAsFixed(2)}%',
-                            style: styles.textStyleAddressPrimary,
-                          ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      AppTextField(
+                        style: styles.textStyleParagraphPrimary,
+                        controller: fromAmountController,
+                        inputFormatters: [
+                          fromCurrencyFormatter,
                         ],
+                        onChanged: onFromChanged,
+                        textInputAction: TextInputAction.done,
+                        maxLines: null,
+                        autocorrect: false,
+                        hintText: l10n.enterAmount,
+                        prefixButton: TextFieldButton(
+                          icon: AppIcons.swapcurrency,
+                          widget:
+                              TokenIconWidget(tokenId: state.fromToken.tokenId),
+                          onPressed: () {
+                            Sheets.showAppHeightEightSheet(
+                              context: context,
+                              widget: ProviderScope(
+                                overrides: [
+                                  tokenCardActionProvider.overrideWithValue(
+                                    TokenCardAction.vitcSwapSelectFromToken,
+                                  ),
+                                ],
+                                child: VitcSwapTokenSelectSheet(
+                                  title: 'Swap from',
+                                ),
+                              ),
+                              theme: theme,
+                              backgroundColor: theme.background,
+                            );
+                          },
+                        ),
+                        suffixButton: TextFieldButton(
+                          icon: AppIcons.max,
+                          onPressed: onMaxPressed,
+                        ),
+                        fadeSuffixOnCondition: true,
+                        suffixShowFirstCondition: !isMaxSwap,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        textAlign: TextAlign.center,
                       ),
-                      onPressed: changeSlippage,
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: TextButton(
+                          style: styles.appIconButtonStyle,
+                          child: Icon(
+                            Icons.swap_vert,
+                            color: theme.text,
+                          ),
+                          onPressed: onSwitchTokens,
+                        ),
+                      ),
+                      AppTextField(
+                        style: styles.textStyleParagraphPrimary,
+                        controller: toAmountController,
+                        inputFormatters: [
+                          toCurrencyFormatter,
+                        ],
+                        onChanged: onToChanged,
+                        textInputAction: TextInputAction.done,
+                        maxLines: null,
+                        autocorrect: false,
+                        hintText: l10n.enterAmount,
+                        prefixButton: TextFieldButton(
+                          icon: AppIcons.swapcurrency,
+                          widget:
+                              TokenIconWidget(tokenId: state.toToken.tokenId),
+                          onPressed: () {
+                            Sheets.showAppHeightEightSheet(
+                              context: context,
+                              widget: ProviderScope(
+                                overrides: [
+                                  tokenCardActionProvider.overrideWithValue(
+                                    TokenCardAction.vitcSwapSelectToToken,
+                                  ),
+                                ],
+                                child: VitcSwapTokenSelectSheet(
+                                  title: 'Swap To',
+                                ),
+                              ),
+                              theme: theme,
+                              backgroundColor: theme.background,
+                            );
+                          },
+                        ),
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 24),
+                      if (fromAmount.raw != BigInt.zero) ...[
+                        Text(
+                          'Rate:',
+                          style: styles.textStyleTransactionType,
+                        ),
+                        Text(
+                          '$rate ${fromToken.symbolLabel} per ${toToken.symbolLabel}',
+                          style: styles.textStyleAddressPrimary,
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                      TextButton(
+                        style: styles.dialogButtonStyle,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Slippage Tolerance:',
+                              style: styles.textStyleTransactionType,
+                            ),
+                            Text(
+                              '${(settings.slippage * 100).toStringAsFixed(2)}%',
+                              style: styles.textStyleAddressPrimary,
+                            ),
+                          ],
+                        ),
+                        onPressed: changeSlippage,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(

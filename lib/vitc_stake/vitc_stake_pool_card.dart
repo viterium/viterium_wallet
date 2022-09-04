@@ -39,7 +39,7 @@ class VitcStakePoolCard extends ConsumerWidget {
         style: styles.cardButtonStyle,
         onPressed: () {
           final scaffold = ref.read(homePageScaffoldKeyProvider);
-          Sheets.showAppHeightEightSheet(
+          Sheets.showAppHeightNineSheet(
             context: scaffold.currentContext ?? context,
             theme: theme,
             widget: VitcStakeSheet(poolInfo: poolInfo),
