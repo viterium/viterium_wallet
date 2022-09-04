@@ -102,7 +102,12 @@ class VitcSwapPage extends HookConsumerWidget {
       final value = (fromAmount.value / toAmount.value)
               .toDecimal(scaleOnInfinitePrecision: 8) *
           Decimal.ten.pow(8);
-      return NumberUtil.getStringFromRaw(value.toBigInt(), 8, 8);
+      return NumberUtil.textFieldFormatedAmount(
+        Amount.raw(
+          value.toBigInt(),
+          tokenInfo: TokenInfo.vite.copyWith(decimals: 8),
+        ),
+      );
     }, [state.callId]);
 
     final formatter = useMemoized(
