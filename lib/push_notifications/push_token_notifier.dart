@@ -51,6 +51,17 @@ class PushTokenSettingsNotifier extends StateNotifier<PushTokenSettings> {
     state = settings;
   }
 
+  Future<void> setTokenPublished() async {
+    if (state.published) {
+      return;
+    }
+
+    final settings = state.copyWith(published: true);
+    await repository.setTokenSettings(settings);
+
+    state = settings;
+  }
+
   Future<bool> publishToken({
     required Address address,
     required AccountService accountService,
@@ -69,10 +80,8 @@ class PushTokenSettingsNotifier extends StateNotifier<PushTokenSettings> {
       payload: payload,
     );
 
-    final settings = state.copyWith(published: true);
-    await repository.setTokenSettings(settings);
+    await setTokenPublished();
 
-    state = settings;
     return true;
   }
 

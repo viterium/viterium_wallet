@@ -34,15 +34,19 @@ class PushSettingsNotifier extends StateNotifier<PushInfo> {
     }).catchError((e) {});
   }
 
-  Future<bool> linkId() async {
+  Future<bool> linkId({PushTokenPayload? tokenPayload}) async {
     if (state.idLinked) {
       return false;
     }
 
     final publicKey = await pushService.getPublicKey();
     final encrypter = PayloadEncrypter(publicKey);
-    final settingsPayload = PushIdLinkPayload(clientId: clientId, id: id);
-    final payload = encrypter.encryptPushSettingsPayload(settingsPayload);
+    final idLinkPayload = PushIdLinkPayload(clientId: clientId, id: id);
+
+    final payload = encrypter.encryptIdLinkPayload(
+      idLinkPayload,
+      tokenPayload: tokenPayload,
+    );
 
     await pushService.linkId(
       address: account.address,

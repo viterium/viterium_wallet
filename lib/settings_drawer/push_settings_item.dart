@@ -45,25 +45,18 @@ class PushSettingsItem extends ConsumerWidget {
 
       try {
         final account = ref.read(selectedAccountProvider);
-        if (enable) {
-          final accountService = ref.read(accountServiceProvider);
-          final service = ref.read(pushServiceProvider);
-          final pushToken = ref.read(pushTokenSettingsProvider.notifier);
-          final published = await pushToken.publishToken(
-            address: account.address,
-            accountService: accountService,
-            service: service,
-          );
-          if (published) {
-            await checkUnreceived();
-          }
-        }
-
         final pushSettingsProvider = pushSettingsForAccountProvider(account);
         final pushSettings = ref.read(pushSettingsProvider.notifier);
+        final pushToken = ref.read(pushTokenSettingsProvider);
         if (enable) {
-          final linked = await pushSettings.linkId();
+          // Also pack push token if not published
+          final tokenPayload = pushToken.published ? null : pushToken.payload;
+          final linked = await pushSettings.linkId(tokenPayload: tokenPayload);
           if (linked) {
+            // Set push token published
+            final notifier = ref.read(pushTokenSettingsProvider.notifier);
+            await notifier.setTokenPublished();
+            // wait for tx to be snapshoted
             await checkUnreceived();
           }
         }

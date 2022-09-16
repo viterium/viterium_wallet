@@ -17,13 +17,32 @@ class PayloadEncrypter {
     return payload;
   }
 
-  Uint8List encryptPushSettingsPayload(PushIdLinkPayload settingsPayload) {
-    final payload = _publicKey.encryptData(settingsPayload.encodeed);
+  Uint8List encryptIdLinkPayload(
+    PushIdLinkPayload idLinkPayload, {
+    PushTokenPayload? tokenPayload,
+  }) {
+    if (tokenPayload != null) {
+      return encryptPushPayloads(
+        tokenPayload: tokenPayload,
+        idLinkPayload: idLinkPayload,
+      );
+    }
+    final payload = _publicKey.encryptData(idLinkPayload.encodeed);
     return payload;
   }
 
   Uint8List encryptCliendId(Hash clientId) {
     final payload = _publicKey.encryptData(clientId.bytes);
+    return payload;
+  }
+
+  Uint8List encryptPushPayloads({
+    required PushTokenPayload tokenPayload,
+    required PushIdLinkPayload idLinkPayload,
+  }) {
+    final idLink = idLinkPayload.encodeed;
+    final token = stringToBytesUtf8(tokenPayload.token);
+    final payload = _publicKey.encryptData(Uint8List.fromList(idLink + token));
     return payload;
   }
 }
