@@ -98,7 +98,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     Color color = _selectedIndex == index ? widget.selectedColor : widget.color;
     return SizedBox(
       height: widget.height,
-      width: 60,
+      width: 70,
       child: Material(
         shape: const CircleBorder(),
         type: MaterialType.transparency,
@@ -106,14 +106,17 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
           onTap: () => onPressed(index),
           customBorder: const CircleBorder(),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(item.iconData, color: color, size: widget.iconSize),
-                Text(item.text, style: TextStyle(color: color))
-              ],
+            padding: const EdgeInsets.all(8),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(item.iconData, color: color, size: widget.iconSize),
+                  Text(item.text, style: TextStyle(color: color))
+                ],
+              ),
             ),
           ),
         ),
