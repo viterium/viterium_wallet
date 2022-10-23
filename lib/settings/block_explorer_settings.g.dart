@@ -23,7 +23,7 @@ Map<String, dynamic> _$$_BlockExplorerSettingsToJson(
         _$_BlockExplorerSettings instance) =>
     <String, dynamic>{
       'selection': instance.selection
-          .map((k, e) => MapEntry(_$ViteNetworkEnumMap[k], e.toJson())),
+          .map((k, e) => MapEntry(_$ViteNetworkEnumMap[k]!, e.toJson())),
     };
 
 const _$ViteNetworkEnumMap = {

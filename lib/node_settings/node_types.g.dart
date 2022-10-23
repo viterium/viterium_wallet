@@ -43,7 +43,7 @@ Map<String, dynamic> _$$_ViteNodeConfigToJson(_$_ViteNodeConfig instance) =>
       'name': instance.name,
       'http': instance.http,
       'ws': instance.ws,
-      'network': _$ViteNetworkEnumMap[instance.network],
+      'network': _$ViteNetworkEnumMap[instance.network]!,
     };
 
 const _$ViteNetworkEnumMap = {

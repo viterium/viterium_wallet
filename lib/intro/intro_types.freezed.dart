@@ -12,29 +12,7 @@ part of 'intro_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$IntroStateTearOff {
-  const _$IntroStateTearOff();
-
-  _IntroStateInit init() {
-    return const _IntroStateInit();
-  }
-
-  _IntroStatePush push({required IntroPage page}) {
-    return _IntroStatePush(
-      page: page,
-    );
-  }
-
-  _IntroStatePop pop() {
-    return const _IntroStatePop();
-  }
-}
-
-/// @nodoc
-const $IntroState = _$IntroStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$IntroState {
@@ -47,9 +25,9 @@ mixin _$IntroState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(IntroPage page)? push,
-    TResult Function()? pop,
+    TResult? Function()? init,
+    TResult? Function(IntroPage page)? push,
+    TResult? Function()? pop,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,9 +47,9 @@ mixin _$IntroState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_IntroStateInit value)? init,
-    TResult Function(_IntroStatePush value)? push,
-    TResult Function(_IntroStatePop value)? pop,
+    TResult? Function(_IntroStateInit value)? init,
+    TResult? Function(_IntroStatePush value)? push,
+    TResult? Function(_IntroStatePop value)? pop,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -88,34 +66,34 @@ mixin _$IntroState {
 abstract class $IntroStateCopyWith<$Res> {
   factory $IntroStateCopyWith(
           IntroState value, $Res Function(IntroState) then) =
-      _$IntroStateCopyWithImpl<$Res>;
+      _$IntroStateCopyWithImpl<$Res, IntroState>;
 }
 
 /// @nodoc
-class _$IntroStateCopyWithImpl<$Res> implements $IntroStateCopyWith<$Res> {
+class _$IntroStateCopyWithImpl<$Res, $Val extends IntroState>
+    implements $IntroStateCopyWith<$Res> {
   _$IntroStateCopyWithImpl(this._value, this._then);
 
-  final IntroState _value;
   // ignore: unused_field
-  final $Res Function(IntroState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$IntroStateInitCopyWith<$Res> {
-  factory _$IntroStateInitCopyWith(
-          _IntroStateInit value, $Res Function(_IntroStateInit) then) =
-      __$IntroStateInitCopyWithImpl<$Res>;
+abstract class _$$_IntroStateInitCopyWith<$Res> {
+  factory _$$_IntroStateInitCopyWith(
+          _$_IntroStateInit value, $Res Function(_$_IntroStateInit) then) =
+      __$$_IntroStateInitCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$IntroStateInitCopyWithImpl<$Res> extends _$IntroStateCopyWithImpl<$Res>
-    implements _$IntroStateInitCopyWith<$Res> {
-  __$IntroStateInitCopyWithImpl(
-      _IntroStateInit _value, $Res Function(_IntroStateInit) _then)
-      : super(_value, (v) => _then(v as _IntroStateInit));
-
-  @override
-  _IntroStateInit get _value => super._value as _IntroStateInit;
+class __$$_IntroStateInitCopyWithImpl<$Res>
+    extends _$IntroStateCopyWithImpl<$Res, _$_IntroStateInit>
+    implements _$$_IntroStateInitCopyWith<$Res> {
+  __$$_IntroStateInitCopyWithImpl(
+      _$_IntroStateInit _value, $Res Function(_$_IntroStateInit) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -131,7 +109,7 @@ class _$_IntroStateInit implements _IntroStateInit {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _IntroStateInit);
+        (other.runtimeType == runtimeType && other is _$_IntroStateInit);
   }
 
   @override
@@ -150,9 +128,9 @@ class _$_IntroStateInit implements _IntroStateInit {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(IntroPage page)? push,
-    TResult Function()? pop,
+    TResult? Function()? init,
+    TResult? Function(IntroPage page)? push,
+    TResult? Function()? pop,
   }) {
     return init?.call();
   }
@@ -184,9 +162,9 @@ class _$_IntroStateInit implements _IntroStateInit {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_IntroStateInit value)? init,
-    TResult Function(_IntroStatePush value)? push,
-    TResult Function(_IntroStatePop value)? pop,
+    TResult? Function(_IntroStateInit value)? init,
+    TResult? Function(_IntroStatePush value)? push,
+    TResult? Function(_IntroStatePop value)? pop,
   }) {
     return init?.call(this);
   }
@@ -211,29 +189,29 @@ abstract class _IntroStateInit implements IntroState {
 }
 
 /// @nodoc
-abstract class _$IntroStatePushCopyWith<$Res> {
-  factory _$IntroStatePushCopyWith(
-          _IntroStatePush value, $Res Function(_IntroStatePush) then) =
-      __$IntroStatePushCopyWithImpl<$Res>;
+abstract class _$$_IntroStatePushCopyWith<$Res> {
+  factory _$$_IntroStatePushCopyWith(
+          _$_IntroStatePush value, $Res Function(_$_IntroStatePush) then) =
+      __$$_IntroStatePushCopyWithImpl<$Res>;
+  @useResult
   $Res call({IntroPage page});
 }
 
 /// @nodoc
-class __$IntroStatePushCopyWithImpl<$Res> extends _$IntroStateCopyWithImpl<$Res>
-    implements _$IntroStatePushCopyWith<$Res> {
-  __$IntroStatePushCopyWithImpl(
-      _IntroStatePush _value, $Res Function(_IntroStatePush) _then)
-      : super(_value, (v) => _then(v as _IntroStatePush));
+class __$$_IntroStatePushCopyWithImpl<$Res>
+    extends _$IntroStateCopyWithImpl<$Res, _$_IntroStatePush>
+    implements _$$_IntroStatePushCopyWith<$Res> {
+  __$$_IntroStatePushCopyWithImpl(
+      _$_IntroStatePush _value, $Res Function(_$_IntroStatePush) _then)
+      : super(_value, _then);
 
-  @override
-  _IntroStatePush get _value => super._value as _IntroStatePush;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? page = freezed,
+    Object? page = null,
   }) {
-    return _then(_IntroStatePush(
-      page: page == freezed
+    return _then(_$_IntroStatePush(
+      page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as IntroPage,
@@ -258,18 +236,18 @@ class _$_IntroStatePush implements _IntroStatePush {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _IntroStatePush &&
-            const DeepCollectionEquality().equals(other.page, page));
+            other is _$_IntroStatePush &&
+            (identical(other.page, page) || other.page == page));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(page));
+  int get hashCode => Object.hash(runtimeType, page);
 
   @JsonKey(ignore: true)
   @override
-  _$IntroStatePushCopyWith<_IntroStatePush> get copyWith =>
-      __$IntroStatePushCopyWithImpl<_IntroStatePush>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_IntroStatePushCopyWith<_$_IntroStatePush> get copyWith =>
+      __$$_IntroStatePushCopyWithImpl<_$_IntroStatePush>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -284,9 +262,9 @@ class _$_IntroStatePush implements _IntroStatePush {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(IntroPage page)? push,
-    TResult Function()? pop,
+    TResult? Function()? init,
+    TResult? Function(IntroPage page)? push,
+    TResult? Function()? pop,
   }) {
     return push?.call(page);
   }
@@ -318,9 +296,9 @@ class _$_IntroStatePush implements _IntroStatePush {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_IntroStateInit value)? init,
-    TResult Function(_IntroStatePush value)? push,
-    TResult Function(_IntroStatePop value)? pop,
+    TResult? Function(_IntroStateInit value)? init,
+    TResult? Function(_IntroStatePush value)? push,
+    TResult? Function(_IntroStatePop value)? pop,
   }) {
     return push?.call(this);
   }
@@ -341,30 +319,29 @@ class _$_IntroStatePush implements _IntroStatePush {
 }
 
 abstract class _IntroStatePush implements IntroState {
-  const factory _IntroStatePush({required IntroPage page}) = _$_IntroStatePush;
+  const factory _IntroStatePush({required final IntroPage page}) =
+      _$_IntroStatePush;
 
   IntroPage get page;
   @JsonKey(ignore: true)
-  _$IntroStatePushCopyWith<_IntroStatePush> get copyWith =>
+  _$$_IntroStatePushCopyWith<_$_IntroStatePush> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$IntroStatePopCopyWith<$Res> {
-  factory _$IntroStatePopCopyWith(
-          _IntroStatePop value, $Res Function(_IntroStatePop) then) =
-      __$IntroStatePopCopyWithImpl<$Res>;
+abstract class _$$_IntroStatePopCopyWith<$Res> {
+  factory _$$_IntroStatePopCopyWith(
+          _$_IntroStatePop value, $Res Function(_$_IntroStatePop) then) =
+      __$$_IntroStatePopCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$IntroStatePopCopyWithImpl<$Res> extends _$IntroStateCopyWithImpl<$Res>
-    implements _$IntroStatePopCopyWith<$Res> {
-  __$IntroStatePopCopyWithImpl(
-      _IntroStatePop _value, $Res Function(_IntroStatePop) _then)
-      : super(_value, (v) => _then(v as _IntroStatePop));
-
-  @override
-  _IntroStatePop get _value => super._value as _IntroStatePop;
+class __$$_IntroStatePopCopyWithImpl<$Res>
+    extends _$IntroStateCopyWithImpl<$Res, _$_IntroStatePop>
+    implements _$$_IntroStatePopCopyWith<$Res> {
+  __$$_IntroStatePopCopyWithImpl(
+      _$_IntroStatePop _value, $Res Function(_$_IntroStatePop) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -380,7 +357,7 @@ class _$_IntroStatePop implements _IntroStatePop {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _IntroStatePop);
+        (other.runtimeType == runtimeType && other is _$_IntroStatePop);
   }
 
   @override
@@ -399,9 +376,9 @@ class _$_IntroStatePop implements _IntroStatePop {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(IntroPage page)? push,
-    TResult Function()? pop,
+    TResult? Function()? init,
+    TResult? Function(IntroPage page)? push,
+    TResult? Function()? pop,
   }) {
     return pop?.call();
   }
@@ -433,9 +410,9 @@ class _$_IntroStatePop implements _IntroStatePop {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_IntroStateInit value)? init,
-    TResult Function(_IntroStatePush value)? push,
-    TResult Function(_IntroStatePop value)? pop,
+    TResult? Function(_IntroStateInit value)? init,
+    TResult? Function(_IntroStatePush value)? push,
+    TResult? Function(_IntroStatePop value)? pop,
   }) {
     return pop?.call(this);
   }
@@ -460,35 +437,6 @@ abstract class _IntroStatePop implements IntroState {
 }
 
 /// @nodoc
-class _$IntroDataTearOff {
-  const _$IntroDataTearOff();
-
-  _IntroData call(
-      {String? mnemonic,
-      String? userSeed,
-      Future<String>? seed,
-      String? name,
-      String? pin,
-      String? password,
-      bool generated = false,
-      bool completed = false}) {
-    return _IntroData(
-      mnemonic: mnemonic,
-      userSeed: userSeed,
-      seed: seed,
-      name: name,
-      pin: pin,
-      password: password,
-      generated: generated,
-      completed: completed,
-    );
-  }
-}
-
-/// @nodoc
-const $IntroData = _$IntroDataTearOff();
-
-/// @nodoc
 mixin _$IntroData {
   String? get mnemonic => throw _privateConstructorUsedError;
   String? get userSeed => throw _privateConstructorUsedError;
@@ -507,7 +455,8 @@ mixin _$IntroData {
 /// @nodoc
 abstract class $IntroDataCopyWith<$Res> {
   factory $IntroDataCopyWith(IntroData value, $Res Function(IntroData) then) =
-      _$IntroDataCopyWithImpl<$Res>;
+      _$IntroDataCopyWithImpl<$Res, IntroData>;
+  @useResult
   $Res call(
       {String? mnemonic,
       String? userSeed,
@@ -520,13 +469,16 @@ abstract class $IntroDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$IntroDataCopyWithImpl<$Res> implements $IntroDataCopyWith<$Res> {
+class _$IntroDataCopyWithImpl<$Res, $Val extends IntroData>
+    implements $IntroDataCopyWith<$Res> {
   _$IntroDataCopyWithImpl(this._value, this._then);
 
-  final IntroData _value;
   // ignore: unused_field
-  final $Res Function(IntroData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? mnemonic = freezed,
@@ -535,52 +487,53 @@ class _$IntroDataCopyWithImpl<$Res> implements $IntroDataCopyWith<$Res> {
     Object? name = freezed,
     Object? pin = freezed,
     Object? password = freezed,
-    Object? generated = freezed,
-    Object? completed = freezed,
+    Object? generated = null,
+    Object? completed = null,
   }) {
     return _then(_value.copyWith(
-      mnemonic: mnemonic == freezed
+      mnemonic: freezed == mnemonic
           ? _value.mnemonic
           : mnemonic // ignore: cast_nullable_to_non_nullable
               as String?,
-      userSeed: userSeed == freezed
+      userSeed: freezed == userSeed
           ? _value.userSeed
           : userSeed // ignore: cast_nullable_to_non_nullable
               as String?,
-      seed: seed == freezed
+      seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as Future<String>?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      pin: pin == freezed
+      pin: freezed == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: password == freezed
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      generated: generated == freezed
+      generated: null == generated
           ? _value.generated
           : generated // ignore: cast_nullable_to_non_nullable
               as bool,
-      completed: completed == freezed
+      completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$IntroDataCopyWith<$Res> implements $IntroDataCopyWith<$Res> {
-  factory _$IntroDataCopyWith(
-          _IntroData value, $Res Function(_IntroData) then) =
-      __$IntroDataCopyWithImpl<$Res>;
+abstract class _$$_IntroDataCopyWith<$Res> implements $IntroDataCopyWith<$Res> {
+  factory _$$_IntroDataCopyWith(
+          _$_IntroData value, $Res Function(_$_IntroData) then) =
+      __$$_IntroDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? mnemonic,
       String? userSeed,
@@ -593,14 +546,14 @@ abstract class _$IntroDataCopyWith<$Res> implements $IntroDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$IntroDataCopyWithImpl<$Res> extends _$IntroDataCopyWithImpl<$Res>
-    implements _$IntroDataCopyWith<$Res> {
-  __$IntroDataCopyWithImpl(_IntroData _value, $Res Function(_IntroData) _then)
-      : super(_value, (v) => _then(v as _IntroData));
+class __$$_IntroDataCopyWithImpl<$Res>
+    extends _$IntroDataCopyWithImpl<$Res, _$_IntroData>
+    implements _$$_IntroDataCopyWith<$Res> {
+  __$$_IntroDataCopyWithImpl(
+      _$_IntroData _value, $Res Function(_$_IntroData) _then)
+      : super(_value, _then);
 
-  @override
-  _IntroData get _value => super._value as _IntroData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? mnemonic = freezed,
@@ -609,39 +562,39 @@ class __$IntroDataCopyWithImpl<$Res> extends _$IntroDataCopyWithImpl<$Res>
     Object? name = freezed,
     Object? pin = freezed,
     Object? password = freezed,
-    Object? generated = freezed,
-    Object? completed = freezed,
+    Object? generated = null,
+    Object? completed = null,
   }) {
-    return _then(_IntroData(
-      mnemonic: mnemonic == freezed
+    return _then(_$_IntroData(
+      mnemonic: freezed == mnemonic
           ? _value.mnemonic
           : mnemonic // ignore: cast_nullable_to_non_nullable
               as String?,
-      userSeed: userSeed == freezed
+      userSeed: freezed == userSeed
           ? _value.userSeed
           : userSeed // ignore: cast_nullable_to_non_nullable
               as String?,
-      seed: seed == freezed
+      seed: freezed == seed
           ? _value.seed
           : seed // ignore: cast_nullable_to_non_nullable
               as Future<String>?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      pin: pin == freezed
+      pin: freezed == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: password == freezed
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      generated: generated == freezed
+      generated: null == generated
           ? _value.generated
           : generated // ignore: cast_nullable_to_non_nullable
               as bool,
-      completed: completed == freezed
+      completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -674,11 +627,11 @@ class _$_IntroData implements _IntroData {
   final String? pin;
   @override
   final String? password;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool generated;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool completed;
 
   @override
@@ -690,45 +643,43 @@ class _$_IntroData implements _IntroData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _IntroData &&
-            const DeepCollectionEquality().equals(other.mnemonic, mnemonic) &&
-            const DeepCollectionEquality().equals(other.userSeed, userSeed) &&
-            const DeepCollectionEquality().equals(other.seed, seed) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.pin, pin) &&
-            const DeepCollectionEquality().equals(other.password, password) &&
-            const DeepCollectionEquality().equals(other.generated, generated) &&
-            const DeepCollectionEquality().equals(other.completed, completed));
+            other is _$_IntroData &&
+            (identical(other.mnemonic, mnemonic) ||
+                other.mnemonic == mnemonic) &&
+            (identical(other.userSeed, userSeed) ||
+                other.userSeed == userSeed) &&
+            (identical(other.seed, seed) || other.seed == seed) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.pin, pin) || other.pin == pin) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.generated, generated) ||
+                other.generated == generated) &&
+            (identical(other.completed, completed) ||
+                other.completed == completed));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(mnemonic),
-      const DeepCollectionEquality().hash(userSeed),
-      const DeepCollectionEquality().hash(seed),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(pin),
-      const DeepCollectionEquality().hash(password),
-      const DeepCollectionEquality().hash(generated),
-      const DeepCollectionEquality().hash(completed));
+  int get hashCode => Object.hash(runtimeType, mnemonic, userSeed, seed, name,
+      pin, password, generated, completed);
 
   @JsonKey(ignore: true)
   @override
-  _$IntroDataCopyWith<_IntroData> get copyWith =>
-      __$IntroDataCopyWithImpl<_IntroData>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_IntroDataCopyWith<_$_IntroData> get copyWith =>
+      __$$_IntroDataCopyWithImpl<_$_IntroData>(this, _$identity);
 }
 
 abstract class _IntroData implements IntroData {
   const factory _IntroData(
-      {String? mnemonic,
-      String? userSeed,
-      Future<String>? seed,
-      String? name,
-      String? pin,
-      String? password,
-      bool generated,
-      bool completed}) = _$_IntroData;
+      {final String? mnemonic,
+      final String? userSeed,
+      final Future<String>? seed,
+      final String? name,
+      final String? pin,
+      final String? password,
+      final bool generated,
+      final bool completed}) = _$_IntroData;
 
   @override
   String? get mnemonic;
@@ -748,6 +699,6 @@ abstract class _IntroData implements IntroData {
   bool get completed;
   @override
   @JsonKey(ignore: true)
-  _$IntroDataCopyWith<_IntroData> get copyWith =>
+  _$$_IntroDataCopyWith<_$_IntroData> get copyWith =>
       throw _privateConstructorUsedError;
 }

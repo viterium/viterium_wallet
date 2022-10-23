@@ -12,45 +12,7 @@ part of 'viteconnect_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VCEventTearOff {
-  const _$VCEventTearOff();
-
-  _VCEventSessionRequest sessionRequest(VCSessionRequest sessionRequest) {
-    return _VCEventSessionRequest(
-      sessionRequest,
-    );
-  }
-
-  _VCEventConnected connected(SessionStatus sessionStatus) {
-    return _VCEventConnected(
-      sessionStatus,
-    );
-  }
-
-  _VCEventDisconnected disconnected([String? message]) {
-    return _VCEventDisconnected(
-      message,
-    );
-  }
-
-  _VCEventSignEndSendTx signAndSendTx(JsonRpcRequest request) {
-    return _VCEventSignEndSendTx(
-      request,
-    );
-  }
-
-  _VCEventSignMessage signMessage(JsonRpcRequest request) {
-    return _VCEventSignMessage(
-      request,
-    );
-  }
-}
-
-/// @nodoc
-const $VCEvent = _$VCEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VCEvent {
@@ -65,11 +27,11 @@ mixin _$VCEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(VCSessionRequest sessionRequest)? sessionRequest,
-    TResult Function(SessionStatus sessionStatus)? connected,
-    TResult Function(String? message)? disconnected,
-    TResult Function(JsonRpcRequest request)? signAndSendTx,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(VCSessionRequest sessionRequest)? sessionRequest,
+    TResult? Function(SessionStatus sessionStatus)? connected,
+    TResult? Function(String? message)? disconnected,
+    TResult? Function(JsonRpcRequest request)? signAndSendTx,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -93,11 +55,11 @@ mixin _$VCEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCEventSessionRequest value)? sessionRequest,
-    TResult Function(_VCEventConnected value)? connected,
-    TResult Function(_VCEventDisconnected value)? disconnected,
-    TResult Function(_VCEventSignEndSendTx value)? signAndSendTx,
-    TResult Function(_VCEventSignMessage value)? signMessage,
+    TResult? Function(_VCEventSessionRequest value)? sessionRequest,
+    TResult? Function(_VCEventConnected value)? connected,
+    TResult? Function(_VCEventDisconnected value)? disconnected,
+    TResult? Function(_VCEventSignEndSendTx value)? signAndSendTx,
+    TResult? Function(_VCEventSignMessage value)? signMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -115,45 +77,46 @@ mixin _$VCEvent {
 /// @nodoc
 abstract class $VCEventCopyWith<$Res> {
   factory $VCEventCopyWith(VCEvent value, $Res Function(VCEvent) then) =
-      _$VCEventCopyWithImpl<$Res>;
+      _$VCEventCopyWithImpl<$Res, VCEvent>;
 }
 
 /// @nodoc
-class _$VCEventCopyWithImpl<$Res> implements $VCEventCopyWith<$Res> {
+class _$VCEventCopyWithImpl<$Res, $Val extends VCEvent>
+    implements $VCEventCopyWith<$Res> {
   _$VCEventCopyWithImpl(this._value, this._then);
 
-  final VCEvent _value;
   // ignore: unused_field
-  final $Res Function(VCEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$VCEventSessionRequestCopyWith<$Res> {
-  factory _$VCEventSessionRequestCopyWith(_VCEventSessionRequest value,
-          $Res Function(_VCEventSessionRequest) then) =
-      __$VCEventSessionRequestCopyWithImpl<$Res>;
+abstract class _$$_VCEventSessionRequestCopyWith<$Res> {
+  factory _$$_VCEventSessionRequestCopyWith(_$_VCEventSessionRequest value,
+          $Res Function(_$_VCEventSessionRequest) then) =
+      __$$_VCEventSessionRequestCopyWithImpl<$Res>;
+  @useResult
   $Res call({VCSessionRequest sessionRequest});
 
   $VCSessionRequestCopyWith<$Res> get sessionRequest;
 }
 
 /// @nodoc
-class __$VCEventSessionRequestCopyWithImpl<$Res>
-    extends _$VCEventCopyWithImpl<$Res>
-    implements _$VCEventSessionRequestCopyWith<$Res> {
-  __$VCEventSessionRequestCopyWithImpl(_VCEventSessionRequest _value,
-      $Res Function(_VCEventSessionRequest) _then)
-      : super(_value, (v) => _then(v as _VCEventSessionRequest));
+class __$$_VCEventSessionRequestCopyWithImpl<$Res>
+    extends _$VCEventCopyWithImpl<$Res, _$_VCEventSessionRequest>
+    implements _$$_VCEventSessionRequestCopyWith<$Res> {
+  __$$_VCEventSessionRequestCopyWithImpl(_$_VCEventSessionRequest _value,
+      $Res Function(_$_VCEventSessionRequest) _then)
+      : super(_value, _then);
 
-  @override
-  _VCEventSessionRequest get _value => super._value as _VCEventSessionRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sessionRequest = freezed,
+    Object? sessionRequest = null,
   }) {
-    return _then(_VCEventSessionRequest(
-      sessionRequest == freezed
+    return _then(_$_VCEventSessionRequest(
+      null == sessionRequest
           ? _value.sessionRequest
           : sessionRequest // ignore: cast_nullable_to_non_nullable
               as VCSessionRequest,
@@ -161,6 +124,7 @@ class __$VCEventSessionRequestCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCSessionRequestCopyWith<$Res> get sessionRequest {
     return $VCSessionRequestCopyWith<$Res>(_value.sessionRequest, (value) {
       return _then(_value.copyWith(sessionRequest: value));
@@ -185,19 +149,19 @@ class _$_VCEventSessionRequest implements _VCEventSessionRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCEventSessionRequest &&
-            const DeepCollectionEquality()
-                .equals(other.sessionRequest, sessionRequest));
+            other is _$_VCEventSessionRequest &&
+            (identical(other.sessionRequest, sessionRequest) ||
+                other.sessionRequest == sessionRequest));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(sessionRequest));
+  int get hashCode => Object.hash(runtimeType, sessionRequest);
 
   @JsonKey(ignore: true)
   @override
-  _$VCEventSessionRequestCopyWith<_VCEventSessionRequest> get copyWith =>
-      __$VCEventSessionRequestCopyWithImpl<_VCEventSessionRequest>(
+  @pragma('vm:prefer-inline')
+  _$$_VCEventSessionRequestCopyWith<_$_VCEventSessionRequest> get copyWith =>
+      __$$_VCEventSessionRequestCopyWithImpl<_$_VCEventSessionRequest>(
           this, _$identity);
 
   @override
@@ -215,11 +179,11 @@ class _$_VCEventSessionRequest implements _VCEventSessionRequest {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(VCSessionRequest sessionRequest)? sessionRequest,
-    TResult Function(SessionStatus sessionStatus)? connected,
-    TResult Function(String? message)? disconnected,
-    TResult Function(JsonRpcRequest request)? signAndSendTx,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(VCSessionRequest sessionRequest)? sessionRequest,
+    TResult? Function(SessionStatus sessionStatus)? connected,
+    TResult? Function(String? message)? disconnected,
+    TResult? Function(JsonRpcRequest request)? signAndSendTx,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return sessionRequest?.call(this.sessionRequest);
   }
@@ -255,11 +219,11 @@ class _$_VCEventSessionRequest implements _VCEventSessionRequest {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCEventSessionRequest value)? sessionRequest,
-    TResult Function(_VCEventConnected value)? connected,
-    TResult Function(_VCEventDisconnected value)? disconnected,
-    TResult Function(_VCEventSignEndSendTx value)? signAndSendTx,
-    TResult Function(_VCEventSignMessage value)? signMessage,
+    TResult? Function(_VCEventSessionRequest value)? sessionRequest,
+    TResult? Function(_VCEventConnected value)? connected,
+    TResult? Function(_VCEventDisconnected value)? disconnected,
+    TResult? Function(_VCEventSignEndSendTx value)? signAndSendTx,
+    TResult? Function(_VCEventSignMessage value)? signMessage,
   }) {
     return sessionRequest?.call(this);
   }
@@ -282,41 +246,41 @@ class _$_VCEventSessionRequest implements _VCEventSessionRequest {
 }
 
 abstract class _VCEventSessionRequest implements VCEvent {
-  const factory _VCEventSessionRequest(VCSessionRequest sessionRequest) =
+  const factory _VCEventSessionRequest(final VCSessionRequest sessionRequest) =
       _$_VCEventSessionRequest;
 
   VCSessionRequest get sessionRequest;
   @JsonKey(ignore: true)
-  _$VCEventSessionRequestCopyWith<_VCEventSessionRequest> get copyWith =>
+  _$$_VCEventSessionRequestCopyWith<_$_VCEventSessionRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCEventConnectedCopyWith<$Res> {
-  factory _$VCEventConnectedCopyWith(
-          _VCEventConnected value, $Res Function(_VCEventConnected) then) =
-      __$VCEventConnectedCopyWithImpl<$Res>;
+abstract class _$$_VCEventConnectedCopyWith<$Res> {
+  factory _$$_VCEventConnectedCopyWith(
+          _$_VCEventConnected value, $Res Function(_$_VCEventConnected) then) =
+      __$$_VCEventConnectedCopyWithImpl<$Res>;
+  @useResult
   $Res call({SessionStatus sessionStatus});
 
   $SessionStatusCopyWith<$Res> get sessionStatus;
 }
 
 /// @nodoc
-class __$VCEventConnectedCopyWithImpl<$Res> extends _$VCEventCopyWithImpl<$Res>
-    implements _$VCEventConnectedCopyWith<$Res> {
-  __$VCEventConnectedCopyWithImpl(
-      _VCEventConnected _value, $Res Function(_VCEventConnected) _then)
-      : super(_value, (v) => _then(v as _VCEventConnected));
+class __$$_VCEventConnectedCopyWithImpl<$Res>
+    extends _$VCEventCopyWithImpl<$Res, _$_VCEventConnected>
+    implements _$$_VCEventConnectedCopyWith<$Res> {
+  __$$_VCEventConnectedCopyWithImpl(
+      _$_VCEventConnected _value, $Res Function(_$_VCEventConnected) _then)
+      : super(_value, _then);
 
-  @override
-  _VCEventConnected get _value => super._value as _VCEventConnected;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sessionStatus = freezed,
+    Object? sessionStatus = null,
   }) {
-    return _then(_VCEventConnected(
-      sessionStatus == freezed
+    return _then(_$_VCEventConnected(
+      null == sessionStatus
           ? _value.sessionStatus
           : sessionStatus // ignore: cast_nullable_to_non_nullable
               as SessionStatus,
@@ -324,6 +288,7 @@ class __$VCEventConnectedCopyWithImpl<$Res> extends _$VCEventCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SessionStatusCopyWith<$Res> get sessionStatus {
     return $SessionStatusCopyWith<$Res>(_value.sessionStatus, (value) {
       return _then(_value.copyWith(sessionStatus: value));
@@ -348,19 +313,19 @@ class _$_VCEventConnected implements _VCEventConnected {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCEventConnected &&
-            const DeepCollectionEquality()
-                .equals(other.sessionStatus, sessionStatus));
+            other is _$_VCEventConnected &&
+            (identical(other.sessionStatus, sessionStatus) ||
+                other.sessionStatus == sessionStatus));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(sessionStatus));
+  int get hashCode => Object.hash(runtimeType, sessionStatus);
 
   @JsonKey(ignore: true)
   @override
-  _$VCEventConnectedCopyWith<_VCEventConnected> get copyWith =>
-      __$VCEventConnectedCopyWithImpl<_VCEventConnected>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCEventConnectedCopyWith<_$_VCEventConnected> get copyWith =>
+      __$$_VCEventConnectedCopyWithImpl<_$_VCEventConnected>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -377,11 +342,11 @@ class _$_VCEventConnected implements _VCEventConnected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(VCSessionRequest sessionRequest)? sessionRequest,
-    TResult Function(SessionStatus sessionStatus)? connected,
-    TResult Function(String? message)? disconnected,
-    TResult Function(JsonRpcRequest request)? signAndSendTx,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(VCSessionRequest sessionRequest)? sessionRequest,
+    TResult? Function(SessionStatus sessionStatus)? connected,
+    TResult? Function(String? message)? disconnected,
+    TResult? Function(JsonRpcRequest request)? signAndSendTx,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return connected?.call(sessionStatus);
   }
@@ -417,11 +382,11 @@ class _$_VCEventConnected implements _VCEventConnected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCEventSessionRequest value)? sessionRequest,
-    TResult Function(_VCEventConnected value)? connected,
-    TResult Function(_VCEventDisconnected value)? disconnected,
-    TResult Function(_VCEventSignEndSendTx value)? signAndSendTx,
-    TResult Function(_VCEventSignMessage value)? signMessage,
+    TResult? Function(_VCEventSessionRequest value)? sessionRequest,
+    TResult? Function(_VCEventConnected value)? connected,
+    TResult? Function(_VCEventDisconnected value)? disconnected,
+    TResult? Function(_VCEventSignEndSendTx value)? signAndSendTx,
+    TResult? Function(_VCEventSignMessage value)? signMessage,
   }) {
     return connected?.call(this);
   }
@@ -444,40 +409,39 @@ class _$_VCEventConnected implements _VCEventConnected {
 }
 
 abstract class _VCEventConnected implements VCEvent {
-  const factory _VCEventConnected(SessionStatus sessionStatus) =
+  const factory _VCEventConnected(final SessionStatus sessionStatus) =
       _$_VCEventConnected;
 
   SessionStatus get sessionStatus;
   @JsonKey(ignore: true)
-  _$VCEventConnectedCopyWith<_VCEventConnected> get copyWith =>
+  _$$_VCEventConnectedCopyWith<_$_VCEventConnected> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCEventDisconnectedCopyWith<$Res> {
-  factory _$VCEventDisconnectedCopyWith(_VCEventDisconnected value,
-          $Res Function(_VCEventDisconnected) then) =
-      __$VCEventDisconnectedCopyWithImpl<$Res>;
+abstract class _$$_VCEventDisconnectedCopyWith<$Res> {
+  factory _$$_VCEventDisconnectedCopyWith(_$_VCEventDisconnected value,
+          $Res Function(_$_VCEventDisconnected) then) =
+      __$$_VCEventDisconnectedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$VCEventDisconnectedCopyWithImpl<$Res>
-    extends _$VCEventCopyWithImpl<$Res>
-    implements _$VCEventDisconnectedCopyWith<$Res> {
-  __$VCEventDisconnectedCopyWithImpl(
-      _VCEventDisconnected _value, $Res Function(_VCEventDisconnected) _then)
-      : super(_value, (v) => _then(v as _VCEventDisconnected));
+class __$$_VCEventDisconnectedCopyWithImpl<$Res>
+    extends _$VCEventCopyWithImpl<$Res, _$_VCEventDisconnected>
+    implements _$$_VCEventDisconnectedCopyWith<$Res> {
+  __$$_VCEventDisconnectedCopyWithImpl(_$_VCEventDisconnected _value,
+      $Res Function(_$_VCEventDisconnected) _then)
+      : super(_value, _then);
 
-  @override
-  _VCEventDisconnected get _value => super._value as _VCEventDisconnected;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_VCEventDisconnected(
-      message == freezed
+    return _then(_$_VCEventDisconnected(
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -502,18 +466,18 @@ class _$_VCEventDisconnected implements _VCEventDisconnected {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCEventDisconnected &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$_VCEventDisconnected &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
-  _$VCEventDisconnectedCopyWith<_VCEventDisconnected> get copyWith =>
-      __$VCEventDisconnectedCopyWithImpl<_VCEventDisconnected>(
+  @pragma('vm:prefer-inline')
+  _$$_VCEventDisconnectedCopyWith<_$_VCEventDisconnected> get copyWith =>
+      __$$_VCEventDisconnectedCopyWithImpl<_$_VCEventDisconnected>(
           this, _$identity);
 
   @override
@@ -531,11 +495,11 @@ class _$_VCEventDisconnected implements _VCEventDisconnected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(VCSessionRequest sessionRequest)? sessionRequest,
-    TResult Function(SessionStatus sessionStatus)? connected,
-    TResult Function(String? message)? disconnected,
-    TResult Function(JsonRpcRequest request)? signAndSendTx,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(VCSessionRequest sessionRequest)? sessionRequest,
+    TResult? Function(SessionStatus sessionStatus)? connected,
+    TResult? Function(String? message)? disconnected,
+    TResult? Function(JsonRpcRequest request)? signAndSendTx,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return disconnected?.call(message);
   }
@@ -571,11 +535,11 @@ class _$_VCEventDisconnected implements _VCEventDisconnected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCEventSessionRequest value)? sessionRequest,
-    TResult Function(_VCEventConnected value)? connected,
-    TResult Function(_VCEventDisconnected value)? disconnected,
-    TResult Function(_VCEventSignEndSendTx value)? signAndSendTx,
-    TResult Function(_VCEventSignMessage value)? signMessage,
+    TResult? Function(_VCEventSessionRequest value)? sessionRequest,
+    TResult? Function(_VCEventConnected value)? connected,
+    TResult? Function(_VCEventDisconnected value)? disconnected,
+    TResult? Function(_VCEventSignEndSendTx value)? signAndSendTx,
+    TResult? Function(_VCEventSignMessage value)? signMessage,
   }) {
     return disconnected?.call(this);
   }
@@ -598,42 +562,41 @@ class _$_VCEventDisconnected implements _VCEventDisconnected {
 }
 
 abstract class _VCEventDisconnected implements VCEvent {
-  const factory _VCEventDisconnected([String? message]) =
+  const factory _VCEventDisconnected([final String? message]) =
       _$_VCEventDisconnected;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$VCEventDisconnectedCopyWith<_VCEventDisconnected> get copyWith =>
+  _$$_VCEventDisconnectedCopyWith<_$_VCEventDisconnected> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCEventSignEndSendTxCopyWith<$Res> {
-  factory _$VCEventSignEndSendTxCopyWith(_VCEventSignEndSendTx value,
-          $Res Function(_VCEventSignEndSendTx) then) =
-      __$VCEventSignEndSendTxCopyWithImpl<$Res>;
+abstract class _$$_VCEventSignEndSendTxCopyWith<$Res> {
+  factory _$$_VCEventSignEndSendTxCopyWith(_$_VCEventSignEndSendTx value,
+          $Res Function(_$_VCEventSignEndSendTx) then) =
+      __$$_VCEventSignEndSendTxCopyWithImpl<$Res>;
+  @useResult
   $Res call({JsonRpcRequest request});
 
   $JsonRpcRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
-class __$VCEventSignEndSendTxCopyWithImpl<$Res>
-    extends _$VCEventCopyWithImpl<$Res>
-    implements _$VCEventSignEndSendTxCopyWith<$Res> {
-  __$VCEventSignEndSendTxCopyWithImpl(
-      _VCEventSignEndSendTx _value, $Res Function(_VCEventSignEndSendTx) _then)
-      : super(_value, (v) => _then(v as _VCEventSignEndSendTx));
+class __$$_VCEventSignEndSendTxCopyWithImpl<$Res>
+    extends _$VCEventCopyWithImpl<$Res, _$_VCEventSignEndSendTx>
+    implements _$$_VCEventSignEndSendTxCopyWith<$Res> {
+  __$$_VCEventSignEndSendTxCopyWithImpl(_$_VCEventSignEndSendTx _value,
+      $Res Function(_$_VCEventSignEndSendTx) _then)
+      : super(_value, _then);
 
-  @override
-  _VCEventSignEndSendTx get _value => super._value as _VCEventSignEndSendTx;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
+    Object? request = null,
   }) {
-    return _then(_VCEventSignEndSendTx(
-      request == freezed
+    return _then(_$_VCEventSignEndSendTx(
+      null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as JsonRpcRequest,
@@ -641,6 +604,7 @@ class __$VCEventSignEndSendTxCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $JsonRpcRequestCopyWith<$Res> get request {
     return $JsonRpcRequestCopyWith<$Res>(_value.request, (value) {
       return _then(_value.copyWith(request: value));
@@ -665,18 +629,18 @@ class _$_VCEventSignEndSendTx implements _VCEventSignEndSendTx {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCEventSignEndSendTx &&
-            const DeepCollectionEquality().equals(other.request, request));
+            other is _$_VCEventSignEndSendTx &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(request));
+  int get hashCode => Object.hash(runtimeType, request);
 
   @JsonKey(ignore: true)
   @override
-  _$VCEventSignEndSendTxCopyWith<_VCEventSignEndSendTx> get copyWith =>
-      __$VCEventSignEndSendTxCopyWithImpl<_VCEventSignEndSendTx>(
+  @pragma('vm:prefer-inline')
+  _$$_VCEventSignEndSendTxCopyWith<_$_VCEventSignEndSendTx> get copyWith =>
+      __$$_VCEventSignEndSendTxCopyWithImpl<_$_VCEventSignEndSendTx>(
           this, _$identity);
 
   @override
@@ -694,11 +658,11 @@ class _$_VCEventSignEndSendTx implements _VCEventSignEndSendTx {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(VCSessionRequest sessionRequest)? sessionRequest,
-    TResult Function(SessionStatus sessionStatus)? connected,
-    TResult Function(String? message)? disconnected,
-    TResult Function(JsonRpcRequest request)? signAndSendTx,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(VCSessionRequest sessionRequest)? sessionRequest,
+    TResult? Function(SessionStatus sessionStatus)? connected,
+    TResult? Function(String? message)? disconnected,
+    TResult? Function(JsonRpcRequest request)? signAndSendTx,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return signAndSendTx?.call(request);
   }
@@ -734,11 +698,11 @@ class _$_VCEventSignEndSendTx implements _VCEventSignEndSendTx {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCEventSessionRequest value)? sessionRequest,
-    TResult Function(_VCEventConnected value)? connected,
-    TResult Function(_VCEventDisconnected value)? disconnected,
-    TResult Function(_VCEventSignEndSendTx value)? signAndSendTx,
-    TResult Function(_VCEventSignMessage value)? signMessage,
+    TResult? Function(_VCEventSessionRequest value)? sessionRequest,
+    TResult? Function(_VCEventConnected value)? connected,
+    TResult? Function(_VCEventDisconnected value)? disconnected,
+    TResult? Function(_VCEventSignEndSendTx value)? signAndSendTx,
+    TResult? Function(_VCEventSignMessage value)? signMessage,
   }) {
     return signAndSendTx?.call(this);
   }
@@ -761,42 +725,41 @@ class _$_VCEventSignEndSendTx implements _VCEventSignEndSendTx {
 }
 
 abstract class _VCEventSignEndSendTx implements VCEvent {
-  const factory _VCEventSignEndSendTx(JsonRpcRequest request) =
+  const factory _VCEventSignEndSendTx(final JsonRpcRequest request) =
       _$_VCEventSignEndSendTx;
 
   JsonRpcRequest get request;
   @JsonKey(ignore: true)
-  _$VCEventSignEndSendTxCopyWith<_VCEventSignEndSendTx> get copyWith =>
+  _$$_VCEventSignEndSendTxCopyWith<_$_VCEventSignEndSendTx> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCEventSignMessageCopyWith<$Res> {
-  factory _$VCEventSignMessageCopyWith(
-          _VCEventSignMessage value, $Res Function(_VCEventSignMessage) then) =
-      __$VCEventSignMessageCopyWithImpl<$Res>;
+abstract class _$$_VCEventSignMessageCopyWith<$Res> {
+  factory _$$_VCEventSignMessageCopyWith(_$_VCEventSignMessage value,
+          $Res Function(_$_VCEventSignMessage) then) =
+      __$$_VCEventSignMessageCopyWithImpl<$Res>;
+  @useResult
   $Res call({JsonRpcRequest request});
 
   $JsonRpcRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
-class __$VCEventSignMessageCopyWithImpl<$Res>
-    extends _$VCEventCopyWithImpl<$Res>
-    implements _$VCEventSignMessageCopyWith<$Res> {
-  __$VCEventSignMessageCopyWithImpl(
-      _VCEventSignMessage _value, $Res Function(_VCEventSignMessage) _then)
-      : super(_value, (v) => _then(v as _VCEventSignMessage));
+class __$$_VCEventSignMessageCopyWithImpl<$Res>
+    extends _$VCEventCopyWithImpl<$Res, _$_VCEventSignMessage>
+    implements _$$_VCEventSignMessageCopyWith<$Res> {
+  __$$_VCEventSignMessageCopyWithImpl(
+      _$_VCEventSignMessage _value, $Res Function(_$_VCEventSignMessage) _then)
+      : super(_value, _then);
 
-  @override
-  _VCEventSignMessage get _value => super._value as _VCEventSignMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
+    Object? request = null,
   }) {
-    return _then(_VCEventSignMessage(
-      request == freezed
+    return _then(_$_VCEventSignMessage(
+      null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as JsonRpcRequest,
@@ -804,6 +767,7 @@ class __$VCEventSignMessageCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $JsonRpcRequestCopyWith<$Res> get request {
     return $JsonRpcRequestCopyWith<$Res>(_value.request, (value) {
       return _then(_value.copyWith(request: value));
@@ -828,18 +792,19 @@ class _$_VCEventSignMessage implements _VCEventSignMessage {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCEventSignMessage &&
-            const DeepCollectionEquality().equals(other.request, request));
+            other is _$_VCEventSignMessage &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(request));
+  int get hashCode => Object.hash(runtimeType, request);
 
   @JsonKey(ignore: true)
   @override
-  _$VCEventSignMessageCopyWith<_VCEventSignMessage> get copyWith =>
-      __$VCEventSignMessageCopyWithImpl<_VCEventSignMessage>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCEventSignMessageCopyWith<_$_VCEventSignMessage> get copyWith =>
+      __$$_VCEventSignMessageCopyWithImpl<_$_VCEventSignMessage>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -856,11 +821,11 @@ class _$_VCEventSignMessage implements _VCEventSignMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(VCSessionRequest sessionRequest)? sessionRequest,
-    TResult Function(SessionStatus sessionStatus)? connected,
-    TResult Function(String? message)? disconnected,
-    TResult Function(JsonRpcRequest request)? signAndSendTx,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(VCSessionRequest sessionRequest)? sessionRequest,
+    TResult? Function(SessionStatus sessionStatus)? connected,
+    TResult? Function(String? message)? disconnected,
+    TResult? Function(JsonRpcRequest request)? signAndSendTx,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return signMessage?.call(request);
   }
@@ -896,11 +861,11 @@ class _$_VCEventSignMessage implements _VCEventSignMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCEventSessionRequest value)? sessionRequest,
-    TResult Function(_VCEventConnected value)? connected,
-    TResult Function(_VCEventDisconnected value)? disconnected,
-    TResult Function(_VCEventSignEndSendTx value)? signAndSendTx,
-    TResult Function(_VCEventSignMessage value)? signMessage,
+    TResult? Function(_VCEventSessionRequest value)? sessionRequest,
+    TResult? Function(_VCEventConnected value)? connected,
+    TResult? Function(_VCEventDisconnected value)? disconnected,
+    TResult? Function(_VCEventSignEndSendTx value)? signAndSendTx,
+    TResult? Function(_VCEventSignMessage value)? signMessage,
   }) {
     return signMessage?.call(this);
   }
@@ -923,62 +888,14 @@ class _$_VCEventSignMessage implements _VCEventSignMessage {
 }
 
 abstract class _VCEventSignMessage implements VCEvent {
-  const factory _VCEventSignMessage(JsonRpcRequest request) =
+  const factory _VCEventSignMessage(final JsonRpcRequest request) =
       _$_VCEventSignMessage;
 
   JsonRpcRequest get request;
   @JsonKey(ignore: true)
-  _$VCEventSignMessageCopyWith<_VCEventSignMessage> get copyWith =>
+  _$$_VCEventSignMessageCopyWith<_$_VCEventSignMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VCStateTearOff {
-  const _$VCStateTearOff();
-
-  _VCStateConnectingServer connectingToBridge(String bridgeUri) {
-    return _VCStateConnectingServer(
-      bridgeUri,
-    );
-  }
-
-  _VCStatePendingApproval pendingApproval(VCSessionRequest sessionRequest) {
-    return _VCStatePendingApproval(
-      sessionRequest,
-    );
-  }
-
-  _VCStateConnectingSession connectingSession(VCSessionRequest sessionRequest) {
-    return _VCStateConnectingSession(
-      sessionRequest,
-    );
-  }
-
-  _VCStateConnected connected(
-      {required SessionStatus sessionStatus,
-      PeerMeta? peerMeta,
-      VCRequest? currentRequest,
-      IList<VCRequest> pendingRequests = const IListConst<VCRequest>([]),
-      IList<VCHistoryItem> historyRequests =
-          const IListConst<VCHistoryItem>([])}) {
-    return _VCStateConnected(
-      sessionStatus: sessionStatus,
-      peerMeta: peerMeta,
-      currentRequest: currentRequest,
-      pendingRequests: pendingRequests,
-      historyRequests: historyRequests,
-    );
-  }
-
-  _VCStateDisconnected disconnected([String? message]) {
-    return _VCStateDisconnected(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $VCState = _$VCStateTearOff();
 
 /// @nodoc
 mixin _$VCState {
@@ -1000,17 +917,17 @@ mixin _$VCState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String bridgeUri)? connectingToBridge,
-    TResult Function(VCSessionRequest sessionRequest)? pendingApproval,
-    TResult Function(VCSessionRequest sessionRequest)? connectingSession,
-    TResult Function(
+    TResult? Function(String bridgeUri)? connectingToBridge,
+    TResult? Function(VCSessionRequest sessionRequest)? pendingApproval,
+    TResult? Function(VCSessionRequest sessionRequest)? connectingSession,
+    TResult? Function(
             SessionStatus sessionStatus,
             PeerMeta? peerMeta,
             VCRequest? currentRequest,
             IList<VCRequest> pendingRequests,
             IList<VCHistoryItem> historyRequests)?
         connected,
-    TResult Function(String? message)? disconnected,
+    TResult? Function(String? message)? disconnected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1042,11 +959,11 @@ mixin _$VCState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCStateConnectingServer value)? connectingToBridge,
-    TResult Function(_VCStatePendingApproval value)? pendingApproval,
-    TResult Function(_VCStateConnectingSession value)? connectingSession,
-    TResult Function(_VCStateConnected value)? connected,
-    TResult Function(_VCStateDisconnected value)? disconnected,
+    TResult? Function(_VCStateConnectingServer value)? connectingToBridge,
+    TResult? Function(_VCStatePendingApproval value)? pendingApproval,
+    TResult? Function(_VCStateConnectingSession value)? connectingSession,
+    TResult? Function(_VCStateConnected value)? connected,
+    TResult? Function(_VCStateDisconnected value)? disconnected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1064,44 +981,44 @@ mixin _$VCState {
 /// @nodoc
 abstract class $VCStateCopyWith<$Res> {
   factory $VCStateCopyWith(VCState value, $Res Function(VCState) then) =
-      _$VCStateCopyWithImpl<$Res>;
+      _$VCStateCopyWithImpl<$Res, VCState>;
 }
 
 /// @nodoc
-class _$VCStateCopyWithImpl<$Res> implements $VCStateCopyWith<$Res> {
+class _$VCStateCopyWithImpl<$Res, $Val extends VCState>
+    implements $VCStateCopyWith<$Res> {
   _$VCStateCopyWithImpl(this._value, this._then);
 
-  final VCState _value;
   // ignore: unused_field
-  final $Res Function(VCState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$VCStateConnectingServerCopyWith<$Res> {
-  factory _$VCStateConnectingServerCopyWith(_VCStateConnectingServer value,
-          $Res Function(_VCStateConnectingServer) then) =
-      __$VCStateConnectingServerCopyWithImpl<$Res>;
+abstract class _$$_VCStateConnectingServerCopyWith<$Res> {
+  factory _$$_VCStateConnectingServerCopyWith(_$_VCStateConnectingServer value,
+          $Res Function(_$_VCStateConnectingServer) then) =
+      __$$_VCStateConnectingServerCopyWithImpl<$Res>;
+  @useResult
   $Res call({String bridgeUri});
 }
 
 /// @nodoc
-class __$VCStateConnectingServerCopyWithImpl<$Res>
-    extends _$VCStateCopyWithImpl<$Res>
-    implements _$VCStateConnectingServerCopyWith<$Res> {
-  __$VCStateConnectingServerCopyWithImpl(_VCStateConnectingServer _value,
-      $Res Function(_VCStateConnectingServer) _then)
-      : super(_value, (v) => _then(v as _VCStateConnectingServer));
+class __$$_VCStateConnectingServerCopyWithImpl<$Res>
+    extends _$VCStateCopyWithImpl<$Res, _$_VCStateConnectingServer>
+    implements _$$_VCStateConnectingServerCopyWith<$Res> {
+  __$$_VCStateConnectingServerCopyWithImpl(_$_VCStateConnectingServer _value,
+      $Res Function(_$_VCStateConnectingServer) _then)
+      : super(_value, _then);
 
-  @override
-  _VCStateConnectingServer get _value =>
-      super._value as _VCStateConnectingServer;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? bridgeUri = freezed,
+    Object? bridgeUri = null,
   }) {
-    return _then(_VCStateConnectingServer(
-      bridgeUri == freezed
+    return _then(_$_VCStateConnectingServer(
+      null == bridgeUri
           ? _value.bridgeUri
           : bridgeUri // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1126,19 +1043,21 @@ class _$_VCStateConnectingServer extends _VCStateConnectingServer {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCStateConnectingServer &&
-            const DeepCollectionEquality().equals(other.bridgeUri, bridgeUri));
+            other is _$_VCStateConnectingServer &&
+            (identical(other.bridgeUri, bridgeUri) ||
+                other.bridgeUri == bridgeUri));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(bridgeUri));
+  int get hashCode => Object.hash(runtimeType, bridgeUri);
 
   @JsonKey(ignore: true)
   @override
-  _$VCStateConnectingServerCopyWith<_VCStateConnectingServer> get copyWith =>
-      __$VCStateConnectingServerCopyWithImpl<_VCStateConnectingServer>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCStateConnectingServerCopyWith<_$_VCStateConnectingServer>
+      get copyWith =>
+          __$$_VCStateConnectingServerCopyWithImpl<_$_VCStateConnectingServer>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1162,17 +1081,17 @@ class _$_VCStateConnectingServer extends _VCStateConnectingServer {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String bridgeUri)? connectingToBridge,
-    TResult Function(VCSessionRequest sessionRequest)? pendingApproval,
-    TResult Function(VCSessionRequest sessionRequest)? connectingSession,
-    TResult Function(
+    TResult? Function(String bridgeUri)? connectingToBridge,
+    TResult? Function(VCSessionRequest sessionRequest)? pendingApproval,
+    TResult? Function(VCSessionRequest sessionRequest)? connectingSession,
+    TResult? Function(
             SessionStatus sessionStatus,
             PeerMeta? peerMeta,
             VCRequest? currentRequest,
             IList<VCRequest> pendingRequests,
             IList<VCHistoryItem> historyRequests)?
         connected,
-    TResult Function(String? message)? disconnected,
+    TResult? Function(String? message)? disconnected,
   }) {
     return connectingToBridge?.call(bridgeUri);
   }
@@ -1216,11 +1135,11 @@ class _$_VCStateConnectingServer extends _VCStateConnectingServer {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCStateConnectingServer value)? connectingToBridge,
-    TResult Function(_VCStatePendingApproval value)? pendingApproval,
-    TResult Function(_VCStateConnectingSession value)? connectingSession,
-    TResult Function(_VCStateConnected value)? connected,
-    TResult Function(_VCStateDisconnected value)? disconnected,
+    TResult? Function(_VCStateConnectingServer value)? connectingToBridge,
+    TResult? Function(_VCStatePendingApproval value)? pendingApproval,
+    TResult? Function(_VCStateConnectingSession value)? connectingSession,
+    TResult? Function(_VCStateConnected value)? connected,
+    TResult? Function(_VCStateDisconnected value)? disconnected,
   }) {
     return connectingToBridge?.call(this);
   }
@@ -1243,43 +1162,42 @@ class _$_VCStateConnectingServer extends _VCStateConnectingServer {
 }
 
 abstract class _VCStateConnectingServer extends VCState {
-  const factory _VCStateConnectingServer(String bridgeUri) =
+  const factory _VCStateConnectingServer(final String bridgeUri) =
       _$_VCStateConnectingServer;
   const _VCStateConnectingServer._() : super._();
 
   String get bridgeUri;
   @JsonKey(ignore: true)
-  _$VCStateConnectingServerCopyWith<_VCStateConnectingServer> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_VCStateConnectingServerCopyWith<_$_VCStateConnectingServer>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCStatePendingApprovalCopyWith<$Res> {
-  factory _$VCStatePendingApprovalCopyWith(_VCStatePendingApproval value,
-          $Res Function(_VCStatePendingApproval) then) =
-      __$VCStatePendingApprovalCopyWithImpl<$Res>;
+abstract class _$$_VCStatePendingApprovalCopyWith<$Res> {
+  factory _$$_VCStatePendingApprovalCopyWith(_$_VCStatePendingApproval value,
+          $Res Function(_$_VCStatePendingApproval) then) =
+      __$$_VCStatePendingApprovalCopyWithImpl<$Res>;
+  @useResult
   $Res call({VCSessionRequest sessionRequest});
 
   $VCSessionRequestCopyWith<$Res> get sessionRequest;
 }
 
 /// @nodoc
-class __$VCStatePendingApprovalCopyWithImpl<$Res>
-    extends _$VCStateCopyWithImpl<$Res>
-    implements _$VCStatePendingApprovalCopyWith<$Res> {
-  __$VCStatePendingApprovalCopyWithImpl(_VCStatePendingApproval _value,
-      $Res Function(_VCStatePendingApproval) _then)
-      : super(_value, (v) => _then(v as _VCStatePendingApproval));
+class __$$_VCStatePendingApprovalCopyWithImpl<$Res>
+    extends _$VCStateCopyWithImpl<$Res, _$_VCStatePendingApproval>
+    implements _$$_VCStatePendingApprovalCopyWith<$Res> {
+  __$$_VCStatePendingApprovalCopyWithImpl(_$_VCStatePendingApproval _value,
+      $Res Function(_$_VCStatePendingApproval) _then)
+      : super(_value, _then);
 
-  @override
-  _VCStatePendingApproval get _value => super._value as _VCStatePendingApproval;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sessionRequest = freezed,
+    Object? sessionRequest = null,
   }) {
-    return _then(_VCStatePendingApproval(
-      sessionRequest == freezed
+    return _then(_$_VCStatePendingApproval(
+      null == sessionRequest
           ? _value.sessionRequest
           : sessionRequest // ignore: cast_nullable_to_non_nullable
               as VCSessionRequest,
@@ -1287,6 +1205,7 @@ class __$VCStatePendingApprovalCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCSessionRequestCopyWith<$Res> get sessionRequest {
     return $VCSessionRequestCopyWith<$Res>(_value.sessionRequest, (value) {
       return _then(_value.copyWith(sessionRequest: value));
@@ -1311,19 +1230,19 @@ class _$_VCStatePendingApproval extends _VCStatePendingApproval {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCStatePendingApproval &&
-            const DeepCollectionEquality()
-                .equals(other.sessionRequest, sessionRequest));
+            other is _$_VCStatePendingApproval &&
+            (identical(other.sessionRequest, sessionRequest) ||
+                other.sessionRequest == sessionRequest));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(sessionRequest));
+  int get hashCode => Object.hash(runtimeType, sessionRequest);
 
   @JsonKey(ignore: true)
   @override
-  _$VCStatePendingApprovalCopyWith<_VCStatePendingApproval> get copyWith =>
-      __$VCStatePendingApprovalCopyWithImpl<_VCStatePendingApproval>(
+  @pragma('vm:prefer-inline')
+  _$$_VCStatePendingApprovalCopyWith<_$_VCStatePendingApproval> get copyWith =>
+      __$$_VCStatePendingApprovalCopyWithImpl<_$_VCStatePendingApproval>(
           this, _$identity);
 
   @override
@@ -1348,17 +1267,17 @@ class _$_VCStatePendingApproval extends _VCStatePendingApproval {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String bridgeUri)? connectingToBridge,
-    TResult Function(VCSessionRequest sessionRequest)? pendingApproval,
-    TResult Function(VCSessionRequest sessionRequest)? connectingSession,
-    TResult Function(
+    TResult? Function(String bridgeUri)? connectingToBridge,
+    TResult? Function(VCSessionRequest sessionRequest)? pendingApproval,
+    TResult? Function(VCSessionRequest sessionRequest)? connectingSession,
+    TResult? Function(
             SessionStatus sessionStatus,
             PeerMeta? peerMeta,
             VCRequest? currentRequest,
             IList<VCRequest> pendingRequests,
             IList<VCHistoryItem> historyRequests)?
         connected,
-    TResult Function(String? message)? disconnected,
+    TResult? Function(String? message)? disconnected,
   }) {
     return pendingApproval?.call(sessionRequest);
   }
@@ -1402,11 +1321,11 @@ class _$_VCStatePendingApproval extends _VCStatePendingApproval {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCStateConnectingServer value)? connectingToBridge,
-    TResult Function(_VCStatePendingApproval value)? pendingApproval,
-    TResult Function(_VCStateConnectingSession value)? connectingSession,
-    TResult Function(_VCStateConnected value)? connected,
-    TResult Function(_VCStateDisconnected value)? disconnected,
+    TResult? Function(_VCStateConnectingServer value)? connectingToBridge,
+    TResult? Function(_VCStatePendingApproval value)? pendingApproval,
+    TResult? Function(_VCStateConnectingSession value)? connectingSession,
+    TResult? Function(_VCStateConnected value)? connected,
+    TResult? Function(_VCStateDisconnected value)? disconnected,
   }) {
     return pendingApproval?.call(this);
   }
@@ -1429,44 +1348,43 @@ class _$_VCStatePendingApproval extends _VCStatePendingApproval {
 }
 
 abstract class _VCStatePendingApproval extends VCState {
-  const factory _VCStatePendingApproval(VCSessionRequest sessionRequest) =
+  const factory _VCStatePendingApproval(final VCSessionRequest sessionRequest) =
       _$_VCStatePendingApproval;
   const _VCStatePendingApproval._() : super._();
 
   VCSessionRequest get sessionRequest;
   @JsonKey(ignore: true)
-  _$VCStatePendingApprovalCopyWith<_VCStatePendingApproval> get copyWith =>
+  _$$_VCStatePendingApprovalCopyWith<_$_VCStatePendingApproval> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCStateConnectingSessionCopyWith<$Res> {
-  factory _$VCStateConnectingSessionCopyWith(_VCStateConnectingSession value,
-          $Res Function(_VCStateConnectingSession) then) =
-      __$VCStateConnectingSessionCopyWithImpl<$Res>;
+abstract class _$$_VCStateConnectingSessionCopyWith<$Res> {
+  factory _$$_VCStateConnectingSessionCopyWith(
+          _$_VCStateConnectingSession value,
+          $Res Function(_$_VCStateConnectingSession) then) =
+      __$$_VCStateConnectingSessionCopyWithImpl<$Res>;
+  @useResult
   $Res call({VCSessionRequest sessionRequest});
 
   $VCSessionRequestCopyWith<$Res> get sessionRequest;
 }
 
 /// @nodoc
-class __$VCStateConnectingSessionCopyWithImpl<$Res>
-    extends _$VCStateCopyWithImpl<$Res>
-    implements _$VCStateConnectingSessionCopyWith<$Res> {
-  __$VCStateConnectingSessionCopyWithImpl(_VCStateConnectingSession _value,
-      $Res Function(_VCStateConnectingSession) _then)
-      : super(_value, (v) => _then(v as _VCStateConnectingSession));
+class __$$_VCStateConnectingSessionCopyWithImpl<$Res>
+    extends _$VCStateCopyWithImpl<$Res, _$_VCStateConnectingSession>
+    implements _$$_VCStateConnectingSessionCopyWith<$Res> {
+  __$$_VCStateConnectingSessionCopyWithImpl(_$_VCStateConnectingSession _value,
+      $Res Function(_$_VCStateConnectingSession) _then)
+      : super(_value, _then);
 
-  @override
-  _VCStateConnectingSession get _value =>
-      super._value as _VCStateConnectingSession;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sessionRequest = freezed,
+    Object? sessionRequest = null,
   }) {
-    return _then(_VCStateConnectingSession(
-      sessionRequest == freezed
+    return _then(_$_VCStateConnectingSession(
+      null == sessionRequest
           ? _value.sessionRequest
           : sessionRequest // ignore: cast_nullable_to_non_nullable
               as VCSessionRequest,
@@ -1474,6 +1392,7 @@ class __$VCStateConnectingSessionCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCSessionRequestCopyWith<$Res> get sessionRequest {
     return $VCSessionRequestCopyWith<$Res>(_value.sessionRequest, (value) {
       return _then(_value.copyWith(sessionRequest: value));
@@ -1498,20 +1417,20 @@ class _$_VCStateConnectingSession extends _VCStateConnectingSession {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCStateConnectingSession &&
-            const DeepCollectionEquality()
-                .equals(other.sessionRequest, sessionRequest));
+            other is _$_VCStateConnectingSession &&
+            (identical(other.sessionRequest, sessionRequest) ||
+                other.sessionRequest == sessionRequest));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(sessionRequest));
+  int get hashCode => Object.hash(runtimeType, sessionRequest);
 
   @JsonKey(ignore: true)
   @override
-  _$VCStateConnectingSessionCopyWith<_VCStateConnectingSession> get copyWith =>
-      __$VCStateConnectingSessionCopyWithImpl<_VCStateConnectingSession>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCStateConnectingSessionCopyWith<_$_VCStateConnectingSession>
+      get copyWith => __$$_VCStateConnectingSessionCopyWithImpl<
+          _$_VCStateConnectingSession>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1535,17 +1454,17 @@ class _$_VCStateConnectingSession extends _VCStateConnectingSession {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String bridgeUri)? connectingToBridge,
-    TResult Function(VCSessionRequest sessionRequest)? pendingApproval,
-    TResult Function(VCSessionRequest sessionRequest)? connectingSession,
-    TResult Function(
+    TResult? Function(String bridgeUri)? connectingToBridge,
+    TResult? Function(VCSessionRequest sessionRequest)? pendingApproval,
+    TResult? Function(VCSessionRequest sessionRequest)? connectingSession,
+    TResult? Function(
             SessionStatus sessionStatus,
             PeerMeta? peerMeta,
             VCRequest? currentRequest,
             IList<VCRequest> pendingRequests,
             IList<VCHistoryItem> historyRequests)?
         connected,
-    TResult Function(String? message)? disconnected,
+    TResult? Function(String? message)? disconnected,
   }) {
     return connectingSession?.call(sessionRequest);
   }
@@ -1589,11 +1508,11 @@ class _$_VCStateConnectingSession extends _VCStateConnectingSession {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCStateConnectingServer value)? connectingToBridge,
-    TResult Function(_VCStatePendingApproval value)? pendingApproval,
-    TResult Function(_VCStateConnectingSession value)? connectingSession,
-    TResult Function(_VCStateConnected value)? connected,
-    TResult Function(_VCStateDisconnected value)? disconnected,
+    TResult? Function(_VCStateConnectingServer value)? connectingToBridge,
+    TResult? Function(_VCStatePendingApproval value)? pendingApproval,
+    TResult? Function(_VCStateConnectingSession value)? connectingSession,
+    TResult? Function(_VCStateConnected value)? connected,
+    TResult? Function(_VCStateDisconnected value)? disconnected,
   }) {
     return connectingSession?.call(this);
   }
@@ -1616,21 +1535,22 @@ class _$_VCStateConnectingSession extends _VCStateConnectingSession {
 }
 
 abstract class _VCStateConnectingSession extends VCState {
-  const factory _VCStateConnectingSession(VCSessionRequest sessionRequest) =
-      _$_VCStateConnectingSession;
+  const factory _VCStateConnectingSession(
+      final VCSessionRequest sessionRequest) = _$_VCStateConnectingSession;
   const _VCStateConnectingSession._() : super._();
 
   VCSessionRequest get sessionRequest;
   @JsonKey(ignore: true)
-  _$VCStateConnectingSessionCopyWith<_VCStateConnectingSession> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_VCStateConnectingSessionCopyWith<_$_VCStateConnectingSession>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCStateConnectedCopyWith<$Res> {
-  factory _$VCStateConnectedCopyWith(
-          _VCStateConnected value, $Res Function(_VCStateConnected) then) =
-      __$VCStateConnectedCopyWithImpl<$Res>;
+abstract class _$$_VCStateConnectedCopyWith<$Res> {
+  factory _$$_VCStateConnectedCopyWith(
+          _$_VCStateConnected value, $Res Function(_$_VCStateConnected) then) =
+      __$$_VCStateConnectedCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {SessionStatus sessionStatus,
       PeerMeta? peerMeta,
@@ -1644,41 +1564,40 @@ abstract class _$VCStateConnectedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$VCStateConnectedCopyWithImpl<$Res> extends _$VCStateCopyWithImpl<$Res>
-    implements _$VCStateConnectedCopyWith<$Res> {
-  __$VCStateConnectedCopyWithImpl(
-      _VCStateConnected _value, $Res Function(_VCStateConnected) _then)
-      : super(_value, (v) => _then(v as _VCStateConnected));
+class __$$_VCStateConnectedCopyWithImpl<$Res>
+    extends _$VCStateCopyWithImpl<$Res, _$_VCStateConnected>
+    implements _$$_VCStateConnectedCopyWith<$Res> {
+  __$$_VCStateConnectedCopyWithImpl(
+      _$_VCStateConnected _value, $Res Function(_$_VCStateConnected) _then)
+      : super(_value, _then);
 
-  @override
-  _VCStateConnected get _value => super._value as _VCStateConnected;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sessionStatus = freezed,
+    Object? sessionStatus = null,
     Object? peerMeta = freezed,
     Object? currentRequest = freezed,
-    Object? pendingRequests = freezed,
-    Object? historyRequests = freezed,
+    Object? pendingRequests = null,
+    Object? historyRequests = null,
   }) {
-    return _then(_VCStateConnected(
-      sessionStatus: sessionStatus == freezed
+    return _then(_$_VCStateConnected(
+      sessionStatus: null == sessionStatus
           ? _value.sessionStatus
           : sessionStatus // ignore: cast_nullable_to_non_nullable
               as SessionStatus,
-      peerMeta: peerMeta == freezed
+      peerMeta: freezed == peerMeta
           ? _value.peerMeta
           : peerMeta // ignore: cast_nullable_to_non_nullable
               as PeerMeta?,
-      currentRequest: currentRequest == freezed
+      currentRequest: freezed == currentRequest
           ? _value.currentRequest
           : currentRequest // ignore: cast_nullable_to_non_nullable
               as VCRequest?,
-      pendingRequests: pendingRequests == freezed
+      pendingRequests: null == pendingRequests
           ? _value.pendingRequests
           : pendingRequests // ignore: cast_nullable_to_non_nullable
               as IList<VCRequest>,
-      historyRequests: historyRequests == freezed
+      historyRequests: null == historyRequests
           ? _value.historyRequests
           : historyRequests // ignore: cast_nullable_to_non_nullable
               as IList<VCHistoryItem>,
@@ -1686,6 +1605,7 @@ class __$VCStateConnectedCopyWithImpl<$Res> extends _$VCStateCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SessionStatusCopyWith<$Res> get sessionStatus {
     return $SessionStatusCopyWith<$Res>(_value.sessionStatus, (value) {
       return _then(_value.copyWith(sessionStatus: value));
@@ -1693,6 +1613,7 @@ class __$VCStateConnectedCopyWithImpl<$Res> extends _$VCStateCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PeerMetaCopyWith<$Res>? get peerMeta {
     if (_value.peerMeta == null) {
       return null;
@@ -1704,6 +1625,7 @@ class __$VCStateConnectedCopyWithImpl<$Res> extends _$VCStateCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCRequestCopyWith<$Res>? get currentRequest {
     if (_value.currentRequest == null) {
       return null;
@@ -1732,11 +1654,11 @@ class _$_VCStateConnected extends _VCStateConnected {
   final PeerMeta? peerMeta;
   @override
   final VCRequest? currentRequest;
-  @JsonKey()
   @override
+  @JsonKey()
   final IList<VCRequest> pendingRequests;
-  @JsonKey()
   @override
+  @JsonKey()
   final IList<VCHistoryItem> historyRequests;
 
   @override
@@ -1748,12 +1670,13 @@ class _$_VCStateConnected extends _VCStateConnected {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCStateConnected &&
-            const DeepCollectionEquality()
-                .equals(other.sessionStatus, sessionStatus) &&
-            const DeepCollectionEquality().equals(other.peerMeta, peerMeta) &&
-            const DeepCollectionEquality()
-                .equals(other.currentRequest, currentRequest) &&
+            other is _$_VCStateConnected &&
+            (identical(other.sessionStatus, sessionStatus) ||
+                other.sessionStatus == sessionStatus) &&
+            (identical(other.peerMeta, peerMeta) ||
+                other.peerMeta == peerMeta) &&
+            (identical(other.currentRequest, currentRequest) ||
+                other.currentRequest == currentRequest) &&
             const DeepCollectionEquality()
                 .equals(other.pendingRequests, pendingRequests) &&
             const DeepCollectionEquality()
@@ -1763,16 +1686,17 @@ class _$_VCStateConnected extends _VCStateConnected {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(sessionStatus),
-      const DeepCollectionEquality().hash(peerMeta),
-      const DeepCollectionEquality().hash(currentRequest),
+      sessionStatus,
+      peerMeta,
+      currentRequest,
       const DeepCollectionEquality().hash(pendingRequests),
       const DeepCollectionEquality().hash(historyRequests));
 
   @JsonKey(ignore: true)
   @override
-  _$VCStateConnectedCopyWith<_VCStateConnected> get copyWith =>
-      __$VCStateConnectedCopyWithImpl<_VCStateConnected>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCStateConnectedCopyWith<_$_VCStateConnected> get copyWith =>
+      __$$_VCStateConnectedCopyWithImpl<_$_VCStateConnected>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1797,17 +1721,17 @@ class _$_VCStateConnected extends _VCStateConnected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String bridgeUri)? connectingToBridge,
-    TResult Function(VCSessionRequest sessionRequest)? pendingApproval,
-    TResult Function(VCSessionRequest sessionRequest)? connectingSession,
-    TResult Function(
+    TResult? Function(String bridgeUri)? connectingToBridge,
+    TResult? Function(VCSessionRequest sessionRequest)? pendingApproval,
+    TResult? Function(VCSessionRequest sessionRequest)? connectingSession,
+    TResult? Function(
             SessionStatus sessionStatus,
             PeerMeta? peerMeta,
             VCRequest? currentRequest,
             IList<VCRequest> pendingRequests,
             IList<VCHistoryItem> historyRequests)?
         connected,
-    TResult Function(String? message)? disconnected,
+    TResult? Function(String? message)? disconnected,
   }) {
     return connected?.call(sessionStatus, peerMeta, currentRequest,
         pendingRequests, historyRequests);
@@ -1853,11 +1777,11 @@ class _$_VCStateConnected extends _VCStateConnected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCStateConnectingServer value)? connectingToBridge,
-    TResult Function(_VCStatePendingApproval value)? pendingApproval,
-    TResult Function(_VCStateConnectingSession value)? connectingSession,
-    TResult Function(_VCStateConnected value)? connected,
-    TResult Function(_VCStateDisconnected value)? disconnected,
+    TResult? Function(_VCStateConnectingServer value)? connectingToBridge,
+    TResult? Function(_VCStatePendingApproval value)? pendingApproval,
+    TResult? Function(_VCStateConnectingSession value)? connectingSession,
+    TResult? Function(_VCStateConnected value)? connected,
+    TResult? Function(_VCStateDisconnected value)? disconnected,
   }) {
     return connected?.call(this);
   }
@@ -1881,11 +1805,11 @@ class _$_VCStateConnected extends _VCStateConnected {
 
 abstract class _VCStateConnected extends VCState {
   const factory _VCStateConnected(
-      {required SessionStatus sessionStatus,
-      PeerMeta? peerMeta,
-      VCRequest? currentRequest,
-      IList<VCRequest> pendingRequests,
-      IList<VCHistoryItem> historyRequests}) = _$_VCStateConnected;
+      {required final SessionStatus sessionStatus,
+      final PeerMeta? peerMeta,
+      final VCRequest? currentRequest,
+      final IList<VCRequest> pendingRequests,
+      final IList<VCHistoryItem> historyRequests}) = _$_VCStateConnected;
   const _VCStateConnected._() : super._();
 
   SessionStatus get sessionStatus;
@@ -1894,35 +1818,34 @@ abstract class _VCStateConnected extends VCState {
   IList<VCRequest> get pendingRequests;
   IList<VCHistoryItem> get historyRequests;
   @JsonKey(ignore: true)
-  _$VCStateConnectedCopyWith<_VCStateConnected> get copyWith =>
+  _$$_VCStateConnectedCopyWith<_$_VCStateConnected> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCStateDisconnectedCopyWith<$Res> {
-  factory _$VCStateDisconnectedCopyWith(_VCStateDisconnected value,
-          $Res Function(_VCStateDisconnected) then) =
-      __$VCStateDisconnectedCopyWithImpl<$Res>;
+abstract class _$$_VCStateDisconnectedCopyWith<$Res> {
+  factory _$$_VCStateDisconnectedCopyWith(_$_VCStateDisconnected value,
+          $Res Function(_$_VCStateDisconnected) then) =
+      __$$_VCStateDisconnectedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$VCStateDisconnectedCopyWithImpl<$Res>
-    extends _$VCStateCopyWithImpl<$Res>
-    implements _$VCStateDisconnectedCopyWith<$Res> {
-  __$VCStateDisconnectedCopyWithImpl(
-      _VCStateDisconnected _value, $Res Function(_VCStateDisconnected) _then)
-      : super(_value, (v) => _then(v as _VCStateDisconnected));
+class __$$_VCStateDisconnectedCopyWithImpl<$Res>
+    extends _$VCStateCopyWithImpl<$Res, _$_VCStateDisconnected>
+    implements _$$_VCStateDisconnectedCopyWith<$Res> {
+  __$$_VCStateDisconnectedCopyWithImpl(_$_VCStateDisconnected _value,
+      $Res Function(_$_VCStateDisconnected) _then)
+      : super(_value, _then);
 
-  @override
-  _VCStateDisconnected get _value => super._value as _VCStateDisconnected;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_VCStateDisconnected(
-      message == freezed
+    return _then(_$_VCStateDisconnected(
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1947,18 +1870,18 @@ class _$_VCStateDisconnected extends _VCStateDisconnected {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCStateDisconnected &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$_VCStateDisconnected &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
-  _$VCStateDisconnectedCopyWith<_VCStateDisconnected> get copyWith =>
-      __$VCStateDisconnectedCopyWithImpl<_VCStateDisconnected>(
+  @pragma('vm:prefer-inline')
+  _$$_VCStateDisconnectedCopyWith<_$_VCStateDisconnected> get copyWith =>
+      __$$_VCStateDisconnectedCopyWithImpl<_$_VCStateDisconnected>(
           this, _$identity);
 
   @override
@@ -1983,17 +1906,17 @@ class _$_VCStateDisconnected extends _VCStateDisconnected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String bridgeUri)? connectingToBridge,
-    TResult Function(VCSessionRequest sessionRequest)? pendingApproval,
-    TResult Function(VCSessionRequest sessionRequest)? connectingSession,
-    TResult Function(
+    TResult? Function(String bridgeUri)? connectingToBridge,
+    TResult? Function(VCSessionRequest sessionRequest)? pendingApproval,
+    TResult? Function(VCSessionRequest sessionRequest)? connectingSession,
+    TResult? Function(
             SessionStatus sessionStatus,
             PeerMeta? peerMeta,
             VCRequest? currentRequest,
             IList<VCRequest> pendingRequests,
             IList<VCHistoryItem> historyRequests)?
         connected,
-    TResult Function(String? message)? disconnected,
+    TResult? Function(String? message)? disconnected,
   }) {
     return disconnected?.call(message);
   }
@@ -2037,11 +1960,11 @@ class _$_VCStateDisconnected extends _VCStateDisconnected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCStateConnectingServer value)? connectingToBridge,
-    TResult Function(_VCStatePendingApproval value)? pendingApproval,
-    TResult Function(_VCStateConnectingSession value)? connectingSession,
-    TResult Function(_VCStateConnected value)? connected,
-    TResult Function(_VCStateDisconnected value)? disconnected,
+    TResult? Function(_VCStateConnectingServer value)? connectingToBridge,
+    TResult? Function(_VCStatePendingApproval value)? pendingApproval,
+    TResult? Function(_VCStateConnectingSession value)? connectingSession,
+    TResult? Function(_VCStateConnected value)? connected,
+    TResult? Function(_VCStateDisconnected value)? disconnected,
   }) {
     return disconnected?.call(this);
   }
@@ -2064,40 +1987,19 @@ class _$_VCStateDisconnected extends _VCStateDisconnected {
 }
 
 abstract class _VCStateDisconnected extends VCState {
-  const factory _VCStateDisconnected([String? message]) =
+  const factory _VCStateDisconnected([final String? message]) =
       _$_VCStateDisconnected;
   const _VCStateDisconnected._() : super._();
 
   String? get message;
   @JsonKey(ignore: true)
-  _$VCStateDisconnectedCopyWith<_VCStateDisconnected> get copyWith =>
+  _$$_VCStateDisconnectedCopyWith<_$_VCStateDisconnected> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-class _$VCRequestTearOff {
-  const _$VCRequestTearOff();
-
-  _VCRequestTransaction transaction(JsonRpcRequest request) {
-    return _VCRequestTransaction(
-      request,
-    );
-  }
-
-  _VCRequestSignMessage signMessage(JsonRpcRequest request) {
-    return _VCRequestSignMessage(
-      request,
-    );
-  }
-}
-
-/// @nodoc
-const $VCRequest = _$VCRequestTearOff();
-
-/// @nodoc
 mixin _$VCRequest {
   JsonRpcRequest get request => throw _privateConstructorUsedError;
-
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(JsonRpcRequest request) transaction,
@@ -2106,8 +2008,8 @@ mixin _$VCRequest {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(JsonRpcRequest request)? transaction,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(JsonRpcRequest request)? transaction,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2125,8 +2027,8 @@ mixin _$VCRequest {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCRequestTransaction value)? transaction,
-    TResult Function(_VCRequestSignMessage value)? signMessage,
+    TResult? Function(_VCRequestTransaction value)? transaction,
+    TResult? Function(_VCRequestSignMessage value)? signMessage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2145,47 +2047,53 @@ mixin _$VCRequest {
 /// @nodoc
 abstract class $VCRequestCopyWith<$Res> {
   factory $VCRequestCopyWith(VCRequest value, $Res Function(VCRequest) then) =
-      _$VCRequestCopyWithImpl<$Res>;
+      _$VCRequestCopyWithImpl<$Res, VCRequest>;
+  @useResult
   $Res call({JsonRpcRequest request});
 
   $JsonRpcRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
-class _$VCRequestCopyWithImpl<$Res> implements $VCRequestCopyWith<$Res> {
+class _$VCRequestCopyWithImpl<$Res, $Val extends VCRequest>
+    implements $VCRequestCopyWith<$Res> {
   _$VCRequestCopyWithImpl(this._value, this._then);
 
-  final VCRequest _value;
   // ignore: unused_field
-  final $Res Function(VCRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
+    Object? request = null,
   }) {
     return _then(_value.copyWith(
-      request: request == freezed
+      request: null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as JsonRpcRequest,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $JsonRpcRequestCopyWith<$Res> get request {
     return $JsonRpcRequestCopyWith<$Res>(_value.request, (value) {
-      return _then(_value.copyWith(request: value));
+      return _then(_value.copyWith(request: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VCRequestTransactionCopyWith<$Res>
+abstract class _$$_VCRequestTransactionCopyWith<$Res>
     implements $VCRequestCopyWith<$Res> {
-  factory _$VCRequestTransactionCopyWith(_VCRequestTransaction value,
-          $Res Function(_VCRequestTransaction) then) =
-      __$VCRequestTransactionCopyWithImpl<$Res>;
+  factory _$$_VCRequestTransactionCopyWith(_$_VCRequestTransaction value,
+          $Res Function(_$_VCRequestTransaction) then) =
+      __$$_VCRequestTransactionCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({JsonRpcRequest request});
 
   @override
@@ -2193,22 +2101,20 @@ abstract class _$VCRequestTransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VCRequestTransactionCopyWithImpl<$Res>
-    extends _$VCRequestCopyWithImpl<$Res>
-    implements _$VCRequestTransactionCopyWith<$Res> {
-  __$VCRequestTransactionCopyWithImpl(
-      _VCRequestTransaction _value, $Res Function(_VCRequestTransaction) _then)
-      : super(_value, (v) => _then(v as _VCRequestTransaction));
+class __$$_VCRequestTransactionCopyWithImpl<$Res>
+    extends _$VCRequestCopyWithImpl<$Res, _$_VCRequestTransaction>
+    implements _$$_VCRequestTransactionCopyWith<$Res> {
+  __$$_VCRequestTransactionCopyWithImpl(_$_VCRequestTransaction _value,
+      $Res Function(_$_VCRequestTransaction) _then)
+      : super(_value, _then);
 
-  @override
-  _VCRequestTransaction get _value => super._value as _VCRequestTransaction;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
+    Object? request = null,
   }) {
-    return _then(_VCRequestTransaction(
-      request == freezed
+    return _then(_$_VCRequestTransaction(
+      null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as JsonRpcRequest,
@@ -2233,18 +2139,18 @@ class _$_VCRequestTransaction extends _VCRequestTransaction {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCRequestTransaction &&
-            const DeepCollectionEquality().equals(other.request, request));
+            other is _$_VCRequestTransaction &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(request));
+  int get hashCode => Object.hash(runtimeType, request);
 
   @JsonKey(ignore: true)
   @override
-  _$VCRequestTransactionCopyWith<_VCRequestTransaction> get copyWith =>
-      __$VCRequestTransactionCopyWithImpl<_VCRequestTransaction>(
+  @pragma('vm:prefer-inline')
+  _$$_VCRequestTransactionCopyWith<_$_VCRequestTransaction> get copyWith =>
+      __$$_VCRequestTransactionCopyWithImpl<_$_VCRequestTransaction>(
           this, _$identity);
 
   @override
@@ -2259,8 +2165,8 @@ class _$_VCRequestTransaction extends _VCRequestTransaction {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(JsonRpcRequest request)? transaction,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(JsonRpcRequest request)? transaction,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return transaction?.call(request);
   }
@@ -2290,8 +2196,8 @@ class _$_VCRequestTransaction extends _VCRequestTransaction {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCRequestTransaction value)? transaction,
-    TResult Function(_VCRequestSignMessage value)? signMessage,
+    TResult? Function(_VCRequestTransaction value)? transaction,
+    TResult? Function(_VCRequestSignMessage value)? signMessage,
   }) {
     return transaction?.call(this);
   }
@@ -2311,7 +2217,7 @@ class _$_VCRequestTransaction extends _VCRequestTransaction {
 }
 
 abstract class _VCRequestTransaction extends VCRequest {
-  const factory _VCRequestTransaction(JsonRpcRequest request) =
+  const factory _VCRequestTransaction(final JsonRpcRequest request) =
       _$_VCRequestTransaction;
   const _VCRequestTransaction._() : super._();
 
@@ -2319,17 +2225,18 @@ abstract class _VCRequestTransaction extends VCRequest {
   JsonRpcRequest get request;
   @override
   @JsonKey(ignore: true)
-  _$VCRequestTransactionCopyWith<_VCRequestTransaction> get copyWith =>
+  _$$_VCRequestTransactionCopyWith<_$_VCRequestTransaction> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCRequestSignMessageCopyWith<$Res>
+abstract class _$$_VCRequestSignMessageCopyWith<$Res>
     implements $VCRequestCopyWith<$Res> {
-  factory _$VCRequestSignMessageCopyWith(_VCRequestSignMessage value,
-          $Res Function(_VCRequestSignMessage) then) =
-      __$VCRequestSignMessageCopyWithImpl<$Res>;
+  factory _$$_VCRequestSignMessageCopyWith(_$_VCRequestSignMessage value,
+          $Res Function(_$_VCRequestSignMessage) then) =
+      __$$_VCRequestSignMessageCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({JsonRpcRequest request});
 
   @override
@@ -2337,22 +2244,20 @@ abstract class _$VCRequestSignMessageCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VCRequestSignMessageCopyWithImpl<$Res>
-    extends _$VCRequestCopyWithImpl<$Res>
-    implements _$VCRequestSignMessageCopyWith<$Res> {
-  __$VCRequestSignMessageCopyWithImpl(
-      _VCRequestSignMessage _value, $Res Function(_VCRequestSignMessage) _then)
-      : super(_value, (v) => _then(v as _VCRequestSignMessage));
+class __$$_VCRequestSignMessageCopyWithImpl<$Res>
+    extends _$VCRequestCopyWithImpl<$Res, _$_VCRequestSignMessage>
+    implements _$$_VCRequestSignMessageCopyWith<$Res> {
+  __$$_VCRequestSignMessageCopyWithImpl(_$_VCRequestSignMessage _value,
+      $Res Function(_$_VCRequestSignMessage) _then)
+      : super(_value, _then);
 
-  @override
-  _VCRequestSignMessage get _value => super._value as _VCRequestSignMessage;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
+    Object? request = null,
   }) {
-    return _then(_VCRequestSignMessage(
-      request == freezed
+    return _then(_$_VCRequestSignMessage(
+      null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as JsonRpcRequest,
@@ -2377,18 +2282,18 @@ class _$_VCRequestSignMessage extends _VCRequestSignMessage {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCRequestSignMessage &&
-            const DeepCollectionEquality().equals(other.request, request));
+            other is _$_VCRequestSignMessage &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(request));
+  int get hashCode => Object.hash(runtimeType, request);
 
   @JsonKey(ignore: true)
   @override
-  _$VCRequestSignMessageCopyWith<_VCRequestSignMessage> get copyWith =>
-      __$VCRequestSignMessageCopyWithImpl<_VCRequestSignMessage>(
+  @pragma('vm:prefer-inline')
+  _$$_VCRequestSignMessageCopyWith<_$_VCRequestSignMessage> get copyWith =>
+      __$$_VCRequestSignMessageCopyWithImpl<_$_VCRequestSignMessage>(
           this, _$identity);
 
   @override
@@ -2403,8 +2308,8 @@ class _$_VCRequestSignMessage extends _VCRequestSignMessage {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(JsonRpcRequest request)? transaction,
-    TResult Function(JsonRpcRequest request)? signMessage,
+    TResult? Function(JsonRpcRequest request)? transaction,
+    TResult? Function(JsonRpcRequest request)? signMessage,
   }) {
     return signMessage?.call(request);
   }
@@ -2434,8 +2339,8 @@ class _$_VCRequestSignMessage extends _VCRequestSignMessage {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCRequestTransaction value)? transaction,
-    TResult Function(_VCRequestSignMessage value)? signMessage,
+    TResult? Function(_VCRequestTransaction value)? transaction,
+    TResult? Function(_VCRequestSignMessage value)? signMessage,
   }) {
     return signMessage?.call(this);
   }
@@ -2455,7 +2360,7 @@ class _$_VCRequestSignMessage extends _VCRequestSignMessage {
 }
 
 abstract class _VCRequestSignMessage extends VCRequest {
-  const factory _VCRequestSignMessage(JsonRpcRequest request) =
+  const factory _VCRequestSignMessage(final JsonRpcRequest request) =
       _$_VCRequestSignMessage;
   const _VCRequestSignMessage._() : super._();
 
@@ -2463,24 +2368,9 @@ abstract class _VCRequestSignMessage extends VCRequest {
   JsonRpcRequest get request;
   @override
   @JsonKey(ignore: true)
-  _$VCRequestSignMessageCopyWith<_VCRequestSignMessage> get copyWith =>
+  _$$_VCRequestSignMessageCopyWith<_$_VCRequestSignMessage> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VCTxRequestTearOff {
-  const _$VCTxRequestTearOff();
-
-  _VCTxRequest call({required int id, required SendTx tx}) {
-    return _VCTxRequest(
-      id: id,
-      tx: tx,
-    );
-  }
-}
-
-/// @nodoc
-const $VCTxRequest = _$VCTxRequestTearOff();
 
 /// @nodoc
 mixin _$VCTxRequest {
@@ -2496,52 +2386,58 @@ mixin _$VCTxRequest {
 abstract class $VCTxRequestCopyWith<$Res> {
   factory $VCTxRequestCopyWith(
           VCTxRequest value, $Res Function(VCTxRequest) then) =
-      _$VCTxRequestCopyWithImpl<$Res>;
+      _$VCTxRequestCopyWithImpl<$Res, VCTxRequest>;
+  @useResult
   $Res call({int id, SendTx tx});
 
   $SendTxCopyWith<$Res> get tx;
 }
 
 /// @nodoc
-class _$VCTxRequestCopyWithImpl<$Res> implements $VCTxRequestCopyWith<$Res> {
+class _$VCTxRequestCopyWithImpl<$Res, $Val extends VCTxRequest>
+    implements $VCTxRequestCopyWith<$Res> {
   _$VCTxRequestCopyWithImpl(this._value, this._then);
 
-  final VCTxRequest _value;
   // ignore: unused_field
-  final $Res Function(VCTxRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? tx = freezed,
+    Object? id = null,
+    Object? tx = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      tx: tx == freezed
+      tx: null == tx
           ? _value.tx
           : tx // ignore: cast_nullable_to_non_nullable
               as SendTx,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SendTxCopyWith<$Res> get tx {
     return $SendTxCopyWith<$Res>(_value.tx, (value) {
-      return _then(_value.copyWith(tx: value));
+      return _then(_value.copyWith(tx: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VCTxRequestCopyWith<$Res>
+abstract class _$$_VCTxRequestCopyWith<$Res>
     implements $VCTxRequestCopyWith<$Res> {
-  factory _$VCTxRequestCopyWith(
-          _VCTxRequest value, $Res Function(_VCTxRequest) then) =
-      __$VCTxRequestCopyWithImpl<$Res>;
+  factory _$$_VCTxRequestCopyWith(
+          _$_VCTxRequest value, $Res Function(_$_VCTxRequest) then) =
+      __$$_VCTxRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, SendTx tx});
 
   @override
@@ -2549,26 +2445,25 @@ abstract class _$VCTxRequestCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VCTxRequestCopyWithImpl<$Res> extends _$VCTxRequestCopyWithImpl<$Res>
-    implements _$VCTxRequestCopyWith<$Res> {
-  __$VCTxRequestCopyWithImpl(
-      _VCTxRequest _value, $Res Function(_VCTxRequest) _then)
-      : super(_value, (v) => _then(v as _VCTxRequest));
+class __$$_VCTxRequestCopyWithImpl<$Res>
+    extends _$VCTxRequestCopyWithImpl<$Res, _$_VCTxRequest>
+    implements _$$_VCTxRequestCopyWith<$Res> {
+  __$$_VCTxRequestCopyWithImpl(
+      _$_VCTxRequest _value, $Res Function(_$_VCTxRequest) _then)
+      : super(_value, _then);
 
-  @override
-  _VCTxRequest get _value => super._value as _VCTxRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? tx = freezed,
+    Object? id = null,
+    Object? tx = null,
   }) {
-    return _then(_VCTxRequest(
-      id: id == freezed
+    return _then(_$_VCTxRequest(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      tx: tx == freezed
+      tx: null == tx
           ? _value.tx
           : tx // ignore: cast_nullable_to_non_nullable
               as SendTx,
@@ -2595,26 +2490,24 @@ class _$_VCTxRequest extends _VCTxRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCTxRequest &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.tx, tx));
+            other is _$_VCTxRequest &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.tx, tx) || other.tx == tx));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(tx));
+  int get hashCode => Object.hash(runtimeType, id, tx);
 
   @JsonKey(ignore: true)
   @override
-  _$VCTxRequestCopyWith<_VCTxRequest> get copyWith =>
-      __$VCTxRequestCopyWithImpl<_VCTxRequest>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCTxRequestCopyWith<_$_VCTxRequest> get copyWith =>
+      __$$_VCTxRequestCopyWithImpl<_$_VCTxRequest>(this, _$identity);
 }
 
 abstract class _VCTxRequest extends VCTxRequest {
-  const factory _VCTxRequest({required int id, required SendTx tx}) =
-      _$_VCTxRequest;
+  const factory _VCTxRequest(
+      {required final int id, required final SendTx tx}) = _$_VCTxRequest;
   const _VCTxRequest._() : super._();
 
   @override
@@ -2623,27 +2516,9 @@ abstract class _VCTxRequest extends VCTxRequest {
   SendTx get tx;
   @override
   @JsonKey(ignore: true)
-  _$VCTxRequestCopyWith<_VCTxRequest> get copyWith =>
+  _$$_VCTxRequestCopyWith<_$_VCTxRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VCTxResponseTearOff {
-  const _$VCTxResponseTearOff();
-
-  _VCTxResponseConfirmed confirmed(AccountBlock accountBlock) {
-    return _VCTxResponseConfirmed(
-      accountBlock,
-    );
-  }
-
-  _VCTxResponseCancelled cancelled() {
-    return const _VCTxResponseCancelled();
-  }
-}
-
-/// @nodoc
-const $VCTxResponse = _$VCTxResponseTearOff();
 
 /// @nodoc
 mixin _$VCTxResponse {
@@ -2655,8 +2530,8 @@ mixin _$VCTxResponse {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AccountBlock accountBlock)? confirmed,
-    TResult Function()? cancelled,
+    TResult? Function(AccountBlock accountBlock)? confirmed,
+    TResult? Function()? cancelled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2674,8 +2549,8 @@ mixin _$VCTxResponse {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxResponseConfirmed value)? confirmed,
-    TResult Function(_VCTxResponseCancelled value)? cancelled,
+    TResult? Function(_VCTxResponseConfirmed value)? confirmed,
+    TResult? Function(_VCTxResponseCancelled value)? cancelled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -2691,45 +2566,46 @@ mixin _$VCTxResponse {
 abstract class $VCTxResponseCopyWith<$Res> {
   factory $VCTxResponseCopyWith(
           VCTxResponse value, $Res Function(VCTxResponse) then) =
-      _$VCTxResponseCopyWithImpl<$Res>;
+      _$VCTxResponseCopyWithImpl<$Res, VCTxResponse>;
 }
 
 /// @nodoc
-class _$VCTxResponseCopyWithImpl<$Res> implements $VCTxResponseCopyWith<$Res> {
+class _$VCTxResponseCopyWithImpl<$Res, $Val extends VCTxResponse>
+    implements $VCTxResponseCopyWith<$Res> {
   _$VCTxResponseCopyWithImpl(this._value, this._then);
 
-  final VCTxResponse _value;
   // ignore: unused_field
-  final $Res Function(VCTxResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$VCTxResponseConfirmedCopyWith<$Res> {
-  factory _$VCTxResponseConfirmedCopyWith(_VCTxResponseConfirmed value,
-          $Res Function(_VCTxResponseConfirmed) then) =
-      __$VCTxResponseConfirmedCopyWithImpl<$Res>;
+abstract class _$$_VCTxResponseConfirmedCopyWith<$Res> {
+  factory _$$_VCTxResponseConfirmedCopyWith(_$_VCTxResponseConfirmed value,
+          $Res Function(_$_VCTxResponseConfirmed) then) =
+      __$$_VCTxResponseConfirmedCopyWithImpl<$Res>;
+  @useResult
   $Res call({AccountBlock accountBlock});
 
   $AccountBlockCopyWith<$Res> get accountBlock;
 }
 
 /// @nodoc
-class __$VCTxResponseConfirmedCopyWithImpl<$Res>
-    extends _$VCTxResponseCopyWithImpl<$Res>
-    implements _$VCTxResponseConfirmedCopyWith<$Res> {
-  __$VCTxResponseConfirmedCopyWithImpl(_VCTxResponseConfirmed _value,
-      $Res Function(_VCTxResponseConfirmed) _then)
-      : super(_value, (v) => _then(v as _VCTxResponseConfirmed));
+class __$$_VCTxResponseConfirmedCopyWithImpl<$Res>
+    extends _$VCTxResponseCopyWithImpl<$Res, _$_VCTxResponseConfirmed>
+    implements _$$_VCTxResponseConfirmedCopyWith<$Res> {
+  __$$_VCTxResponseConfirmedCopyWithImpl(_$_VCTxResponseConfirmed _value,
+      $Res Function(_$_VCTxResponseConfirmed) _then)
+      : super(_value, _then);
 
-  @override
-  _VCTxResponseConfirmed get _value => super._value as _VCTxResponseConfirmed;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accountBlock = freezed,
+    Object? accountBlock = null,
   }) {
-    return _then(_VCTxResponseConfirmed(
-      accountBlock == freezed
+    return _then(_$_VCTxResponseConfirmed(
+      null == accountBlock
           ? _value.accountBlock
           : accountBlock // ignore: cast_nullable_to_non_nullable
               as AccountBlock,
@@ -2737,6 +2613,7 @@ class __$VCTxResponseConfirmedCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AccountBlockCopyWith<$Res> get accountBlock {
     return $AccountBlockCopyWith<$Res>(_value.accountBlock, (value) {
       return _then(_value.copyWith(accountBlock: value));
@@ -2761,19 +2638,19 @@ class _$_VCTxResponseConfirmed implements _VCTxResponseConfirmed {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCTxResponseConfirmed &&
-            const DeepCollectionEquality()
-                .equals(other.accountBlock, accountBlock));
+            other is _$_VCTxResponseConfirmed &&
+            (identical(other.accountBlock, accountBlock) ||
+                other.accountBlock == accountBlock));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(accountBlock));
+  int get hashCode => Object.hash(runtimeType, accountBlock);
 
   @JsonKey(ignore: true)
   @override
-  _$VCTxResponseConfirmedCopyWith<_VCTxResponseConfirmed> get copyWith =>
-      __$VCTxResponseConfirmedCopyWithImpl<_VCTxResponseConfirmed>(
+  @pragma('vm:prefer-inline')
+  _$$_VCTxResponseConfirmedCopyWith<_$_VCTxResponseConfirmed> get copyWith =>
+      __$$_VCTxResponseConfirmedCopyWithImpl<_$_VCTxResponseConfirmed>(
           this, _$identity);
 
   @override
@@ -2788,8 +2665,8 @@ class _$_VCTxResponseConfirmed implements _VCTxResponseConfirmed {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AccountBlock accountBlock)? confirmed,
-    TResult Function()? cancelled,
+    TResult? Function(AccountBlock accountBlock)? confirmed,
+    TResult? Function()? cancelled,
   }) {
     return confirmed?.call(accountBlock);
   }
@@ -2819,8 +2696,8 @@ class _$_VCTxResponseConfirmed implements _VCTxResponseConfirmed {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxResponseConfirmed value)? confirmed,
-    TResult Function(_VCTxResponseCancelled value)? cancelled,
+    TResult? Function(_VCTxResponseConfirmed value)? confirmed,
+    TResult? Function(_VCTxResponseCancelled value)? cancelled,
   }) {
     return confirmed?.call(this);
   }
@@ -2840,32 +2717,29 @@ class _$_VCTxResponseConfirmed implements _VCTxResponseConfirmed {
 }
 
 abstract class _VCTxResponseConfirmed implements VCTxResponse {
-  const factory _VCTxResponseConfirmed(AccountBlock accountBlock) =
+  const factory _VCTxResponseConfirmed(final AccountBlock accountBlock) =
       _$_VCTxResponseConfirmed;
 
   AccountBlock get accountBlock;
   @JsonKey(ignore: true)
-  _$VCTxResponseConfirmedCopyWith<_VCTxResponseConfirmed> get copyWith =>
+  _$$_VCTxResponseConfirmedCopyWith<_$_VCTxResponseConfirmed> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCTxResponseCancelledCopyWith<$Res> {
-  factory _$VCTxResponseCancelledCopyWith(_VCTxResponseCancelled value,
-          $Res Function(_VCTxResponseCancelled) then) =
-      __$VCTxResponseCancelledCopyWithImpl<$Res>;
+abstract class _$$_VCTxResponseCancelledCopyWith<$Res> {
+  factory _$$_VCTxResponseCancelledCopyWith(_$_VCTxResponseCancelled value,
+          $Res Function(_$_VCTxResponseCancelled) then) =
+      __$$_VCTxResponseCancelledCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$VCTxResponseCancelledCopyWithImpl<$Res>
-    extends _$VCTxResponseCopyWithImpl<$Res>
-    implements _$VCTxResponseCancelledCopyWith<$Res> {
-  __$VCTxResponseCancelledCopyWithImpl(_VCTxResponseCancelled _value,
-      $Res Function(_VCTxResponseCancelled) _then)
-      : super(_value, (v) => _then(v as _VCTxResponseCancelled));
-
-  @override
-  _VCTxResponseCancelled get _value => super._value as _VCTxResponseCancelled;
+class __$$_VCTxResponseCancelledCopyWithImpl<$Res>
+    extends _$VCTxResponseCopyWithImpl<$Res, _$_VCTxResponseCancelled>
+    implements _$$_VCTxResponseCancelledCopyWith<$Res> {
+  __$$_VCTxResponseCancelledCopyWithImpl(_$_VCTxResponseCancelled _value,
+      $Res Function(_$_VCTxResponseCancelled) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -2881,7 +2755,7 @@ class _$_VCTxResponseCancelled implements _VCTxResponseCancelled {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _VCTxResponseCancelled);
+        (other.runtimeType == runtimeType && other is _$_VCTxResponseCancelled);
   }
 
   @override
@@ -2899,8 +2773,8 @@ class _$_VCTxResponseCancelled implements _VCTxResponseCancelled {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AccountBlock accountBlock)? confirmed,
-    TResult Function()? cancelled,
+    TResult? Function(AccountBlock accountBlock)? confirmed,
+    TResult? Function()? cancelled,
   }) {
     return cancelled?.call();
   }
@@ -2930,8 +2804,8 @@ class _$_VCTxResponseCancelled implements _VCTxResponseCancelled {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCTxResponseConfirmed value)? confirmed,
-    TResult Function(_VCTxResponseCancelled value)? cancelled,
+    TResult? Function(_VCTxResponseConfirmed value)? confirmed,
+    TResult? Function(_VCTxResponseCancelled value)? cancelled,
   }) {
     return cancelled?.call(this);
   }
@@ -2955,21 +2829,6 @@ abstract class _VCTxResponseCancelled implements VCTxResponse {
 }
 
 /// @nodoc
-class _$VCSignRequestTearOff {
-  const _$VCSignRequestTearOff();
-
-  _VCSignRequest call({required int id, required Uint8List data}) {
-    return _VCSignRequest(
-      id: id,
-      data: data,
-    );
-  }
-}
-
-/// @nodoc
-const $VCSignRequest = _$VCSignRequestTearOff();
-
-/// @nodoc
 mixin _$VCSignRequest {
   int get id => throw _privateConstructorUsedError;
   Uint8List get data => throw _privateConstructorUsedError;
@@ -2983,69 +2842,71 @@ mixin _$VCSignRequest {
 abstract class $VCSignRequestCopyWith<$Res> {
   factory $VCSignRequestCopyWith(
           VCSignRequest value, $Res Function(VCSignRequest) then) =
-      _$VCSignRequestCopyWithImpl<$Res>;
+      _$VCSignRequestCopyWithImpl<$Res, VCSignRequest>;
+  @useResult
   $Res call({int id, Uint8List data});
 }
 
 /// @nodoc
-class _$VCSignRequestCopyWithImpl<$Res>
+class _$VCSignRequestCopyWithImpl<$Res, $Val extends VCSignRequest>
     implements $VCSignRequestCopyWith<$Res> {
   _$VCSignRequestCopyWithImpl(this._value, this._then);
 
-  final VCSignRequest _value;
   // ignore: unused_field
-  final $Res Function(VCSignRequest) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? data = freezed,
+    Object? id = null,
+    Object? data = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      data: data == freezed
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as Uint8List,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VCSignRequestCopyWith<$Res>
+abstract class _$$_VCSignRequestCopyWith<$Res>
     implements $VCSignRequestCopyWith<$Res> {
-  factory _$VCSignRequestCopyWith(
-          _VCSignRequest value, $Res Function(_VCSignRequest) then) =
-      __$VCSignRequestCopyWithImpl<$Res>;
+  factory _$$_VCSignRequestCopyWith(
+          _$_VCSignRequest value, $Res Function(_$_VCSignRequest) then) =
+      __$$_VCSignRequestCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int id, Uint8List data});
 }
 
 /// @nodoc
-class __$VCSignRequestCopyWithImpl<$Res>
-    extends _$VCSignRequestCopyWithImpl<$Res>
-    implements _$VCSignRequestCopyWith<$Res> {
-  __$VCSignRequestCopyWithImpl(
-      _VCSignRequest _value, $Res Function(_VCSignRequest) _then)
-      : super(_value, (v) => _then(v as _VCSignRequest));
+class __$$_VCSignRequestCopyWithImpl<$Res>
+    extends _$VCSignRequestCopyWithImpl<$Res, _$_VCSignRequest>
+    implements _$$_VCSignRequestCopyWith<$Res> {
+  __$$_VCSignRequestCopyWithImpl(
+      _$_VCSignRequest _value, $Res Function(_$_VCSignRequest) _then)
+      : super(_value, _then);
 
-  @override
-  _VCSignRequest get _value => super._value as _VCSignRequest;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? data = freezed,
+    Object? id = null,
+    Object? data = null,
   }) {
-    return _then(_VCSignRequest(
-      id: id == freezed
+    return _then(_$_VCSignRequest(
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      data: data == freezed
+      data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -3072,26 +2933,26 @@ class _$_VCSignRequest implements _VCSignRequest {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCSignRequest &&
-            const DeepCollectionEquality().equals(other.id, id) &&
+            other is _$_VCSignRequest &&
+            (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(data));
+  int get hashCode =>
+      Object.hash(runtimeType, id, const DeepCollectionEquality().hash(data));
 
   @JsonKey(ignore: true)
   @override
-  _$VCSignRequestCopyWith<_VCSignRequest> get copyWith =>
-      __$VCSignRequestCopyWithImpl<_VCSignRequest>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCSignRequestCopyWith<_$_VCSignRequest> get copyWith =>
+      __$$_VCSignRequestCopyWithImpl<_$_VCSignRequest>(this, _$identity);
 }
 
 abstract class _VCSignRequest implements VCSignRequest {
-  const factory _VCSignRequest({required int id, required Uint8List data}) =
-      _$_VCSignRequest;
+  const factory _VCSignRequest(
+      {required final int id,
+      required final Uint8List data}) = _$_VCSignRequest;
 
   @override
   int get id;
@@ -3099,34 +2960,13 @@ abstract class _VCSignRequest implements VCSignRequest {
   Uint8List get data;
   @override
   @JsonKey(ignore: true)
-  _$VCSignRequestCopyWith<_VCSignRequest> get copyWith =>
+  _$$_VCSignRequestCopyWith<_$_VCSignRequest> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 SignedData _$SignedDataFromJson(Map<String, dynamic> json) {
   return _SignedData.fromJson(json);
 }
-
-/// @nodoc
-class _$SignedDataTearOff {
-  const _$SignedDataTearOff();
-
-  _SignedData call(
-      {@Uint8ListBase64Converter() required Uint8List publicKey,
-      @Uint8ListBase64Converter() required Uint8List signature}) {
-    return _SignedData(
-      publicKey: publicKey,
-      signature: signature,
-    );
-  }
-
-  SignedData fromJson(Map<String, Object?> json) {
-    return SignedData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SignedData = _$SignedDataTearOff();
 
 /// @nodoc
 mixin _$SignedData {
@@ -3145,70 +2985,75 @@ mixin _$SignedData {
 abstract class $SignedDataCopyWith<$Res> {
   factory $SignedDataCopyWith(
           SignedData value, $Res Function(SignedData) then) =
-      _$SignedDataCopyWithImpl<$Res>;
+      _$SignedDataCopyWithImpl<$Res, SignedData>;
+  @useResult
   $Res call(
       {@Uint8ListBase64Converter() Uint8List publicKey,
       @Uint8ListBase64Converter() Uint8List signature});
 }
 
 /// @nodoc
-class _$SignedDataCopyWithImpl<$Res> implements $SignedDataCopyWith<$Res> {
+class _$SignedDataCopyWithImpl<$Res, $Val extends SignedData>
+    implements $SignedDataCopyWith<$Res> {
   _$SignedDataCopyWithImpl(this._value, this._then);
 
-  final SignedData _value;
   // ignore: unused_field
-  final $Res Function(SignedData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? publicKey = freezed,
-    Object? signature = freezed,
+    Object? publicKey = null,
+    Object? signature = null,
   }) {
     return _then(_value.copyWith(
-      publicKey: publicKey == freezed
+      publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
               as Uint8List,
-      signature: signature == freezed
+      signature: null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as Uint8List,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SignedDataCopyWith<$Res> implements $SignedDataCopyWith<$Res> {
-  factory _$SignedDataCopyWith(
-          _SignedData value, $Res Function(_SignedData) then) =
-      __$SignedDataCopyWithImpl<$Res>;
+abstract class _$$_SignedDataCopyWith<$Res>
+    implements $SignedDataCopyWith<$Res> {
+  factory _$$_SignedDataCopyWith(
+          _$_SignedData value, $Res Function(_$_SignedData) then) =
+      __$$_SignedDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@Uint8ListBase64Converter() Uint8List publicKey,
       @Uint8ListBase64Converter() Uint8List signature});
 }
 
 /// @nodoc
-class __$SignedDataCopyWithImpl<$Res> extends _$SignedDataCopyWithImpl<$Res>
-    implements _$SignedDataCopyWith<$Res> {
-  __$SignedDataCopyWithImpl(
-      _SignedData _value, $Res Function(_SignedData) _then)
-      : super(_value, (v) => _then(v as _SignedData));
+class __$$_SignedDataCopyWithImpl<$Res>
+    extends _$SignedDataCopyWithImpl<$Res, _$_SignedData>
+    implements _$$_SignedDataCopyWith<$Res> {
+  __$$_SignedDataCopyWithImpl(
+      _$_SignedData _value, $Res Function(_$_SignedData) _then)
+      : super(_value, _then);
 
-  @override
-  _SignedData get _value => super._value as _SignedData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? publicKey = freezed,
-    Object? signature = freezed,
+    Object? publicKey = null,
+    Object? signature = null,
   }) {
-    return _then(_SignedData(
-      publicKey: publicKey == freezed
+    return _then(_$_SignedData(
+      publicKey: null == publicKey
           ? _value.publicKey
           : publicKey // ignore: cast_nullable_to_non_nullable
               as Uint8List,
-      signature: signature == freezed
+      signature: null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as Uint8List,
@@ -3242,11 +3087,12 @@ class _$_SignedData implements _SignedData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _SignedData &&
+            other is _$_SignedData &&
             const DeepCollectionEquality().equals(other.publicKey, publicKey) &&
             const DeepCollectionEquality().equals(other.signature, signature));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -3255,19 +3101,22 @@ class _$_SignedData implements _SignedData {
 
   @JsonKey(ignore: true)
   @override
-  _$SignedDataCopyWith<_SignedData> get copyWith =>
-      __$SignedDataCopyWithImpl<_SignedData>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_SignedDataCopyWith<_$_SignedData> get copyWith =>
+      __$$_SignedDataCopyWithImpl<_$_SignedData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SignedDataToJson(this);
+    return _$$_SignedDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _SignedData implements SignedData {
   const factory _SignedData(
-          {@Uint8ListBase64Converter() required Uint8List publicKey,
-          @Uint8ListBase64Converter() required Uint8List signature}) =
+          {@Uint8ListBase64Converter() required final Uint8List publicKey,
+          @Uint8ListBase64Converter() required final Uint8List signature}) =
       _$_SignedData;
 
   factory _SignedData.fromJson(Map<String, dynamic> json) =
@@ -3281,27 +3130,9 @@ abstract class _SignedData implements SignedData {
   Uint8List get signature;
   @override
   @JsonKey(ignore: true)
-  _$SignedDataCopyWith<_SignedData> get copyWith =>
+  _$$_SignedDataCopyWith<_$_SignedData> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VCSignResponseTearOff {
-  const _$VCSignResponseTearOff();
-
-  _VCSignResponseConfirmed confirmed(SignedData signedData) {
-    return _VCSignResponseConfirmed(
-      signedData,
-    );
-  }
-
-  _VCSignResponseCancelled cancelled() {
-    return const _VCSignResponseCancelled();
-  }
-}
-
-/// @nodoc
-const $VCSignResponse = _$VCSignResponseTearOff();
 
 /// @nodoc
 mixin _$VCSignResponse {
@@ -3313,8 +3144,8 @@ mixin _$VCSignResponse {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(SignedData signedData)? confirmed,
-    TResult Function()? cancelled,
+    TResult? Function(SignedData signedData)? confirmed,
+    TResult? Function()? cancelled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -3332,8 +3163,8 @@ mixin _$VCSignResponse {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCSignResponseConfirmed value)? confirmed,
-    TResult Function(_VCSignResponseCancelled value)? cancelled,
+    TResult? Function(_VCSignResponseConfirmed value)? confirmed,
+    TResult? Function(_VCSignResponseCancelled value)? cancelled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -3349,47 +3180,46 @@ mixin _$VCSignResponse {
 abstract class $VCSignResponseCopyWith<$Res> {
   factory $VCSignResponseCopyWith(
           VCSignResponse value, $Res Function(VCSignResponse) then) =
-      _$VCSignResponseCopyWithImpl<$Res>;
+      _$VCSignResponseCopyWithImpl<$Res, VCSignResponse>;
 }
 
 /// @nodoc
-class _$VCSignResponseCopyWithImpl<$Res>
+class _$VCSignResponseCopyWithImpl<$Res, $Val extends VCSignResponse>
     implements $VCSignResponseCopyWith<$Res> {
   _$VCSignResponseCopyWithImpl(this._value, this._then);
 
-  final VCSignResponse _value;
   // ignore: unused_field
-  final $Res Function(VCSignResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$VCSignResponseConfirmedCopyWith<$Res> {
-  factory _$VCSignResponseConfirmedCopyWith(_VCSignResponseConfirmed value,
-          $Res Function(_VCSignResponseConfirmed) then) =
-      __$VCSignResponseConfirmedCopyWithImpl<$Res>;
+abstract class _$$_VCSignResponseConfirmedCopyWith<$Res> {
+  factory _$$_VCSignResponseConfirmedCopyWith(_$_VCSignResponseConfirmed value,
+          $Res Function(_$_VCSignResponseConfirmed) then) =
+      __$$_VCSignResponseConfirmedCopyWithImpl<$Res>;
+  @useResult
   $Res call({SignedData signedData});
 
   $SignedDataCopyWith<$Res> get signedData;
 }
 
 /// @nodoc
-class __$VCSignResponseConfirmedCopyWithImpl<$Res>
-    extends _$VCSignResponseCopyWithImpl<$Res>
-    implements _$VCSignResponseConfirmedCopyWith<$Res> {
-  __$VCSignResponseConfirmedCopyWithImpl(_VCSignResponseConfirmed _value,
-      $Res Function(_VCSignResponseConfirmed) _then)
-      : super(_value, (v) => _then(v as _VCSignResponseConfirmed));
+class __$$_VCSignResponseConfirmedCopyWithImpl<$Res>
+    extends _$VCSignResponseCopyWithImpl<$Res, _$_VCSignResponseConfirmed>
+    implements _$$_VCSignResponseConfirmedCopyWith<$Res> {
+  __$$_VCSignResponseConfirmedCopyWithImpl(_$_VCSignResponseConfirmed _value,
+      $Res Function(_$_VCSignResponseConfirmed) _then)
+      : super(_value, _then);
 
-  @override
-  _VCSignResponseConfirmed get _value =>
-      super._value as _VCSignResponseConfirmed;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? signedData = freezed,
+    Object? signedData = null,
   }) {
-    return _then(_VCSignResponseConfirmed(
-      signedData == freezed
+    return _then(_$_VCSignResponseConfirmed(
+      null == signedData
           ? _value.signedData
           : signedData // ignore: cast_nullable_to_non_nullable
               as SignedData,
@@ -3397,6 +3227,7 @@ class __$VCSignResponseConfirmedCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SignedDataCopyWith<$Res> get signedData {
     return $SignedDataCopyWith<$Res>(_value.signedData, (value) {
       return _then(_value.copyWith(signedData: value));
@@ -3421,20 +3252,21 @@ class _$_VCSignResponseConfirmed implements _VCSignResponseConfirmed {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCSignResponseConfirmed &&
-            const DeepCollectionEquality()
-                .equals(other.signedData, signedData));
+            other is _$_VCSignResponseConfirmed &&
+            (identical(other.signedData, signedData) ||
+                other.signedData == signedData));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(signedData));
+  int get hashCode => Object.hash(runtimeType, signedData);
 
   @JsonKey(ignore: true)
   @override
-  _$VCSignResponseConfirmedCopyWith<_VCSignResponseConfirmed> get copyWith =>
-      __$VCSignResponseConfirmedCopyWithImpl<_VCSignResponseConfirmed>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCSignResponseConfirmedCopyWith<_$_VCSignResponseConfirmed>
+      get copyWith =>
+          __$$_VCSignResponseConfirmedCopyWithImpl<_$_VCSignResponseConfirmed>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -3448,8 +3280,8 @@ class _$_VCSignResponseConfirmed implements _VCSignResponseConfirmed {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(SignedData signedData)? confirmed,
-    TResult Function()? cancelled,
+    TResult? Function(SignedData signedData)? confirmed,
+    TResult? Function()? cancelled,
   }) {
     return confirmed?.call(signedData);
   }
@@ -3479,8 +3311,8 @@ class _$_VCSignResponseConfirmed implements _VCSignResponseConfirmed {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCSignResponseConfirmed value)? confirmed,
-    TResult Function(_VCSignResponseCancelled value)? cancelled,
+    TResult? Function(_VCSignResponseConfirmed value)? confirmed,
+    TResult? Function(_VCSignResponseCancelled value)? cancelled,
   }) {
     return confirmed?.call(this);
   }
@@ -3500,33 +3332,29 @@ class _$_VCSignResponseConfirmed implements _VCSignResponseConfirmed {
 }
 
 abstract class _VCSignResponseConfirmed implements VCSignResponse {
-  const factory _VCSignResponseConfirmed(SignedData signedData) =
+  const factory _VCSignResponseConfirmed(final SignedData signedData) =
       _$_VCSignResponseConfirmed;
 
   SignedData get signedData;
   @JsonKey(ignore: true)
-  _$VCSignResponseConfirmedCopyWith<_VCSignResponseConfirmed> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_VCSignResponseConfirmedCopyWith<_$_VCSignResponseConfirmed>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCSignResponseCancelledCopyWith<$Res> {
-  factory _$VCSignResponseCancelledCopyWith(_VCSignResponseCancelled value,
-          $Res Function(_VCSignResponseCancelled) then) =
-      __$VCSignResponseCancelledCopyWithImpl<$Res>;
+abstract class _$$_VCSignResponseCancelledCopyWith<$Res> {
+  factory _$$_VCSignResponseCancelledCopyWith(_$_VCSignResponseCancelled value,
+          $Res Function(_$_VCSignResponseCancelled) then) =
+      __$$_VCSignResponseCancelledCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$VCSignResponseCancelledCopyWithImpl<$Res>
-    extends _$VCSignResponseCopyWithImpl<$Res>
-    implements _$VCSignResponseCancelledCopyWith<$Res> {
-  __$VCSignResponseCancelledCopyWithImpl(_VCSignResponseCancelled _value,
-      $Res Function(_VCSignResponseCancelled) _then)
-      : super(_value, (v) => _then(v as _VCSignResponseCancelled));
-
-  @override
-  _VCSignResponseCancelled get _value =>
-      super._value as _VCSignResponseCancelled;
+class __$$_VCSignResponseCancelledCopyWithImpl<$Res>
+    extends _$VCSignResponseCopyWithImpl<$Res, _$_VCSignResponseCancelled>
+    implements _$$_VCSignResponseCancelledCopyWith<$Res> {
+  __$$_VCSignResponseCancelledCopyWithImpl(_$_VCSignResponseCancelled _value,
+      $Res Function(_$_VCSignResponseCancelled) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -3542,7 +3370,8 @@ class _$_VCSignResponseCancelled implements _VCSignResponseCancelled {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _VCSignResponseCancelled);
+        (other.runtimeType == runtimeType &&
+            other is _$_VCSignResponseCancelled);
   }
 
   @override
@@ -3560,8 +3389,8 @@ class _$_VCSignResponseCancelled implements _VCSignResponseCancelled {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(SignedData signedData)? confirmed,
-    TResult Function()? cancelled,
+    TResult? Function(SignedData signedData)? confirmed,
+    TResult? Function()? cancelled,
   }) {
     return cancelled?.call();
   }
@@ -3591,8 +3420,8 @@ class _$_VCSignResponseCancelled implements _VCSignResponseCancelled {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCSignResponseConfirmed value)? confirmed,
-    TResult Function(_VCSignResponseCancelled value)? cancelled,
+    TResult? Function(_VCSignResponseConfirmed value)? confirmed,
+    TResult? Function(_VCSignResponseCancelled value)? cancelled,
   }) {
     return cancelled?.call(this);
   }
@@ -3616,53 +3445,6 @@ abstract class _VCSignResponseCancelled implements VCSignResponse {
 }
 
 /// @nodoc
-class _$VCHistoryItemTearOff {
-  const _$VCHistoryItemTearOff();
-
-  _VCHistoryItemTx tx(
-      {required VCTxRequest request,
-      required VCTxResponse response,
-      required DateTime timestamp}) {
-    return _VCHistoryItemTx(
-      request: request,
-      response: response,
-      timestamp: timestamp,
-    );
-  }
-
-  _VCHistoryItemSign sign(
-      {required VCSignRequest request,
-      required VCSignResponse response,
-      required DateTime timestamp}) {
-    return _VCHistoryItemSign(
-      request: request,
-      response: response,
-      timestamp: timestamp,
-    );
-  }
-
-  _VCHistoryItemInvalid invalid(
-      {required JsonRpcRequest request,
-      required Object error,
-      required DateTime timestamp}) {
-    return _VCHistoryItemInvalid(
-      request: request,
-      error: error,
-      timestamp: timestamp,
-    );
-  }
-
-  _VCHistoryItemCurrent current({required VCRequest request}) {
-    return _VCHistoryItemCurrent(
-      request: request,
-    );
-  }
-}
-
-/// @nodoc
-const $VCHistoryItem = _$VCHistoryItemTearOff();
-
-/// @nodoc
 mixin _$VCHistoryItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -3680,15 +3462,15 @@ mixin _$VCHistoryItem {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             VCTxRequest request, VCTxResponse response, DateTime timestamp)?
         tx,
-    TResult Function(
+    TResult? Function(
             VCSignRequest request, VCSignResponse response, DateTime timestamp)?
         sign,
-    TResult Function(JsonRpcRequest request, Object error, DateTime timestamp)?
+    TResult? Function(JsonRpcRequest request, Object error, DateTime timestamp)?
         invalid,
-    TResult Function(VCRequest request)? current,
+    TResult? Function(VCRequest request)? current,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -3715,10 +3497,10 @@ mixin _$VCHistoryItem {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCHistoryItemTx value)? tx,
-    TResult Function(_VCHistoryItemSign value)? sign,
-    TResult Function(_VCHistoryItemInvalid value)? invalid,
-    TResult Function(_VCHistoryItemCurrent value)? current,
+    TResult? Function(_VCHistoryItemTx value)? tx,
+    TResult? Function(_VCHistoryItemSign value)? sign,
+    TResult? Function(_VCHistoryItemInvalid value)? invalid,
+    TResult? Function(_VCHistoryItemCurrent value)? current,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -3736,24 +3518,26 @@ mixin _$VCHistoryItem {
 abstract class $VCHistoryItemCopyWith<$Res> {
   factory $VCHistoryItemCopyWith(
           VCHistoryItem value, $Res Function(VCHistoryItem) then) =
-      _$VCHistoryItemCopyWithImpl<$Res>;
+      _$VCHistoryItemCopyWithImpl<$Res, VCHistoryItem>;
 }
 
 /// @nodoc
-class _$VCHistoryItemCopyWithImpl<$Res>
+class _$VCHistoryItemCopyWithImpl<$Res, $Val extends VCHistoryItem>
     implements $VCHistoryItemCopyWith<$Res> {
   _$VCHistoryItemCopyWithImpl(this._value, this._then);
 
-  final VCHistoryItem _value;
   // ignore: unused_field
-  final $Res Function(VCHistoryItem) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$VCHistoryItemTxCopyWith<$Res> {
-  factory _$VCHistoryItemTxCopyWith(
-          _VCHistoryItemTx value, $Res Function(_VCHistoryItemTx) then) =
-      __$VCHistoryItemTxCopyWithImpl<$Res>;
+abstract class _$$_VCHistoryItemTxCopyWith<$Res> {
+  factory _$$_VCHistoryItemTxCopyWith(
+          _$_VCHistoryItemTx value, $Res Function(_$_VCHistoryItemTx) then) =
+      __$$_VCHistoryItemTxCopyWithImpl<$Res>;
+  @useResult
   $Res call({VCTxRequest request, VCTxResponse response, DateTime timestamp});
 
   $VCTxRequestCopyWith<$Res> get request;
@@ -3761,32 +3545,30 @@ abstract class _$VCHistoryItemTxCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$VCHistoryItemTxCopyWithImpl<$Res>
-    extends _$VCHistoryItemCopyWithImpl<$Res>
-    implements _$VCHistoryItemTxCopyWith<$Res> {
-  __$VCHistoryItemTxCopyWithImpl(
-      _VCHistoryItemTx _value, $Res Function(_VCHistoryItemTx) _then)
-      : super(_value, (v) => _then(v as _VCHistoryItemTx));
+class __$$_VCHistoryItemTxCopyWithImpl<$Res>
+    extends _$VCHistoryItemCopyWithImpl<$Res, _$_VCHistoryItemTx>
+    implements _$$_VCHistoryItemTxCopyWith<$Res> {
+  __$$_VCHistoryItemTxCopyWithImpl(
+      _$_VCHistoryItemTx _value, $Res Function(_$_VCHistoryItemTx) _then)
+      : super(_value, _then);
 
-  @override
-  _VCHistoryItemTx get _value => super._value as _VCHistoryItemTx;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
-    Object? response = freezed,
-    Object? timestamp = freezed,
+    Object? request = null,
+    Object? response = null,
+    Object? timestamp = null,
   }) {
-    return _then(_VCHistoryItemTx(
-      request: request == freezed
+    return _then(_$_VCHistoryItemTx(
+      request: null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as VCTxRequest,
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as VCTxResponse,
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -3794,6 +3576,7 @@ class __$VCHistoryItemTxCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCTxRequestCopyWith<$Res> get request {
     return $VCTxRequestCopyWith<$Res>(_value.request, (value) {
       return _then(_value.copyWith(request: value));
@@ -3801,6 +3584,7 @@ class __$VCHistoryItemTxCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCTxResponseCopyWith<$Res> get response {
     return $VCTxResponseCopyWith<$Res>(_value.response, (value) {
       return _then(_value.copyWith(response: value));
@@ -3831,23 +3615,22 @@ class _$_VCHistoryItemTx extends _VCHistoryItemTx {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCHistoryItemTx &&
-            const DeepCollectionEquality().equals(other.request, request) &&
-            const DeepCollectionEquality().equals(other.response, response) &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp));
+            other is _$_VCHistoryItemTx &&
+            (identical(other.request, request) || other.request == request) &&
+            (identical(other.response, response) ||
+                other.response == response) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(request),
-      const DeepCollectionEquality().hash(response),
-      const DeepCollectionEquality().hash(timestamp));
+  int get hashCode => Object.hash(runtimeType, request, response, timestamp);
 
   @JsonKey(ignore: true)
   @override
-  _$VCHistoryItemTxCopyWith<_VCHistoryItemTx> get copyWith =>
-      __$VCHistoryItemTxCopyWithImpl<_VCHistoryItemTx>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCHistoryItemTxCopyWith<_$_VCHistoryItemTx> get copyWith =>
+      __$$_VCHistoryItemTxCopyWithImpl<_$_VCHistoryItemTx>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -3869,15 +3652,15 @@ class _$_VCHistoryItemTx extends _VCHistoryItemTx {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             VCTxRequest request, VCTxResponse response, DateTime timestamp)?
         tx,
-    TResult Function(
+    TResult? Function(
             VCSignRequest request, VCSignResponse response, DateTime timestamp)?
         sign,
-    TResult Function(JsonRpcRequest request, Object error, DateTime timestamp)?
+    TResult? Function(JsonRpcRequest request, Object error, DateTime timestamp)?
         invalid,
-    TResult Function(VCRequest request)? current,
+    TResult? Function(VCRequest request)? current,
   }) {
     return tx?.call(request, response, timestamp);
   }
@@ -3916,10 +3699,10 @@ class _$_VCHistoryItemTx extends _VCHistoryItemTx {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCHistoryItemTx value)? tx,
-    TResult Function(_VCHistoryItemSign value)? sign,
-    TResult Function(_VCHistoryItemInvalid value)? invalid,
-    TResult Function(_VCHistoryItemCurrent value)? current,
+    TResult? Function(_VCHistoryItemTx value)? tx,
+    TResult? Function(_VCHistoryItemSign value)? sign,
+    TResult? Function(_VCHistoryItemInvalid value)? invalid,
+    TResult? Function(_VCHistoryItemCurrent value)? current,
   }) {
     return tx?.call(this);
   }
@@ -3942,24 +3725,25 @@ class _$_VCHistoryItemTx extends _VCHistoryItemTx {
 
 abstract class _VCHistoryItemTx extends VCHistoryItem {
   const factory _VCHistoryItemTx(
-      {required VCTxRequest request,
-      required VCTxResponse response,
-      required DateTime timestamp}) = _$_VCHistoryItemTx;
+      {required final VCTxRequest request,
+      required final VCTxResponse response,
+      required final DateTime timestamp}) = _$_VCHistoryItemTx;
   const _VCHistoryItemTx._() : super._();
 
   VCTxRequest get request;
   VCTxResponse get response;
   DateTime get timestamp;
   @JsonKey(ignore: true)
-  _$VCHistoryItemTxCopyWith<_VCHistoryItemTx> get copyWith =>
+  _$$_VCHistoryItemTxCopyWith<_$_VCHistoryItemTx> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCHistoryItemSignCopyWith<$Res> {
-  factory _$VCHistoryItemSignCopyWith(
-          _VCHistoryItemSign value, $Res Function(_VCHistoryItemSign) then) =
-      __$VCHistoryItemSignCopyWithImpl<$Res>;
+abstract class _$$_VCHistoryItemSignCopyWith<$Res> {
+  factory _$$_VCHistoryItemSignCopyWith(_$_VCHistoryItemSign value,
+          $Res Function(_$_VCHistoryItemSign) then) =
+      __$$_VCHistoryItemSignCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {VCSignRequest request, VCSignResponse response, DateTime timestamp});
 
@@ -3968,32 +3752,30 @@ abstract class _$VCHistoryItemSignCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$VCHistoryItemSignCopyWithImpl<$Res>
-    extends _$VCHistoryItemCopyWithImpl<$Res>
-    implements _$VCHistoryItemSignCopyWith<$Res> {
-  __$VCHistoryItemSignCopyWithImpl(
-      _VCHistoryItemSign _value, $Res Function(_VCHistoryItemSign) _then)
-      : super(_value, (v) => _then(v as _VCHistoryItemSign));
+class __$$_VCHistoryItemSignCopyWithImpl<$Res>
+    extends _$VCHistoryItemCopyWithImpl<$Res, _$_VCHistoryItemSign>
+    implements _$$_VCHistoryItemSignCopyWith<$Res> {
+  __$$_VCHistoryItemSignCopyWithImpl(
+      _$_VCHistoryItemSign _value, $Res Function(_$_VCHistoryItemSign) _then)
+      : super(_value, _then);
 
-  @override
-  _VCHistoryItemSign get _value => super._value as _VCHistoryItemSign;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
-    Object? response = freezed,
-    Object? timestamp = freezed,
+    Object? request = null,
+    Object? response = null,
+    Object? timestamp = null,
   }) {
-    return _then(_VCHistoryItemSign(
-      request: request == freezed
+    return _then(_$_VCHistoryItemSign(
+      request: null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as VCSignRequest,
-      response: response == freezed
+      response: null == response
           ? _value.response
           : response // ignore: cast_nullable_to_non_nullable
               as VCSignResponse,
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -4001,6 +3783,7 @@ class __$VCHistoryItemSignCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCSignRequestCopyWith<$Res> get request {
     return $VCSignRequestCopyWith<$Res>(_value.request, (value) {
       return _then(_value.copyWith(request: value));
@@ -4008,6 +3791,7 @@ class __$VCHistoryItemSignCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCSignResponseCopyWith<$Res> get response {
     return $VCSignResponseCopyWith<$Res>(_value.response, (value) {
       return _then(_value.copyWith(response: value));
@@ -4038,23 +3822,23 @@ class _$_VCHistoryItemSign extends _VCHistoryItemSign {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCHistoryItemSign &&
-            const DeepCollectionEquality().equals(other.request, request) &&
-            const DeepCollectionEquality().equals(other.response, response) &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp));
+            other is _$_VCHistoryItemSign &&
+            (identical(other.request, request) || other.request == request) &&
+            (identical(other.response, response) ||
+                other.response == response) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(request),
-      const DeepCollectionEquality().hash(response),
-      const DeepCollectionEquality().hash(timestamp));
+  int get hashCode => Object.hash(runtimeType, request, response, timestamp);
 
   @JsonKey(ignore: true)
   @override
-  _$VCHistoryItemSignCopyWith<_VCHistoryItemSign> get copyWith =>
-      __$VCHistoryItemSignCopyWithImpl<_VCHistoryItemSign>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VCHistoryItemSignCopyWith<_$_VCHistoryItemSign> get copyWith =>
+      __$$_VCHistoryItemSignCopyWithImpl<_$_VCHistoryItemSign>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -4076,15 +3860,15 @@ class _$_VCHistoryItemSign extends _VCHistoryItemSign {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             VCTxRequest request, VCTxResponse response, DateTime timestamp)?
         tx,
-    TResult Function(
+    TResult? Function(
             VCSignRequest request, VCSignResponse response, DateTime timestamp)?
         sign,
-    TResult Function(JsonRpcRequest request, Object error, DateTime timestamp)?
+    TResult? Function(JsonRpcRequest request, Object error, DateTime timestamp)?
         invalid,
-    TResult Function(VCRequest request)? current,
+    TResult? Function(VCRequest request)? current,
   }) {
     return sign?.call(request, response, timestamp);
   }
@@ -4123,10 +3907,10 @@ class _$_VCHistoryItemSign extends _VCHistoryItemSign {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCHistoryItemTx value)? tx,
-    TResult Function(_VCHistoryItemSign value)? sign,
-    TResult Function(_VCHistoryItemInvalid value)? invalid,
-    TResult Function(_VCHistoryItemCurrent value)? current,
+    TResult? Function(_VCHistoryItemTx value)? tx,
+    TResult? Function(_VCHistoryItemSign value)? sign,
+    TResult? Function(_VCHistoryItemInvalid value)? invalid,
+    TResult? Function(_VCHistoryItemCurrent value)? current,
   }) {
     return sign?.call(this);
   }
@@ -4149,56 +3933,52 @@ class _$_VCHistoryItemSign extends _VCHistoryItemSign {
 
 abstract class _VCHistoryItemSign extends VCHistoryItem {
   const factory _VCHistoryItemSign(
-      {required VCSignRequest request,
-      required VCSignResponse response,
-      required DateTime timestamp}) = _$_VCHistoryItemSign;
+      {required final VCSignRequest request,
+      required final VCSignResponse response,
+      required final DateTime timestamp}) = _$_VCHistoryItemSign;
   const _VCHistoryItemSign._() : super._();
 
   VCSignRequest get request;
   VCSignResponse get response;
   DateTime get timestamp;
   @JsonKey(ignore: true)
-  _$VCHistoryItemSignCopyWith<_VCHistoryItemSign> get copyWith =>
+  _$$_VCHistoryItemSignCopyWith<_$_VCHistoryItemSign> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCHistoryItemInvalidCopyWith<$Res> {
-  factory _$VCHistoryItemInvalidCopyWith(_VCHistoryItemInvalid value,
-          $Res Function(_VCHistoryItemInvalid) then) =
-      __$VCHistoryItemInvalidCopyWithImpl<$Res>;
+abstract class _$$_VCHistoryItemInvalidCopyWith<$Res> {
+  factory _$$_VCHistoryItemInvalidCopyWith(_$_VCHistoryItemInvalid value,
+          $Res Function(_$_VCHistoryItemInvalid) then) =
+      __$$_VCHistoryItemInvalidCopyWithImpl<$Res>;
+  @useResult
   $Res call({JsonRpcRequest request, Object error, DateTime timestamp});
 
   $JsonRpcRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
-class __$VCHistoryItemInvalidCopyWithImpl<$Res>
-    extends _$VCHistoryItemCopyWithImpl<$Res>
-    implements _$VCHistoryItemInvalidCopyWith<$Res> {
-  __$VCHistoryItemInvalidCopyWithImpl(
-      _VCHistoryItemInvalid _value, $Res Function(_VCHistoryItemInvalid) _then)
-      : super(_value, (v) => _then(v as _VCHistoryItemInvalid));
+class __$$_VCHistoryItemInvalidCopyWithImpl<$Res>
+    extends _$VCHistoryItemCopyWithImpl<$Res, _$_VCHistoryItemInvalid>
+    implements _$$_VCHistoryItemInvalidCopyWith<$Res> {
+  __$$_VCHistoryItemInvalidCopyWithImpl(_$_VCHistoryItemInvalid _value,
+      $Res Function(_$_VCHistoryItemInvalid) _then)
+      : super(_value, _then);
 
-  @override
-  _VCHistoryItemInvalid get _value => super._value as _VCHistoryItemInvalid;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
-    Object? error = freezed,
-    Object? timestamp = freezed,
+    Object? request = null,
+    Object? error = null,
+    Object? timestamp = null,
   }) {
-    return _then(_VCHistoryItemInvalid(
-      request: request == freezed
+    return _then(_$_VCHistoryItemInvalid(
+      request: null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as JsonRpcRequest,
-      error: error == freezed
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as Object,
-      timestamp: timestamp == freezed
+      error: null == error ? _value.error : error,
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -4206,6 +3986,7 @@ class __$VCHistoryItemInvalidCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $JsonRpcRequestCopyWith<$Res> get request {
     return $JsonRpcRequestCopyWith<$Res>(_value.request, (value) {
       return _then(_value.copyWith(request: value));
@@ -4236,23 +4017,22 @@ class _$_VCHistoryItemInvalid extends _VCHistoryItemInvalid {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCHistoryItemInvalid &&
-            const DeepCollectionEquality().equals(other.request, request) &&
+            other is _$_VCHistoryItemInvalid &&
+            (identical(other.request, request) || other.request == request) &&
             const DeepCollectionEquality().equals(other.error, error) &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp));
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(request),
-      const DeepCollectionEquality().hash(error),
-      const DeepCollectionEquality().hash(timestamp));
+  int get hashCode => Object.hash(runtimeType, request,
+      const DeepCollectionEquality().hash(error), timestamp);
 
   @JsonKey(ignore: true)
   @override
-  _$VCHistoryItemInvalidCopyWith<_VCHistoryItemInvalid> get copyWith =>
-      __$VCHistoryItemInvalidCopyWithImpl<_VCHistoryItemInvalid>(
+  @pragma('vm:prefer-inline')
+  _$$_VCHistoryItemInvalidCopyWith<_$_VCHistoryItemInvalid> get copyWith =>
+      __$$_VCHistoryItemInvalidCopyWithImpl<_$_VCHistoryItemInvalid>(
           this, _$identity);
 
   @override
@@ -4275,15 +4055,15 @@ class _$_VCHistoryItemInvalid extends _VCHistoryItemInvalid {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             VCTxRequest request, VCTxResponse response, DateTime timestamp)?
         tx,
-    TResult Function(
+    TResult? Function(
             VCSignRequest request, VCSignResponse response, DateTime timestamp)?
         sign,
-    TResult Function(JsonRpcRequest request, Object error, DateTime timestamp)?
+    TResult? Function(JsonRpcRequest request, Object error, DateTime timestamp)?
         invalid,
-    TResult Function(VCRequest request)? current,
+    TResult? Function(VCRequest request)? current,
   }) {
     return invalid?.call(request, error, timestamp);
   }
@@ -4322,10 +4102,10 @@ class _$_VCHistoryItemInvalid extends _VCHistoryItemInvalid {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCHistoryItemTx value)? tx,
-    TResult Function(_VCHistoryItemSign value)? sign,
-    TResult Function(_VCHistoryItemInvalid value)? invalid,
-    TResult Function(_VCHistoryItemCurrent value)? current,
+    TResult? Function(_VCHistoryItemTx value)? tx,
+    TResult? Function(_VCHistoryItemSign value)? sign,
+    TResult? Function(_VCHistoryItemInvalid value)? invalid,
+    TResult? Function(_VCHistoryItemCurrent value)? current,
   }) {
     return invalid?.call(this);
   }
@@ -4348,46 +4128,45 @@ class _$_VCHistoryItemInvalid extends _VCHistoryItemInvalid {
 
 abstract class _VCHistoryItemInvalid extends VCHistoryItem {
   const factory _VCHistoryItemInvalid(
-      {required JsonRpcRequest request,
-      required Object error,
-      required DateTime timestamp}) = _$_VCHistoryItemInvalid;
+      {required final JsonRpcRequest request,
+      required final Object error,
+      required final DateTime timestamp}) = _$_VCHistoryItemInvalid;
   const _VCHistoryItemInvalid._() : super._();
 
   JsonRpcRequest get request;
   Object get error;
   DateTime get timestamp;
   @JsonKey(ignore: true)
-  _$VCHistoryItemInvalidCopyWith<_VCHistoryItemInvalid> get copyWith =>
+  _$$_VCHistoryItemInvalidCopyWith<_$_VCHistoryItemInvalid> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VCHistoryItemCurrentCopyWith<$Res> {
-  factory _$VCHistoryItemCurrentCopyWith(_VCHistoryItemCurrent value,
-          $Res Function(_VCHistoryItemCurrent) then) =
-      __$VCHistoryItemCurrentCopyWithImpl<$Res>;
+abstract class _$$_VCHistoryItemCurrentCopyWith<$Res> {
+  factory _$$_VCHistoryItemCurrentCopyWith(_$_VCHistoryItemCurrent value,
+          $Res Function(_$_VCHistoryItemCurrent) then) =
+      __$$_VCHistoryItemCurrentCopyWithImpl<$Res>;
+  @useResult
   $Res call({VCRequest request});
 
   $VCRequestCopyWith<$Res> get request;
 }
 
 /// @nodoc
-class __$VCHistoryItemCurrentCopyWithImpl<$Res>
-    extends _$VCHistoryItemCopyWithImpl<$Res>
-    implements _$VCHistoryItemCurrentCopyWith<$Res> {
-  __$VCHistoryItemCurrentCopyWithImpl(
-      _VCHistoryItemCurrent _value, $Res Function(_VCHistoryItemCurrent) _then)
-      : super(_value, (v) => _then(v as _VCHistoryItemCurrent));
+class __$$_VCHistoryItemCurrentCopyWithImpl<$Res>
+    extends _$VCHistoryItemCopyWithImpl<$Res, _$_VCHistoryItemCurrent>
+    implements _$$_VCHistoryItemCurrentCopyWith<$Res> {
+  __$$_VCHistoryItemCurrentCopyWithImpl(_$_VCHistoryItemCurrent _value,
+      $Res Function(_$_VCHistoryItemCurrent) _then)
+      : super(_value, _then);
 
-  @override
-  _VCHistoryItemCurrent get _value => super._value as _VCHistoryItemCurrent;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? request = freezed,
+    Object? request = null,
   }) {
-    return _then(_VCHistoryItemCurrent(
-      request: request == freezed
+    return _then(_$_VCHistoryItemCurrent(
+      request: null == request
           ? _value.request
           : request // ignore: cast_nullable_to_non_nullable
               as VCRequest,
@@ -4395,6 +4174,7 @@ class __$VCHistoryItemCurrentCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VCRequestCopyWith<$Res> get request {
     return $VCRequestCopyWith<$Res>(_value.request, (value) {
       return _then(_value.copyWith(request: value));
@@ -4419,18 +4199,18 @@ class _$_VCHistoryItemCurrent extends _VCHistoryItemCurrent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCHistoryItemCurrent &&
-            const DeepCollectionEquality().equals(other.request, request));
+            other is _$_VCHistoryItemCurrent &&
+            (identical(other.request, request) || other.request == request));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(request));
+  int get hashCode => Object.hash(runtimeType, request);
 
   @JsonKey(ignore: true)
   @override
-  _$VCHistoryItemCurrentCopyWith<_VCHistoryItemCurrent> get copyWith =>
-      __$VCHistoryItemCurrentCopyWithImpl<_VCHistoryItemCurrent>(
+  @pragma('vm:prefer-inline')
+  _$$_VCHistoryItemCurrentCopyWith<_$_VCHistoryItemCurrent> get copyWith =>
+      __$$_VCHistoryItemCurrentCopyWithImpl<_$_VCHistoryItemCurrent>(
           this, _$identity);
 
   @override
@@ -4453,15 +4233,15 @@ class _$_VCHistoryItemCurrent extends _VCHistoryItemCurrent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(
+    TResult? Function(
             VCTxRequest request, VCTxResponse response, DateTime timestamp)?
         tx,
-    TResult Function(
+    TResult? Function(
             VCSignRequest request, VCSignResponse response, DateTime timestamp)?
         sign,
-    TResult Function(JsonRpcRequest request, Object error, DateTime timestamp)?
+    TResult? Function(JsonRpcRequest request, Object error, DateTime timestamp)?
         invalid,
-    TResult Function(VCRequest request)? current,
+    TResult? Function(VCRequest request)? current,
   }) {
     return current?.call(request);
   }
@@ -4500,10 +4280,10 @@ class _$_VCHistoryItemCurrent extends _VCHistoryItemCurrent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VCHistoryItemTx value)? tx,
-    TResult Function(_VCHistoryItemSign value)? sign,
-    TResult Function(_VCHistoryItemInvalid value)? invalid,
-    TResult Function(_VCHistoryItemCurrent value)? current,
+    TResult? Function(_VCHistoryItemTx value)? tx,
+    TResult? Function(_VCHistoryItemSign value)? sign,
+    TResult? Function(_VCHistoryItemInvalid value)? invalid,
+    TResult? Function(_VCHistoryItemCurrent value)? current,
   }) {
     return current?.call(this);
   }
@@ -4525,38 +4305,19 @@ class _$_VCHistoryItemCurrent extends _VCHistoryItemCurrent {
 }
 
 abstract class _VCHistoryItemCurrent extends VCHistoryItem {
-  const factory _VCHistoryItemCurrent({required VCRequest request}) =
+  const factory _VCHistoryItemCurrent({required final VCRequest request}) =
       _$_VCHistoryItemCurrent;
   const _VCHistoryItemCurrent._() : super._();
 
   VCRequest get request;
   @JsonKey(ignore: true)
-  _$VCHistoryItemCurrentCopyWith<_VCHistoryItemCurrent> get copyWith =>
+  _$$_VCHistoryItemCurrentCopyWith<_$_VCHistoryItemCurrent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 VCError _$VCErrorFromJson(Map<String, dynamic> json) {
   return _VCError.fromJson(json);
 }
-
-/// @nodoc
-class _$VCErrorTearOff {
-  const _$VCErrorTearOff();
-
-  _VCError call({required int code, String? message}) {
-    return _VCError(
-      code: code,
-      message: message,
-    );
-  }
-
-  VCError fromJson(Map<String, Object?> json) {
-    return VCError.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VCError = _$VCErrorTearOff();
 
 /// @nodoc
 mixin _$VCError {
@@ -4571,64 +4332,69 @@ mixin _$VCError {
 /// @nodoc
 abstract class $VCErrorCopyWith<$Res> {
   factory $VCErrorCopyWith(VCError value, $Res Function(VCError) then) =
-      _$VCErrorCopyWithImpl<$Res>;
+      _$VCErrorCopyWithImpl<$Res, VCError>;
+  @useResult
   $Res call({int code, String? message});
 }
 
 /// @nodoc
-class _$VCErrorCopyWithImpl<$Res> implements $VCErrorCopyWith<$Res> {
+class _$VCErrorCopyWithImpl<$Res, $Val extends VCError>
+    implements $VCErrorCopyWith<$Res> {
   _$VCErrorCopyWithImpl(this._value, this._then);
 
-  final VCError _value;
   // ignore: unused_field
-  final $Res Function(VCError) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = freezed,
+    Object? code = null,
     Object? message = freezed,
   }) {
     return _then(_value.copyWith(
-      code: code == freezed
+      code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as int,
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VCErrorCopyWith<$Res> implements $VCErrorCopyWith<$Res> {
-  factory _$VCErrorCopyWith(_VCError value, $Res Function(_VCError) then) =
-      __$VCErrorCopyWithImpl<$Res>;
+abstract class _$$_VCErrorCopyWith<$Res> implements $VCErrorCopyWith<$Res> {
+  factory _$$_VCErrorCopyWith(
+          _$_VCError value, $Res Function(_$_VCError) then) =
+      __$$_VCErrorCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int code, String? message});
 }
 
 /// @nodoc
-class __$VCErrorCopyWithImpl<$Res> extends _$VCErrorCopyWithImpl<$Res>
-    implements _$VCErrorCopyWith<$Res> {
-  __$VCErrorCopyWithImpl(_VCError _value, $Res Function(_VCError) _then)
-      : super(_value, (v) => _then(v as _VCError));
+class __$$_VCErrorCopyWithImpl<$Res>
+    extends _$VCErrorCopyWithImpl<$Res, _$_VCError>
+    implements _$$_VCErrorCopyWith<$Res> {
+  __$$_VCErrorCopyWithImpl(_$_VCError _value, $Res Function(_$_VCError) _then)
+      : super(_value, _then);
 
-  @override
-  _VCError get _value => super._value as _VCError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? code = freezed,
+    Object? code = null,
     Object? message = freezed,
   }) {
-    return _then(_VCError(
-      code: code == freezed
+    return _then(_$_VCError(
+      code: null == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as int,
-      message: message == freezed
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -4658,30 +4424,32 @@ class _$_VCError implements _VCError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VCError &&
-            const DeepCollectionEquality().equals(other.code, code) &&
-            const DeepCollectionEquality().equals(other.message, message));
+            other is _$_VCError &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.message, message) || other.message == message));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(code),
-      const DeepCollectionEquality().hash(message));
 
   @JsonKey(ignore: true)
   @override
-  _$VCErrorCopyWith<_VCError> get copyWith =>
-      __$VCErrorCopyWithImpl<_VCError>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, code, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VCErrorCopyWith<_$_VCError> get copyWith =>
+      __$$_VCErrorCopyWithImpl<_$_VCError>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VCErrorToJson(this);
+    return _$$_VCErrorToJson(
+      this,
+    );
   }
 }
 
 abstract class _VCError implements VCError {
-  const factory _VCError({required int code, String? message}) = _$_VCError;
+  const factory _VCError({required final int code, final String? message}) =
+      _$_VCError;
 
   factory _VCError.fromJson(Map<String, dynamic> json) = _$_VCError.fromJson;
 
@@ -4691,6 +4459,6 @@ abstract class _VCError implements VCError {
   String? get message;
   @override
   @JsonKey(ignore: true)
-  _$VCErrorCopyWith<_VCError> get copyWith =>
+  _$$_VCErrorCopyWith<_$_VCError> get copyWith =>
       throw _privateConstructorUsedError;
 }

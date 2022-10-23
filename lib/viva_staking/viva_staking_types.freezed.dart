@@ -12,42 +12,7 @@ part of 'viva_staking_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VivaPoolInfoTearOff {
-  const _$VivaPoolInfoTearOff();
-
-  _VivaPoolInfo call(
-      {required Token stakingToken,
-      required Token rewardToken,
-      required BigInt totalStakingBalance,
-      required BigInt totalRewardBalance,
-      required BigInt startBlock,
-      required BigInt endBlock,
-      required BigInt latestRewardBlock,
-      required BigInt rewardPerPeriod,
-      required BigInt rewardPerToken,
-      required BigInt paidOut,
-      required BigInt poolId}) {
-    return _VivaPoolInfo(
-      stakingToken: stakingToken,
-      rewardToken: rewardToken,
-      totalStakingBalance: totalStakingBalance,
-      totalRewardBalance: totalRewardBalance,
-      startBlock: startBlock,
-      endBlock: endBlock,
-      latestRewardBlock: latestRewardBlock,
-      rewardPerPeriod: rewardPerPeriod,
-      rewardPerToken: rewardPerToken,
-      paidOut: paidOut,
-      poolId: poolId,
-    );
-  }
-}
-
-/// @nodoc
-const $VivaPoolInfo = _$VivaPoolInfoTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VivaPoolInfo {
@@ -72,7 +37,8 @@ mixin _$VivaPoolInfo {
 abstract class $VivaPoolInfoCopyWith<$Res> {
   factory $VivaPoolInfoCopyWith(
           VivaPoolInfo value, $Res Function(VivaPoolInfo) then) =
-      _$VivaPoolInfoCopyWithImpl<$Res>;
+      _$VivaPoolInfoCopyWithImpl<$Res, VivaPoolInfo>;
+  @useResult
   $Res call(
       {Token stakingToken,
       Token rewardToken,
@@ -91,97 +57,103 @@ abstract class $VivaPoolInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VivaPoolInfoCopyWithImpl<$Res> implements $VivaPoolInfoCopyWith<$Res> {
+class _$VivaPoolInfoCopyWithImpl<$Res, $Val extends VivaPoolInfo>
+    implements $VivaPoolInfoCopyWith<$Res> {
   _$VivaPoolInfoCopyWithImpl(this._value, this._then);
 
-  final VivaPoolInfo _value;
   // ignore: unused_field
-  final $Res Function(VivaPoolInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stakingToken = freezed,
-    Object? rewardToken = freezed,
-    Object? totalStakingBalance = freezed,
-    Object? totalRewardBalance = freezed,
-    Object? startBlock = freezed,
-    Object? endBlock = freezed,
-    Object? latestRewardBlock = freezed,
-    Object? rewardPerPeriod = freezed,
-    Object? rewardPerToken = freezed,
-    Object? paidOut = freezed,
-    Object? poolId = freezed,
+    Object? stakingToken = null,
+    Object? rewardToken = null,
+    Object? totalStakingBalance = null,
+    Object? totalRewardBalance = null,
+    Object? startBlock = null,
+    Object? endBlock = null,
+    Object? latestRewardBlock = null,
+    Object? rewardPerPeriod = null,
+    Object? rewardPerToken = null,
+    Object? paidOut = null,
+    Object? poolId = null,
   }) {
     return _then(_value.copyWith(
-      stakingToken: stakingToken == freezed
+      stakingToken: null == stakingToken
           ? _value.stakingToken
           : stakingToken // ignore: cast_nullable_to_non_nullable
               as Token,
-      rewardToken: rewardToken == freezed
+      rewardToken: null == rewardToken
           ? _value.rewardToken
           : rewardToken // ignore: cast_nullable_to_non_nullable
               as Token,
-      totalStakingBalance: totalStakingBalance == freezed
+      totalStakingBalance: null == totalStakingBalance
           ? _value.totalStakingBalance
           : totalStakingBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      totalRewardBalance: totalRewardBalance == freezed
+      totalRewardBalance: null == totalRewardBalance
           ? _value.totalRewardBalance
           : totalRewardBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      startBlock: startBlock == freezed
+      startBlock: null == startBlock
           ? _value.startBlock
           : startBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      endBlock: endBlock == freezed
+      endBlock: null == endBlock
           ? _value.endBlock
           : endBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      latestRewardBlock: latestRewardBlock == freezed
+      latestRewardBlock: null == latestRewardBlock
           ? _value.latestRewardBlock
           : latestRewardBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      rewardPerPeriod: rewardPerPeriod == freezed
+      rewardPerPeriod: null == rewardPerPeriod
           ? _value.rewardPerPeriod
           : rewardPerPeriod // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      rewardPerToken: rewardPerToken == freezed
+      rewardPerToken: null == rewardPerToken
           ? _value.rewardPerToken
           : rewardPerToken // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      paidOut: paidOut == freezed
+      paidOut: null == paidOut
           ? _value.paidOut
           : paidOut // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      poolId: poolId == freezed
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenCopyWith<$Res> get stakingToken {
     return $TokenCopyWith<$Res>(_value.stakingToken, (value) {
-      return _then(_value.copyWith(stakingToken: value));
+      return _then(_value.copyWith(stakingToken: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenCopyWith<$Res> get rewardToken {
     return $TokenCopyWith<$Res>(_value.rewardToken, (value) {
-      return _then(_value.copyWith(rewardToken: value));
+      return _then(_value.copyWith(rewardToken: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VivaPoolInfoCopyWith<$Res>
+abstract class _$$_VivaPoolInfoCopyWith<$Res>
     implements $VivaPoolInfoCopyWith<$Res> {
-  factory _$VivaPoolInfoCopyWith(
-          _VivaPoolInfo value, $Res Function(_VivaPoolInfo) then) =
-      __$VivaPoolInfoCopyWithImpl<$Res>;
+  factory _$$_VivaPoolInfoCopyWith(
+          _$_VivaPoolInfo value, $Res Function(_$_VivaPoolInfo) then) =
+      __$$_VivaPoolInfoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Token stakingToken,
       Token rewardToken,
@@ -202,71 +174,70 @@ abstract class _$VivaPoolInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VivaPoolInfoCopyWithImpl<$Res> extends _$VivaPoolInfoCopyWithImpl<$Res>
-    implements _$VivaPoolInfoCopyWith<$Res> {
-  __$VivaPoolInfoCopyWithImpl(
-      _VivaPoolInfo _value, $Res Function(_VivaPoolInfo) _then)
-      : super(_value, (v) => _then(v as _VivaPoolInfo));
+class __$$_VivaPoolInfoCopyWithImpl<$Res>
+    extends _$VivaPoolInfoCopyWithImpl<$Res, _$_VivaPoolInfo>
+    implements _$$_VivaPoolInfoCopyWith<$Res> {
+  __$$_VivaPoolInfoCopyWithImpl(
+      _$_VivaPoolInfo _value, $Res Function(_$_VivaPoolInfo) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaPoolInfo get _value => super._value as _VivaPoolInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stakingToken = freezed,
-    Object? rewardToken = freezed,
-    Object? totalStakingBalance = freezed,
-    Object? totalRewardBalance = freezed,
-    Object? startBlock = freezed,
-    Object? endBlock = freezed,
-    Object? latestRewardBlock = freezed,
-    Object? rewardPerPeriod = freezed,
-    Object? rewardPerToken = freezed,
-    Object? paidOut = freezed,
-    Object? poolId = freezed,
+    Object? stakingToken = null,
+    Object? rewardToken = null,
+    Object? totalStakingBalance = null,
+    Object? totalRewardBalance = null,
+    Object? startBlock = null,
+    Object? endBlock = null,
+    Object? latestRewardBlock = null,
+    Object? rewardPerPeriod = null,
+    Object? rewardPerToken = null,
+    Object? paidOut = null,
+    Object? poolId = null,
   }) {
-    return _then(_VivaPoolInfo(
-      stakingToken: stakingToken == freezed
+    return _then(_$_VivaPoolInfo(
+      stakingToken: null == stakingToken
           ? _value.stakingToken
           : stakingToken // ignore: cast_nullable_to_non_nullable
               as Token,
-      rewardToken: rewardToken == freezed
+      rewardToken: null == rewardToken
           ? _value.rewardToken
           : rewardToken // ignore: cast_nullable_to_non_nullable
               as Token,
-      totalStakingBalance: totalStakingBalance == freezed
+      totalStakingBalance: null == totalStakingBalance
           ? _value.totalStakingBalance
           : totalStakingBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      totalRewardBalance: totalRewardBalance == freezed
+      totalRewardBalance: null == totalRewardBalance
           ? _value.totalRewardBalance
           : totalRewardBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      startBlock: startBlock == freezed
+      startBlock: null == startBlock
           ? _value.startBlock
           : startBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      endBlock: endBlock == freezed
+      endBlock: null == endBlock
           ? _value.endBlock
           : endBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      latestRewardBlock: latestRewardBlock == freezed
+      latestRewardBlock: null == latestRewardBlock
           ? _value.latestRewardBlock
           : latestRewardBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      rewardPerPeriod: rewardPerPeriod == freezed
+      rewardPerPeriod: null == rewardPerPeriod
           ? _value.rewardPerPeriod
           : rewardPerPeriod // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      rewardPerToken: rewardPerToken == freezed
+      rewardPerToken: null == rewardPerToken
           ? _value.rewardPerToken
           : rewardPerToken // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      paidOut: paidOut == freezed
+      paidOut: null == paidOut
           ? _value.paidOut
           : paidOut // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      poolId: poolId == freezed
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -323,62 +294,64 @@ class _$_VivaPoolInfo extends _VivaPoolInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaPoolInfo &&
-            const DeepCollectionEquality()
-                .equals(other.stakingToken, stakingToken) &&
-            const DeepCollectionEquality()
-                .equals(other.rewardToken, rewardToken) &&
-            const DeepCollectionEquality()
-                .equals(other.totalStakingBalance, totalStakingBalance) &&
-            const DeepCollectionEquality()
-                .equals(other.totalRewardBalance, totalRewardBalance) &&
-            const DeepCollectionEquality()
-                .equals(other.startBlock, startBlock) &&
-            const DeepCollectionEquality().equals(other.endBlock, endBlock) &&
-            const DeepCollectionEquality()
-                .equals(other.latestRewardBlock, latestRewardBlock) &&
-            const DeepCollectionEquality()
-                .equals(other.rewardPerPeriod, rewardPerPeriod) &&
-            const DeepCollectionEquality()
-                .equals(other.rewardPerToken, rewardPerToken) &&
-            const DeepCollectionEquality().equals(other.paidOut, paidOut) &&
-            const DeepCollectionEquality().equals(other.poolId, poolId));
+            other is _$_VivaPoolInfo &&
+            (identical(other.stakingToken, stakingToken) ||
+                other.stakingToken == stakingToken) &&
+            (identical(other.rewardToken, rewardToken) ||
+                other.rewardToken == rewardToken) &&
+            (identical(other.totalStakingBalance, totalStakingBalance) ||
+                other.totalStakingBalance == totalStakingBalance) &&
+            (identical(other.totalRewardBalance, totalRewardBalance) ||
+                other.totalRewardBalance == totalRewardBalance) &&
+            (identical(other.startBlock, startBlock) ||
+                other.startBlock == startBlock) &&
+            (identical(other.endBlock, endBlock) ||
+                other.endBlock == endBlock) &&
+            (identical(other.latestRewardBlock, latestRewardBlock) ||
+                other.latestRewardBlock == latestRewardBlock) &&
+            (identical(other.rewardPerPeriod, rewardPerPeriod) ||
+                other.rewardPerPeriod == rewardPerPeriod) &&
+            (identical(other.rewardPerToken, rewardPerToken) ||
+                other.rewardPerToken == rewardPerToken) &&
+            (identical(other.paidOut, paidOut) || other.paidOut == paidOut) &&
+            (identical(other.poolId, poolId) || other.poolId == poolId));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(stakingToken),
-      const DeepCollectionEquality().hash(rewardToken),
-      const DeepCollectionEquality().hash(totalStakingBalance),
-      const DeepCollectionEquality().hash(totalRewardBalance),
-      const DeepCollectionEquality().hash(startBlock),
-      const DeepCollectionEquality().hash(endBlock),
-      const DeepCollectionEquality().hash(latestRewardBlock),
-      const DeepCollectionEquality().hash(rewardPerPeriod),
-      const DeepCollectionEquality().hash(rewardPerToken),
-      const DeepCollectionEquality().hash(paidOut),
-      const DeepCollectionEquality().hash(poolId));
+      stakingToken,
+      rewardToken,
+      totalStakingBalance,
+      totalRewardBalance,
+      startBlock,
+      endBlock,
+      latestRewardBlock,
+      rewardPerPeriod,
+      rewardPerToken,
+      paidOut,
+      poolId);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaPoolInfoCopyWith<_VivaPoolInfo> get copyWith =>
-      __$VivaPoolInfoCopyWithImpl<_VivaPoolInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaPoolInfoCopyWith<_$_VivaPoolInfo> get copyWith =>
+      __$$_VivaPoolInfoCopyWithImpl<_$_VivaPoolInfo>(this, _$identity);
 }
 
 abstract class _VivaPoolInfo extends VivaPoolInfo {
   const factory _VivaPoolInfo(
-      {required Token stakingToken,
-      required Token rewardToken,
-      required BigInt totalStakingBalance,
-      required BigInt totalRewardBalance,
-      required BigInt startBlock,
-      required BigInt endBlock,
-      required BigInt latestRewardBlock,
-      required BigInt rewardPerPeriod,
-      required BigInt rewardPerToken,
-      required BigInt paidOut,
-      required BigInt poolId}) = _$_VivaPoolInfo;
+      {required final Token stakingToken,
+      required final Token rewardToken,
+      required final BigInt totalStakingBalance,
+      required final BigInt totalRewardBalance,
+      required final BigInt startBlock,
+      required final BigInt endBlock,
+      required final BigInt latestRewardBlock,
+      required final BigInt rewardPerPeriod,
+      required final BigInt rewardPerToken,
+      required final BigInt paidOut,
+      required final BigInt poolId}) = _$_VivaPoolInfo;
   const _VivaPoolInfo._() : super._();
 
   @override
@@ -405,30 +378,9 @@ abstract class _VivaPoolInfo extends VivaPoolInfo {
   BigInt get poolId;
   @override
   @JsonKey(ignore: true)
-  _$VivaPoolInfoCopyWith<_VivaPoolInfo> get copyWith =>
+  _$$_VivaPoolInfoCopyWith<_$_VivaPoolInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VivaPoolInfoAllTearOff {
-  const _$VivaPoolInfoAllTearOff();
-
-  _VivaPoolInfoAll call(
-      {required VivaPoolInfo poolInfo,
-      required VivaExtraPoolInfo extra,
-      required TokenInfo stakingTokenInfo,
-      required TokenInfo rewardTokenInfo}) {
-    return _VivaPoolInfoAll(
-      poolInfo: poolInfo,
-      extra: extra,
-      stakingTokenInfo: stakingTokenInfo,
-      rewardTokenInfo: rewardTokenInfo,
-    );
-  }
-}
-
-/// @nodoc
-const $VivaPoolInfoAll = _$VivaPoolInfoAllTearOff();
 
 /// @nodoc
 mixin _$VivaPoolInfoAll {
@@ -446,7 +398,8 @@ mixin _$VivaPoolInfoAll {
 abstract class $VivaPoolInfoAllCopyWith<$Res> {
   factory $VivaPoolInfoAllCopyWith(
           VivaPoolInfoAll value, $Res Function(VivaPoolInfoAll) then) =
-      _$VivaPoolInfoAllCopyWithImpl<$Res>;
+      _$VivaPoolInfoAllCopyWithImpl<$Res, VivaPoolInfoAll>;
+  @useResult
   $Res call(
       {VivaPoolInfo poolInfo,
       VivaExtraPoolInfo extra,
@@ -460,77 +413,84 @@ abstract class $VivaPoolInfoAllCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VivaPoolInfoAllCopyWithImpl<$Res>
+class _$VivaPoolInfoAllCopyWithImpl<$Res, $Val extends VivaPoolInfoAll>
     implements $VivaPoolInfoAllCopyWith<$Res> {
   _$VivaPoolInfoAllCopyWithImpl(this._value, this._then);
 
-  final VivaPoolInfoAll _value;
   // ignore: unused_field
-  final $Res Function(VivaPoolInfoAll) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? poolInfo = freezed,
-    Object? extra = freezed,
-    Object? stakingTokenInfo = freezed,
-    Object? rewardTokenInfo = freezed,
+    Object? poolInfo = null,
+    Object? extra = null,
+    Object? stakingTokenInfo = null,
+    Object? rewardTokenInfo = null,
   }) {
     return _then(_value.copyWith(
-      poolInfo: poolInfo == freezed
+      poolInfo: null == poolInfo
           ? _value.poolInfo
           : poolInfo // ignore: cast_nullable_to_non_nullable
               as VivaPoolInfo,
-      extra: extra == freezed
+      extra: null == extra
           ? _value.extra
           : extra // ignore: cast_nullable_to_non_nullable
               as VivaExtraPoolInfo,
-      stakingTokenInfo: stakingTokenInfo == freezed
+      stakingTokenInfo: null == stakingTokenInfo
           ? _value.stakingTokenInfo
           : stakingTokenInfo // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-      rewardTokenInfo: rewardTokenInfo == freezed
+      rewardTokenInfo: null == rewardTokenInfo
           ? _value.rewardTokenInfo
           : rewardTokenInfo // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VivaPoolInfoCopyWith<$Res> get poolInfo {
     return $VivaPoolInfoCopyWith<$Res>(_value.poolInfo, (value) {
-      return _then(_value.copyWith(poolInfo: value));
+      return _then(_value.copyWith(poolInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VivaExtraPoolInfoCopyWith<$Res> get extra {
     return $VivaExtraPoolInfoCopyWith<$Res>(_value.extra, (value) {
-      return _then(_value.copyWith(extra: value));
+      return _then(_value.copyWith(extra: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenInfoCopyWith<$Res> get stakingTokenInfo {
     return $TokenInfoCopyWith<$Res>(_value.stakingTokenInfo, (value) {
-      return _then(_value.copyWith(stakingTokenInfo: value));
+      return _then(_value.copyWith(stakingTokenInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenInfoCopyWith<$Res> get rewardTokenInfo {
     return $TokenInfoCopyWith<$Res>(_value.rewardTokenInfo, (value) {
-      return _then(_value.copyWith(rewardTokenInfo: value));
+      return _then(_value.copyWith(rewardTokenInfo: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VivaPoolInfoAllCopyWith<$Res>
+abstract class _$$_VivaPoolInfoAllCopyWith<$Res>
     implements $VivaPoolInfoAllCopyWith<$Res> {
-  factory _$VivaPoolInfoAllCopyWith(
-          _VivaPoolInfoAll value, $Res Function(_VivaPoolInfoAll) then) =
-      __$VivaPoolInfoAllCopyWithImpl<$Res>;
+  factory _$$_VivaPoolInfoAllCopyWith(
+          _$_VivaPoolInfoAll value, $Res Function(_$_VivaPoolInfoAll) then) =
+      __$$_VivaPoolInfoAllCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {VivaPoolInfo poolInfo,
       VivaExtraPoolInfo extra,
@@ -548,37 +508,35 @@ abstract class _$VivaPoolInfoAllCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VivaPoolInfoAllCopyWithImpl<$Res>
-    extends _$VivaPoolInfoAllCopyWithImpl<$Res>
-    implements _$VivaPoolInfoAllCopyWith<$Res> {
-  __$VivaPoolInfoAllCopyWithImpl(
-      _VivaPoolInfoAll _value, $Res Function(_VivaPoolInfoAll) _then)
-      : super(_value, (v) => _then(v as _VivaPoolInfoAll));
+class __$$_VivaPoolInfoAllCopyWithImpl<$Res>
+    extends _$VivaPoolInfoAllCopyWithImpl<$Res, _$_VivaPoolInfoAll>
+    implements _$$_VivaPoolInfoAllCopyWith<$Res> {
+  __$$_VivaPoolInfoAllCopyWithImpl(
+      _$_VivaPoolInfoAll _value, $Res Function(_$_VivaPoolInfoAll) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaPoolInfoAll get _value => super._value as _VivaPoolInfoAll;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? poolInfo = freezed,
-    Object? extra = freezed,
-    Object? stakingTokenInfo = freezed,
-    Object? rewardTokenInfo = freezed,
+    Object? poolInfo = null,
+    Object? extra = null,
+    Object? stakingTokenInfo = null,
+    Object? rewardTokenInfo = null,
   }) {
-    return _then(_VivaPoolInfoAll(
-      poolInfo: poolInfo == freezed
+    return _then(_$_VivaPoolInfoAll(
+      poolInfo: null == poolInfo
           ? _value.poolInfo
           : poolInfo // ignore: cast_nullable_to_non_nullable
               as VivaPoolInfo,
-      extra: extra == freezed
+      extra: null == extra
           ? _value.extra
           : extra // ignore: cast_nullable_to_non_nullable
               as VivaExtraPoolInfo,
-      stakingTokenInfo: stakingTokenInfo == freezed
+      stakingTokenInfo: null == stakingTokenInfo
           ? _value.stakingTokenInfo
           : stakingTokenInfo // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-      rewardTokenInfo: rewardTokenInfo == freezed
+      rewardTokenInfo: null == rewardTokenInfo
           ? _value.rewardTokenInfo
           : rewardTokenInfo // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
@@ -614,35 +572,33 @@ class _$_VivaPoolInfoAll extends _VivaPoolInfoAll {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaPoolInfoAll &&
-            const DeepCollectionEquality().equals(other.poolInfo, poolInfo) &&
-            const DeepCollectionEquality().equals(other.extra, extra) &&
-            const DeepCollectionEquality()
-                .equals(other.stakingTokenInfo, stakingTokenInfo) &&
-            const DeepCollectionEquality()
-                .equals(other.rewardTokenInfo, rewardTokenInfo));
+            other is _$_VivaPoolInfoAll &&
+            (identical(other.poolInfo, poolInfo) ||
+                other.poolInfo == poolInfo) &&
+            (identical(other.extra, extra) || other.extra == extra) &&
+            (identical(other.stakingTokenInfo, stakingTokenInfo) ||
+                other.stakingTokenInfo == stakingTokenInfo) &&
+            (identical(other.rewardTokenInfo, rewardTokenInfo) ||
+                other.rewardTokenInfo == rewardTokenInfo));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(poolInfo),
-      const DeepCollectionEquality().hash(extra),
-      const DeepCollectionEquality().hash(stakingTokenInfo),
-      const DeepCollectionEquality().hash(rewardTokenInfo));
+      runtimeType, poolInfo, extra, stakingTokenInfo, rewardTokenInfo);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaPoolInfoAllCopyWith<_VivaPoolInfoAll> get copyWith =>
-      __$VivaPoolInfoAllCopyWithImpl<_VivaPoolInfoAll>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaPoolInfoAllCopyWith<_$_VivaPoolInfoAll> get copyWith =>
+      __$$_VivaPoolInfoAllCopyWithImpl<_$_VivaPoolInfoAll>(this, _$identity);
 }
 
 abstract class _VivaPoolInfoAll extends VivaPoolInfoAll {
   const factory _VivaPoolInfoAll(
-      {required VivaPoolInfo poolInfo,
-      required VivaExtraPoolInfo extra,
-      required TokenInfo stakingTokenInfo,
-      required TokenInfo rewardTokenInfo}) = _$_VivaPoolInfoAll;
+      {required final VivaPoolInfo poolInfo,
+      required final VivaExtraPoolInfo extra,
+      required final TokenInfo stakingTokenInfo,
+      required final TokenInfo rewardTokenInfo}) = _$_VivaPoolInfoAll;
   const _VivaPoolInfoAll._() : super._();
 
   @override
@@ -655,28 +611,9 @@ abstract class _VivaPoolInfoAll extends VivaPoolInfoAll {
   TokenInfo get rewardTokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$VivaPoolInfoAllCopyWith<_VivaPoolInfoAll> get copyWith =>
+  _$$_VivaPoolInfoAllCopyWith<_$_VivaPoolInfoAll> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VivaExtraPoolInfoTearOff {
-  const _$VivaExtraPoolInfoTearOff();
-
-  _VivaExtraPoolInfo call(
-      {required BigInt minimumDeposit,
-      required BigInt maximumTotalStakingBalance,
-      required BigInt lockTime}) {
-    return _VivaExtraPoolInfo(
-      minimumDeposit: minimumDeposit,
-      maximumTotalStakingBalance: maximumTotalStakingBalance,
-      lockTime: lockTime,
-    );
-  }
-}
-
-/// @nodoc
-const $VivaExtraPoolInfo = _$VivaExtraPoolInfoTearOff();
 
 /// @nodoc
 mixin _$VivaExtraPoolInfo {
@@ -693,7 +630,8 @@ mixin _$VivaExtraPoolInfo {
 abstract class $VivaExtraPoolInfoCopyWith<$Res> {
   factory $VivaExtraPoolInfoCopyWith(
           VivaExtraPoolInfo value, $Res Function(VivaExtraPoolInfo) then) =
-      _$VivaExtraPoolInfoCopyWithImpl<$Res>;
+      _$VivaExtraPoolInfoCopyWithImpl<$Res, VivaExtraPoolInfo>;
+  @useResult
   $Res call(
       {BigInt minimumDeposit,
       BigInt maximumTotalStakingBalance,
@@ -701,44 +639,47 @@ abstract class $VivaExtraPoolInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VivaExtraPoolInfoCopyWithImpl<$Res>
+class _$VivaExtraPoolInfoCopyWithImpl<$Res, $Val extends VivaExtraPoolInfo>
     implements $VivaExtraPoolInfoCopyWith<$Res> {
   _$VivaExtraPoolInfoCopyWithImpl(this._value, this._then);
 
-  final VivaExtraPoolInfo _value;
   // ignore: unused_field
-  final $Res Function(VivaExtraPoolInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? minimumDeposit = freezed,
-    Object? maximumTotalStakingBalance = freezed,
-    Object? lockTime = freezed,
+    Object? minimumDeposit = null,
+    Object? maximumTotalStakingBalance = null,
+    Object? lockTime = null,
   }) {
     return _then(_value.copyWith(
-      minimumDeposit: minimumDeposit == freezed
+      minimumDeposit: null == minimumDeposit
           ? _value.minimumDeposit
           : minimumDeposit // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      maximumTotalStakingBalance: maximumTotalStakingBalance == freezed
+      maximumTotalStakingBalance: null == maximumTotalStakingBalance
           ? _value.maximumTotalStakingBalance
           : maximumTotalStakingBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      lockTime: lockTime == freezed
+      lockTime: null == lockTime
           ? _value.lockTime
           : lockTime // ignore: cast_nullable_to_non_nullable
               as BigInt,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VivaExtraPoolInfoCopyWith<$Res>
+abstract class _$$_VivaExtraPoolInfoCopyWith<$Res>
     implements $VivaExtraPoolInfoCopyWith<$Res> {
-  factory _$VivaExtraPoolInfoCopyWith(
-          _VivaExtraPoolInfo value, $Res Function(_VivaExtraPoolInfo) then) =
-      __$VivaExtraPoolInfoCopyWithImpl<$Res>;
+  factory _$$_VivaExtraPoolInfoCopyWith(_$_VivaExtraPoolInfo value,
+          $Res Function(_$_VivaExtraPoolInfo) then) =
+      __$$_VivaExtraPoolInfoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {BigInt minimumDeposit,
       BigInt maximumTotalStakingBalance,
@@ -746,32 +687,30 @@ abstract class _$VivaExtraPoolInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VivaExtraPoolInfoCopyWithImpl<$Res>
-    extends _$VivaExtraPoolInfoCopyWithImpl<$Res>
-    implements _$VivaExtraPoolInfoCopyWith<$Res> {
-  __$VivaExtraPoolInfoCopyWithImpl(
-      _VivaExtraPoolInfo _value, $Res Function(_VivaExtraPoolInfo) _then)
-      : super(_value, (v) => _then(v as _VivaExtraPoolInfo));
+class __$$_VivaExtraPoolInfoCopyWithImpl<$Res>
+    extends _$VivaExtraPoolInfoCopyWithImpl<$Res, _$_VivaExtraPoolInfo>
+    implements _$$_VivaExtraPoolInfoCopyWith<$Res> {
+  __$$_VivaExtraPoolInfoCopyWithImpl(
+      _$_VivaExtraPoolInfo _value, $Res Function(_$_VivaExtraPoolInfo) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaExtraPoolInfo get _value => super._value as _VivaExtraPoolInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? minimumDeposit = freezed,
-    Object? maximumTotalStakingBalance = freezed,
-    Object? lockTime = freezed,
+    Object? minimumDeposit = null,
+    Object? maximumTotalStakingBalance = null,
+    Object? lockTime = null,
   }) {
-    return _then(_VivaExtraPoolInfo(
-      minimumDeposit: minimumDeposit == freezed
+    return _then(_$_VivaExtraPoolInfo(
+      minimumDeposit: null == minimumDeposit
           ? _value.minimumDeposit
           : minimumDeposit // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      maximumTotalStakingBalance: maximumTotalStakingBalance == freezed
+      maximumTotalStakingBalance: null == maximumTotalStakingBalance
           ? _value.maximumTotalStakingBalance
           : maximumTotalStakingBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      lockTime: lockTime == freezed
+      lockTime: null == lockTime
           ? _value.lockTime
           : lockTime // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -803,32 +742,34 @@ class _$_VivaExtraPoolInfo implements _VivaExtraPoolInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaExtraPoolInfo &&
-            const DeepCollectionEquality()
-                .equals(other.minimumDeposit, minimumDeposit) &&
-            const DeepCollectionEquality().equals(
-                other.maximumTotalStakingBalance, maximumTotalStakingBalance) &&
-            const DeepCollectionEquality().equals(other.lockTime, lockTime));
+            other is _$_VivaExtraPoolInfo &&
+            (identical(other.minimumDeposit, minimumDeposit) ||
+                other.minimumDeposit == minimumDeposit) &&
+            (identical(other.maximumTotalStakingBalance,
+                    maximumTotalStakingBalance) ||
+                other.maximumTotalStakingBalance ==
+                    maximumTotalStakingBalance) &&
+            (identical(other.lockTime, lockTime) ||
+                other.lockTime == lockTime));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(minimumDeposit),
-      const DeepCollectionEquality().hash(maximumTotalStakingBalance),
-      const DeepCollectionEquality().hash(lockTime));
+      runtimeType, minimumDeposit, maximumTotalStakingBalance, lockTime);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaExtraPoolInfoCopyWith<_VivaExtraPoolInfo> get copyWith =>
-      __$VivaExtraPoolInfoCopyWithImpl<_VivaExtraPoolInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaExtraPoolInfoCopyWith<_$_VivaExtraPoolInfo> get copyWith =>
+      __$$_VivaExtraPoolInfoCopyWithImpl<_$_VivaExtraPoolInfo>(
+          this, _$identity);
 }
 
 abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
   const factory _VivaExtraPoolInfo(
-      {required BigInt minimumDeposit,
-      required BigInt maximumTotalStakingBalance,
-      required BigInt lockTime}) = _$_VivaExtraPoolInfo;
+      {required final BigInt minimumDeposit,
+      required final BigInt maximumTotalStakingBalance,
+      required final BigInt lockTime}) = _$_VivaExtraPoolInfo;
 
   @override
   BigInt get minimumDeposit;
@@ -838,25 +779,9 @@ abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
   BigInt get lockTime;
   @override
   @JsonKey(ignore: true)
-  _$VivaExtraPoolInfoCopyWith<_VivaExtraPoolInfo> get copyWith =>
+  _$$_VivaExtraPoolInfoCopyWith<_$_VivaExtraPoolInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VivaUserInfoTearOff {
-  const _$VivaUserInfoTearOff();
-
-  _VivaUserInfo call(
-      {required BigInt stakingBalance, required BigInt rewardDebt}) {
-    return _VivaUserInfo(
-      stakingBalance: stakingBalance,
-      rewardDebt: rewardDebt,
-    );
-  }
-}
-
-/// @nodoc
-const $VivaUserInfo = _$VivaUserInfoTearOff();
 
 /// @nodoc
 mixin _$VivaUserInfo {
@@ -872,67 +797,71 @@ mixin _$VivaUserInfo {
 abstract class $VivaUserInfoCopyWith<$Res> {
   factory $VivaUserInfoCopyWith(
           VivaUserInfo value, $Res Function(VivaUserInfo) then) =
-      _$VivaUserInfoCopyWithImpl<$Res>;
+      _$VivaUserInfoCopyWithImpl<$Res, VivaUserInfo>;
+  @useResult
   $Res call({BigInt stakingBalance, BigInt rewardDebt});
 }
 
 /// @nodoc
-class _$VivaUserInfoCopyWithImpl<$Res> implements $VivaUserInfoCopyWith<$Res> {
+class _$VivaUserInfoCopyWithImpl<$Res, $Val extends VivaUserInfo>
+    implements $VivaUserInfoCopyWith<$Res> {
   _$VivaUserInfoCopyWithImpl(this._value, this._then);
 
-  final VivaUserInfo _value;
   // ignore: unused_field
-  final $Res Function(VivaUserInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stakingBalance = freezed,
-    Object? rewardDebt = freezed,
+    Object? stakingBalance = null,
+    Object? rewardDebt = null,
   }) {
     return _then(_value.copyWith(
-      stakingBalance: stakingBalance == freezed
+      stakingBalance: null == stakingBalance
           ? _value.stakingBalance
           : stakingBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      rewardDebt: rewardDebt == freezed
+      rewardDebt: null == rewardDebt
           ? _value.rewardDebt
           : rewardDebt // ignore: cast_nullable_to_non_nullable
               as BigInt,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VivaUserInfoCopyWith<$Res>
+abstract class _$$_VivaUserInfoCopyWith<$Res>
     implements $VivaUserInfoCopyWith<$Res> {
-  factory _$VivaUserInfoCopyWith(
-          _VivaUserInfo value, $Res Function(_VivaUserInfo) then) =
-      __$VivaUserInfoCopyWithImpl<$Res>;
+  factory _$$_VivaUserInfoCopyWith(
+          _$_VivaUserInfo value, $Res Function(_$_VivaUserInfo) then) =
+      __$$_VivaUserInfoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({BigInt stakingBalance, BigInt rewardDebt});
 }
 
 /// @nodoc
-class __$VivaUserInfoCopyWithImpl<$Res> extends _$VivaUserInfoCopyWithImpl<$Res>
-    implements _$VivaUserInfoCopyWith<$Res> {
-  __$VivaUserInfoCopyWithImpl(
-      _VivaUserInfo _value, $Res Function(_VivaUserInfo) _then)
-      : super(_value, (v) => _then(v as _VivaUserInfo));
+class __$$_VivaUserInfoCopyWithImpl<$Res>
+    extends _$VivaUserInfoCopyWithImpl<$Res, _$_VivaUserInfo>
+    implements _$$_VivaUserInfoCopyWith<$Res> {
+  __$$_VivaUserInfoCopyWithImpl(
+      _$_VivaUserInfo _value, $Res Function(_$_VivaUserInfo) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaUserInfo get _value => super._value as _VivaUserInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stakingBalance = freezed,
-    Object? rewardDebt = freezed,
+    Object? stakingBalance = null,
+    Object? rewardDebt = null,
   }) {
-    return _then(_VivaUserInfo(
-      stakingBalance: stakingBalance == freezed
+    return _then(_$_VivaUserInfo(
+      stakingBalance: null == stakingBalance
           ? _value.stakingBalance
           : stakingBalance // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      rewardDebt: rewardDebt == freezed
+      rewardDebt: null == rewardDebt
           ? _value.rewardDebt
           : rewardDebt // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -960,29 +889,27 @@ class _$_VivaUserInfo implements _VivaUserInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaUserInfo &&
-            const DeepCollectionEquality()
-                .equals(other.stakingBalance, stakingBalance) &&
-            const DeepCollectionEquality()
-                .equals(other.rewardDebt, rewardDebt));
+            other is _$_VivaUserInfo &&
+            (identical(other.stakingBalance, stakingBalance) ||
+                other.stakingBalance == stakingBalance) &&
+            (identical(other.rewardDebt, rewardDebt) ||
+                other.rewardDebt == rewardDebt));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(stakingBalance),
-      const DeepCollectionEquality().hash(rewardDebt));
+  int get hashCode => Object.hash(runtimeType, stakingBalance, rewardDebt);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaUserInfoCopyWith<_VivaUserInfo> get copyWith =>
-      __$VivaUserInfoCopyWithImpl<_VivaUserInfo>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaUserInfoCopyWith<_$_VivaUserInfo> get copyWith =>
+      __$$_VivaUserInfoCopyWithImpl<_$_VivaUserInfo>(this, _$identity);
 }
 
 abstract class _VivaUserInfo implements VivaUserInfo {
   const factory _VivaUserInfo(
-      {required BigInt stakingBalance,
-      required BigInt rewardDebt}) = _$_VivaUserInfo;
+      {required final BigInt stakingBalance,
+      required final BigInt rewardDebt}) = _$_VivaUserInfo;
 
   @override
   BigInt get stakingBalance;
@@ -990,73 +917,9 @@ abstract class _VivaUserInfo implements VivaUserInfo {
   BigInt get rewardDebt;
   @override
   @JsonKey(ignore: true)
-  _$VivaUserInfoCopyWith<_VivaUserInfo> get copyWith =>
+  _$$_VivaUserInfoCopyWith<_$_VivaUserInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VivaEventTearOff {
-  const _$VivaEventTearOff();
-
-  _VivaEventPoolCreated poolCreated({required BigInt poolId}) {
-    return _VivaEventPoolCreated(
-      poolId: poolId,
-    );
-  }
-
-  _VivaEventDeposit deposit(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) {
-    return _VivaEventDeposit(
-      address: address,
-      poolId: poolId,
-      amount: amount,
-    );
-  }
-
-  _VivaEventWithdraw withdraw(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) {
-    return _VivaEventWithdraw(
-      address: address,
-      poolId: poolId,
-      amount: amount,
-    );
-  }
-
-  _VivaEventEmergencyWithdraw emergencyWithdraw(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) {
-    return _VivaEventEmergencyWithdraw(
-      address: address,
-      poolId: poolId,
-      amount: amount,
-    );
-  }
-
-  _VivaEventClaim claim(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) {
-    return _VivaEventClaim(
-      address: address,
-      poolId: poolId,
-      amount: amount,
-    );
-  }
-
-  _VivaEventUnknown unknown({required VmLog vmLog}) {
-    return _VivaEventUnknown(
-      vmLog: vmLog,
-    );
-  }
-}
-
-/// @nodoc
-const $VivaEvent = _$VivaEventTearOff();
 
 /// @nodoc
 mixin _$VivaEvent {
@@ -1076,13 +939,13 @@ mixin _$VivaEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1110,12 +973,12 @@ mixin _$VivaEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1134,43 +997,44 @@ mixin _$VivaEvent {
 /// @nodoc
 abstract class $VivaEventCopyWith<$Res> {
   factory $VivaEventCopyWith(VivaEvent value, $Res Function(VivaEvent) then) =
-      _$VivaEventCopyWithImpl<$Res>;
+      _$VivaEventCopyWithImpl<$Res, VivaEvent>;
 }
 
 /// @nodoc
-class _$VivaEventCopyWithImpl<$Res> implements $VivaEventCopyWith<$Res> {
+class _$VivaEventCopyWithImpl<$Res, $Val extends VivaEvent>
+    implements $VivaEventCopyWith<$Res> {
   _$VivaEventCopyWithImpl(this._value, this._then);
 
-  final VivaEvent _value;
   // ignore: unused_field
-  final $Res Function(VivaEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$VivaEventPoolCreatedCopyWith<$Res> {
-  factory _$VivaEventPoolCreatedCopyWith(_VivaEventPoolCreated value,
-          $Res Function(_VivaEventPoolCreated) then) =
-      __$VivaEventPoolCreatedCopyWithImpl<$Res>;
+abstract class _$$_VivaEventPoolCreatedCopyWith<$Res> {
+  factory _$$_VivaEventPoolCreatedCopyWith(_$_VivaEventPoolCreated value,
+          $Res Function(_$_VivaEventPoolCreated) then) =
+      __$$_VivaEventPoolCreatedCopyWithImpl<$Res>;
+  @useResult
   $Res call({BigInt poolId});
 }
 
 /// @nodoc
-class __$VivaEventPoolCreatedCopyWithImpl<$Res>
-    extends _$VivaEventCopyWithImpl<$Res>
-    implements _$VivaEventPoolCreatedCopyWith<$Res> {
-  __$VivaEventPoolCreatedCopyWithImpl(
-      _VivaEventPoolCreated _value, $Res Function(_VivaEventPoolCreated) _then)
-      : super(_value, (v) => _then(v as _VivaEventPoolCreated));
+class __$$_VivaEventPoolCreatedCopyWithImpl<$Res>
+    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventPoolCreated>
+    implements _$$_VivaEventPoolCreatedCopyWith<$Res> {
+  __$$_VivaEventPoolCreatedCopyWithImpl(_$_VivaEventPoolCreated _value,
+      $Res Function(_$_VivaEventPoolCreated) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaEventPoolCreated get _value => super._value as _VivaEventPoolCreated;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? poolId = freezed,
+    Object? poolId = null,
   }) {
-    return _then(_VivaEventPoolCreated(
-      poolId: poolId == freezed
+    return _then(_$_VivaEventPoolCreated(
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -1195,18 +1059,18 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaEventPoolCreated &&
-            const DeepCollectionEquality().equals(other.poolId, poolId));
+            other is _$_VivaEventPoolCreated &&
+            (identical(other.poolId, poolId) || other.poolId == poolId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(poolId));
+  int get hashCode => Object.hash(runtimeType, poolId);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaEventPoolCreatedCopyWith<_VivaEventPoolCreated> get copyWith =>
-      __$VivaEventPoolCreatedCopyWithImpl<_VivaEventPoolCreated>(
+  @pragma('vm:prefer-inline')
+  _$$_VivaEventPoolCreatedCopyWith<_$_VivaEventPoolCreated> get copyWith =>
+      __$$_VivaEventPoolCreatedCopyWithImpl<_$_VivaEventPoolCreated>(
           this, _$identity);
 
   @override
@@ -1229,13 +1093,13 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return poolCreated?.call(poolId);
   }
@@ -1275,12 +1139,12 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return poolCreated?.call(this);
   }
@@ -1304,52 +1168,51 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
 }
 
 abstract class _VivaEventPoolCreated implements VivaEvent {
-  const factory _VivaEventPoolCreated({required BigInt poolId}) =
+  const factory _VivaEventPoolCreated({required final BigInt poolId}) =
       _$_VivaEventPoolCreated;
 
   BigInt get poolId;
   @JsonKey(ignore: true)
-  _$VivaEventPoolCreatedCopyWith<_VivaEventPoolCreated> get copyWith =>
+  _$$_VivaEventPoolCreatedCopyWith<_$_VivaEventPoolCreated> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VivaEventDepositCopyWith<$Res> {
-  factory _$VivaEventDepositCopyWith(
-          _VivaEventDeposit value, $Res Function(_VivaEventDeposit) then) =
-      __$VivaEventDepositCopyWithImpl<$Res>;
+abstract class _$$_VivaEventDepositCopyWith<$Res> {
+  factory _$$_VivaEventDepositCopyWith(
+          _$_VivaEventDeposit value, $Res Function(_$_VivaEventDeposit) then) =
+      __$$_VivaEventDepositCopyWithImpl<$Res>;
+  @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
   $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
-class __$VivaEventDepositCopyWithImpl<$Res>
-    extends _$VivaEventCopyWithImpl<$Res>
-    implements _$VivaEventDepositCopyWith<$Res> {
-  __$VivaEventDepositCopyWithImpl(
-      _VivaEventDeposit _value, $Res Function(_VivaEventDeposit) _then)
-      : super(_value, (v) => _then(v as _VivaEventDeposit));
+class __$$_VivaEventDepositCopyWithImpl<$Res>
+    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventDeposit>
+    implements _$$_VivaEventDepositCopyWith<$Res> {
+  __$$_VivaEventDepositCopyWithImpl(
+      _$_VivaEventDeposit _value, $Res Function(_$_VivaEventDeposit) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaEventDeposit get _value => super._value as _VivaEventDeposit;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
-    Object? poolId = freezed,
-    Object? amount = freezed,
+    Object? address = null,
+    Object? poolId = null,
+    Object? amount = null,
   }) {
-    return _then(_VivaEventDeposit(
-      address: address == freezed
+    return _then(_$_VivaEventDeposit(
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
-      poolId: poolId == freezed
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -1357,6 +1220,7 @@ class __$VivaEventDepositCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
     return $AddressCopyWith<$Res>(_value.address, (value) {
       return _then(_value.copyWith(address: value));
@@ -1386,23 +1250,20 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaEventDeposit &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.poolId, poolId) &&
-            const DeepCollectionEquality().equals(other.amount, amount));
+            other is _$_VivaEventDeposit &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.poolId, poolId) || other.poolId == poolId) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(poolId),
-      const DeepCollectionEquality().hash(amount));
+  int get hashCode => Object.hash(runtimeType, address, poolId, amount);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaEventDepositCopyWith<_VivaEventDeposit> get copyWith =>
-      __$VivaEventDepositCopyWithImpl<_VivaEventDeposit>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaEventDepositCopyWith<_$_VivaEventDeposit> get copyWith =>
+      __$$_VivaEventDepositCopyWithImpl<_$_VivaEventDeposit>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1424,13 +1285,13 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return deposit?.call(address, poolId, amount);
   }
@@ -1470,12 +1331,12 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return deposit?.call(this);
   }
@@ -1500,55 +1361,54 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
 
 abstract class _VivaEventDeposit implements VivaEvent {
   const factory _VivaEventDeposit(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) = _$_VivaEventDeposit;
+      {required final Address address,
+      required final BigInt poolId,
+      required final BigInt amount}) = _$_VivaEventDeposit;
 
   Address get address;
   BigInt get poolId;
   BigInt get amount;
   @JsonKey(ignore: true)
-  _$VivaEventDepositCopyWith<_VivaEventDeposit> get copyWith =>
+  _$$_VivaEventDepositCopyWith<_$_VivaEventDeposit> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VivaEventWithdrawCopyWith<$Res> {
-  factory _$VivaEventWithdrawCopyWith(
-          _VivaEventWithdraw value, $Res Function(_VivaEventWithdraw) then) =
-      __$VivaEventWithdrawCopyWithImpl<$Res>;
+abstract class _$$_VivaEventWithdrawCopyWith<$Res> {
+  factory _$$_VivaEventWithdrawCopyWith(_$_VivaEventWithdraw value,
+          $Res Function(_$_VivaEventWithdraw) then) =
+      __$$_VivaEventWithdrawCopyWithImpl<$Res>;
+  @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
   $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
-class __$VivaEventWithdrawCopyWithImpl<$Res>
-    extends _$VivaEventCopyWithImpl<$Res>
-    implements _$VivaEventWithdrawCopyWith<$Res> {
-  __$VivaEventWithdrawCopyWithImpl(
-      _VivaEventWithdraw _value, $Res Function(_VivaEventWithdraw) _then)
-      : super(_value, (v) => _then(v as _VivaEventWithdraw));
+class __$$_VivaEventWithdrawCopyWithImpl<$Res>
+    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventWithdraw>
+    implements _$$_VivaEventWithdrawCopyWith<$Res> {
+  __$$_VivaEventWithdrawCopyWithImpl(
+      _$_VivaEventWithdraw _value, $Res Function(_$_VivaEventWithdraw) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaEventWithdraw get _value => super._value as _VivaEventWithdraw;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
-    Object? poolId = freezed,
-    Object? amount = freezed,
+    Object? address = null,
+    Object? poolId = null,
+    Object? amount = null,
   }) {
-    return _then(_VivaEventWithdraw(
-      address: address == freezed
+    return _then(_$_VivaEventWithdraw(
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
-      poolId: poolId == freezed
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -1556,6 +1416,7 @@ class __$VivaEventWithdrawCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
     return $AddressCopyWith<$Res>(_value.address, (value) {
       return _then(_value.copyWith(address: value));
@@ -1585,23 +1446,21 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaEventWithdraw &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.poolId, poolId) &&
-            const DeepCollectionEquality().equals(other.amount, amount));
+            other is _$_VivaEventWithdraw &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.poolId, poolId) || other.poolId == poolId) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(poolId),
-      const DeepCollectionEquality().hash(amount));
+  int get hashCode => Object.hash(runtimeType, address, poolId, amount);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaEventWithdrawCopyWith<_VivaEventWithdraw> get copyWith =>
-      __$VivaEventWithdrawCopyWithImpl<_VivaEventWithdraw>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaEventWithdrawCopyWith<_$_VivaEventWithdraw> get copyWith =>
+      __$$_VivaEventWithdrawCopyWithImpl<_$_VivaEventWithdraw>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1623,13 +1482,13 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return withdraw?.call(address, poolId, amount);
   }
@@ -1669,12 +1528,12 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return withdraw?.call(this);
   }
@@ -1699,57 +1558,56 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
 
 abstract class _VivaEventWithdraw implements VivaEvent {
   const factory _VivaEventWithdraw(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) = _$_VivaEventWithdraw;
+      {required final Address address,
+      required final BigInt poolId,
+      required final BigInt amount}) = _$_VivaEventWithdraw;
 
   Address get address;
   BigInt get poolId;
   BigInt get amount;
   @JsonKey(ignore: true)
-  _$VivaEventWithdrawCopyWith<_VivaEventWithdraw> get copyWith =>
+  _$$_VivaEventWithdrawCopyWith<_$_VivaEventWithdraw> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VivaEventEmergencyWithdrawCopyWith<$Res> {
-  factory _$VivaEventEmergencyWithdrawCopyWith(
-          _VivaEventEmergencyWithdraw value,
-          $Res Function(_VivaEventEmergencyWithdraw) then) =
-      __$VivaEventEmergencyWithdrawCopyWithImpl<$Res>;
+abstract class _$$_VivaEventEmergencyWithdrawCopyWith<$Res> {
+  factory _$$_VivaEventEmergencyWithdrawCopyWith(
+          _$_VivaEventEmergencyWithdraw value,
+          $Res Function(_$_VivaEventEmergencyWithdraw) then) =
+      __$$_VivaEventEmergencyWithdrawCopyWithImpl<$Res>;
+  @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
   $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
-class __$VivaEventEmergencyWithdrawCopyWithImpl<$Res>
-    extends _$VivaEventCopyWithImpl<$Res>
-    implements _$VivaEventEmergencyWithdrawCopyWith<$Res> {
-  __$VivaEventEmergencyWithdrawCopyWithImpl(_VivaEventEmergencyWithdraw _value,
-      $Res Function(_VivaEventEmergencyWithdraw) _then)
-      : super(_value, (v) => _then(v as _VivaEventEmergencyWithdraw));
+class __$$_VivaEventEmergencyWithdrawCopyWithImpl<$Res>
+    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventEmergencyWithdraw>
+    implements _$$_VivaEventEmergencyWithdrawCopyWith<$Res> {
+  __$$_VivaEventEmergencyWithdrawCopyWithImpl(
+      _$_VivaEventEmergencyWithdraw _value,
+      $Res Function(_$_VivaEventEmergencyWithdraw) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaEventEmergencyWithdraw get _value =>
-      super._value as _VivaEventEmergencyWithdraw;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
-    Object? poolId = freezed,
-    Object? amount = freezed,
+    Object? address = null,
+    Object? poolId = null,
+    Object? amount = null,
   }) {
-    return _then(_VivaEventEmergencyWithdraw(
-      address: address == freezed
+    return _then(_$_VivaEventEmergencyWithdraw(
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
-      poolId: poolId == freezed
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -1757,6 +1615,7 @@ class __$VivaEventEmergencyWithdrawCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
     return $AddressCopyWith<$Res>(_value.address, (value) {
       return _then(_value.copyWith(address: value));
@@ -1786,24 +1645,21 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaEventEmergencyWithdraw &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.poolId, poolId) &&
-            const DeepCollectionEquality().equals(other.amount, amount));
+            other is _$_VivaEventEmergencyWithdraw &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.poolId, poolId) || other.poolId == poolId) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(poolId),
-      const DeepCollectionEquality().hash(amount));
+  int get hashCode => Object.hash(runtimeType, address, poolId, amount);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaEventEmergencyWithdrawCopyWith<_VivaEventEmergencyWithdraw>
-      get copyWith => __$VivaEventEmergencyWithdrawCopyWithImpl<
-          _VivaEventEmergencyWithdraw>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaEventEmergencyWithdrawCopyWith<_$_VivaEventEmergencyWithdraw>
+      get copyWith => __$$_VivaEventEmergencyWithdrawCopyWithImpl<
+          _$_VivaEventEmergencyWithdraw>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1825,13 +1681,13 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return emergencyWithdraw?.call(address, poolId, amount);
   }
@@ -1871,12 +1727,12 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return emergencyWithdraw?.call(this);
   }
@@ -1901,54 +1757,54 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
 
 abstract class _VivaEventEmergencyWithdraw implements VivaEvent {
   const factory _VivaEventEmergencyWithdraw(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) = _$_VivaEventEmergencyWithdraw;
+      {required final Address address,
+      required final BigInt poolId,
+      required final BigInt amount}) = _$_VivaEventEmergencyWithdraw;
 
   Address get address;
   BigInt get poolId;
   BigInt get amount;
   @JsonKey(ignore: true)
-  _$VivaEventEmergencyWithdrawCopyWith<_VivaEventEmergencyWithdraw>
+  _$$_VivaEventEmergencyWithdrawCopyWith<_$_VivaEventEmergencyWithdraw>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VivaEventClaimCopyWith<$Res> {
-  factory _$VivaEventClaimCopyWith(
-          _VivaEventClaim value, $Res Function(_VivaEventClaim) then) =
-      __$VivaEventClaimCopyWithImpl<$Res>;
+abstract class _$$_VivaEventClaimCopyWith<$Res> {
+  factory _$$_VivaEventClaimCopyWith(
+          _$_VivaEventClaim value, $Res Function(_$_VivaEventClaim) then) =
+      __$$_VivaEventClaimCopyWithImpl<$Res>;
+  @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
   $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
-class __$VivaEventClaimCopyWithImpl<$Res> extends _$VivaEventCopyWithImpl<$Res>
-    implements _$VivaEventClaimCopyWith<$Res> {
-  __$VivaEventClaimCopyWithImpl(
-      _VivaEventClaim _value, $Res Function(_VivaEventClaim) _then)
-      : super(_value, (v) => _then(v as _VivaEventClaim));
+class __$$_VivaEventClaimCopyWithImpl<$Res>
+    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventClaim>
+    implements _$$_VivaEventClaimCopyWith<$Res> {
+  __$$_VivaEventClaimCopyWithImpl(
+      _$_VivaEventClaim _value, $Res Function(_$_VivaEventClaim) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaEventClaim get _value => super._value as _VivaEventClaim;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? address = freezed,
-    Object? poolId = freezed,
-    Object? amount = freezed,
+    Object? address = null,
+    Object? poolId = null,
+    Object? amount = null,
   }) {
-    return _then(_VivaEventClaim(
-      address: address == freezed
+    return _then(_$_VivaEventClaim(
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as Address,
-      poolId: poolId == freezed
+      poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
               as BigInt,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as BigInt,
@@ -1956,6 +1812,7 @@ class __$VivaEventClaimCopyWithImpl<$Res> extends _$VivaEventCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res> get address {
     return $AddressCopyWith<$Res>(_value.address, (value) {
       return _then(_value.copyWith(address: value));
@@ -1985,23 +1842,20 @@ class _$_VivaEventClaim implements _VivaEventClaim {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaEventClaim &&
-            const DeepCollectionEquality().equals(other.address, address) &&
-            const DeepCollectionEquality().equals(other.poolId, poolId) &&
-            const DeepCollectionEquality().equals(other.amount, amount));
+            other is _$_VivaEventClaim &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.poolId, poolId) || other.poolId == poolId) &&
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(address),
-      const DeepCollectionEquality().hash(poolId),
-      const DeepCollectionEquality().hash(amount));
+  int get hashCode => Object.hash(runtimeType, address, poolId, amount);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaEventClaimCopyWith<_VivaEventClaim> get copyWith =>
-      __$VivaEventClaimCopyWithImpl<_VivaEventClaim>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaEventClaimCopyWith<_$_VivaEventClaim> get copyWith =>
+      __$$_VivaEventClaimCopyWithImpl<_$_VivaEventClaim>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2023,13 +1877,13 @@ class _$_VivaEventClaim implements _VivaEventClaim {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return claim?.call(address, poolId, amount);
   }
@@ -2069,12 +1923,12 @@ class _$_VivaEventClaim implements _VivaEventClaim {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return claim?.call(this);
   }
@@ -2099,45 +1953,44 @@ class _$_VivaEventClaim implements _VivaEventClaim {
 
 abstract class _VivaEventClaim implements VivaEvent {
   const factory _VivaEventClaim(
-      {required Address address,
-      required BigInt poolId,
-      required BigInt amount}) = _$_VivaEventClaim;
+      {required final Address address,
+      required final BigInt poolId,
+      required final BigInt amount}) = _$_VivaEventClaim;
 
   Address get address;
   BigInt get poolId;
   BigInt get amount;
   @JsonKey(ignore: true)
-  _$VivaEventClaimCopyWith<_VivaEventClaim> get copyWith =>
+  _$$_VivaEventClaimCopyWith<_$_VivaEventClaim> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$VivaEventUnknownCopyWith<$Res> {
-  factory _$VivaEventUnknownCopyWith(
-          _VivaEventUnknown value, $Res Function(_VivaEventUnknown) then) =
-      __$VivaEventUnknownCopyWithImpl<$Res>;
+abstract class _$$_VivaEventUnknownCopyWith<$Res> {
+  factory _$$_VivaEventUnknownCopyWith(
+          _$_VivaEventUnknown value, $Res Function(_$_VivaEventUnknown) then) =
+      __$$_VivaEventUnknownCopyWithImpl<$Res>;
+  @useResult
   $Res call({VmLog vmLog});
 
   $VmLogCopyWith<$Res> get vmLog;
 }
 
 /// @nodoc
-class __$VivaEventUnknownCopyWithImpl<$Res>
-    extends _$VivaEventCopyWithImpl<$Res>
-    implements _$VivaEventUnknownCopyWith<$Res> {
-  __$VivaEventUnknownCopyWithImpl(
-      _VivaEventUnknown _value, $Res Function(_VivaEventUnknown) _then)
-      : super(_value, (v) => _then(v as _VivaEventUnknown));
+class __$$_VivaEventUnknownCopyWithImpl<$Res>
+    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventUnknown>
+    implements _$$_VivaEventUnknownCopyWith<$Res> {
+  __$$_VivaEventUnknownCopyWithImpl(
+      _$_VivaEventUnknown _value, $Res Function(_$_VivaEventUnknown) _then)
+      : super(_value, _then);
 
-  @override
-  _VivaEventUnknown get _value => super._value as _VivaEventUnknown;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vmLog = freezed,
+    Object? vmLog = null,
   }) {
-    return _then(_VivaEventUnknown(
-      vmLog: vmLog == freezed
+    return _then(_$_VivaEventUnknown(
+      vmLog: null == vmLog
           ? _value.vmLog
           : vmLog // ignore: cast_nullable_to_non_nullable
               as VmLog,
@@ -2145,6 +1998,7 @@ class __$VivaEventUnknownCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $VmLogCopyWith<$Res> get vmLog {
     return $VmLogCopyWith<$Res>(_value.vmLog, (value) {
       return _then(_value.copyWith(vmLog: value));
@@ -2169,18 +2023,18 @@ class _$_VivaEventUnknown implements _VivaEventUnknown {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VivaEventUnknown &&
-            const DeepCollectionEquality().equals(other.vmLog, vmLog));
+            other is _$_VivaEventUnknown &&
+            (identical(other.vmLog, vmLog) || other.vmLog == vmLog));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(vmLog));
+  int get hashCode => Object.hash(runtimeType, vmLog);
 
   @JsonKey(ignore: true)
   @override
-  _$VivaEventUnknownCopyWith<_VivaEventUnknown> get copyWith =>
-      __$VivaEventUnknownCopyWithImpl<_VivaEventUnknown>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VivaEventUnknownCopyWith<_$_VivaEventUnknown> get copyWith =>
+      __$$_VivaEventUnknownCopyWithImpl<_$_VivaEventUnknown>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2202,13 +2056,13 @@ class _$_VivaEventUnknown implements _VivaEventUnknown {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
+    TResult? Function(BigInt poolId)? poolCreated,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
+    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
+    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return unknown?.call(vmLog);
   }
@@ -2248,12 +2102,12 @@ class _$_VivaEventUnknown implements _VivaEventUnknown {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
+    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
+    TResult? Function(_VivaEventDeposit value)? deposit,
+    TResult? Function(_VivaEventWithdraw value)? withdraw,
+    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
+    TResult? Function(_VivaEventClaim value)? claim,
+    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return unknown?.call(this);
   }
@@ -2277,34 +2131,14 @@ class _$_VivaEventUnknown implements _VivaEventUnknown {
 }
 
 abstract class _VivaEventUnknown implements VivaEvent {
-  const factory _VivaEventUnknown({required VmLog vmLog}) = _$_VivaEventUnknown;
+  const factory _VivaEventUnknown({required final VmLog vmLog}) =
+      _$_VivaEventUnknown;
 
   VmLog get vmLog;
   @JsonKey(ignore: true)
-  _$VivaEventUnknownCopyWith<_VivaEventUnknown> get copyWith =>
+  _$$_VivaEventUnknownCopyWith<_$_VivaEventUnknown> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$PoolFilterTearOff {
-  const _$PoolFilterTearOff();
-
-  _PoolFilter call(
-      {bool stakedOnly = false,
-      bool ended = false,
-      PoolSortOrder sortOrder = PoolSortOrder.byDefault,
-      String searchTerm = ''}) {
-    return _PoolFilter(
-      stakedOnly: stakedOnly,
-      ended: ended,
-      sortOrder: sortOrder,
-      searchTerm: searchTerm,
-    );
-  }
-}
-
-/// @nodoc
-const $PoolFilter = _$PoolFilterTearOff();
 
 /// @nodoc
 mixin _$PoolFilter {
@@ -2322,7 +2156,8 @@ mixin _$PoolFilter {
 abstract class $PoolFilterCopyWith<$Res> {
   factory $PoolFilterCopyWith(
           PoolFilter value, $Res Function(PoolFilter) then) =
-      _$PoolFilterCopyWithImpl<$Res>;
+      _$PoolFilterCopyWithImpl<$Res, PoolFilter>;
+  @useResult
   $Res call(
       {bool stakedOnly,
       bool ended,
@@ -2331,47 +2166,52 @@ abstract class $PoolFilterCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PoolFilterCopyWithImpl<$Res> implements $PoolFilterCopyWith<$Res> {
+class _$PoolFilterCopyWithImpl<$Res, $Val extends PoolFilter>
+    implements $PoolFilterCopyWith<$Res> {
   _$PoolFilterCopyWithImpl(this._value, this._then);
 
-  final PoolFilter _value;
   // ignore: unused_field
-  final $Res Function(PoolFilter) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stakedOnly = freezed,
-    Object? ended = freezed,
-    Object? sortOrder = freezed,
-    Object? searchTerm = freezed,
+    Object? stakedOnly = null,
+    Object? ended = null,
+    Object? sortOrder = null,
+    Object? searchTerm = null,
   }) {
     return _then(_value.copyWith(
-      stakedOnly: stakedOnly == freezed
+      stakedOnly: null == stakedOnly
           ? _value.stakedOnly
           : stakedOnly // ignore: cast_nullable_to_non_nullable
               as bool,
-      ended: ended == freezed
+      ended: null == ended
           ? _value.ended
           : ended // ignore: cast_nullable_to_non_nullable
               as bool,
-      sortOrder: sortOrder == freezed
+      sortOrder: null == sortOrder
           ? _value.sortOrder
           : sortOrder // ignore: cast_nullable_to_non_nullable
               as PoolSortOrder,
-      searchTerm: searchTerm == freezed
+      searchTerm: null == searchTerm
           ? _value.searchTerm
           : searchTerm // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$PoolFilterCopyWith<$Res> implements $PoolFilterCopyWith<$Res> {
-  factory _$PoolFilterCopyWith(
-          _PoolFilter value, $Res Function(_PoolFilter) then) =
-      __$PoolFilterCopyWithImpl<$Res>;
+abstract class _$$_PoolFilterCopyWith<$Res>
+    implements $PoolFilterCopyWith<$Res> {
+  factory _$$_PoolFilterCopyWith(
+          _$_PoolFilter value, $Res Function(_$_PoolFilter) then) =
+      __$$_PoolFilterCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool stakedOnly,
       bool ended,
@@ -2380,36 +2220,35 @@ abstract class _$PoolFilterCopyWith<$Res> implements $PoolFilterCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PoolFilterCopyWithImpl<$Res> extends _$PoolFilterCopyWithImpl<$Res>
-    implements _$PoolFilterCopyWith<$Res> {
-  __$PoolFilterCopyWithImpl(
-      _PoolFilter _value, $Res Function(_PoolFilter) _then)
-      : super(_value, (v) => _then(v as _PoolFilter));
+class __$$_PoolFilterCopyWithImpl<$Res>
+    extends _$PoolFilterCopyWithImpl<$Res, _$_PoolFilter>
+    implements _$$_PoolFilterCopyWith<$Res> {
+  __$$_PoolFilterCopyWithImpl(
+      _$_PoolFilter _value, $Res Function(_$_PoolFilter) _then)
+      : super(_value, _then);
 
-  @override
-  _PoolFilter get _value => super._value as _PoolFilter;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stakedOnly = freezed,
-    Object? ended = freezed,
-    Object? sortOrder = freezed,
-    Object? searchTerm = freezed,
+    Object? stakedOnly = null,
+    Object? ended = null,
+    Object? sortOrder = null,
+    Object? searchTerm = null,
   }) {
-    return _then(_PoolFilter(
-      stakedOnly: stakedOnly == freezed
+    return _then(_$_PoolFilter(
+      stakedOnly: null == stakedOnly
           ? _value.stakedOnly
           : stakedOnly // ignore: cast_nullable_to_non_nullable
               as bool,
-      ended: ended == freezed
+      ended: null == ended
           ? _value.ended
           : ended // ignore: cast_nullable_to_non_nullable
               as bool,
-      sortOrder: sortOrder == freezed
+      sortOrder: null == sortOrder
           ? _value.sortOrder
           : sortOrder // ignore: cast_nullable_to_non_nullable
               as PoolSortOrder,
-      searchTerm: searchTerm == freezed
+      searchTerm: null == searchTerm
           ? _value.searchTerm
           : searchTerm // ignore: cast_nullable_to_non_nullable
               as String,
@@ -2426,17 +2265,17 @@ class _$_PoolFilter implements _PoolFilter {
       this.sortOrder = PoolSortOrder.byDefault,
       this.searchTerm = ''});
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool stakedOnly;
-  @JsonKey()
   @override
+  @JsonKey()
   final bool ended;
-  @JsonKey()
   @override
+  @JsonKey()
   final PoolSortOrder sortOrder;
-  @JsonKey()
   @override
+  @JsonKey()
   final String searchTerm;
 
   @override
@@ -2448,35 +2287,33 @@ class _$_PoolFilter implements _PoolFilter {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PoolFilter &&
-            const DeepCollectionEquality()
-                .equals(other.stakedOnly, stakedOnly) &&
-            const DeepCollectionEquality().equals(other.ended, ended) &&
-            const DeepCollectionEquality().equals(other.sortOrder, sortOrder) &&
-            const DeepCollectionEquality()
-                .equals(other.searchTerm, searchTerm));
+            other is _$_PoolFilter &&
+            (identical(other.stakedOnly, stakedOnly) ||
+                other.stakedOnly == stakedOnly) &&
+            (identical(other.ended, ended) || other.ended == ended) &&
+            (identical(other.sortOrder, sortOrder) ||
+                other.sortOrder == sortOrder) &&
+            (identical(other.searchTerm, searchTerm) ||
+                other.searchTerm == searchTerm));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(stakedOnly),
-      const DeepCollectionEquality().hash(ended),
-      const DeepCollectionEquality().hash(sortOrder),
-      const DeepCollectionEquality().hash(searchTerm));
+  int get hashCode =>
+      Object.hash(runtimeType, stakedOnly, ended, sortOrder, searchTerm);
 
   @JsonKey(ignore: true)
   @override
-  _$PoolFilterCopyWith<_PoolFilter> get copyWith =>
-      __$PoolFilterCopyWithImpl<_PoolFilter>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_PoolFilterCopyWith<_$_PoolFilter> get copyWith =>
+      __$$_PoolFilterCopyWithImpl<_$_PoolFilter>(this, _$identity);
 }
 
 abstract class _PoolFilter implements PoolFilter {
   const factory _PoolFilter(
-      {bool stakedOnly,
-      bool ended,
-      PoolSortOrder sortOrder,
-      String searchTerm}) = _$_PoolFilter;
+      {final bool stakedOnly,
+      final bool ended,
+      final PoolSortOrder sortOrder,
+      final String searchTerm}) = _$_PoolFilter;
 
   @override
   bool get stakedOnly;
@@ -2488,6 +2325,6 @@ abstract class _PoolFilter implements PoolFilter {
   String get searchTerm;
   @override
   @JsonKey(ignore: true)
-  _$PoolFilterCopyWith<_PoolFilter> get copyWith =>
+  _$$_PoolFilterCopyWith<_$_PoolFilter> get copyWith =>
       throw _privateConstructorUsedError;
 }

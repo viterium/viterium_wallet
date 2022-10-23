@@ -14,7 +14,7 @@ _$_TokenOrderSettings _$$_TokenOrderSettingsFromJson(Map json) =>
 Map<String, dynamic> _$$_TokenOrderSettingsToJson(
         _$_TokenOrderSettings instance) =>
     <String, dynamic>{
-      'sortOption': _$TokenSortOptionEnumMap[instance.sortOption],
+      'sortOption': _$TokenSortOptionEnumMap[instance.sortOption]!,
     };
 
 const _$TokenSortOptionEnumMap = {

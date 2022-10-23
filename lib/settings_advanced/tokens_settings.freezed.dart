@@ -12,29 +12,11 @@ part of 'tokens_settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 TokensSettings _$TokensSettingsFromJson(Map<String, dynamic> json) {
   return _TokenOrderSettings.fromJson(json);
 }
-
-/// @nodoc
-class _$TokensSettingsTearOff {
-  const _$TokensSettingsTearOff();
-
-  _TokenOrderSettings call({required TokenSortOption sortOption}) {
-    return _TokenOrderSettings(
-      sortOption: sortOption,
-    );
-  }
-
-  TokensSettings fromJson(Map<String, Object?> json) {
-    return TokensSettings.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $TokensSettings = _$TokensSettingsTearOff();
 
 /// @nodoc
 mixin _$TokensSettings {
@@ -50,59 +32,61 @@ mixin _$TokensSettings {
 abstract class $TokensSettingsCopyWith<$Res> {
   factory $TokensSettingsCopyWith(
           TokensSettings value, $Res Function(TokensSettings) then) =
-      _$TokensSettingsCopyWithImpl<$Res>;
+      _$TokensSettingsCopyWithImpl<$Res, TokensSettings>;
+  @useResult
   $Res call({TokenSortOption sortOption});
 }
 
 /// @nodoc
-class _$TokensSettingsCopyWithImpl<$Res>
+class _$TokensSettingsCopyWithImpl<$Res, $Val extends TokensSettings>
     implements $TokensSettingsCopyWith<$Res> {
   _$TokensSettingsCopyWithImpl(this._value, this._then);
 
-  final TokensSettings _value;
   // ignore: unused_field
-  final $Res Function(TokensSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sortOption = freezed,
+    Object? sortOption = null,
   }) {
     return _then(_value.copyWith(
-      sortOption: sortOption == freezed
+      sortOption: null == sortOption
           ? _value.sortOption
           : sortOption // ignore: cast_nullable_to_non_nullable
               as TokenSortOption,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$TokenOrderSettingsCopyWith<$Res>
+abstract class _$$_TokenOrderSettingsCopyWith<$Res>
     implements $TokensSettingsCopyWith<$Res> {
-  factory _$TokenOrderSettingsCopyWith(
-          _TokenOrderSettings value, $Res Function(_TokenOrderSettings) then) =
-      __$TokenOrderSettingsCopyWithImpl<$Res>;
+  factory _$$_TokenOrderSettingsCopyWith(_$_TokenOrderSettings value,
+          $Res Function(_$_TokenOrderSettings) then) =
+      __$$_TokenOrderSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({TokenSortOption sortOption});
 }
 
 /// @nodoc
-class __$TokenOrderSettingsCopyWithImpl<$Res>
-    extends _$TokensSettingsCopyWithImpl<$Res>
-    implements _$TokenOrderSettingsCopyWith<$Res> {
-  __$TokenOrderSettingsCopyWithImpl(
-      _TokenOrderSettings _value, $Res Function(_TokenOrderSettings) _then)
-      : super(_value, (v) => _then(v as _TokenOrderSettings));
+class __$$_TokenOrderSettingsCopyWithImpl<$Res>
+    extends _$TokensSettingsCopyWithImpl<$Res, _$_TokenOrderSettings>
+    implements _$$_TokenOrderSettingsCopyWith<$Res> {
+  __$$_TokenOrderSettingsCopyWithImpl(
+      _$_TokenOrderSettings _value, $Res Function(_$_TokenOrderSettings) _then)
+      : super(_value, _then);
 
-  @override
-  _TokenOrderSettings get _value => super._value as _TokenOrderSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? sortOption = freezed,
+    Object? sortOption = null,
   }) {
-    return _then(_TokenOrderSettings(
-      sortOption: sortOption == freezed
+    return _then(_$_TokenOrderSettings(
+      sortOption: null == sortOption
           ? _value.sortOption
           : sortOption // ignore: cast_nullable_to_non_nullable
               as TokenSortOption,
@@ -130,29 +114,33 @@ class _$_TokenOrderSettings implements _TokenOrderSettings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _TokenOrderSettings &&
-            const DeepCollectionEquality()
-                .equals(other.sortOption, sortOption));
+            other is _$_TokenOrderSettings &&
+            (identical(other.sortOption, sortOption) ||
+                other.sortOption == sortOption));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(sortOption));
 
   @JsonKey(ignore: true)
   @override
-  _$TokenOrderSettingsCopyWith<_TokenOrderSettings> get copyWith =>
-      __$TokenOrderSettingsCopyWithImpl<_TokenOrderSettings>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, sortOption);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_TokenOrderSettingsCopyWith<_$_TokenOrderSettings> get copyWith =>
+      __$$_TokenOrderSettingsCopyWithImpl<_$_TokenOrderSettings>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenOrderSettingsToJson(this);
+    return _$$_TokenOrderSettingsToJson(
+      this,
+    );
   }
 }
 
 abstract class _TokenOrderSettings implements TokensSettings {
-  const factory _TokenOrderSettings({required TokenSortOption sortOption}) =
-      _$_TokenOrderSettings;
+  const factory _TokenOrderSettings(
+      {required final TokenSortOption sortOption}) = _$_TokenOrderSettings;
 
   factory _TokenOrderSettings.fromJson(Map<String, dynamic> json) =
       _$_TokenOrderSettings.fromJson;
@@ -161,6 +149,6 @@ abstract class _TokenOrderSettings implements TokensSettings {
   TokenSortOption get sortOption;
   @override
   @JsonKey(ignore: true)
-  _$TokenOrderSettingsCopyWith<_TokenOrderSettings> get copyWith =>
+  _$$_TokenOrderSettingsCopyWith<_$_TokenOrderSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }

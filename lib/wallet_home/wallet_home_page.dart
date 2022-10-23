@@ -7,7 +7,6 @@ import 'package:vite/vite.dart';
 
 import '../accounts/account.dart';
 import '../app_providers.dart';
-import '../keep_alive.dart';
 import '../main_card/main_card.dart';
 import '../push_notifications/push_types.dart';
 import '../tokens/tokens_manage_sheet.dart';

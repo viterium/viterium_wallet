@@ -12,40 +12,11 @@ part of 'block_explorers.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 BlockExplorer _$BlockExplorerFromJson(Map<String, dynamic> json) {
   return _BlockExplorer.fromJson(json);
 }
-
-/// @nodoc
-class _$BlockExplorerTearOff {
-  const _$BlockExplorerTearOff();
-
-  _BlockExplorer call(
-      {required ViteNetwork network,
-      required String name,
-      required String url,
-      required String addressUrl,
-      required String tokenIdUrl,
-      required String txUrl}) {
-    return _BlockExplorer(
-      network: network,
-      name: name,
-      url: url,
-      addressUrl: addressUrl,
-      tokenIdUrl: tokenIdUrl,
-      txUrl: txUrl,
-    );
-  }
-
-  BlockExplorer fromJson(Map<String, Object?> json) {
-    return BlockExplorer.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $BlockExplorer = _$BlockExplorerTearOff();
 
 /// @nodoc
 mixin _$BlockExplorer {
@@ -66,7 +37,8 @@ mixin _$BlockExplorer {
 abstract class $BlockExplorerCopyWith<$Res> {
   factory $BlockExplorerCopyWith(
           BlockExplorer value, $Res Function(BlockExplorer) then) =
-      _$BlockExplorerCopyWithImpl<$Res>;
+      _$BlockExplorerCopyWithImpl<$Res, BlockExplorer>;
+  @useResult
   $Res call(
       {ViteNetwork network,
       String name,
@@ -77,59 +49,62 @@ abstract class $BlockExplorerCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BlockExplorerCopyWithImpl<$Res>
+class _$BlockExplorerCopyWithImpl<$Res, $Val extends BlockExplorer>
     implements $BlockExplorerCopyWith<$Res> {
   _$BlockExplorerCopyWithImpl(this._value, this._then);
 
-  final BlockExplorer _value;
   // ignore: unused_field
-  final $Res Function(BlockExplorer) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? network = freezed,
-    Object? name = freezed,
-    Object? url = freezed,
-    Object? addressUrl = freezed,
-    Object? tokenIdUrl = freezed,
-    Object? txUrl = freezed,
+    Object? network = null,
+    Object? name = null,
+    Object? url = null,
+    Object? addressUrl = null,
+    Object? tokenIdUrl = null,
+    Object? txUrl = null,
   }) {
     return _then(_value.copyWith(
-      network: network == freezed
+      network: null == network
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as ViteNetwork,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      addressUrl: addressUrl == freezed
+      addressUrl: null == addressUrl
           ? _value.addressUrl
           : addressUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenIdUrl: tokenIdUrl == freezed
+      tokenIdUrl: null == tokenIdUrl
           ? _value.tokenIdUrl
           : tokenIdUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      txUrl: txUrl == freezed
+      txUrl: null == txUrl
           ? _value.txUrl
           : txUrl // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$BlockExplorerCopyWith<$Res>
+abstract class _$$_BlockExplorerCopyWith<$Res>
     implements $BlockExplorerCopyWith<$Res> {
-  factory _$BlockExplorerCopyWith(
-          _BlockExplorer value, $Res Function(_BlockExplorer) then) =
-      __$BlockExplorerCopyWithImpl<$Res>;
+  factory _$$_BlockExplorerCopyWith(
+          _$_BlockExplorer value, $Res Function(_$_BlockExplorer) then) =
+      __$$_BlockExplorerCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {ViteNetwork network,
       String name,
@@ -140,47 +115,45 @@ abstract class _$BlockExplorerCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BlockExplorerCopyWithImpl<$Res>
-    extends _$BlockExplorerCopyWithImpl<$Res>
-    implements _$BlockExplorerCopyWith<$Res> {
-  __$BlockExplorerCopyWithImpl(
-      _BlockExplorer _value, $Res Function(_BlockExplorer) _then)
-      : super(_value, (v) => _then(v as _BlockExplorer));
+class __$$_BlockExplorerCopyWithImpl<$Res>
+    extends _$BlockExplorerCopyWithImpl<$Res, _$_BlockExplorer>
+    implements _$$_BlockExplorerCopyWith<$Res> {
+  __$$_BlockExplorerCopyWithImpl(
+      _$_BlockExplorer _value, $Res Function(_$_BlockExplorer) _then)
+      : super(_value, _then);
 
-  @override
-  _BlockExplorer get _value => super._value as _BlockExplorer;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? network = freezed,
-    Object? name = freezed,
-    Object? url = freezed,
-    Object? addressUrl = freezed,
-    Object? tokenIdUrl = freezed,
-    Object? txUrl = freezed,
+    Object? network = null,
+    Object? name = null,
+    Object? url = null,
+    Object? addressUrl = null,
+    Object? tokenIdUrl = null,
+    Object? txUrl = null,
   }) {
-    return _then(_BlockExplorer(
-      network: network == freezed
+    return _then(_$_BlockExplorer(
+      network: null == network
           ? _value.network
           : network // ignore: cast_nullable_to_non_nullable
               as ViteNetwork,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      url: url == freezed
+      url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      addressUrl: addressUrl == freezed
+      addressUrl: null == addressUrl
           ? _value.addressUrl
           : addressUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenIdUrl: tokenIdUrl == freezed
+      tokenIdUrl: null == tokenIdUrl
           ? _value.tokenIdUrl
           : tokenIdUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      txUrl: txUrl == freezed
+      txUrl: null == txUrl
           ? _value.txUrl
           : txUrl // ignore: cast_nullable_to_non_nullable
               as String,
@@ -225,46 +198,44 @@ class _$_BlockExplorer extends _BlockExplorer {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BlockExplorer &&
-            const DeepCollectionEquality().equals(other.network, network) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.url, url) &&
-            const DeepCollectionEquality()
-                .equals(other.addressUrl, addressUrl) &&
-            const DeepCollectionEquality()
-                .equals(other.tokenIdUrl, tokenIdUrl) &&
-            const DeepCollectionEquality().equals(other.txUrl, txUrl));
+            other is _$_BlockExplorer &&
+            (identical(other.network, network) || other.network == network) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.url, url) || other.url == url) &&
+            (identical(other.addressUrl, addressUrl) ||
+                other.addressUrl == addressUrl) &&
+            (identical(other.tokenIdUrl, tokenIdUrl) ||
+                other.tokenIdUrl == tokenIdUrl) &&
+            (identical(other.txUrl, txUrl) || other.txUrl == txUrl));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(network),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(url),
-      const DeepCollectionEquality().hash(addressUrl),
-      const DeepCollectionEquality().hash(tokenIdUrl),
-      const DeepCollectionEquality().hash(txUrl));
 
   @JsonKey(ignore: true)
   @override
-  _$BlockExplorerCopyWith<_BlockExplorer> get copyWith =>
-      __$BlockExplorerCopyWithImpl<_BlockExplorer>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, network, name, url, addressUrl, tokenIdUrl, txUrl);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BlockExplorerCopyWith<_$_BlockExplorer> get copyWith =>
+      __$$_BlockExplorerCopyWithImpl<_$_BlockExplorer>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BlockExplorerToJson(this);
+    return _$$_BlockExplorerToJson(
+      this,
+    );
   }
 }
 
 abstract class _BlockExplorer extends BlockExplorer {
   const factory _BlockExplorer(
-      {required ViteNetwork network,
-      required String name,
-      required String url,
-      required String addressUrl,
-      required String tokenIdUrl,
-      required String txUrl}) = _$_BlockExplorer;
+      {required final ViteNetwork network,
+      required final String name,
+      required final String url,
+      required final String addressUrl,
+      required final String tokenIdUrl,
+      required final String txUrl}) = _$_BlockExplorer;
   const _BlockExplorer._() : super._();
 
   factory _BlockExplorer.fromJson(Map<String, dynamic> json) =
@@ -284,6 +255,6 @@ abstract class _BlockExplorer extends BlockExplorer {
   String get txUrl;
   @override
   @JsonKey(ignore: true)
-  _$BlockExplorerCopyWith<_BlockExplorer> get copyWith =>
+  _$$_BlockExplorerCopyWith<_$_BlockExplorer> get copyWith =>
       throw _privateConstructorUsedError;
 }

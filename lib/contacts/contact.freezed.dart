@@ -12,30 +12,11 @@ part of 'contact.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Contact _$ContactFromJson(Map<String, dynamic> json) {
   return _Contact.fromJson(json);
 }
-
-/// @nodoc
-class _$ContactTearOff {
-  const _$ContactTearOff();
-
-  _Contact call({required String name, required String address}) {
-    return _Contact(
-      name: name,
-      address: address,
-    );
-  }
-
-  Contact fromJson(Map<String, Object?> json) {
-    return Contact.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Contact = _$ContactTearOff();
 
 /// @nodoc
 mixin _$Contact {
@@ -50,64 +31,69 @@ mixin _$Contact {
 /// @nodoc
 abstract class $ContactCopyWith<$Res> {
   factory $ContactCopyWith(Contact value, $Res Function(Contact) then) =
-      _$ContactCopyWithImpl<$Res>;
+      _$ContactCopyWithImpl<$Res, Contact>;
+  @useResult
   $Res call({String name, String address});
 }
 
 /// @nodoc
-class _$ContactCopyWithImpl<$Res> implements $ContactCopyWith<$Res> {
+class _$ContactCopyWithImpl<$Res, $Val extends Contact>
+    implements $ContactCopyWith<$Res> {
   _$ContactCopyWithImpl(this._value, this._then);
 
-  final Contact _value;
   // ignore: unused_field
-  final $Res Function(Contact) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? address = freezed,
+    Object? name = null,
+    Object? address = null,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ContactCopyWith<$Res> implements $ContactCopyWith<$Res> {
-  factory _$ContactCopyWith(_Contact value, $Res Function(_Contact) then) =
-      __$ContactCopyWithImpl<$Res>;
+abstract class _$$_ContactCopyWith<$Res> implements $ContactCopyWith<$Res> {
+  factory _$$_ContactCopyWith(
+          _$_Contact value, $Res Function(_$_Contact) then) =
+      __$$_ContactCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String name, String address});
 }
 
 /// @nodoc
-class __$ContactCopyWithImpl<$Res> extends _$ContactCopyWithImpl<$Res>
-    implements _$ContactCopyWith<$Res> {
-  __$ContactCopyWithImpl(_Contact _value, $Res Function(_Contact) _then)
-      : super(_value, (v) => _then(v as _Contact));
+class __$$_ContactCopyWithImpl<$Res>
+    extends _$ContactCopyWithImpl<$Res, _$_Contact>
+    implements _$$_ContactCopyWith<$Res> {
+  __$$_ContactCopyWithImpl(_$_Contact _value, $Res Function(_$_Contact) _then)
+      : super(_value, _then);
 
-  @override
-  _Contact get _value => super._value as _Contact;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
-    Object? address = freezed,
+    Object? name = null,
+    Object? address = null,
   }) {
-    return _then(_Contact(
-      name: name == freezed
+    return _then(_$_Contact(
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      address: address == freezed
+      address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
@@ -137,31 +123,32 @@ class _$_Contact implements _Contact {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Contact &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.address, address));
+            other is _$_Contact &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.address, address) || other.address == address));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(address));
 
   @JsonKey(ignore: true)
   @override
-  _$ContactCopyWith<_Contact> get copyWith =>
-      __$ContactCopyWithImpl<_Contact>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, name, address);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ContactCopyWith<_$_Contact> get copyWith =>
+      __$$_ContactCopyWithImpl<_$_Contact>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ContactToJson(this);
+    return _$$_ContactToJson(
+      this,
+    );
   }
 }
 
 abstract class _Contact implements Contact {
-  const factory _Contact({required String name, required String address}) =
-      _$_Contact;
+  const factory _Contact(
+      {required final String name, required final String address}) = _$_Contact;
 
   factory _Contact.fromJson(Map<String, dynamic> json) = _$_Contact.fromJson;
 
@@ -171,6 +158,6 @@ abstract class _Contact implements Contact {
   String get address;
   @override
   @JsonKey(ignore: true)
-  _$ContactCopyWith<_Contact> get copyWith =>
+  _$$_ContactCopyWith<_$_Contact> get copyWith =>
       throw _privateConstructorUsedError;
 }

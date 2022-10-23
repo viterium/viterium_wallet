@@ -12,36 +12,11 @@ part of 'vitc_swap_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 VitcSwapSettings _$VitcSwapSettingsFromJson(Map<String, dynamic> json) {
   return _VitcSwapSettings.fromJson(json);
 }
-
-/// @nodoc
-class _$VitcSwapSettingsTearOff {
-  const _$VitcSwapSettingsTearOff();
-
-  _VitcSwapSettings call(
-      {IList<String> tradingTokens = const IListConst([]),
-      required TokenInfo fromToken,
-      required TokenInfo toToken,
-      double slippage = 0.005}) {
-    return _VitcSwapSettings(
-      tradingTokens: tradingTokens,
-      fromToken: fromToken,
-      toToken: toToken,
-      slippage: slippage,
-    );
-  }
-
-  VitcSwapSettings fromJson(Map<String, Object?> json) {
-    return VitcSwapSettings.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VitcSwapSettings = _$VitcSwapSettingsTearOff();
 
 /// @nodoc
 mixin _$VitcSwapSettings {
@@ -60,7 +35,8 @@ mixin _$VitcSwapSettings {
 abstract class $VitcSwapSettingsCopyWith<$Res> {
   factory $VitcSwapSettingsCopyWith(
           VitcSwapSettings value, $Res Function(VitcSwapSettings) then) =
-      _$VitcSwapSettingsCopyWithImpl<$Res>;
+      _$VitcSwapSettingsCopyWithImpl<$Res, VitcSwapSettings>;
+  @useResult
   $Res call(
       {IList<String> tradingTokens,
       TokenInfo fromToken,
@@ -72,63 +48,68 @@ abstract class $VitcSwapSettingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VitcSwapSettingsCopyWithImpl<$Res>
+class _$VitcSwapSettingsCopyWithImpl<$Res, $Val extends VitcSwapSettings>
     implements $VitcSwapSettingsCopyWith<$Res> {
   _$VitcSwapSettingsCopyWithImpl(this._value, this._then);
 
-  final VitcSwapSettings _value;
   // ignore: unused_field
-  final $Res Function(VitcSwapSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tradingTokens = freezed,
-    Object? fromToken = freezed,
-    Object? toToken = freezed,
-    Object? slippage = freezed,
+    Object? tradingTokens = null,
+    Object? fromToken = null,
+    Object? toToken = null,
+    Object? slippage = null,
   }) {
     return _then(_value.copyWith(
-      tradingTokens: tradingTokens == freezed
+      tradingTokens: null == tradingTokens
           ? _value.tradingTokens
           : tradingTokens // ignore: cast_nullable_to_non_nullable
               as IList<String>,
-      fromToken: fromToken == freezed
+      fromToken: null == fromToken
           ? _value.fromToken
           : fromToken // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-      toToken: toToken == freezed
+      toToken: null == toToken
           ? _value.toToken
           : toToken // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-      slippage: slippage == freezed
+      slippage: null == slippage
           ? _value.slippage
           : slippage // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenInfoCopyWith<$Res> get fromToken {
     return $TokenInfoCopyWith<$Res>(_value.fromToken, (value) {
-      return _then(_value.copyWith(fromToken: value));
+      return _then(_value.copyWith(fromToken: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $TokenInfoCopyWith<$Res> get toToken {
     return $TokenInfoCopyWith<$Res>(_value.toToken, (value) {
-      return _then(_value.copyWith(toToken: value));
+      return _then(_value.copyWith(toToken: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VitcSwapSettingsCopyWith<$Res>
+abstract class _$$_VitcSwapSettingsCopyWith<$Res>
     implements $VitcSwapSettingsCopyWith<$Res> {
-  factory _$VitcSwapSettingsCopyWith(
-          _VitcSwapSettings value, $Res Function(_VitcSwapSettings) then) =
-      __$VitcSwapSettingsCopyWithImpl<$Res>;
+  factory _$$_VitcSwapSettingsCopyWith(
+          _$_VitcSwapSettings value, $Res Function(_$_VitcSwapSettings) then) =
+      __$$_VitcSwapSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {IList<String> tradingTokens,
       TokenInfo fromToken,
@@ -142,37 +123,35 @@ abstract class _$VitcSwapSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VitcSwapSettingsCopyWithImpl<$Res>
-    extends _$VitcSwapSettingsCopyWithImpl<$Res>
-    implements _$VitcSwapSettingsCopyWith<$Res> {
-  __$VitcSwapSettingsCopyWithImpl(
-      _VitcSwapSettings _value, $Res Function(_VitcSwapSettings) _then)
-      : super(_value, (v) => _then(v as _VitcSwapSettings));
+class __$$_VitcSwapSettingsCopyWithImpl<$Res>
+    extends _$VitcSwapSettingsCopyWithImpl<$Res, _$_VitcSwapSettings>
+    implements _$$_VitcSwapSettingsCopyWith<$Res> {
+  __$$_VitcSwapSettingsCopyWithImpl(
+      _$_VitcSwapSettings _value, $Res Function(_$_VitcSwapSettings) _then)
+      : super(_value, _then);
 
-  @override
-  _VitcSwapSettings get _value => super._value as _VitcSwapSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tradingTokens = freezed,
-    Object? fromToken = freezed,
-    Object? toToken = freezed,
-    Object? slippage = freezed,
+    Object? tradingTokens = null,
+    Object? fromToken = null,
+    Object? toToken = null,
+    Object? slippage = null,
   }) {
-    return _then(_VitcSwapSettings(
-      tradingTokens: tradingTokens == freezed
+    return _then(_$_VitcSwapSettings(
+      tradingTokens: null == tradingTokens
           ? _value.tradingTokens
           : tradingTokens // ignore: cast_nullable_to_non_nullable
               as IList<String>,
-      fromToken: fromToken == freezed
+      fromToken: null == fromToken
           ? _value.fromToken
           : fromToken // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-      toToken: toToken == freezed
+      toToken: null == toToken
           ? _value.toToken
           : toToken // ignore: cast_nullable_to_non_nullable
               as TokenInfo,
-      slippage: slippage == freezed
+      slippage: null == slippage
           ? _value.slippage
           : slippage // ignore: cast_nullable_to_non_nullable
               as double,
@@ -192,15 +171,15 @@ class _$_VitcSwapSettings implements _VitcSwapSettings {
   factory _$_VitcSwapSettings.fromJson(Map<String, dynamic> json) =>
       _$$_VitcSwapSettingsFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final IList<String> tradingTokens;
   @override
   final TokenInfo fromToken;
   @override
   final TokenInfo toToken;
-  @JsonKey()
   @override
+  @JsonKey()
   final double slippage;
 
   @override
@@ -212,39 +191,45 @@ class _$_VitcSwapSettings implements _VitcSwapSettings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VitcSwapSettings &&
+            other is _$_VitcSwapSettings &&
             const DeepCollectionEquality()
                 .equals(other.tradingTokens, tradingTokens) &&
-            const DeepCollectionEquality().equals(other.fromToken, fromToken) &&
-            const DeepCollectionEquality().equals(other.toToken, toToken) &&
-            const DeepCollectionEquality().equals(other.slippage, slippage));
+            (identical(other.fromToken, fromToken) ||
+                other.fromToken == fromToken) &&
+            (identical(other.toToken, toToken) || other.toToken == toToken) &&
+            (identical(other.slippage, slippage) ||
+                other.slippage == slippage));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(tradingTokens),
-      const DeepCollectionEquality().hash(fromToken),
-      const DeepCollectionEquality().hash(toToken),
-      const DeepCollectionEquality().hash(slippage));
+      fromToken,
+      toToken,
+      slippage);
 
   @JsonKey(ignore: true)
   @override
-  _$VitcSwapSettingsCopyWith<_VitcSwapSettings> get copyWith =>
-      __$VitcSwapSettingsCopyWithImpl<_VitcSwapSettings>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VitcSwapSettingsCopyWith<_$_VitcSwapSettings> get copyWith =>
+      __$$_VitcSwapSettingsCopyWithImpl<_$_VitcSwapSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VitcSwapSettingsToJson(this);
+    return _$$_VitcSwapSettingsToJson(
+      this,
+    );
   }
 }
 
 abstract class _VitcSwapSettings implements VitcSwapSettings {
   const factory _VitcSwapSettings(
-      {IList<String> tradingTokens,
-      required TokenInfo fromToken,
-      required TokenInfo toToken,
-      double slippage}) = _$_VitcSwapSettings;
+      {final IList<String> tradingTokens,
+      required final TokenInfo fromToken,
+      required final TokenInfo toToken,
+      final double slippage}) = _$_VitcSwapSettings;
 
   factory _VitcSwapSettings.fromJson(Map<String, dynamic> json) =
       _$_VitcSwapSettings.fromJson;
@@ -259,32 +244,9 @@ abstract class _VitcSwapSettings implements VitcSwapSettings {
   double get slippage;
   @override
   @JsonKey(ignore: true)
-  _$VitcSwapSettingsCopyWith<_VitcSwapSettings> get copyWith =>
+  _$$_VitcSwapSettingsCopyWith<_$_VitcSwapSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$VitcSwapStateTearOff {
-  const _$VitcSwapStateTearOff();
-
-  _VitcSwapState call(
-      {required Amount fromAmount,
-      required Amount toAmount,
-      required double slippage,
-      required int requestId,
-      required int callId}) {
-    return _VitcSwapState(
-      fromAmount: fromAmount,
-      toAmount: toAmount,
-      slippage: slippage,
-      requestId: requestId,
-      callId: callId,
-    );
-  }
-}
-
-/// @nodoc
-const $VitcSwapState = _$VitcSwapStateTearOff();
 
 /// @nodoc
 mixin _$VitcSwapState {
@@ -303,7 +265,8 @@ mixin _$VitcSwapState {
 abstract class $VitcSwapStateCopyWith<$Res> {
   factory $VitcSwapStateCopyWith(
           VitcSwapState value, $Res Function(VitcSwapState) then) =
-      _$VitcSwapStateCopyWithImpl<$Res>;
+      _$VitcSwapStateCopyWithImpl<$Res, VitcSwapState>;
+  @useResult
   $Res call(
       {Amount fromAmount,
       Amount toAmount,
@@ -316,68 +279,73 @@ abstract class $VitcSwapStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VitcSwapStateCopyWithImpl<$Res>
+class _$VitcSwapStateCopyWithImpl<$Res, $Val extends VitcSwapState>
     implements $VitcSwapStateCopyWith<$Res> {
   _$VitcSwapStateCopyWithImpl(this._value, this._then);
 
-  final VitcSwapState _value;
   // ignore: unused_field
-  final $Res Function(VitcSwapState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fromAmount = freezed,
-    Object? toAmount = freezed,
-    Object? slippage = freezed,
-    Object? requestId = freezed,
-    Object? callId = freezed,
+    Object? fromAmount = null,
+    Object? toAmount = null,
+    Object? slippage = null,
+    Object? requestId = null,
+    Object? callId = null,
   }) {
     return _then(_value.copyWith(
-      fromAmount: fromAmount == freezed
+      fromAmount: null == fromAmount
           ? _value.fromAmount
           : fromAmount // ignore: cast_nullable_to_non_nullable
               as Amount,
-      toAmount: toAmount == freezed
+      toAmount: null == toAmount
           ? _value.toAmount
           : toAmount // ignore: cast_nullable_to_non_nullable
               as Amount,
-      slippage: slippage == freezed
+      slippage: null == slippage
           ? _value.slippage
           : slippage // ignore: cast_nullable_to_non_nullable
               as double,
-      requestId: requestId == freezed
+      requestId: null == requestId
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as int,
-      callId: callId == freezed
+      callId: null == callId
           ? _value.callId
           : callId // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AmountCopyWith<$Res> get fromAmount {
     return $AmountCopyWith<$Res>(_value.fromAmount, (value) {
-      return _then(_value.copyWith(fromAmount: value));
+      return _then(_value.copyWith(fromAmount: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AmountCopyWith<$Res> get toAmount {
     return $AmountCopyWith<$Res>(_value.toAmount, (value) {
-      return _then(_value.copyWith(toAmount: value));
+      return _then(_value.copyWith(toAmount: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VitcSwapStateCopyWith<$Res>
+abstract class _$$_VitcSwapStateCopyWith<$Res>
     implements $VitcSwapStateCopyWith<$Res> {
-  factory _$VitcSwapStateCopyWith(
-          _VitcSwapState value, $Res Function(_VitcSwapState) then) =
-      __$VitcSwapStateCopyWithImpl<$Res>;
+  factory _$$_VitcSwapStateCopyWith(
+          _$_VitcSwapState value, $Res Function(_$_VitcSwapState) then) =
+      __$$_VitcSwapStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Amount fromAmount,
       Amount toAmount,
@@ -392,42 +360,40 @@ abstract class _$VitcSwapStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VitcSwapStateCopyWithImpl<$Res>
-    extends _$VitcSwapStateCopyWithImpl<$Res>
-    implements _$VitcSwapStateCopyWith<$Res> {
-  __$VitcSwapStateCopyWithImpl(
-      _VitcSwapState _value, $Res Function(_VitcSwapState) _then)
-      : super(_value, (v) => _then(v as _VitcSwapState));
+class __$$_VitcSwapStateCopyWithImpl<$Res>
+    extends _$VitcSwapStateCopyWithImpl<$Res, _$_VitcSwapState>
+    implements _$$_VitcSwapStateCopyWith<$Res> {
+  __$$_VitcSwapStateCopyWithImpl(
+      _$_VitcSwapState _value, $Res Function(_$_VitcSwapState) _then)
+      : super(_value, _then);
 
-  @override
-  _VitcSwapState get _value => super._value as _VitcSwapState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fromAmount = freezed,
-    Object? toAmount = freezed,
-    Object? slippage = freezed,
-    Object? requestId = freezed,
-    Object? callId = freezed,
+    Object? fromAmount = null,
+    Object? toAmount = null,
+    Object? slippage = null,
+    Object? requestId = null,
+    Object? callId = null,
   }) {
-    return _then(_VitcSwapState(
-      fromAmount: fromAmount == freezed
+    return _then(_$_VitcSwapState(
+      fromAmount: null == fromAmount
           ? _value.fromAmount
           : fromAmount // ignore: cast_nullable_to_non_nullable
               as Amount,
-      toAmount: toAmount == freezed
+      toAmount: null == toAmount
           ? _value.toAmount
           : toAmount // ignore: cast_nullable_to_non_nullable
               as Amount,
-      slippage: slippage == freezed
+      slippage: null == slippage
           ? _value.slippage
           : slippage // ignore: cast_nullable_to_non_nullable
               as double,
-      requestId: requestId == freezed
+      requestId: null == requestId
           ? _value.requestId
           : requestId // ignore: cast_nullable_to_non_nullable
               as int,
-      callId: callId == freezed
+      callId: null == callId
           ? _value.callId
           : callId // ignore: cast_nullable_to_non_nullable
               as int,
@@ -466,37 +432,36 @@ class _$_VitcSwapState extends _VitcSwapState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VitcSwapState &&
-            const DeepCollectionEquality()
-                .equals(other.fromAmount, fromAmount) &&
-            const DeepCollectionEquality().equals(other.toAmount, toAmount) &&
-            const DeepCollectionEquality().equals(other.slippage, slippage) &&
-            const DeepCollectionEquality().equals(other.requestId, requestId) &&
-            const DeepCollectionEquality().equals(other.callId, callId));
+            other is _$_VitcSwapState &&
+            (identical(other.fromAmount, fromAmount) ||
+                other.fromAmount == fromAmount) &&
+            (identical(other.toAmount, toAmount) ||
+                other.toAmount == toAmount) &&
+            (identical(other.slippage, slippage) ||
+                other.slippage == slippage) &&
+            (identical(other.requestId, requestId) ||
+                other.requestId == requestId) &&
+            (identical(other.callId, callId) || other.callId == callId));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(fromAmount),
-      const DeepCollectionEquality().hash(toAmount),
-      const DeepCollectionEquality().hash(slippage),
-      const DeepCollectionEquality().hash(requestId),
-      const DeepCollectionEquality().hash(callId));
+      runtimeType, fromAmount, toAmount, slippage, requestId, callId);
 
   @JsonKey(ignore: true)
   @override
-  _$VitcSwapStateCopyWith<_VitcSwapState> get copyWith =>
-      __$VitcSwapStateCopyWithImpl<_VitcSwapState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_VitcSwapStateCopyWith<_$_VitcSwapState> get copyWith =>
+      __$$_VitcSwapStateCopyWithImpl<_$_VitcSwapState>(this, _$identity);
 }
 
 abstract class _VitcSwapState extends VitcSwapState {
   const factory _VitcSwapState(
-      {required Amount fromAmount,
-      required Amount toAmount,
-      required double slippage,
-      required int requestId,
-      required int callId}) = _$_VitcSwapState;
+      {required final Amount fromAmount,
+      required final Amount toAmount,
+      required final double slippage,
+      required final int requestId,
+      required final int callId}) = _$_VitcSwapState;
   const _VitcSwapState._() : super._();
 
   @override
@@ -511,6 +476,6 @@ abstract class _VitcSwapState extends VitcSwapState {
   int get callId;
   @override
   @JsonKey(ignore: true)
-  _$VitcSwapStateCopyWith<_VitcSwapState> get copyWith =>
+  _$$_VitcSwapStateCopyWith<_$_VitcSwapState> get copyWith =>
       throw _privateConstructorUsedError;
 }

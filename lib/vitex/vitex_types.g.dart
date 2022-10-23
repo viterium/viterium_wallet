@@ -6,6 +6,18 @@ part of 'vitex_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+_$_ExchangeRateVitex _$$_ExchangeRateVitexFromJson(Map json) =>
+    _$_ExchangeRateVitex(
+      VitexExchangeRate.fromJson(
+          Map<String, dynamic>.from(json['exchangeRate'] as Map)),
+    );
+
+Map<String, dynamic> _$$_ExchangeRateVitexToJson(
+        _$_ExchangeRateVitex instance) =>
+    <String, dynamic>{
+      'exchangeRate': instance.exchangeRate.toJson(),
+    };
+
 _$_VitexExchangeRate _$$_VitexExchangeRateFromJson(Map json) =>
     _$_VitexExchangeRate(
       tokenId: json['tokenId'] as String,

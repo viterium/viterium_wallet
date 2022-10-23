@@ -17,7 +17,7 @@ _$_BlockExplorer _$$_BlockExplorerFromJson(Map json) => _$_BlockExplorer(
 
 Map<String, dynamic> _$$_BlockExplorerToJson(_$_BlockExplorer instance) =>
     <String, dynamic>{
-      'network': _$ViteNetworkEnumMap[instance.network],
+      'network': _$ViteNetworkEnumMap[instance.network]!,
       'name': instance.name,
       'url': instance.url,
       'addressUrl': instance.addressUrl,

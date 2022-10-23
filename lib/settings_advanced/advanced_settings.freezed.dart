@@ -12,29 +12,11 @@ part of 'advanced_settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 AdvancedSettings _$AdvancedSettingsFromJson(Map<String, dynamic> json) {
   return _AdvancedSettings.fromJson(json);
 }
-
-/// @nodoc
-class _$AdvancedSettingsTearOff {
-  const _$AdvancedSettingsTearOff();
-
-  _AdvancedSettings call({bool defiEnabled = true}) {
-    return _AdvancedSettings(
-      defiEnabled: defiEnabled,
-    );
-  }
-
-  AdvancedSettings fromJson(Map<String, Object?> json) {
-    return AdvancedSettings.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AdvancedSettings = _$AdvancedSettingsTearOff();
 
 /// @nodoc
 mixin _$AdvancedSettings {
@@ -50,59 +32,61 @@ mixin _$AdvancedSettings {
 abstract class $AdvancedSettingsCopyWith<$Res> {
   factory $AdvancedSettingsCopyWith(
           AdvancedSettings value, $Res Function(AdvancedSettings) then) =
-      _$AdvancedSettingsCopyWithImpl<$Res>;
+      _$AdvancedSettingsCopyWithImpl<$Res, AdvancedSettings>;
+  @useResult
   $Res call({bool defiEnabled});
 }
 
 /// @nodoc
-class _$AdvancedSettingsCopyWithImpl<$Res>
+class _$AdvancedSettingsCopyWithImpl<$Res, $Val extends AdvancedSettings>
     implements $AdvancedSettingsCopyWith<$Res> {
   _$AdvancedSettingsCopyWithImpl(this._value, this._then);
 
-  final AdvancedSettings _value;
   // ignore: unused_field
-  final $Res Function(AdvancedSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? defiEnabled = freezed,
+    Object? defiEnabled = null,
   }) {
     return _then(_value.copyWith(
-      defiEnabled: defiEnabled == freezed
+      defiEnabled: null == defiEnabled
           ? _value.defiEnabled
           : defiEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AdvancedSettingsCopyWith<$Res>
+abstract class _$$_AdvancedSettingsCopyWith<$Res>
     implements $AdvancedSettingsCopyWith<$Res> {
-  factory _$AdvancedSettingsCopyWith(
-          _AdvancedSettings value, $Res Function(_AdvancedSettings) then) =
-      __$AdvancedSettingsCopyWithImpl<$Res>;
+  factory _$$_AdvancedSettingsCopyWith(
+          _$_AdvancedSettings value, $Res Function(_$_AdvancedSettings) then) =
+      __$$_AdvancedSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({bool defiEnabled});
 }
 
 /// @nodoc
-class __$AdvancedSettingsCopyWithImpl<$Res>
-    extends _$AdvancedSettingsCopyWithImpl<$Res>
-    implements _$AdvancedSettingsCopyWith<$Res> {
-  __$AdvancedSettingsCopyWithImpl(
-      _AdvancedSettings _value, $Res Function(_AdvancedSettings) _then)
-      : super(_value, (v) => _then(v as _AdvancedSettings));
+class __$$_AdvancedSettingsCopyWithImpl<$Res>
+    extends _$AdvancedSettingsCopyWithImpl<$Res, _$_AdvancedSettings>
+    implements _$$_AdvancedSettingsCopyWith<$Res> {
+  __$$_AdvancedSettingsCopyWithImpl(
+      _$_AdvancedSettings _value, $Res Function(_$_AdvancedSettings) _then)
+      : super(_value, _then);
 
-  @override
-  _AdvancedSettings get _value => super._value as _AdvancedSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? defiEnabled = freezed,
+    Object? defiEnabled = null,
   }) {
-    return _then(_AdvancedSettings(
-      defiEnabled: defiEnabled == freezed
+    return _then(_$_AdvancedSettings(
+      defiEnabled: null == defiEnabled
           ? _value.defiEnabled
           : defiEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -118,8 +102,8 @@ class _$_AdvancedSettings implements _AdvancedSettings {
   factory _$_AdvancedSettings.fromJson(Map<String, dynamic> json) =>
       _$$_AdvancedSettingsFromJson(json);
 
-  @JsonKey()
   @override
+  @JsonKey()
   final bool defiEnabled;
 
   @override
@@ -131,28 +115,32 @@ class _$_AdvancedSettings implements _AdvancedSettings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _AdvancedSettings &&
-            const DeepCollectionEquality()
-                .equals(other.defiEnabled, defiEnabled));
+            other is _$_AdvancedSettings &&
+            (identical(other.defiEnabled, defiEnabled) ||
+                other.defiEnabled == defiEnabled));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(defiEnabled));
 
   @JsonKey(ignore: true)
   @override
-  _$AdvancedSettingsCopyWith<_AdvancedSettings> get copyWith =>
-      __$AdvancedSettingsCopyWithImpl<_AdvancedSettings>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, defiEnabled);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AdvancedSettingsCopyWith<_$_AdvancedSettings> get copyWith =>
+      __$$_AdvancedSettingsCopyWithImpl<_$_AdvancedSettings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AdvancedSettingsToJson(this);
+    return _$$_AdvancedSettingsToJson(
+      this,
+    );
   }
 }
 
 abstract class _AdvancedSettings implements AdvancedSettings {
-  const factory _AdvancedSettings({bool defiEnabled}) = _$_AdvancedSettings;
+  const factory _AdvancedSettings({final bool defiEnabled}) =
+      _$_AdvancedSettings;
 
   factory _AdvancedSettings.fromJson(Map<String, dynamic> json) =
       _$_AdvancedSettings.fromJson;
@@ -161,6 +149,6 @@ abstract class _AdvancedSettings implements AdvancedSettings {
   bool get defiEnabled;
   @override
   @JsonKey(ignore: true)
-  _$AdvancedSettingsCopyWith<_AdvancedSettings> get copyWith =>
+  _$$_AdvancedSettingsCopyWith<_$_AdvancedSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }

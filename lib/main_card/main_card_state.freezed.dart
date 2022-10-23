@@ -12,27 +12,7 @@ part of 'main_card_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$MainCardStateTearOff {
-  const _$MainCardStateTearOff();
-
-  _ShowBalance showBalance() {
-    return const _ShowBalance();
-  }
-
-  _HideBalance hideBalance() {
-    return const _HideBalance();
-  }
-
-  _HideAll hideAll() {
-    return const _HideAll();
-  }
-}
-
-/// @nodoc
-const $MainCardState = _$MainCardStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$MainCardState {
@@ -45,9 +25,9 @@ mixin _$MainCardState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? showBalance,
-    TResult Function()? hideBalance,
-    TResult Function()? hideAll,
+    TResult? Function()? showBalance,
+    TResult? Function()? hideBalance,
+    TResult? Function()? hideAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,9 +47,9 @@ mixin _$MainCardState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ShowBalance value)? showBalance,
-    TResult Function(_HideBalance value)? hideBalance,
-    TResult Function(_HideAll value)? hideAll,
+    TResult? Function(_ShowBalance value)? showBalance,
+    TResult? Function(_HideBalance value)? hideBalance,
+    TResult? Function(_HideAll value)? hideAll,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -86,35 +66,34 @@ mixin _$MainCardState {
 abstract class $MainCardStateCopyWith<$Res> {
   factory $MainCardStateCopyWith(
           MainCardState value, $Res Function(MainCardState) then) =
-      _$MainCardStateCopyWithImpl<$Res>;
+      _$MainCardStateCopyWithImpl<$Res, MainCardState>;
 }
 
 /// @nodoc
-class _$MainCardStateCopyWithImpl<$Res>
+class _$MainCardStateCopyWithImpl<$Res, $Val extends MainCardState>
     implements $MainCardStateCopyWith<$Res> {
   _$MainCardStateCopyWithImpl(this._value, this._then);
 
-  final MainCardState _value;
   // ignore: unused_field
-  final $Res Function(MainCardState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$ShowBalanceCopyWith<$Res> {
-  factory _$ShowBalanceCopyWith(
-          _ShowBalance value, $Res Function(_ShowBalance) then) =
-      __$ShowBalanceCopyWithImpl<$Res>;
+abstract class _$$_ShowBalanceCopyWith<$Res> {
+  factory _$$_ShowBalanceCopyWith(
+          _$_ShowBalance value, $Res Function(_$_ShowBalance) then) =
+      __$$_ShowBalanceCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ShowBalanceCopyWithImpl<$Res> extends _$MainCardStateCopyWithImpl<$Res>
-    implements _$ShowBalanceCopyWith<$Res> {
-  __$ShowBalanceCopyWithImpl(
-      _ShowBalance _value, $Res Function(_ShowBalance) _then)
-      : super(_value, (v) => _then(v as _ShowBalance));
-
-  @override
-  _ShowBalance get _value => super._value as _ShowBalance;
+class __$$_ShowBalanceCopyWithImpl<$Res>
+    extends _$MainCardStateCopyWithImpl<$Res, _$_ShowBalance>
+    implements _$$_ShowBalanceCopyWith<$Res> {
+  __$$_ShowBalanceCopyWithImpl(
+      _$_ShowBalance _value, $Res Function(_$_ShowBalance) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -130,7 +109,7 @@ class _$_ShowBalance extends _ShowBalance {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _ShowBalance);
+        (other.runtimeType == runtimeType && other is _$_ShowBalance);
   }
 
   @override
@@ -149,9 +128,9 @@ class _$_ShowBalance extends _ShowBalance {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? showBalance,
-    TResult Function()? hideBalance,
-    TResult Function()? hideAll,
+    TResult? Function()? showBalance,
+    TResult? Function()? hideBalance,
+    TResult? Function()? hideAll,
   }) {
     return showBalance?.call();
   }
@@ -183,9 +162,9 @@ class _$_ShowBalance extends _ShowBalance {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ShowBalance value)? showBalance,
-    TResult Function(_HideBalance value)? hideBalance,
-    TResult Function(_HideAll value)? hideAll,
+    TResult? Function(_ShowBalance value)? showBalance,
+    TResult? Function(_HideBalance value)? hideBalance,
+    TResult? Function(_HideAll value)? hideAll,
   }) {
     return showBalance?.call(this);
   }
@@ -211,21 +190,19 @@ abstract class _ShowBalance extends MainCardState {
 }
 
 /// @nodoc
-abstract class _$HideBalanceCopyWith<$Res> {
-  factory _$HideBalanceCopyWith(
-          _HideBalance value, $Res Function(_HideBalance) then) =
-      __$HideBalanceCopyWithImpl<$Res>;
+abstract class _$$_HideBalanceCopyWith<$Res> {
+  factory _$$_HideBalanceCopyWith(
+          _$_HideBalance value, $Res Function(_$_HideBalance) then) =
+      __$$_HideBalanceCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$HideBalanceCopyWithImpl<$Res> extends _$MainCardStateCopyWithImpl<$Res>
-    implements _$HideBalanceCopyWith<$Res> {
-  __$HideBalanceCopyWithImpl(
-      _HideBalance _value, $Res Function(_HideBalance) _then)
-      : super(_value, (v) => _then(v as _HideBalance));
-
-  @override
-  _HideBalance get _value => super._value as _HideBalance;
+class __$$_HideBalanceCopyWithImpl<$Res>
+    extends _$MainCardStateCopyWithImpl<$Res, _$_HideBalance>
+    implements _$$_HideBalanceCopyWith<$Res> {
+  __$$_HideBalanceCopyWithImpl(
+      _$_HideBalance _value, $Res Function(_$_HideBalance) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -241,7 +218,7 @@ class _$_HideBalance extends _HideBalance {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _HideBalance);
+        (other.runtimeType == runtimeType && other is _$_HideBalance);
   }
 
   @override
@@ -260,9 +237,9 @@ class _$_HideBalance extends _HideBalance {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? showBalance,
-    TResult Function()? hideBalance,
-    TResult Function()? hideAll,
+    TResult? Function()? showBalance,
+    TResult? Function()? hideBalance,
+    TResult? Function()? hideAll,
   }) {
     return hideBalance?.call();
   }
@@ -294,9 +271,9 @@ class _$_HideBalance extends _HideBalance {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ShowBalance value)? showBalance,
-    TResult Function(_HideBalance value)? hideBalance,
-    TResult Function(_HideAll value)? hideAll,
+    TResult? Function(_ShowBalance value)? showBalance,
+    TResult? Function(_HideBalance value)? hideBalance,
+    TResult? Function(_HideAll value)? hideAll,
   }) {
     return hideBalance?.call(this);
   }
@@ -322,19 +299,18 @@ abstract class _HideBalance extends MainCardState {
 }
 
 /// @nodoc
-abstract class _$HideAllCopyWith<$Res> {
-  factory _$HideAllCopyWith(_HideAll value, $Res Function(_HideAll) then) =
-      __$HideAllCopyWithImpl<$Res>;
+abstract class _$$_HideAllCopyWith<$Res> {
+  factory _$$_HideAllCopyWith(
+          _$_HideAll value, $Res Function(_$_HideAll) then) =
+      __$$_HideAllCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$HideAllCopyWithImpl<$Res> extends _$MainCardStateCopyWithImpl<$Res>
-    implements _$HideAllCopyWith<$Res> {
-  __$HideAllCopyWithImpl(_HideAll _value, $Res Function(_HideAll) _then)
-      : super(_value, (v) => _then(v as _HideAll));
-
-  @override
-  _HideAll get _value => super._value as _HideAll;
+class __$$_HideAllCopyWithImpl<$Res>
+    extends _$MainCardStateCopyWithImpl<$Res, _$_HideAll>
+    implements _$$_HideAllCopyWith<$Res> {
+  __$$_HideAllCopyWithImpl(_$_HideAll _value, $Res Function(_$_HideAll) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -350,7 +326,7 @@ class _$_HideAll extends _HideAll {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _HideAll);
+        (other.runtimeType == runtimeType && other is _$_HideAll);
   }
 
   @override
@@ -369,9 +345,9 @@ class _$_HideAll extends _HideAll {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? showBalance,
-    TResult Function()? hideBalance,
-    TResult Function()? hideAll,
+    TResult? Function()? showBalance,
+    TResult? Function()? hideBalance,
+    TResult? Function()? hideAll,
   }) {
     return hideAll?.call();
   }
@@ -403,9 +379,9 @@ class _$_HideAll extends _HideAll {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ShowBalance value)? showBalance,
-    TResult Function(_HideBalance value)? hideBalance,
-    TResult Function(_HideAll value)? hideAll,
+    TResult? Function(_ShowBalance value)? showBalance,
+    TResult? Function(_HideBalance value)? hideBalance,
+    TResult? Function(_HideAll value)? hideAll,
   }) {
     return hideAll?.call(this);
   }

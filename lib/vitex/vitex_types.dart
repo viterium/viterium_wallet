@@ -8,6 +8,15 @@ part 'vitex_types.freezed.dart';
 part 'vitex_types.g.dart';
 
 @freezed
+class ExchangeRate with _$ExchangeRate {
+  const factory ExchangeRate.vitex(VitexExchangeRate exchangeRate) =
+      _ExchangeRateVitex;
+
+  factory ExchangeRate.fromJson(Map<String, dynamic> json) =>
+      _$ExchangeRateFromJson(json);
+}
+
+@freezed
 class VitexExchangeRate with _$VitexExchangeRate {
   static VitexExchangeRate zero({TokenId tokenId = viteTokenId}) =>
       VitexExchangeRate(
@@ -68,6 +77,10 @@ class VitexExchangeRate with _$VitexExchangeRate {
         return inrRate ?? Decimal.zero;
       case AvailableCurrencies.VND:
         return vndRate ?? Decimal.zero;
+      default:
+        return Decimal.zero;
     }
   }
+
+  Decimal get btcRateDecimal => Decimal.parse(btcRate.toStringAsFixed(8));
 }

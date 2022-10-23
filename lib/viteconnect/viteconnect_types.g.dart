@@ -13,21 +13,11 @@ _$_SignedData _$$_SignedDataFromJson(Map json) => _$_SignedData(
           .fromJson(json['signature'] as String),
     );
 
-Map<String, dynamic> _$$_SignedDataToJson(_$_SignedData instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull(
-      'publicKey', const Uint8ListBase64Converter().toJson(instance.publicKey));
-  writeNotNull(
-      'signature', const Uint8ListBase64Converter().toJson(instance.signature));
-  return val;
-}
+Map<String, dynamic> _$$_SignedDataToJson(_$_SignedData instance) =>
+    <String, dynamic>{
+      'publicKey': const Uint8ListBase64Converter().toJson(instance.publicKey),
+      'signature': const Uint8ListBase64Converter().toJson(instance.signature),
+    };
 
 _$_VCError _$$_VCErrorFromJson(Map json) => _$_VCError(
       code: json['code'] as int,

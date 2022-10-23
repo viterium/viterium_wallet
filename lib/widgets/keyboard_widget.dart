@@ -88,7 +88,7 @@ class WordsWidget extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 backgroundColor: theme.background,
-                primary: theme.text,
+                foregroundColor: theme.text,
               ),
               child: Text.rich(
                 TextSpan(children: [
@@ -138,7 +138,7 @@ class KeyWidget extends ConsumerWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             backgroundColor: theme.background,
-            primary: theme.text,
+            foregroundColor: theme.text,
           ),
           child: Center(
             child: Text(

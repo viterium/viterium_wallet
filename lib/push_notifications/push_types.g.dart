@@ -47,7 +47,7 @@ Map<String, dynamic> _$$_PushInfoToJson(_$_PushInfo instance) =>
       'index': instance.index,
       'settings': instance.settings.toString(),
       'idLinked': instance.idLinked,
-      'network': _$ViteNetworkEnumMap[instance.network],
+      'network': _$ViteNetworkEnumMap[instance.network]!,
     };
 
 const _$ViteNetworkEnumMap = {

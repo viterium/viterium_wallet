@@ -12,35 +12,12 @@ part of 'block_explorer_settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 BlockExplorerSettings _$BlockExplorerSettingsFromJson(
     Map<String, dynamic> json) {
   return _BlockExplorerSettings.fromJson(json);
 }
-
-/// @nodoc
-class _$BlockExplorerSettingsTearOff {
-  const _$BlockExplorerSettingsTearOff();
-
-  _BlockExplorerSettings call(
-      {Map<ViteNetwork, BlockExplorer> selection = const {
-        ViteNetwork.mainnet: kVitcScanMainnet,
-        ViteNetwork.testnet: kVitcScanTestnet,
-        ViteNetwork.devnet: kVitcScanDebug
-      }}) {
-    return _BlockExplorerSettings(
-      selection: selection,
-    );
-  }
-
-  BlockExplorerSettings fromJson(Map<String, Object?> json) {
-    return BlockExplorerSettings.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $BlockExplorerSettings = _$BlockExplorerSettingsTearOff();
 
 /// @nodoc
 mixin _$BlockExplorerSettings {
@@ -57,60 +34,63 @@ mixin _$BlockExplorerSettings {
 abstract class $BlockExplorerSettingsCopyWith<$Res> {
   factory $BlockExplorerSettingsCopyWith(BlockExplorerSettings value,
           $Res Function(BlockExplorerSettings) then) =
-      _$BlockExplorerSettingsCopyWithImpl<$Res>;
+      _$BlockExplorerSettingsCopyWithImpl<$Res, BlockExplorerSettings>;
+  @useResult
   $Res call({Map<ViteNetwork, BlockExplorer> selection});
 }
 
 /// @nodoc
-class _$BlockExplorerSettingsCopyWithImpl<$Res>
+class _$BlockExplorerSettingsCopyWithImpl<$Res,
+        $Val extends BlockExplorerSettings>
     implements $BlockExplorerSettingsCopyWith<$Res> {
   _$BlockExplorerSettingsCopyWithImpl(this._value, this._then);
 
-  final BlockExplorerSettings _value;
   // ignore: unused_field
-  final $Res Function(BlockExplorerSettings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selection = freezed,
+    Object? selection = null,
   }) {
     return _then(_value.copyWith(
-      selection: selection == freezed
+      selection: null == selection
           ? _value.selection
           : selection // ignore: cast_nullable_to_non_nullable
               as Map<ViteNetwork, BlockExplorer>,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$BlockExplorerSettingsCopyWith<$Res>
+abstract class _$$_BlockExplorerSettingsCopyWith<$Res>
     implements $BlockExplorerSettingsCopyWith<$Res> {
-  factory _$BlockExplorerSettingsCopyWith(_BlockExplorerSettings value,
-          $Res Function(_BlockExplorerSettings) then) =
-      __$BlockExplorerSettingsCopyWithImpl<$Res>;
+  factory _$$_BlockExplorerSettingsCopyWith(_$_BlockExplorerSettings value,
+          $Res Function(_$_BlockExplorerSettings) then) =
+      __$$_BlockExplorerSettingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Map<ViteNetwork, BlockExplorer> selection});
 }
 
 /// @nodoc
-class __$BlockExplorerSettingsCopyWithImpl<$Res>
-    extends _$BlockExplorerSettingsCopyWithImpl<$Res>
-    implements _$BlockExplorerSettingsCopyWith<$Res> {
-  __$BlockExplorerSettingsCopyWithImpl(_BlockExplorerSettings _value,
-      $Res Function(_BlockExplorerSettings) _then)
-      : super(_value, (v) => _then(v as _BlockExplorerSettings));
+class __$$_BlockExplorerSettingsCopyWithImpl<$Res>
+    extends _$BlockExplorerSettingsCopyWithImpl<$Res, _$_BlockExplorerSettings>
+    implements _$$_BlockExplorerSettingsCopyWith<$Res> {
+  __$$_BlockExplorerSettingsCopyWithImpl(_$_BlockExplorerSettings _value,
+      $Res Function(_$_BlockExplorerSettings) _then)
+      : super(_value, _then);
 
-  @override
-  _BlockExplorerSettings get _value => super._value as _BlockExplorerSettings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selection = freezed,
+    Object? selection = null,
   }) {
-    return _then(_BlockExplorerSettings(
-      selection: selection == freezed
-          ? _value.selection
+    return _then(_$_BlockExplorerSettings(
+      selection: null == selection
+          ? _value._selection
           : selection // ignore: cast_nullable_to_non_nullable
               as Map<ViteNetwork, BlockExplorer>,
     ));
@@ -121,19 +101,24 @@ class __$BlockExplorerSettingsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_BlockExplorerSettings extends _BlockExplorerSettings {
   const _$_BlockExplorerSettings(
-      {this.selection = const {
+      {final Map<ViteNetwork, BlockExplorer> selection = const {
         ViteNetwork.mainnet: kVitcScanMainnet,
         ViteNetwork.testnet: kVitcScanTestnet,
         ViteNetwork.devnet: kVitcScanDebug
       }})
-      : super._();
+      : _selection = selection,
+        super._();
 
   factory _$_BlockExplorerSettings.fromJson(Map<String, dynamic> json) =>
       _$$_BlockExplorerSettingsFromJson(json);
 
-  @JsonKey()
+  final Map<ViteNetwork, BlockExplorer> _selection;
   @override
-  final Map<ViteNetwork, BlockExplorer> selection;
+  @JsonKey()
+  Map<ViteNetwork, BlockExplorer> get selection {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_selection);
+  }
 
   @override
   String toString() {
@@ -144,29 +129,35 @@ class _$_BlockExplorerSettings extends _BlockExplorerSettings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _BlockExplorerSettings &&
-            const DeepCollectionEquality().equals(other.selection, selection));
+            other is _$_BlockExplorerSettings &&
+            const DeepCollectionEquality()
+                .equals(other._selection, _selection));
   }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(selection));
 
   @JsonKey(ignore: true)
   @override
-  _$BlockExplorerSettingsCopyWith<_BlockExplorerSettings> get copyWith =>
-      __$BlockExplorerSettingsCopyWithImpl<_BlockExplorerSettings>(
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_selection));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BlockExplorerSettingsCopyWith<_$_BlockExplorerSettings> get copyWith =>
+      __$$_BlockExplorerSettingsCopyWithImpl<_$_BlockExplorerSettings>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BlockExplorerSettingsToJson(this);
+    return _$$_BlockExplorerSettingsToJson(
+      this,
+    );
   }
 }
 
 abstract class _BlockExplorerSettings extends BlockExplorerSettings {
   const factory _BlockExplorerSettings(
-      {Map<ViteNetwork, BlockExplorer> selection}) = _$_BlockExplorerSettings;
+          {final Map<ViteNetwork, BlockExplorer> selection}) =
+      _$_BlockExplorerSettings;
   const _BlockExplorerSettings._() : super._();
 
   factory _BlockExplorerSettings.fromJson(Map<String, dynamic> json) =
@@ -176,6 +167,6 @@ abstract class _BlockExplorerSettings extends BlockExplorerSettings {
   Map<ViteNetwork, BlockExplorer> get selection;
   @override
   @JsonKey(ignore: true)
-  _$BlockExplorerSettingsCopyWith<_BlockExplorerSettings> get copyWith =>
+  _$$_BlockExplorerSettingsCopyWith<_$_BlockExplorerSettings> get copyWith =>
       throw _privateConstructorUsedError;
 }

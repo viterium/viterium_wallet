@@ -12,54 +12,250 @@ part of 'vitex_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+ExchangeRate _$ExchangeRateFromJson(Map<String, dynamic> json) {
+  return _ExchangeRateVitex.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ExchangeRate {
+  VitexExchangeRate get exchangeRate => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(VitexExchangeRate exchangeRate) vitex,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(VitexExchangeRate exchangeRate)? vitex,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(VitexExchangeRate exchangeRate)? vitex,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ExchangeRateVitex value) vitex,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ExchangeRateVitex value)? vitex,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ExchangeRateVitex value)? vitex,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ExchangeRateCopyWith<ExchangeRate> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ExchangeRateCopyWith<$Res> {
+  factory $ExchangeRateCopyWith(
+          ExchangeRate value, $Res Function(ExchangeRate) then) =
+      _$ExchangeRateCopyWithImpl<$Res, ExchangeRate>;
+  @useResult
+  $Res call({VitexExchangeRate exchangeRate});
+
+  $VitexExchangeRateCopyWith<$Res> get exchangeRate;
+}
+
+/// @nodoc
+class _$ExchangeRateCopyWithImpl<$Res, $Val extends ExchangeRate>
+    implements $ExchangeRateCopyWith<$Res> {
+  _$ExchangeRateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exchangeRate = null,
+  }) {
+    return _then(_value.copyWith(
+      exchangeRate: null == exchangeRate
+          ? _value.exchangeRate
+          : exchangeRate // ignore: cast_nullable_to_non_nullable
+              as VitexExchangeRate,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VitexExchangeRateCopyWith<$Res> get exchangeRate {
+    return $VitexExchangeRateCopyWith<$Res>(_value.exchangeRate, (value) {
+      return _then(_value.copyWith(exchangeRate: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$_ExchangeRateVitexCopyWith<$Res>
+    implements $ExchangeRateCopyWith<$Res> {
+  factory _$$_ExchangeRateVitexCopyWith(_$_ExchangeRateVitex value,
+          $Res Function(_$_ExchangeRateVitex) then) =
+      __$$_ExchangeRateVitexCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({VitexExchangeRate exchangeRate});
+
+  @override
+  $VitexExchangeRateCopyWith<$Res> get exchangeRate;
+}
+
+/// @nodoc
+class __$$_ExchangeRateVitexCopyWithImpl<$Res>
+    extends _$ExchangeRateCopyWithImpl<$Res, _$_ExchangeRateVitex>
+    implements _$$_ExchangeRateVitexCopyWith<$Res> {
+  __$$_ExchangeRateVitexCopyWithImpl(
+      _$_ExchangeRateVitex _value, $Res Function(_$_ExchangeRateVitex) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exchangeRate = null,
+  }) {
+    return _then(_$_ExchangeRateVitex(
+      null == exchangeRate
+          ? _value.exchangeRate
+          : exchangeRate // ignore: cast_nullable_to_non_nullable
+              as VitexExchangeRate,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ExchangeRateVitex implements _ExchangeRateVitex {
+  const _$_ExchangeRateVitex(this.exchangeRate);
+
+  factory _$_ExchangeRateVitex.fromJson(Map<String, dynamic> json) =>
+      _$$_ExchangeRateVitexFromJson(json);
+
+  @override
+  final VitexExchangeRate exchangeRate;
+
+  @override
+  String toString() {
+    return 'ExchangeRate.vitex(exchangeRate: $exchangeRate)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ExchangeRateVitex &&
+            (identical(other.exchangeRate, exchangeRate) ||
+                other.exchangeRate == exchangeRate));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, exchangeRate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ExchangeRateVitexCopyWith<_$_ExchangeRateVitex> get copyWith =>
+      __$$_ExchangeRateVitexCopyWithImpl<_$_ExchangeRateVitex>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(VitexExchangeRate exchangeRate) vitex,
+  }) {
+    return vitex(exchangeRate);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(VitexExchangeRate exchangeRate)? vitex,
+  }) {
+    return vitex?.call(exchangeRate);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(VitexExchangeRate exchangeRate)? vitex,
+    required TResult orElse(),
+  }) {
+    if (vitex != null) {
+      return vitex(exchangeRate);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ExchangeRateVitex value) vitex,
+  }) {
+    return vitex(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ExchangeRateVitex value)? vitex,
+  }) {
+    return vitex?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ExchangeRateVitex value)? vitex,
+    required TResult orElse(),
+  }) {
+    if (vitex != null) {
+      return vitex(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ExchangeRateVitexToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ExchangeRateVitex implements ExchangeRate {
+  const factory _ExchangeRateVitex(final VitexExchangeRate exchangeRate) =
+      _$_ExchangeRateVitex;
+
+  factory _ExchangeRateVitex.fromJson(Map<String, dynamic> json) =
+      _$_ExchangeRateVitex.fromJson;
+
+  @override
+  VitexExchangeRate get exchangeRate;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ExchangeRateVitexCopyWith<_$_ExchangeRateVitex> get copyWith =>
+      throw _privateConstructorUsedError;
+}
 
 VitexExchangeRate _$VitexExchangeRateFromJson(Map<String, dynamic> json) {
   return _VitexExchangeRate.fromJson(json);
 }
-
-/// @nodoc
-class _$VitexExchangeRateTearOff {
-  const _$VitexExchangeRateTearOff();
-
-  _VitexExchangeRate call(
-      {required String tokenId,
-      String? tokenSymbol,
-      required double usdRate,
-      required double cnyRate,
-      Decimal? rubRate,
-      Decimal? krwRate,
-      Decimal? tryRate,
-      Decimal? vndRate,
-      Decimal? eurRate,
-      Decimal? gbpRate,
-      Decimal? inrRate,
-      Decimal? uahRate,
-      required double btcRate}) {
-    return _VitexExchangeRate(
-      tokenId: tokenId,
-      tokenSymbol: tokenSymbol,
-      usdRate: usdRate,
-      cnyRate: cnyRate,
-      rubRate: rubRate,
-      krwRate: krwRate,
-      tryRate: tryRate,
-      vndRate: vndRate,
-      eurRate: eurRate,
-      gbpRate: gbpRate,
-      inrRate: inrRate,
-      uahRate: uahRate,
-      btcRate: btcRate,
-    );
-  }
-
-  VitexExchangeRate fromJson(Map<String, Object?> json) {
-    return VitexExchangeRate.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VitexExchangeRate = _$VitexExchangeRateTearOff();
 
 /// @nodoc
 mixin _$VitexExchangeRate {
@@ -87,7 +283,8 @@ mixin _$VitexExchangeRate {
 abstract class $VitexExchangeRateCopyWith<$Res> {
   factory $VitexExchangeRateCopyWith(
           VitexExchangeRate value, $Res Function(VitexExchangeRate) then) =
-      _$VitexExchangeRateCopyWithImpl<$Res>;
+      _$VitexExchangeRateCopyWithImpl<$Res, VitexExchangeRate>;
+  @useResult
   $Res call(
       {String tokenId,
       String? tokenSymbol,
@@ -105,20 +302,22 @@ abstract class $VitexExchangeRateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VitexExchangeRateCopyWithImpl<$Res>
+class _$VitexExchangeRateCopyWithImpl<$Res, $Val extends VitexExchangeRate>
     implements $VitexExchangeRateCopyWith<$Res> {
   _$VitexExchangeRateCopyWithImpl(this._value, this._then);
 
-  final VitexExchangeRate _value;
   // ignore: unused_field
-  final $Res Function(VitexExchangeRate) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tokenId = freezed,
+    Object? tokenId = null,
     Object? tokenSymbol = freezed,
-    Object? usdRate = freezed,
-    Object? cnyRate = freezed,
+    Object? usdRate = null,
+    Object? cnyRate = null,
     Object? rubRate = freezed,
     Object? krwRate = freezed,
     Object? tryRate = freezed,
@@ -127,72 +326,73 @@ class _$VitexExchangeRateCopyWithImpl<$Res>
     Object? gbpRate = freezed,
     Object? inrRate = freezed,
     Object? uahRate = freezed,
-    Object? btcRate = freezed,
+    Object? btcRate = null,
   }) {
     return _then(_value.copyWith(
-      tokenId: tokenId == freezed
+      tokenId: null == tokenId
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenSymbol: tokenSymbol == freezed
+      tokenSymbol: freezed == tokenSymbol
           ? _value.tokenSymbol
           : tokenSymbol // ignore: cast_nullable_to_non_nullable
               as String?,
-      usdRate: usdRate == freezed
+      usdRate: null == usdRate
           ? _value.usdRate
           : usdRate // ignore: cast_nullable_to_non_nullable
               as double,
-      cnyRate: cnyRate == freezed
+      cnyRate: null == cnyRate
           ? _value.cnyRate
           : cnyRate // ignore: cast_nullable_to_non_nullable
               as double,
-      rubRate: rubRate == freezed
+      rubRate: freezed == rubRate
           ? _value.rubRate
           : rubRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      krwRate: krwRate == freezed
+      krwRate: freezed == krwRate
           ? _value.krwRate
           : krwRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      tryRate: tryRate == freezed
+      tryRate: freezed == tryRate
           ? _value.tryRate
           : tryRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      vndRate: vndRate == freezed
+      vndRate: freezed == vndRate
           ? _value.vndRate
           : vndRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      eurRate: eurRate == freezed
+      eurRate: freezed == eurRate
           ? _value.eurRate
           : eurRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      gbpRate: gbpRate == freezed
+      gbpRate: freezed == gbpRate
           ? _value.gbpRate
           : gbpRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      inrRate: inrRate == freezed
+      inrRate: freezed == inrRate
           ? _value.inrRate
           : inrRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      uahRate: uahRate == freezed
+      uahRate: freezed == uahRate
           ? _value.uahRate
           : uahRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      btcRate: btcRate == freezed
+      btcRate: null == btcRate
           ? _value.btcRate
           : btcRate // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VitexExchangeRateCopyWith<$Res>
+abstract class _$$_VitexExchangeRateCopyWith<$Res>
     implements $VitexExchangeRateCopyWith<$Res> {
-  factory _$VitexExchangeRateCopyWith(
-          _VitexExchangeRate value, $Res Function(_VitexExchangeRate) then) =
-      __$VitexExchangeRateCopyWithImpl<$Res>;
+  factory _$$_VitexExchangeRateCopyWith(_$_VitexExchangeRate value,
+          $Res Function(_$_VitexExchangeRate) then) =
+      __$$_VitexExchangeRateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String tokenId,
       String? tokenSymbol,
@@ -210,22 +410,20 @@ abstract class _$VitexExchangeRateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VitexExchangeRateCopyWithImpl<$Res>
-    extends _$VitexExchangeRateCopyWithImpl<$Res>
-    implements _$VitexExchangeRateCopyWith<$Res> {
-  __$VitexExchangeRateCopyWithImpl(
-      _VitexExchangeRate _value, $Res Function(_VitexExchangeRate) _then)
-      : super(_value, (v) => _then(v as _VitexExchangeRate));
+class __$$_VitexExchangeRateCopyWithImpl<$Res>
+    extends _$VitexExchangeRateCopyWithImpl<$Res, _$_VitexExchangeRate>
+    implements _$$_VitexExchangeRateCopyWith<$Res> {
+  __$$_VitexExchangeRateCopyWithImpl(
+      _$_VitexExchangeRate _value, $Res Function(_$_VitexExchangeRate) _then)
+      : super(_value, _then);
 
-  @override
-  _VitexExchangeRate get _value => super._value as _VitexExchangeRate;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? tokenId = freezed,
+    Object? tokenId = null,
     Object? tokenSymbol = freezed,
-    Object? usdRate = freezed,
-    Object? cnyRate = freezed,
+    Object? usdRate = null,
+    Object? cnyRate = null,
     Object? rubRate = freezed,
     Object? krwRate = freezed,
     Object? tryRate = freezed,
@@ -234,58 +432,58 @@ class __$VitexExchangeRateCopyWithImpl<$Res>
     Object? gbpRate = freezed,
     Object? inrRate = freezed,
     Object? uahRate = freezed,
-    Object? btcRate = freezed,
+    Object? btcRate = null,
   }) {
-    return _then(_VitexExchangeRate(
-      tokenId: tokenId == freezed
+    return _then(_$_VitexExchangeRate(
+      tokenId: null == tokenId
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
-      tokenSymbol: tokenSymbol == freezed
+      tokenSymbol: freezed == tokenSymbol
           ? _value.tokenSymbol
           : tokenSymbol // ignore: cast_nullable_to_non_nullable
               as String?,
-      usdRate: usdRate == freezed
+      usdRate: null == usdRate
           ? _value.usdRate
           : usdRate // ignore: cast_nullable_to_non_nullable
               as double,
-      cnyRate: cnyRate == freezed
+      cnyRate: null == cnyRate
           ? _value.cnyRate
           : cnyRate // ignore: cast_nullable_to_non_nullable
               as double,
-      rubRate: rubRate == freezed
+      rubRate: freezed == rubRate
           ? _value.rubRate
           : rubRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      krwRate: krwRate == freezed
+      krwRate: freezed == krwRate
           ? _value.krwRate
           : krwRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      tryRate: tryRate == freezed
+      tryRate: freezed == tryRate
           ? _value.tryRate
           : tryRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      vndRate: vndRate == freezed
+      vndRate: freezed == vndRate
           ? _value.vndRate
           : vndRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      eurRate: eurRate == freezed
+      eurRate: freezed == eurRate
           ? _value.eurRate
           : eurRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      gbpRate: gbpRate == freezed
+      gbpRate: freezed == gbpRate
           ? _value.gbpRate
           : gbpRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      inrRate: inrRate == freezed
+      inrRate: freezed == inrRate
           ? _value.inrRate
           : inrRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      uahRate: uahRate == freezed
+      uahRate: freezed == uahRate
           ? _value.uahRate
           : uahRate // ignore: cast_nullable_to_non_nullable
               as Decimal?,
-      btcRate: btcRate == freezed
+      btcRate: null == btcRate
           ? _value.btcRate
           : btcRate // ignore: cast_nullable_to_non_nullable
               as double,
@@ -351,66 +549,71 @@ class _$_VitexExchangeRate extends _VitexExchangeRate {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _VitexExchangeRate &&
-            const DeepCollectionEquality().equals(other.tokenId, tokenId) &&
-            const DeepCollectionEquality()
-                .equals(other.tokenSymbol, tokenSymbol) &&
-            const DeepCollectionEquality().equals(other.usdRate, usdRate) &&
-            const DeepCollectionEquality().equals(other.cnyRate, cnyRate) &&
-            const DeepCollectionEquality().equals(other.rubRate, rubRate) &&
-            const DeepCollectionEquality().equals(other.krwRate, krwRate) &&
-            const DeepCollectionEquality().equals(other.tryRate, tryRate) &&
-            const DeepCollectionEquality().equals(other.vndRate, vndRate) &&
-            const DeepCollectionEquality().equals(other.eurRate, eurRate) &&
-            const DeepCollectionEquality().equals(other.gbpRate, gbpRate) &&
-            const DeepCollectionEquality().equals(other.inrRate, inrRate) &&
-            const DeepCollectionEquality().equals(other.uahRate, uahRate) &&
-            const DeepCollectionEquality().equals(other.btcRate, btcRate));
+            other is _$_VitexExchangeRate &&
+            (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
+            (identical(other.tokenSymbol, tokenSymbol) ||
+                other.tokenSymbol == tokenSymbol) &&
+            (identical(other.usdRate, usdRate) || other.usdRate == usdRate) &&
+            (identical(other.cnyRate, cnyRate) || other.cnyRate == cnyRate) &&
+            (identical(other.rubRate, rubRate) || other.rubRate == rubRate) &&
+            (identical(other.krwRate, krwRate) || other.krwRate == krwRate) &&
+            (identical(other.tryRate, tryRate) || other.tryRate == tryRate) &&
+            (identical(other.vndRate, vndRate) || other.vndRate == vndRate) &&
+            (identical(other.eurRate, eurRate) || other.eurRate == eurRate) &&
+            (identical(other.gbpRate, gbpRate) || other.gbpRate == gbpRate) &&
+            (identical(other.inrRate, inrRate) || other.inrRate == inrRate) &&
+            (identical(other.uahRate, uahRate) || other.uahRate == uahRate) &&
+            (identical(other.btcRate, btcRate) || other.btcRate == btcRate));
   }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(tokenId),
-      const DeepCollectionEquality().hash(tokenSymbol),
-      const DeepCollectionEquality().hash(usdRate),
-      const DeepCollectionEquality().hash(cnyRate),
-      const DeepCollectionEquality().hash(rubRate),
-      const DeepCollectionEquality().hash(krwRate),
-      const DeepCollectionEquality().hash(tryRate),
-      const DeepCollectionEquality().hash(vndRate),
-      const DeepCollectionEquality().hash(eurRate),
-      const DeepCollectionEquality().hash(gbpRate),
-      const DeepCollectionEquality().hash(inrRate),
-      const DeepCollectionEquality().hash(uahRate),
-      const DeepCollectionEquality().hash(btcRate));
 
   @JsonKey(ignore: true)
   @override
-  _$VitexExchangeRateCopyWith<_VitexExchangeRate> get copyWith =>
-      __$VitexExchangeRateCopyWithImpl<_VitexExchangeRate>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      tokenId,
+      tokenSymbol,
+      usdRate,
+      cnyRate,
+      rubRate,
+      krwRate,
+      tryRate,
+      vndRate,
+      eurRate,
+      gbpRate,
+      inrRate,
+      uahRate,
+      btcRate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VitexExchangeRateCopyWith<_$_VitexExchangeRate> get copyWith =>
+      __$$_VitexExchangeRateCopyWithImpl<_$_VitexExchangeRate>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VitexExchangeRateToJson(this);
+    return _$$_VitexExchangeRateToJson(
+      this,
+    );
   }
 }
 
 abstract class _VitexExchangeRate extends VitexExchangeRate {
   const factory _VitexExchangeRate(
-      {required String tokenId,
-      String? tokenSymbol,
-      required double usdRate,
-      required double cnyRate,
-      Decimal? rubRate,
-      Decimal? krwRate,
-      Decimal? tryRate,
-      Decimal? vndRate,
-      Decimal? eurRate,
-      Decimal? gbpRate,
-      Decimal? inrRate,
-      Decimal? uahRate,
-      required double btcRate}) = _$_VitexExchangeRate;
+      {required final String tokenId,
+      final String? tokenSymbol,
+      required final double usdRate,
+      required final double cnyRate,
+      final Decimal? rubRate,
+      final Decimal? krwRate,
+      final Decimal? tryRate,
+      final Decimal? vndRate,
+      final Decimal? eurRate,
+      final Decimal? gbpRate,
+      final Decimal? inrRate,
+      final Decimal? uahRate,
+      required final double btcRate}) = _$_VitexExchangeRate;
   const _VitexExchangeRate._() : super._();
 
   factory _VitexExchangeRate.fromJson(Map<String, dynamic> json) =
@@ -444,6 +647,6 @@ abstract class _VitexExchangeRate extends VitexExchangeRate {
   double get btcRate;
   @override
   @JsonKey(ignore: true)
-  _$VitexExchangeRateCopyWith<_VitexExchangeRate> get copyWith =>
+  _$$_VitexExchangeRateCopyWith<_$_VitexExchangeRate> get copyWith =>
       throw _privateConstructorUsedError;
 }
