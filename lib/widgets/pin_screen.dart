@@ -85,48 +85,47 @@ class _PinScreenState extends ConsumerState<PinScreen>
       parent: _controller,
       curve: ShakeCurve(),
     );
-    _animation =
-        Tween(begin: 0.0, end: 25.0).animate(curve)
-          ..addStatusListener((status) {
-            if (status == AnimationStatus.completed) {
-              if (widget.type == PinOverlayType.ENTER_PIN) {
-                sharedPrefsUtil.incrementLockAttempts().then((_) {
-                  _failedAttempts++;
-                  if (_failedAttempts >= MAX_ATTEMPTS) {
-                    setState(() {
-                      _controller.value = 0;
-                    });
-                    sharedPrefsUtil.updateLockDate().then((_) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/lock_screen_transition',
-                          (Route<dynamic> route) => false);
-                    });
-                  } else {
-                    setState(() {
-                      _pin = '';
-                      _header = ref.read(l10nProvider).pinInvalid;
-                      _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
-                      _controller.value = 0;
-                    });
-                  }
+    _animation = Tween(begin: 0.0, end: 25.0).animate(curve)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          if (widget.type == PinOverlayType.ENTER_PIN) {
+            sharedPrefsUtil.incrementLockAttempts().then((_) {
+              _failedAttempts++;
+              if (_failedAttempts >= MAX_ATTEMPTS) {
+                setState(() {
+                  _controller.value = 0;
+                });
+                sharedPrefsUtil.updateLockDate().then((_) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/lock_screen_transition',
+                      (Route<dynamic> route) => false);
                 });
               } else {
                 setState(() {
-                  _awaitingConfirmation = false;
-                  _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
                   _pin = '';
-                  _pinConfirmed = '';
-                  _header = ref.read(l10nProvider).pinConfirmError;
+                  _header = ref.read(l10nProvider).pinInvalid;
+                  _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
                   _controller.value = 0;
                 });
               }
-            }
-          })
-          ..addListener(() {
-            setState(() {
-              // the animation object’s value is the changed state
             });
-          });
+          } else {
+            setState(() {
+              _awaitingConfirmation = false;
+              _dotStates = List.filled(_pinLength, AppIcons.dotemtpy);
+              _pin = '';
+              _pinConfirmed = '';
+              _header = ref.read(l10nProvider).pinConfirmError;
+              _controller.value = 0;
+            });
+          }
+        }
+      })
+      ..addListener(() {
+        setState(() {
+          // the animation object’s value is the changed state
+        });
+      });
   }
 
   @override
@@ -233,148 +232,145 @@ class _PinScreenState extends ConsumerState<PinScreen>
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Container(
-        constraints: BoxConstraints.expand(),
-        child: Material(
-          color: widget.pinScreenBackgroundColor ?? theme.backgroundDark,
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.1),
-                child: Column(
-                  children: [
-                    // Header
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 40),
-                      child: AutoSizeText(
-                        _header,
-                        style: styles.textStylePinScreenHeaderColored,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        stepGranularity: 0.1,
-                      ),
-                    ),
-                    // Descripttion
-                    Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                      child: AutoSizeText(
-                        widget.description,
-                        style: styles.textStyleParagraph,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        stepGranularity: 0.1,
-                      ),
-                    ),
-                    // Dots
-                    Container(
-                      margin: EdgeInsetsDirectional.only(
-                        start: MediaQuery.of(context).size.width * 0.25 +
-                            _animation.value,
-                        end: MediaQuery.of(context).size.width * 0.25 -
-                            _animation.value,
-                        top: MediaQuery.of(context).size.height * 0.02,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          for (int i = 0; i < _pinLength; i++)
-                            Icon(
-                              _dotStates[i],
-                              color: theme.primary,
-                              size: 20,
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.07,
-                      right: MediaQuery.of(context).size.width * 0.07,
-                      bottom: MediaQuery.of(context).size.height * 0.05,
-                      top: MediaQuery.of(context).size.height * 0.05),
+      body: LayoutBuilder(builder: (context, constraints) {
+        final size = Size(constraints.maxWidth, constraints.maxHeight);
+        return Container(
+          constraints: BoxConstraints.expand(),
+          child: Material(
+            color: widget.pinScreenBackgroundColor ?? theme.backgroundDark,
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: size.height * 0.1),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      // Header
                       Container(
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.01),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            PinScreenButton(text: '1', onTap: onKeyTap),
-                            PinScreenButton(text: '2', onTap: onKeyTap),
-                            PinScreenButton(text: '3', onTap: onKeyTap),
-                          ],
+                        margin: EdgeInsets.symmetric(horizontal: 40),
+                        child: AutoSizeText(
+                          _header,
+                          style: styles.textStylePinScreenHeaderColored,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
                         ),
                       ),
+                      // Descripttion
                       Container(
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.01),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            PinScreenButton(text: '4', onTap: onKeyTap),
-                            PinScreenButton(text: '5', onTap: onKeyTap),
-                            PinScreenButton(text: '6', onTap: onKeyTap),
-                          ],
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        child: AutoSizeText(
+                          widget.description,
+                          style: styles.textStyleParagraph,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          stepGranularity: 0.1,
                         ),
                       ),
+                      // Dots
                       Container(
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.01),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            PinScreenButton(text: '7', onTap: onKeyTap),
-                            PinScreenButton(text: '8', onTap: onKeyTap),
-                            PinScreenButton(text: '9', onTap: onKeyTap),
-                          ],
+                        margin: EdgeInsetsDirectional.only(
+                          start: size.width * 0.25 + _animation.value,
+                          end: size.width * 0.25 - _animation.value,
+                          top: size.height * 0.02,
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).size.height * 0.009),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(height: buttonSize, width: buttonSize),
-                            PinScreenButton(text: '0', onTap: onKeyTap),
-                            Container(
-                              height: buttonSize,
-                              width: buttonSize,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(200),
-                                highlightColor: theme.primary15,
-                                splashColor: theme.primary30,
-                                onTap: _backSpace,
-                                child: Container(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Icon(
-                                    Icons.backspace,
-                                    color: theme.primary,
-                                    size: 20,
-                                  ),
-                                ),
+                            for (int i = 0; i < _pinLength; i++)
+                              Icon(
+                                _dotStates[i],
+                                color: theme.primary,
+                                size: 20,
                               ),
-                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      left: size.width * 0.07,
+                      right: size.width * 0.07,
+                      bottom: size.height * 0.05,
+                      top: size.height * 0.05,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: size.height * 0.01),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              PinScreenButton(text: '1', onTap: onKeyTap),
+                              PinScreenButton(text: '2', onTap: onKeyTap),
+                              PinScreenButton(text: '3', onTap: onKeyTap),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: size.height * 0.01),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              PinScreenButton(text: '4', onTap: onKeyTap),
+                              PinScreenButton(text: '5', onTap: onKeyTap),
+                              PinScreenButton(text: '6', onTap: onKeyTap),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: size.height * 0.01),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              PinScreenButton(text: '7', onTap: onKeyTap),
+                              PinScreenButton(text: '8', onTap: onKeyTap),
+                              PinScreenButton(text: '9', onTap: onKeyTap),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(bottom: size.height * 0.009),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              SizedBox(height: buttonSize, width: buttonSize),
+                              PinScreenButton(text: '0', onTap: onKeyTap),
+                              Container(
+                                height: buttonSize,
+                                width: buttonSize,
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(200),
+                                  highlightColor: theme.primary15,
+                                  splashColor: theme.primary30,
+                                  onTap: _backSpace,
+                                  child: Container(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Icon(
+                                      Icons.backspace,
+                                      color: theme.primary,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
