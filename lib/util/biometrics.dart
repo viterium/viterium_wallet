@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:local_auth/local_auth.dart';
 import 'package:logger/logger.dart';
+
+import 'config.dart';
 
 class BiometricUtil {
   final Logger logger;
@@ -9,7 +9,7 @@ class BiometricUtil {
   const BiometricUtil(this.logger);
 
   Future<bool> hasBiometrics() async {
-    if (!(Platform.isAndroid || Platform.isIOS)) {
+    if (!kCheckBiometrics) {
       return false;
     }
     final localAuth = LocalAuthentication();
@@ -40,8 +40,11 @@ class BiometricUtil {
     final localAuth = LocalAuthentication();
     return localAuth.authenticate(
       localizedReason: message,
-      useErrorDialogs: false,
-      biometricOnly: true,
+      options: AuthenticationOptions(
+        useErrorDialogs: false,
+        biometricOnly: true,
+        sensitiveTransaction: true,
+      ),
     );
   }
 }

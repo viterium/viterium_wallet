@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -10,6 +9,7 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import '../settings_advanced/tokens_settings.dart';
 import '../settings_advanced/tokens_settings_provider.dart';
+import '../util/platform.dart';
 import '../util/ui_util.dart';
 import '../widgets/reactive_refresh.dart';
 import 'token_card.dart';
@@ -79,7 +79,7 @@ class TokensWidget extends HookConsumerWidget {
       );
     }
 
-    final buildDefaultDragHandles = (Platform.isIOS || Platform.isAndroid) &&
+    final buildDefaultDragHandles = (kPlatformIsIOS || kPlatformIsAndroid) &&
         sortOption == TokenSortOption.custom;
 
     return ReactiveRefreshIndicator(

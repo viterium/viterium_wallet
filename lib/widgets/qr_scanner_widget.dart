@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:barcode_finder/barcode_finder.dart' as bf;
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../app_providers.dart';
+import '../util/platform.dart';
 import '../util/ui_util.dart';
 import 'app_icon_button.dart';
 
@@ -29,9 +29,9 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   void reassemble() {
     super.reassemble();
 
-    if (Platform.isAndroid) {
+    if (kPlatformIsAndroid) {
       controller?.pauseCamera();
-    } else if (Platform.isIOS) {
+    } else if (kPlatformIsIOS) {
       controller?.resumeCamera();
     }
   }
@@ -123,7 +123,7 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
                       style: styles.textStyleButtonTextOutline
                           .copyWith(color: Colors.white),
                     ),
-                    Platform.isAndroid || Platform.isIOS
+                    kPlatformIsAndroid || kPlatformIsIOS
                         ? AppIconButton(
                             icon: Icons.image_outlined,
                             onPressed: scanFromImage,
@@ -157,16 +157,17 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   }
 
   void _onPermissionSet(QRViewController ctrl, bool p) {
-    final log = ref.read(loggerProvider);
-    log.d('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       UIUtil.showSnackbar('Check Camera Permission', context);
     }
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((event) {
+  void _onQRViewCreated(QRViewController _controller) async {
+    controller = _controller;
+    if (kPlatformIsAndroid) {
+      await _controller.resumeCamera();
+    }
+    _controller.scannedDataStream.listen((event) {
       if (result == null && _shouldScan) {
         result = event;
         Navigator.of(context).pop(result);

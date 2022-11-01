@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import '../themes/themes.dart';
+import '../util/platform.dart';
 import '../util/routes.dart';
 
 class Sheets {
@@ -85,7 +84,7 @@ class _AppHeightNineSheetLayout extends SingleChildLayoutDelegate {
       );
     }
     if ((constraints.maxHeight / constraints.maxWidth > 2.1 &&
-            Platform.isAndroid) ||
+            kPlatformIsAndroid) ||
         constraints.maxHeight > 812) {
       return BoxConstraints(
         minWidth: constraints.maxWidth,

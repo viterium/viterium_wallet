@@ -1,12 +1,11 @@
-import 'dart:io' show Platform;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:push/push.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
+import '../util/platform.dart';
 import '../util/ui_util.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/dialog.dart';
@@ -87,7 +86,7 @@ class PushSettingsItem extends ConsumerWidget {
     }
 
     Future<bool> iOSCheckPermissions() async {
-      if (!kIsWeb && Platform.isIOS) {
+      if (kPlatformIsIOS) {
         final permission = await Push.instance.requestPermission();
         if (permission == false) {
           AppDialogs.showInfoDialog(
