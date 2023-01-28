@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
@@ -8,12 +6,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:push/push.dart';
-import 'package:vite/vite.dart';
 
 import 'app_localization.dart';
 import 'app_providers.dart';
 import 'app_styles.dart';
+import 'push_notifications.dart';
 import 'screens/home_screen.dart';
 import 'screens/intro_screen.dart';
 import 'screens/lock_screen.dart';
@@ -25,6 +22,7 @@ import 'screens/viteconnect_screen.dart';
 import 'settings/available_language.dart';
 import 'supported_locales.dart';
 import 'themes/themes.dart';
+import 'util/platform.dart';
 import 'util/routes.dart';
 
 class App extends HookConsumerWidget {
@@ -35,14 +33,18 @@ class App extends HookConsumerWidget {
     final language = ref.watch(languageProvider);
     final styles = ref.watch(stylesProvider);
 
+    ref.listen<BaseTheme>(themeProvider, (_, theme) {
+      SystemChrome.setSystemUIOverlayStyle(theme.statusBar);
+    });
+
+    // Setup hight refresh rate on Android devices
     useEffect(() {
-      if (kIsWeb) return null;
-      if (Platform.isAndroid) {
+      if (kPlatformIsAndroid) {
+        final log = ref.read(loggerProvider);
         Future.delayed(Duration.zero, () {
           try {
             FlutterDisplayMode.setHighRefreshRate();
           } catch (e) {
-            final log = ref.read(loggerProvider);
             log.e('Failed to set high refresh rate', e);
           }
         });
@@ -50,59 +52,13 @@ class App extends HookConsumerWidget {
       return null;
     }, const []);
 
+    // Setup Push Notifications
     useEffect(() {
-      final onNewTokenSubscription = Push.instance.onNewToken.listen((token) {
-        final notifier = ref.read(pushTokenSettingsProvider.notifier);
-        notifier.updateToken(token);
-      });
-
-      Push.instance.token.then((token) {
-        if (token == null) {
-          return;
-        }
-        final notifier = ref.read(pushTokenSettingsProvider.notifier);
-        notifier.updateToken(token);
-      });
-
-      Push.instance.notificationTapWhichLaunchedAppFromTerminated.then((data) {
-        if (data == null) {
-          return;
-        }
-        final id = Hash.tryParse(data['id'] as String? ?? '');
-        if (id == null) {
-          return;
-        }
-        final notifier = ref.read(notificationIdProvider.notifier);
-        notifier.state = id;
-      });
-
-      final onNotificationTapSubscription =
-          Push.instance.onNotificationTap.listen((data) {
-        final id = Hash.tryParse(data['id'] as String? ?? '');
-        if (id == null) {
-          return;
-        }
-        final notifier = ref.read(notificationIdProvider.notifier);
-        notifier.state = id;
-      });
-
-      final onMessageSubscription =
-          Push.instance.onMessage.listen((message) {});
-
-      final onBackgroundMessageSubscription =
-          Push.instance.onBackgroundMessage.listen((message) {});
-
-      return () {
-        onNewTokenSubscription.cancel();
-        onNotificationTapSubscription.cancel();
-        onMessageSubscription.cancel();
-        onBackgroundMessageSubscription.cancel();
-      };
+      if (kPlatformIsAndroid || kPlatformIsIOS) {
+        return setupPushNotifications(ref);
+      }
+      return null;
     }, const []);
-
-    ref.listen<BaseTheme>(themeProvider, (_, theme) {
-      SystemChrome.setSystemUIOverlayStyle(theme.statusBar);
-    });
 
     return Container(
       decoration: BoxDecoration(color: theme.backgroundDarkest),
