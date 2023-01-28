@@ -57,14 +57,12 @@ class NumberUtil {
   }
 
   static BigInt getRawFromDecimal(Decimal value, int decimals) {
-    final rawDecimal = value * Decimal.ten.pow(decimals);
-    final raw = rawDecimal.toBigInt();
+    final raw = value.shift(decimals).toBigInt();
     return raw;
   }
 
   static Decimal getDecimalFromRaw(BigInt raw, int decimals) {
-    final result = (raw.toDecimal() / Decimal.ten.pow(decimals))
-        .toDecimal(scaleOnInfinitePrecision: decimals);
+    final result = raw.toDecimal().shift(-decimals);
     return result;
   }
 
@@ -107,17 +105,12 @@ class NumberUtil {
 
   static BigInt? tryParseAmountAsRaw(String amount, int decimals) {
     final decimal = Decimal.tryParse(amount);
-    if (decimal == null) {
-      return null;
-    }
-
-    final decimalRaw = decimal * Decimal.ten.pow(decimals);
-    return decimalRaw.toBigInt();
+    return decimal?.shift(decimals).toBigInt();
   }
 
   static BigInt parseAmountAsRaw(String amount, int decimals) {
-    Decimal decimalRaw = Decimal.parse(amount) * Decimal.ten.pow(decimals);
-    return decimalRaw.toBigInt();
+    Decimal decimal = Decimal.parse(amount);
+    return decimal.shift(decimals).toBigInt();
   }
 
   static String approx({required Amount amount, int precision = 6}) {

@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:decimal/decimal.dart';
 import 'package:flutter/foundation.dart';
@@ -189,8 +188,8 @@ class ViteUtil {
     if (decimal == null) {
       return '0';
     }
-    final votes = (decimal / Decimal.ten.pow(vite.viteTokenDecimals))
-        .toDecimal(scaleOnInfinitePrecision: 0);
+
+    final votes = decimal.shift(-vite.viteTokenDecimals);
     return votes.toStringAsFixed(0);
   }
 
