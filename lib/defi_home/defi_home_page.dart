@@ -53,6 +53,7 @@ class DefiHomePage extends HookConsumerWidget {
               children: [
                 if (network == ViteNetwork.mainnet)
                   ListView(
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 28),
                     children: [
                       DefiCard(
                         image: Image.asset('assets/vivastaking.png'),
@@ -83,6 +84,7 @@ class DefiHomePage extends HookConsumerWidget {
                       style: styles.textStyleAccount,
                     ),
                   ),
+                const TopGradientWidget(),
                 const BottomGradientWidget(),
               ],
             ),
