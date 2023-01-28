@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -347,3 +347,6 @@ final tokenCardActionProvider =
     Provider((ref) => TokenCardAction.showTokenSheet);
 
 final lockDisabledProvider = StateProvider((ref) => false);
+
+final homePageScaffoldKeyProvider =
+    Provider((ref) => GlobalKey<ScaffoldState>());

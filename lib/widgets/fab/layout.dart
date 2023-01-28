@@ -92,7 +92,7 @@ class _OverlayBuilderState extends State<OverlayBuilder> {
   }
 
   void addToOverlay(OverlayEntry entry) async {
-    Overlay.of(context)?.insert(entry);
+    Overlay.of(context).insert(entry);
   }
 
   void hideOverlay() {
@@ -125,10 +125,10 @@ class CenterAbout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Positioned(
+    return Positioned(
       top: position.dy,
       left: position.dx,
-      child: new FractionalTranslation(
+      child: FractionalTranslation(
         translation: const Offset(-0.5, -0.5),
         child: child,
       ),

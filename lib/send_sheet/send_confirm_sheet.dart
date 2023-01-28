@@ -115,7 +115,6 @@ class SendConfirmSheet extends HookConsumerWidget {
 
         autoreceiveService.resumeAutoreceive();
 
-        final l10n = ref.read(l10nProvider);
         UIUtil.showSnackbar(l10n.sendError, context);
 
         Navigator.of(context).pop();

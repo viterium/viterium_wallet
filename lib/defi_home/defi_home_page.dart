@@ -38,7 +38,7 @@ class DefiHomePage extends HookConsumerWidget {
       Sheets.showAppHeightNineSheet(
         context: scaffold.currentContext ?? context,
         theme: theme,
-        widget: VitcSwapPage(),
+        widget: const VitcSwapPage(),
       );
     }
 

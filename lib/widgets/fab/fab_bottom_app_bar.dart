@@ -79,7 +79,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+        children: [
           SizedBox(height: widget.iconSize),
           Text(
             widget.centerItemText ?? '',

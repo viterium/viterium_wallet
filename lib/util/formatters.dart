@@ -138,55 +138,6 @@ class CurrencyFormatter extends TextInputFormatter {
   }
 }
 
-// class LocalCurrencyFormatter extends TextInputFormatter {
-//   NumberFormat currencyFormat;
-//   bool active;
-//   int maxDeciamlDigits;
-
-//   LocalCurrencyFormatter({
-//     required this.currencyFormat,
-//     required this.active,
-//     required this.maxDeciamlDigits,
-//   });
-
-//   TextEditingValue formatEditUpdate(
-//       TextEditingValue oldValue, TextEditingValue newValue) {
-//     if (newValue.text.trim() == currencyFormat.currencySymbol.trim() ||
-//         newValue.text.isEmpty) {
-//       // Return empty string
-//       return newValue.copyWith(
-//           text: '', selection: TextSelection.collapsed(offset: 0));
-//     }
-//     // Ensure our input is in the right formatting here
-//     if (active) {
-//       // Make local currency = symbol + amount with correct decimal separator
-//       String curText = newValue.text;
-//       String shouldBeText = curText;
-//       NumberUtil.sanitizeNumber(curText.replaceAll(',', '.'));
-//       shouldBeText = currencyFormat.currencySymbol +
-//           shouldBeText.replaceAll('.', currencyFormat.symbols.DECIMAL_SEP);
-//       if (shouldBeText != curText) {
-//         return newValue.copyWith(
-//             text: shouldBeText,
-//             selection: TextSelection.collapsed(offset: shouldBeText.length));
-//       }
-//     } else {
-//       // Make crypto amount have no symbol and formatted as US locale
-//       String curText = newValue.text;
-//       String shouldBeText = NumberUtil.sanitizeNumber(
-//         curText.replaceAll(',', '.'),
-//         maxDecimalDigits: maxDeciamlDigits,
-//       );
-//       if (shouldBeText != curText) {
-//         return newValue.copyWith(
-//             text: shouldBeText,
-//             selection: TextSelection.collapsed(offset: shouldBeText.length));
-//       }
-//     }
-//     return newValue;
-//   }
-// }
-
 /// Input formatter that ensures text starts with @
 class ContactInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(

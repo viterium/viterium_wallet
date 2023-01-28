@@ -197,6 +197,7 @@ class HomeScreen extends HookConsumerWidget {
           ),
           bottomNavigationBar: defiEnabled
               ? FABBottomAppBar(
+                  height: 62,
                   color: theme.text60,
                   backgroundColor: theme.backgroundDark,
                   selectedColor: theme.primary,
