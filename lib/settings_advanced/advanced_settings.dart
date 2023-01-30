@@ -7,6 +7,7 @@ part 'advanced_settings.g.dart';
 class AdvancedSettings with _$AdvancedSettings {
   const factory AdvancedSettings({
     @Default(true) bool defiEnabled,
+    @Default(true) bool autoReceiveEnabled,
   }) = _AdvancedSettings;
 
   factory AdvancedSettings.fromJson(Map<String, dynamic> json) =>

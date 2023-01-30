@@ -33,6 +33,11 @@ class AdvancedSettingsNotifier extends StateNotifier<AdvancedSettings> {
     final settings = state.copyWith(defiEnabled: enabled);
     return _updateSettings(settings);
   }
+
+  Future<void> updateAutoReceiveEnabled(bool enabled) async {
+    final settings = state.copyWith(autoReceiveEnabled: enabled);
+    return _updateSettings(settings);
+  }
 }
 
 final _advancedSettingsKeyProvider = Provider((ref) {
@@ -50,4 +55,9 @@ final advancedSettingsProvider =
 final defiEnabledProvider = Provider((ref) {
   final settings = ref.watch(advancedSettingsProvider);
   return settings.defiEnabled;
+});
+
+final autoReceiveEnabledProvider = Provider((ref) {
+  final settings = ref.watch(advancedSettingsProvider);
+  return settings.autoReceiveEnabled;
 });

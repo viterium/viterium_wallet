@@ -21,6 +21,7 @@ class AutoreceiveService {
 
   bool _inProgress = false;
   bool _paused = false;
+  bool _enabled = false;
   DateTime _lastTry = DateTime.now();
   Duration _nextTryDelta = _defaultTryDelta;
 
@@ -36,6 +37,10 @@ class AutoreceiveService {
     return DateTime.now().isAfter(nextTry);
   }
 
+  void setEnabled(bool enabled) {
+    _enabled = enabled;
+  }
+
   void resumeAutoreceive() {
     _paused = false;
   }
@@ -46,7 +51,8 @@ class AutoreceiveService {
   }
 
   Future<void> processNext(BigInt snapshotHeight) async {
-    if (_inProgress ||
+    if (!_enabled ||
+        _inProgress ||
         _paused ||
         unreceived.blockCount == 0 ||
         !allowProcessNext) {

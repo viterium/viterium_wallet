@@ -47,6 +47,10 @@ final autoreceiveServiceProvider =
     service.txNotifier = next;
   }, fireImmediately: true);
 
+  ref.listen(autoReceiveEnabledProvider, (_, enabled) {
+    service.setEnabled(enabled);
+  }, fireImmediately: true);
+
   ref.onDispose(() {
     log.d('Autoreceive disposed');
     disposed = true;

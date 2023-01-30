@@ -75,10 +75,15 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Unreceived',
-                            textAlign: TextAlign.start,
-                            style: styles.textStyleTransactionType,
+                          Consumer(builder: (context, ref, _) {
+                            final enabled =
+                                ref.watch(autoReceiveEnabledProvider);
+                            return Text(
+                              enabled ? 'Receiving' : 'Auto Receive Disabled',
+                              textAlign: TextAlign.start,
+                              style: styles.textStyleTransactionType,
+                            );
+                          }
                           ),
                           const SizedBox(height: 4),
                           RichText(

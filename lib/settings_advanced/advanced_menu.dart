@@ -11,6 +11,7 @@ import '../widgets/app_icon_button.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
+import 'auto_receive_dialog.dart';
 import 'defi_enabled_dialog.dart';
 import 'setting_enabled_item.dart';
 import 'setting_token_sort_option.dart';
@@ -60,6 +61,17 @@ class AdvancedMenu extends ConsumerWidget {
       if (enabled != null) {
         final notifier = ref.read(advancedSettingsProvider.notifier);
         return notifier.updateDefiEnabled(enabled);
+      }
+    }
+
+    Future<void> changeAutoReceiveEnabled() async {
+      final enabled = await showAppDialog<bool>(
+        context: context,
+        builder: (_) => const AutoReceiveDialog(),
+      );
+      if (enabled != null) {
+        final notifier = ref.read(advancedSettingsProvider.notifier);
+        return notifier.updateAutoReceiveEnabled(enabled);
       }
     }
 
@@ -138,14 +150,24 @@ class AdvancedMenu extends ConsumerWidget {
                       }),
                       Divider(height: 2, color: theme.text15),
                       Consumer(builder: (context, ref, _) {
-                        final settings = ref.watch(advancedSettingsProvider);
+                        final enabled = ref.watch(defiEnabledProvider);
                         return DoubleLineItem(
                           heading: 'DeFi Center',
-                          defaultMethod:
-                              SettingEnabledItem(settings.defiEnabled),
+                          defaultMethod: SettingEnabledItem(enabled),
                           icon: AppIconsCustom.defi,
                           iconSize: 28,
                           onPressed: changeDefiEnabled,
+                        );
+                      }),
+                      Divider(height: 2, color: theme.text15),
+                      Consumer(builder: (context, ref, _) {
+                        final enabled = ref.watch(autoReceiveEnabledProvider);
+                        return DoubleLineItem(
+                          heading: 'Auto Receive',
+                          defaultMethod: SettingEnabledItem(enabled),
+                          icon: Icons.receipt,
+                          iconSize: 24,
+                          onPressed: changeAutoReceiveEnabled,
                         );
                       }),
                     ],
