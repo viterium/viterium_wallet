@@ -144,30 +144,3 @@ class GenericBox {
   Future<void> close() => box.close();
 }
 
-class LazyGenericBox {
-  final LazyBox box;
-  final TypeFactory? typeFactory;
-  const LazyGenericBox(this.box, {required this.typeFactory});
-
-  Future<T> get<T>(String key) async {
-    return (await box.get(key))!;
-  }
-
-  Future<T?> tryGet<T>(String key) async {
-    try {
-      return get(key);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  Future<void> set<T>(String key, T value) {
-    return box.put(key, value);
-  }
-
-  Future<void> remove(String key) => box.delete(key);
-
-  Future<int> clear() => box.clear();
-
-  Future<void> close() => box.close();
-}
