@@ -81,6 +81,12 @@ class VitcStakeUserInfo with _$VitcStakeUserInfo {
         rewardDebt: list[1] as BigInt,
         depositBlock: list[2] as BigInt,
       );
+
+  static final empty = VitcStakeUserInfo(
+    stakingBalance: BigInt.zero,
+    rewardDebt: BigInt.zero,
+    depositBlock: BigInt.zero,
+  );
 }
 
 @freezed

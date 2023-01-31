@@ -30,12 +30,9 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
     final l10n = ref.watch(l10nProvider);
 
     final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId)) ??
-        VitcStakeUserInfo(
-          stakingBalance: BigInt.zero,
-          rewardDebt: BigInt.zero,
-          depositBlock: BigInt.zero,
-        );
-    ;
+        VitcStakeUserInfo.empty;
+
+    final amountRaw = useRef(BigInt.zero);
 
     final stakingValue = useMemoized(() {
       final amount = Amount.raw(userInfo.stakingBalance,
@@ -45,19 +42,44 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
 
     final controller = useTextEditingController();
 
-    final formatter = NumberFormat.currency(name: '');
-    final currencyFormatter = CurrencyFormatter(
-      groupSeparator: formatter.symbols.GROUP_SEP,
-      decimalSeparator: formatter.symbols.DECIMAL_SEP,
-      maxDecimalDigits: poolInfo.stakingTokenInfo.decimals,
-    );
+    final formatter = useMemoized(() {
+      final format = NumberFormat.currency(name: '');
+      return CurrencyFormatter(
+        groupSeparator: format.symbols.GROUP_SEP,
+        decimalSeparator: format.symbols.DECIMAL_SEP,
+        maxDecimalDigits: poolInfo.stakingTokenInfo.decimals,
+      );
+    });
 
-    void onResult(String text) {
+    void onMax() {
+      final amount = Amount.raw(
+        userInfo.stakingBalance,
+        tokenInfo: poolInfo.stakingTokenInfo,
+      );
+      final text = NumberUtil.textFieldFormatedAmount(amount);
+      controller.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
+
+      amountRaw.value = userInfo.stakingBalance;
+    }
+
+    void onAmountChanged(String text) {
       text = text
-          .replaceAll(currencyFormatter.groupSeparator, '')
-          .replaceAll(currencyFormatter.decimalSeparator, '.');
+          .replaceAll(formatter.groupSeparator, '')
+          .replaceAll(formatter.decimalSeparator, '.');
       final value = Decimal.tryParse(text) ?? Decimal.zero;
       final amount = Amount.value(value, tokenInfo: poolInfo.stakingTokenInfo);
+
+      amountRaw.value = amount.raw;
+    }
+
+    void onWithdraw(String text) {
+      final amount = Amount.raw(
+        amountRaw.value,
+        tokenInfo: poolInfo.stakingTokenInfo,
+      );
       Navigator.of(context).pop(amount);
     }
 
@@ -109,26 +131,17 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
               textAlign: TextAlign.center,
-              inputFormatters: [currencyFormatter],
+              inputFormatters: [formatter],
               prefixButton: TextFieldButton(
                 icon: AppIcons.swapcurrency,
                 widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
               ),
               suffixButton: TextFieldButton(
                 icon: AppIcons.max,
-                onPressed: () {
-                  final amount = Amount.raw(
-                    userInfo.stakingBalance,
-                    tokenInfo: poolInfo.stakingTokenInfo,
-                  );
-                  final text = NumberUtil.textFieldFormatedAmount(amount);
-                  controller.value = TextEditingValue(
-                    text: text,
-                    selection: TextSelection.collapsed(offset: text.length),
-                  );
-                },
+                onPressed: onMax,
               ),
-              onSubmitted: onResult,
+              onChanged: onAmountChanged,
+              onSubmitted: onWithdraw,
             ),
           ),
           Row(
@@ -148,13 +161,12 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
                   'WITHDRAW',
                   style: styles.textStyleDialogButtonText,
                 ),
-                onPressed: () => onResult(controller.text),
+                onPressed: () => onWithdraw(controller.text),
               ),
             ],
           ),
         ],
       );
-    }
-    );
+    });
   }
 }

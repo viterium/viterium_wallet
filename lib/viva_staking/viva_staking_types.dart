@@ -92,6 +92,11 @@ class VivaUserInfo with _$VivaUserInfo {
         stakingBalance: list[0] as BigInt,
         rewardDebt: list[1] as BigInt,
       );
+
+  static final empty = VivaUserInfo(
+    stakingBalance: BigInt.zero,
+    rewardDebt: BigInt.zero,
+  );
 }
 
 @freezed
