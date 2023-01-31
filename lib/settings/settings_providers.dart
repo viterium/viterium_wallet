@@ -23,10 +23,7 @@ class SettingsRepository {
 
 final _settingsBoxProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
-  final box = db.getGenericBox(
-    kSettingsBox,
-    typeFactory: <T>(value) => value as T,
-  );
+  final box = db.getGenericBox(kSettingsBox);
   return box;
 });
 

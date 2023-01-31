@@ -177,15 +177,9 @@ class Database {
     return LazyTypedBox(box);
   }
 
-  GenericBox getGenericBox(BoxKey boxKey, {TypeFactory? typeFactory}) {
+  GenericBox getGenericBox(BoxKey boxKey) {
     assert(Hive.isBoxOpen(boxKey));
     final box = Hive.box(boxKey);
     return GenericBox(box);
-  }
-
-  LazyGenericBox getLazyGenericBox(BoxKey, {TypeFactory? typeFactory}) {
-    assert(Hive.isBoxOpen(BoxKey));
-    final box = Hive.lazyBox(BoxKey);
-    return LazyGenericBox(box, typeFactory: typeFactory);
   }
 }
