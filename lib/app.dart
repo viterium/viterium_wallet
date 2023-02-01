@@ -82,8 +82,8 @@ class App extends HookConsumerWidget {
                 colorScheme: ThemeData().colorScheme.copyWith(
                       brightness: Brightness.dark,
                       secondary: theme.primary10,
+                      background: theme.backgroundDark,
                     ),
-                backgroundColor: theme.backgroundDark,
                 fontFamily: kDefaultFontFamily,
                 brightness: Brightness.dark,
                 tooltipTheme: TooltipThemeData(

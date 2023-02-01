@@ -33,9 +33,7 @@ class ViteNodeSettingsNotifier extends StateNotifier<ViteNodeConfigSettings> {
   }
 
   Future<void> updateOptions(IList<ViteNodeConfig> options) {
-    state = state.copyWith(
-      options: options,
-    );
+    state = state.copyWith(options: options);
     return repository.setViteNodeConfigSettings(state);
   }
 

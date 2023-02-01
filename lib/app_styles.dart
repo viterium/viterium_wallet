@@ -1079,7 +1079,7 @@ class AppStyles {
       ),
       side: BorderSide(color: theme.success, width: 2),
       backgroundColor: theme.backgroundDark,
-      primary: theme.success,
+      foregroundColor: theme.success,
     ).copyWith(
       overlayColor: MaterialStateProperty.resolveWith<Color?>(
           (Set<MaterialState> states) {
@@ -1102,7 +1102,7 @@ class AppStyles {
 
   ButtonStyle get outlinedButtonStyle {
     return OutlinedButton.styleFrom(
-      primary: theme.text,
+      foregroundColor: theme.text,
       backgroundColor: theme.backgroundDark,
       side: BorderSide(color: theme.text, width: 2),
       shape: RoundedRectangleBorder(
@@ -1121,7 +1121,7 @@ class AppStyles {
 
   ButtonStyle get outlinedPrimaryButtonStyle {
     return OutlinedButton.styleFrom(
-      primary: theme.primary,
+      foregroundColor: theme.primary,
       backgroundColor: theme.backgroundDark,
       side: BorderSide(color: theme.primary, width: 2),
       shape: RoundedRectangleBorder(
@@ -1141,7 +1141,7 @@ class AppStyles {
 
   ButtonStyle get smallOutlinedPrimaryButtonStyle {
     return OutlinedButton.styleFrom(
-      primary: theme.primary,
+      foregroundColor: theme.primary,
       backgroundColor: theme.backgroundDark,
       side: BorderSide(color: theme.primary, width: 1),
       shape: RoundedRectangleBorder(
@@ -1161,7 +1161,7 @@ class AppStyles {
 
   ButtonStyle get outlinedPrimaryDarkButtonStyle {
     return OutlinedButton.styleFrom(
-      primary: theme.primary,
+      foregroundColor: theme.primary,
       backgroundColor: theme.backgroundDarkest,
       side: BorderSide(color: theme.primary, width: 2),
       shape: RoundedRectangleBorder(
@@ -1181,7 +1181,7 @@ class AppStyles {
 
   ButtonStyle get disabledPrimaryOutlinedButtonStyle {
     return OutlinedButton.styleFrom(
-      primary: theme.primary60,
+      foregroundColor: theme.primary60,
       backgroundColor: theme.backgroundDark,
       side: BorderSide(color: theme.primary60, width: 2),
       shape: RoundedRectangleBorder(
@@ -1200,7 +1200,7 @@ class AppStyles {
 
   ButtonStyle get disabledPrimaryOutlinedDarkButtonStyle {
     return OutlinedButton.styleFrom(
-      primary: theme.primary60,
+      foregroundColor: theme.primary60,
       backgroundColor: theme.backgroundDarkest,
       side: BorderSide(color: theme.primary60, width: 2),
       shape: RoundedRectangleBorder(

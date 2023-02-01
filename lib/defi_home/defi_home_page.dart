@@ -6,7 +6,6 @@ import '../contracts/vitc_stake_v2.dart';
 import '../contracts/vitc_swap.dart';
 import '../contracts/viva_staking_v4.dart';
 import '../core/core_providers.dart';
-import '../main_card/main_card.dart';
 import '../node_settings/node_types.dart';
 import '../vitc_swap/vitc_swap_page.dart';
 import '../widgets/gradient_widgets.dart';

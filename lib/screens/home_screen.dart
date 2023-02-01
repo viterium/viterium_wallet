@@ -8,7 +8,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../app_icons_custom.dart';
 import '../app_providers.dart';
 import '../defi_home/defi_home_page.dart';
-import '../main_card/main_card.dart';
 import '../settings_drawer/settings_drawer.dart';
 import '../util/routes.dart';
 import '../util/ui_util.dart';
