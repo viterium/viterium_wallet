@@ -8,14 +8,16 @@ import 'package:intl/intl.dart';
 import 'numberutil.dart';
 
 class PercentFormatter extends TextInputFormatter {
+  final String groupSeparator;
   final String decimalSeparator;
 
   final symbols = <String>{};
 
   PercentFormatter({
+    required this.groupSeparator,
     required this.decimalSeparator,
   }) {
-    symbols.addAll([decimalSeparator]);
+    symbols.addAll([groupSeparator, decimalSeparator]);
     symbols.addAll('0123456789'.split(''));
   }
 
@@ -30,17 +32,29 @@ class PercentFormatter extends TextInputFormatter {
 
     if (!inputSymbols.contains(decimalSeparator) &&
         (inputSymbols.length > 3 ||
-            (inputSymbols.length == 3 && inputSymbols[0] != '1'))) {
+            (inputSymbols.length == 3 &&
+                (inputSymbols[0] != '1' ||
+                    inputSymbols[1] != '0' ||
+                    inputSymbols[2] != '0')))) {
       return oldValue;
     }
 
-    String workingText = newValue.text;
+    String workingText = newValue.text.replaceAll(
+      groupSeparator,
+      decimalSeparator,
+    );
+
+    if (decimalSeparator.allMatches(workingText).length > 1) {
+      return oldValue;
+    }
+
     while (workingText.length > 1 && workingText[0] == '0') {
       workingText = workingText.substring(1);
     }
     if (workingText.startsWith(decimalSeparator)) {
       workingText = '0$workingText';
     }
+    final text = workingText;
     final splitStrs = workingText.split(decimalSeparator);
     if (splitStrs.length > 1 &&
         (splitStrs[1].length > 2 || splitStrs[0].length == 3)) {
@@ -54,15 +68,18 @@ class PercentFormatter extends TextInputFormatter {
       return oldValue;
     }
 
-    return newValue;
+    return newValue.copyWith(
+      text: text.replaceAll(groupSeparator, decimalSeparator),
+      selection: TextSelection.collapsed(offset: text.length),
+    );
   }
 }
 
 /// Input formatter for Crpto/Fiat amounts
 class CurrencyFormatter extends TextInputFormatter {
-  String groupSeparator;
-  String decimalSeparator;
-  int maxDecimalDigits;
+  final String groupSeparator;
+  final String decimalSeparator;
+  final int maxDecimalDigits;
 
   final numberFormat = NumberFormat.decimalPattern();
   final symbols = <String>{};

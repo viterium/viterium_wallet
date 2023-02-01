@@ -51,7 +51,10 @@ class VitcSwapSlippageDialog extends HookConsumerWidget {
           autocorrect: false,
           textInputAction: TextInputAction.done,
           inputFormatters: [
-            PercentFormatter(decimalSeparator: formatter.symbols.DECIMAL_SEP),
+            PercentFormatter(
+              groupSeparator: formatter.symbols.GROUP_SEP,
+              decimalSeparator: formatter.symbols.DECIMAL_SEP,
+            ),
           ],
           suffixButton: TextFieldButton(
             icon: Icons.percent,
