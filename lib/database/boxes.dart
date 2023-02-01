@@ -134,7 +134,7 @@ class GenericBox {
     return box.put(key, json);
   }
 
-  Future<void> setAll<T>(Map<String, dynamic> map) =>
+  Future<void> setAll(Map<String, dynamic> map) =>
       box.putAll(map.map((key, value) => MapEntry(key, _toJson(value))));
 
   Future<void> remove(String key) => box.delete(key);
