@@ -31,7 +31,6 @@ class TokenIconWidget extends ConsumerWidget {
                 asset,
                 width: size.width,
                 height: size.height,
-                filterQuality: FilterQuality.high,
                 isAntiAlias: true,
               ),
               url: (url) => ExtendedImage.network(
@@ -40,7 +39,6 @@ class TokenIconWidget extends ConsumerWidget {
                 width: size.width,
                 height: size.height,
                 cache: true,
-                filterQuality: FilterQuality.high,
                 isAntiAlias: true,
                 loadStateChanged: (state) {
                   if (state.extendedImageLoadState != LoadState.completed) {
