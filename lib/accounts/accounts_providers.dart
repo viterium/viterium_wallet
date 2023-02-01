@@ -20,10 +20,7 @@ final _accountsBoxProvider =
 final _accountSelectionBoxProvider =
     Provider.autoDispose.family<GenericBox, WalletInfo>((ref, wallet) {
   final db = ref.watch(dbProvider);
-  return db.getGenericBox(
-    kSettingsBox,
-    typeFactory: <T>(value) => value as T,
-  );
+  return db.getGenericBox(kSettingsBox);
 });
 
 final _accountSelectionProvider =
