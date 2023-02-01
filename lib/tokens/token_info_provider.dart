@@ -24,6 +24,34 @@ final tokenInfoBoxProvider = Provider((ref) {
   return db.getTypedBox<TokenInfo>(boxId);
 });
 
+final tokenInfoProvider =
+    FutureProvider.family<TokenInfo, TokenId>((ref, tokenId) async {
+  if (tokenId == viteTokenId) {
+    return TokenInfo.vite;
+  }
+
+  final token = Token.tryParse(tokenId);
+  if (token == null) {
+    return TokenInfo.zero;
+  }
+  final client = ref.watch(viteClientProvider);
+  final tokenInfoBox = ref.watch(tokenInfoBoxProvider);
+
+  final cachedTokenInfo = tokenInfoBox.tryGet(tokenId);
+
+  if (cachedTokenInfo != null) {
+    return cachedTokenInfo;
+  }
+
+  try {
+    final tokenInfo = await client.getTokenInfo(tokenId);
+    tokenInfoBox.set(tokenId, tokenInfo);
+    return tokenInfo;
+  } catch (_) {
+    return TokenInfo.unknownToken(token);
+  }
+});
+
 final tokenInfoMapProvider =
     FutureProvider<Map<TokenId, TokenInfo>>((ref) async {
   final client = ref.watch(rpcClientProvider);
@@ -52,7 +80,7 @@ final tokenInfoMapProvider =
   }
 
   try {
-    await updateTokens(0, 30);
+    await updateTokens(0, 50);
   } catch (e) {
     final log = ref.read(loggerProvider);
     log.e('Failed to update tokens list', e);
@@ -64,41 +92,13 @@ final tokenInfoMapProvider =
 final tokenInfoListProvider = FutureProvider<IList<TokenInfo>>((ref) async {
   final allTokens = await ref.watch(tokenInfoMapProvider.future);
 
-  return IList(allTokens.values).sort(
-    (a, b) {
-      final result = a.tokenName.compareTo(b.tokenName);
-      if (result == 0) {
-        return a.symbolLabel.compareTo(b.symbolLabel);
-      }
-      return result;
-    },
-  );
-});
+  final sorted = IList(allTokens.values).sort((a, b) {
+    final result = a.tokenName.compareTo(b.tokenName);
+    if (result == 0) {
+      return a.symbolLabel.compareTo(b.symbolLabel);
+    }
+    return result;
+  });
 
-final tokenInfoProvider =
-    FutureProvider.family<TokenInfo, TokenId>((ref, tokenId) async {
-  if (tokenId == viteTokenId) {
-    return TokenInfo.vite;
-  }
-
-  final token = Token.tryParse(tokenId);
-  if (token == null) {
-    return TokenInfo.zero;
-  }
-  final client = ref.watch(viteClientProvider);
-  final tokenInfoBox = ref.watch(tokenInfoBoxProvider);
-
-  final cachedTokenInfo = tokenInfoBox.tryGet(tokenId);
-
-  if (cachedTokenInfo != null) {
-    return cachedTokenInfo;
-  }
-
-  try {
-    final tokenInfo = await client.getTokenInfo(tokenId);
-    tokenInfoBox.set(tokenId, tokenInfo);
-    return tokenInfo;
-  } catch (_) {
-    return TokenInfo.unknownToken(token);
-  }
+  return sorted;
 });
