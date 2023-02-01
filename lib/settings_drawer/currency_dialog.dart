@@ -10,6 +10,7 @@ class CurrencyDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
@@ -33,6 +34,17 @@ class CurrencyDialog extends ConsumerWidget {
               ),
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Divider(height: 2, color: theme.text15),
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(start: 24, top: 12),
+          child: Text(
+            'Powered by CoinGecko',
+            style: styles.textStyleDialogOptions,
+          ),
+        ),
       ],
     );
   }

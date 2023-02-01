@@ -10,6 +10,7 @@ import '../core/vault.dart';
 import '../push_notifications/push_types.dart';
 import '../tokens/token_types.dart';
 import '../util/random_util.dart';
+import '../vitex/vitex_types.dart';
 import 'boxes.dart';
 import 'json_type_adapter.dart';
 
@@ -22,6 +23,7 @@ final BoxKey kTokenInfoBoxDevnet = 'tokenInfoBoxDevnet';
 late final BoxKey kTokenIconBox;
 late final BoxKey kPushInfoBox;
 late final BoxKey kSettingsBox;
+late final BoxKey kExchangeRateBox;
 
 int _getTypeId<T>() {
   switch (T) {
@@ -37,6 +39,8 @@ int _getTypeId<T>() {
       return 4;
     case PushInfo:
       return 5;
+    case ExchangeRate:
+      return 6;
   }
   throw 'Unknown type $T';
 }
@@ -64,6 +68,11 @@ final cachedTokenIconAdapter = JsonTypeAdapter(
 final pushInfoAdapter = JsonTypeAdapter(
   typeId: _getTypeId<PushInfo>(),
   fromJson: PushInfo.fromJson,
+);
+
+final exchangeRateAdapter = JsonTypeAdapter(
+  typeId: _getTypeId<ExchangeRate>(),
+  fromJson: ExchangeRate.fromJson,
 );
 
 class Database {
@@ -94,6 +103,7 @@ class Database {
     const kTokenIconBoxId = '_tokenIconBox';
     const kSettingsBoxId = '_settingsBox';
     const kPushInfoBoxId = '_pushInfoBox';
+    const kExchangeRateBoxId = '_exchangeRateBox';
 
     kContactsBox =
         digest(data: stringToBytesUtf8('$kContactsBoxId#$secureKey')).hex;
@@ -107,6 +117,8 @@ class Database {
         digest(data: stringToBytesUtf8('$kSettingsBoxId#$secureKey')).hex;
     kPushInfoBox =
         digest(data: stringToBytesUtf8('$kPushInfoBoxId#$secureKey')).hex;
+    kExchangeRateBox =
+        digest(data: stringToBytesUtf8('$kExchangeRateBoxId#$secureKey')).hex;
 
     Hive.registerAdapter(accountAdapter);
     Hive.registerAdapter(accountInfoAdapter);
@@ -114,6 +126,7 @@ class Database {
     Hive.registerAdapter(tokenInfoAdapter);
     Hive.registerAdapter(cachedTokenIconAdapter);
     Hive.registerAdapter(pushInfoAdapter);
+    Hive.registerAdapter(exchangeRateAdapter);
 
     Future<Box> _openBox<T>(String box, {bool encrypted = false}) async {
       return Hive.openBox<T>(
@@ -130,6 +143,7 @@ class Database {
       Hive.openBox<TokenInfo>(kTokenInfoBoxDevnet, bytes: Uint8List(0)),
       _openBox<CachedTokenIcon>(kTokenIconBox),
       _openBox<PushInfo>(kPushInfoBox, encrypted: true),
+      _openBox<ExchangeRate>(kExchangeRateBox),
       // generic boxes
       _openBox(kSettingsBox, encrypted: true),
     ]);

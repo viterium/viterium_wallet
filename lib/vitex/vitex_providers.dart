@@ -9,15 +9,17 @@ import 'package:intl/intl.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
+import '../coingecko/coingecko_providers.dart';
+import '../database/database.dart';
 import 'vitex_types.dart';
 
-final _vitexExchangeRatesCacheProvider =
-    StateProvider<IMap<TokenId, VitexExchangeRate>>((ref) {
-  return <TokenId, VitexExchangeRate>{}.lock;
+final _exchangeRateBoxProvider = Provider((ref) {
+  final db = ref.watch(dbProvider);
+  return db.getTypedBox<ExchangeRate>(kExchangeRateBox);
 });
 
 final _vitexExchangeRatesRemoteProvider =
-    FutureProvider.family<IMap<TokenId, VitexExchangeRate>, IList<TokenId>>(
+    FutureProvider.family<IMap<TokenId, VitexExchangeRate>?, IList<TokenId>>(
         (ref, tokens) async {
   ref.watch(remoteRefreshProvider);
 
@@ -60,30 +62,41 @@ final exchangeRatesRemoteProvider = Provider.autoDispose((ref) {
 });
 
 final exchangeRatesProvider = Provider.autoDispose((ref) {
-  final notifier = ref.watch(_vitexExchangeRatesCacheProvider.notifier);
+  final box = ref.watch(_exchangeRateBoxProvider);
   final remote = ref.watch(exchangeRatesRemoteProvider);
 
   remote.whenOrNull(data: (data) {
-    notifier.update((state) => state.addAll(data));
+    if (data == null) {
+      return;
+    }
+    for (final entry in data.entries) {
+      box.set(entry.key, ExchangeRate.vitex(entry.value));
+    }
   });
 
-  return remote.asData?.value ?? notifier.state;
+  return remote.asData?.value ??
+      box.getAll().map((key, value) => MapEntry(key, value.exchangeRate)).lock;
 });
 
 final aprExchangeRateForTokenIdProvider =
     Provider.autoDispose.family<VitexExchangeRate, TokenId>((ref, tokenId) {
-  final cache = ref.watch(_vitexExchangeRatesCacheProvider.notifier);
+  final box = ref.watch(_exchangeRateBoxProvider);
 
-  final rate = cache.state[tokenId];
+  final rate = box.tryGet(tokenId);
   if (rate != null) {
-    return rate;
+    return rate.exchangeRate;
   }
 
   final remote = ref.watch(_vitexExchangeRatesRemoteProvider([tokenId].lock));
   remote.whenOrNull(data: (data) {
-    cache.update((state) => state.addAll(data));
+    if (data == null) {
+      return;
+    }
+    for (final entry in data.entries) {
+      box.set(entry.key, ExchangeRate.vitex(entry.value));
+    }
   });
-  return remote.asData?.value[tokenId] ??
+  return remote.asData?.value?[tokenId] ??
       VitexExchangeRate.zero(tokenId: tokenId);
 });
 
@@ -112,7 +125,8 @@ final totalBtcValueProvider = Provider.autoDispose((ref) {
 final totalFiatValueForAccountInfoProvider =
     Provider.autoDispose.family<Decimal, AccountInfo>((ref, accountInfo) {
   final exchangeRates = ref.watch(exchangeRatesProvider);
-  final currency = ref.watch(currencyProvider);
+  final coingeckoRates = ref.watch(coingeckoRatesProvider);
+  final currency = ref.watch(currencyProvider).currency;
 
   final value = accountInfo.balances.entries.fold<Decimal>(
     Decimal.zero,
@@ -121,7 +135,12 @@ final totalFiatValueForAccountInfoProvider =
       if (entry == null) {
         return total;
       }
-      final fiatRate = entry.fiatRate(currency.currency);
+      var fiatRate = entry.fiatRate(currency);
+      if (fiatRate == Decimal.zero) {
+        final btcRate = coingeckoRates.fiatRate(currency);
+        fiatRate = btcRate * entry.btcRateDecimal;
+      }
+
       return total + balances.value.value * fiatRate;
     },
   );
@@ -138,8 +157,13 @@ final fiatValueForTokenProvider =
     Provider.autoDispose.family<Decimal, TokenId>((ref, tokenId) {
   final balance = ref.watch(balanceInfoForTokenProvider(tokenId));
   final exchangeRate = ref.watch(exchangeRateForTokenIdProvider(tokenId));
-  final currency = ref.watch(currencyProvider);
-  final fiatRate = exchangeRate.fiatRate(currency.currency);
+  final coingeckoRates = ref.watch(coingeckoRatesProvider);
+  final currency = ref.watch(currencyProvider).currency;
+  var fiatRate = exchangeRate.fiatRate(currency);
+  if (fiatRate == Decimal.zero) {
+    final btcRate = coingeckoRates.fiatRate(currency);
+    fiatRate = btcRate * exchangeRate.btcRateDecimal;
+  }
   if (balance == null) return Decimal.zero;
   return balance.value * fiatRate;
 });
