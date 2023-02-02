@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -61,10 +61,6 @@ class ReceiveSheet extends HookConsumerWidget {
 
     Future<void> shareAddress() async {
       try {
-        String receiveCardFileName = "share_${account.viteAddress}.png";
-        final directory = await getApplicationDocumentsDirectory();
-        String filePath = "${directory.path}/$receiveCardFileName";
-        File f = File(filePath);
         showShareCard.value = true;
         await Future.delayed(Duration(milliseconds: 50));
         if (!showShareCard.value) {
@@ -72,8 +68,21 @@ class ReceiveSheet extends HookConsumerWidget {
         }
         final byteData = await _capturePng();
         if (byteData != null) {
-          final file = await f.writeAsBytes(byteData);
-          Share.shareFiles([file.path], text: account.viteAddress);
+          if (kIsWeb) {
+            final file = await XFile.fromData(
+              byteData,
+              name: '$address.png',
+              mimeType: 'image/png',
+            );
+            Share.shareXFiles([file], text: account.viteAddress);
+          } else {
+            final receiveCardFileName = "share_${account.viteAddress}.png";
+            final directory = await getTemporaryDirectory();
+            final filePath = "${directory.path}/$receiveCardFileName";
+            final f = File(filePath);
+            final file = await f.writeAsBytes(byteData);
+            Share.shareXFiles([XFile(file.path)]);
+          }
         } else {
           Share.share(account.viteAddress);
         }

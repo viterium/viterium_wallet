@@ -29,11 +29,11 @@ Future<void> exportContacts(WidgetRef ref, BuildContext context) async {
   final exportTime = DateTime.now();
   final filename =
       "viteriumcontacts_${exportTime.year}${exportTime.month}${exportTime.day}${exportTime.hour}${exportTime.minute}${exportTime.second}.txt";
-  final baseDirectory = await getApplicationDocumentsDirectory();
+  final baseDirectory = await getTemporaryDirectory();
   final contactsFile = File("${baseDirectory.path}/$filename");
   await contactsFile.writeAsString(json.encode(jsonList));
   //UIUtil.cancelLockEvent();
-  Share.shareFiles([contactsFile.path]);
+  Share.shareXFiles([XFile(contactsFile.path)]);
 }
 
 Future<void> importContacts(WidgetRef ref, BuildContext context) async {
