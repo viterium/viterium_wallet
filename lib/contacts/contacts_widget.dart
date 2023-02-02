@@ -29,6 +29,7 @@ class ContactsWidget extends ConsumerWidget {
 
     Future<void> importContacts() =>
         contactsHelper.importContacts(ref, context);
+
     Future<void> exportContacts() =>
         contactsHelper.exportContacts(ref, context);
 
@@ -77,14 +78,20 @@ class ContactsWidget extends ConsumerWidget {
                     ),
                   ]),
                   Row(children: [
-                    AppIconButton(
-                      icon: AppIcons.import_icon,
-                      onPressed: importContacts,
+                    Tooltip(
+                      message: 'Import',
+                      child: AppIconButton(
+                        icon: AppIcons.import_icon,
+                        onPressed: importContacts,
+                      ),
                     ),
                     const SizedBox(width: 4),
-                    AppIconButton(
-                      icon: AppIcons.export_icon,
-                      onPressed: exportContacts,
+                    Tooltip(
+                      message: 'Export',
+                      child: AppIconButton(
+                        icon: AppIcons.export_icon,
+                        onPressed: exportContacts,
+                      ),
                     ),
                     const SizedBox(width: 12),
                   ]),
