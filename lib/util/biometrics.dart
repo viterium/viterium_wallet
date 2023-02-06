@@ -13,20 +13,13 @@ class BiometricUtil {
       return false;
     }
     final localAuth = LocalAuthentication();
-    bool canCheck = await localAuth.canCheckBiometrics;
+    final canCheck = await localAuth.canCheckBiometrics;
     if (canCheck) {
-      List<BiometricType> availableBiometrics =
-          await localAuth.getAvailableBiometrics();
-      availableBiometrics.forEach((type) {
-        logger.i(type.toString());
-        logger.i(
-            "${type == BiometricType.face ? 'face' : type == BiometricType.iris ? 'iris' : type == BiometricType.fingerprint ? 'fingerprint' : 'unknown'}");
-      });
-      if (availableBiometrics.contains(BiometricType.face)) {
-        return true;
-      } else if (availableBiometrics.contains(BiometricType.fingerprint)) {
-        return true;
-      }
+      final availableBiometrics = await localAuth.getAvailableBiometrics();
+      return availableBiometrics.any((element) =>
+          element == BiometricType.face ||
+          element == BiometricType.fingerprint ||
+          element == BiometricType.strong);
     }
     return false;
   }
