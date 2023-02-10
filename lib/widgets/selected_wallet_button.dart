@@ -25,7 +25,7 @@ class SelectedWalletButton extends ConsumerWidget {
         context: context,
         theme: theme,
         widget: AccountDetailsSheet(account: account),
-        onDisposed: () => AccountDetailsSheet.saveChanges(ref.read, account),
+        onDisposed: () => AccountDetailsSheet.saveChanges(ref, account),
       );
     }
 

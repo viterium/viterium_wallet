@@ -7,16 +7,16 @@ import '../settings/authentication_method.dart';
 import '../widgets/pin_screen.dart';
 
 class AuthUtil {
-  final Reader read;
-  const AuthUtil(this.read);
+  final Ref ref;
+  const AuthUtil(this.ref);
 
   Future<bool> authenticate(
     BuildContext context,
     String pinMessage,
     String biometricsMessage,
   ) async {
-    final sharedPrefsUtil = read(sharedPrefsUtilProvider);
-    final biometricUtil = read(biometricUtilProvider);
+    final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
+    final biometricUtil = ref.read(biometricUtilProvider);
 
     final authMethod = await sharedPrefsUtil.getAuthMethod();
     final hasBiometrics = await biometricUtil.hasBiometrics();
@@ -26,13 +26,13 @@ class AuthUtil {
         final authenticated =
             await biometricUtil.authenticateWithBiometrics(biometricsMessage);
         if (authenticated) {
-          final hapticUtil = read(hapticUtilProvider);
+          final hapticUtil = ref.read(hapticUtilProvider);
           hapticUtil.fingerprintSuccess();
           return true;
         }
         return false;
       } catch (e, st) {
-        final logger = read(loggerProvider);
+        final logger = ref.read(loggerProvider);
         logger.e('Failed to authenticate with biometrics', e, st);
         return authenticateWithPin(context, pinMessage);
       }
@@ -41,7 +41,8 @@ class AuthUtil {
   }
 
   Future<bool> authenticateWithPin(BuildContext context, String message) async {
-    String? expectedPin = await read(vaultProvider).getPin();
+    final vault = ref.read(vaultProvider);
+    String? expectedPin = await vault.getPin();
 
     bool? auth = await Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {

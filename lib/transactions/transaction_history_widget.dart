@@ -64,10 +64,10 @@ class TransactionHistoryWidget extends HookConsumerWidget {
 
       final networkError = ref.read(networkErrorProvider);
       if (networkError) {
-        ref.refresh(wsServiceProvider);
+        ref.invalidate(wsServiceProvider);
       }
 
-      ref.refresh(unreceivedRemoteProvider(account.address));
+      ref.invalidate(unreceivedRemoteProvider(account.address));
       await txHistory.refresh();
 
       if (isMounted()) {

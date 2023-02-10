@@ -25,14 +25,14 @@ final quotaCacheProvider =
 void refreshQuota(Ref ref, Address address) {
   final account = ref.read(selectedAccountProvider);
   if (account.address == address) {
-    ref.refresh(quotaRemoteProvider(address));
+    ref.invalidate(quotaRemoteProvider(address));
   }
 }
 
 final quotaRefreshProvider =
     FutureProvider.autoDispose.family<void, Address>((ref, address) async {
   await Future.delayed(const Duration(seconds: 2));
-  ref.refresh(quotaRemoteProvider(address));
+  ref.invalidate(quotaRemoteProvider(address));
   final notifier = ref.read(quotaStakeListProvider.notifier);
   notifier.refresh();
 });
@@ -82,7 +82,7 @@ final quotaProvider =
 
   return remote.maybeWhen(
     data: (quota) {
-      cache.state = quota;
+      Future.microtask(() => cache.state = quota);
       return quota;
     },
     orElse: () => cache.state,
@@ -123,4 +123,3 @@ final quotaStakeListProvider = ChangeNotifierProvider.autoDispose((ref) {
 
   return notifier;
 });
-

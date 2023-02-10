@@ -63,7 +63,7 @@ class QuotaItem extends ConsumerWidget {
         final stakeList = ref.read(quotaStakeListProvider);
         stakeList.removeRecord(quotaInfo);
 
-        ref.refresh(quotaRefreshProvider(Address.parse(address)));
+        ref.invalidate(quotaRefreshProvider(Address.parse(address)));
       } catch (e, st) {
         final log = ref.read(loggerProvider);
         log.e('Failed to cancel quota staking', e, st);

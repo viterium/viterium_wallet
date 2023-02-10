@@ -279,12 +279,10 @@ class VitcSwapPage extends HookConsumerWidget {
       child: TapOutsideUnfocus(
         child: ProviderScope(
           overrides: [
-            selectedTokenProvider.overrideWithProvider(
-              StateProvider((ref) {
-                final settings = ref.watch(vitcSwapSettingsProvider);
-                return settings.fromToken;
-              }),
-            )
+            selectedTokenProvider.overrideWith((ref) {
+              final settings = ref.watch(vitcSwapSettingsProvider);
+              return settings.fromToken;
+            }),
           ],
           child: Column(
             children: [

@@ -85,7 +85,7 @@ final accountInfoProvider = StateNotifierProvider.autoDispose
     message.whenOrNull(
       data: (_) {
         // account block changed so refresh account info
-        ref.refresh(accountInfoRemoteProvider(account.address));
+        ref.invalidate(accountInfoRemoteProvider(account.address));
       },
     );
   });

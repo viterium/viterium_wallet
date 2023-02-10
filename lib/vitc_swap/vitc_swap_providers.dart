@@ -44,10 +44,10 @@ final vitcSwapTradingBalancesProvider =
     vitcSwapSettingsProvider.select((settings) => settings.tradingTokens),
   );
 
-  return allTokens.map(
+  return allTokens.when(
     data: (tokens) {
       final tradingBalances = tradingTokens.map((tokenId) {
-        final tokenInfo = tokens.value[tokenId] ??
+        final tokenInfo = tokens[tokenId] ??
             TokenInfo.unknownToken(
               Token.parse(tokenId),
             );
@@ -60,8 +60,8 @@ final vitcSwapTradingBalancesProvider =
       });
       return AsyncValue.data(tradingBalances.toIList());
     },
-    error: (e) => AsyncValue.error(e.error),
-    loading: (_) => AsyncValue.loading(),
+    error: (e, st) => AsyncValue.error(e, st),
+    loading: () => AsyncValue.loading(),
   );
 });
 

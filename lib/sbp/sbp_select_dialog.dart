@@ -31,7 +31,7 @@ class SbpSelectDialog extends ConsumerWidget {
         final accountService = ref.read(accountServiceProvider);
 
         await accountService.voteForSbp(account.address, sbpName);
-        ref.refresh(sbpListProvider);
+        ref.invalidate(sbpListProvider);
 
         UIUtil.showSnackbar(l10n.changeSbpVoteSuccess, context);
         Navigator.of(context).pop();

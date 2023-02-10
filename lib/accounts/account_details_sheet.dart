@@ -36,11 +36,11 @@ class AccountDetailsSheet extends HookConsumerWidget {
     required this.account,
   }) : super(key: key);
 
-  // FIXME - workaround
-  static void saveChanges(Reader read, Account account) {
-    final name = read(_accountNameProvider);
+  // FIXME - remove workaround
+  static void saveChanges(WidgetRef ref, Account account) {
+    final name = ref.read(_accountNameProvider);
     if (name != null && account.name != name && name.trim().isNotEmpty) {
-      final accounts = read(accountsProvider);
+      final accounts = ref.read(accountsProvider);
       accounts.changeAccountName(account, name);
     }
   }

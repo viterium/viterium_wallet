@@ -83,7 +83,7 @@ final sharedPrefsProvider =
 
 final l10nProvider = Provider((ref) => const AppLocalization());
 final hapticUtilProvider = Provider((ref) => const HapticUtil());
-final authUtilProvider = Provider((ref) => AuthUtil(ref.read));
+final authUtilProvider = Provider((ref) => AuthUtil(ref));
 final biometricUtilProvider = Provider(
   (ref) => BiometricUtil(ref.watch(loggerProvider)),
 );
@@ -176,7 +176,7 @@ final powClientProvider = Provider<PowClient>((ref) {
 
 final mainCardProvider =
     StateNotifierProvider<MainCardNotifier, MainCardState>((ref) {
-  return MainCardNotifier(ref.read);
+  return MainCardNotifier();
 });
 
 final themeProvider = Provider((ref) {

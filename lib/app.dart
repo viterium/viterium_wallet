@@ -101,7 +101,7 @@ class App extends HookConsumerWidget {
                 ),
               ),
               localizationsDelegates: [
-                AppLocalizationsDelegate(language, ref.read),
+                AppLocalizationsDelegate(language),
                 GlobalMaterialLocalizations.delegate,
                 GlobalCupertinoLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate

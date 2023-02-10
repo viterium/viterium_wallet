@@ -168,7 +168,7 @@ class QuotaGetSheet extends HookConsumerWidget {
           beneficiary: Address.tryParse(beneficiary ?? ''),
         );
 
-        ref.refresh(quotaRefreshProvider(address));
+        ref.invalidate(quotaRefreshProvider(address));
 
         UIUtil.showSnackbar('Locking for quota successful', context);
       } catch (e, st) {

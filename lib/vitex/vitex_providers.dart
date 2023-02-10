@@ -96,7 +96,7 @@ final aprExchangeRateForTokenIdProvider =
       box.set(entry.key, ExchangeRate.vitex(entry.value));
     }
   });
-  return remote.asData?.value?[tokenId] ??
+  return remote.valueOrNull?[tokenId] ??
       VitexExchangeRate.zero(tokenId: tokenId);
 });
 

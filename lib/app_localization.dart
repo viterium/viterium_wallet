@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:riverpod/riverpod.dart';
 
 import 'settings/available_language.dart';
 
@@ -10,7 +9,7 @@ import 'settings/available_language.dart';
 class AppLocalization {
   static Locale currentLocale = Locale('en', 'US');
 
-  static Future<AppLocalization> load(Locale locale, Reader read) async {
+  static Future<AppLocalization> load(Locale locale) async {
     currentLocale = locale;
     final String name =
         locale.countryCode == null ? locale.languageCode : locale.toString();
@@ -1393,9 +1392,8 @@ class AppLocalization {
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   final LanguageSetting languageSetting;
-  final Reader read;
 
-  const AppLocalizationsDelegate(this.languageSetting, this.read);
+  const AppLocalizationsDelegate(this.languageSetting);
 
   @override
   bool isSupported(Locale locale) {
@@ -1405,10 +1403,10 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalization> {
   @override
   Future<AppLocalization> load(Locale locale) {
     if (languageSetting.language == AvailableLanguage.DEFAULT) {
-      return AppLocalization.load(locale, read);
+      return AppLocalization.load(locale);
     }
     return AppLocalization.load(
-        Locale(languageSetting.getLocaleString()), read);
+        Locale(languageSetting.getLocaleString()));
   }
 
   @override

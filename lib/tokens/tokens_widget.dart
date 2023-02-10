@@ -51,11 +51,11 @@ class TokensWidget extends HookConsumerWidget {
 
       final networkError = ref.read(networkErrorProvider);
       if (networkError) {
-        ref.refresh(wsServiceProvider);
+        ref.invalidate(wsServiceProvider);
       }
 
       ref.read(remoteRefreshProvider.notifier).update((state) => state + 1);
-      ref.refresh(accountInfoRemoteProvider(account.address));
+      ref.invalidate(accountInfoRemoteProvider(account.address));
     }
 
     Widget proxyDecorator(
