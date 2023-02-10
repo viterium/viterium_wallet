@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'viva_staking_types.dart';
 
@@ -787,6 +787,7 @@ abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
 mixin _$VivaUserInfo {
   BigInt get stakingBalance => throw _privateConstructorUsedError;
   BigInt get rewardDebt => throw _privateConstructorUsedError;
+  BigInt get lastInteractionBlock => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VivaUserInfoCopyWith<VivaUserInfo> get copyWith =>
@@ -799,7 +800,8 @@ abstract class $VivaUserInfoCopyWith<$Res> {
           VivaUserInfo value, $Res Function(VivaUserInfo) then) =
       _$VivaUserInfoCopyWithImpl<$Res, VivaUserInfo>;
   @useResult
-  $Res call({BigInt stakingBalance, BigInt rewardDebt});
+  $Res call(
+      {BigInt stakingBalance, BigInt rewardDebt, BigInt lastInteractionBlock});
 }
 
 /// @nodoc
@@ -817,6 +819,7 @@ class _$VivaUserInfoCopyWithImpl<$Res, $Val extends VivaUserInfo>
   $Res call({
     Object? stakingBalance = null,
     Object? rewardDebt = null,
+    Object? lastInteractionBlock = null,
   }) {
     return _then(_value.copyWith(
       stakingBalance: null == stakingBalance
@@ -826,6 +829,10 @@ class _$VivaUserInfoCopyWithImpl<$Res, $Val extends VivaUserInfo>
       rewardDebt: null == rewardDebt
           ? _value.rewardDebt
           : rewardDebt // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      lastInteractionBlock: null == lastInteractionBlock
+          ? _value.lastInteractionBlock
+          : lastInteractionBlock // ignore: cast_nullable_to_non_nullable
               as BigInt,
     ) as $Val);
   }
@@ -839,7 +846,8 @@ abstract class _$$_VivaUserInfoCopyWith<$Res>
       __$$_VivaUserInfoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BigInt stakingBalance, BigInt rewardDebt});
+  $Res call(
+      {BigInt stakingBalance, BigInt rewardDebt, BigInt lastInteractionBlock});
 }
 
 /// @nodoc
@@ -855,6 +863,7 @@ class __$$_VivaUserInfoCopyWithImpl<$Res>
   $Res call({
     Object? stakingBalance = null,
     Object? rewardDebt = null,
+    Object? lastInteractionBlock = null,
   }) {
     return _then(_$_VivaUserInfo(
       stakingBalance: null == stakingBalance
@@ -865,6 +874,10 @@ class __$$_VivaUserInfoCopyWithImpl<$Res>
           ? _value.rewardDebt
           : rewardDebt // ignore: cast_nullable_to_non_nullable
               as BigInt,
+      lastInteractionBlock: null == lastInteractionBlock
+          ? _value.lastInteractionBlock
+          : lastInteractionBlock // ignore: cast_nullable_to_non_nullable
+              as BigInt,
     ));
   }
 }
@@ -873,16 +886,20 @@ class __$$_VivaUserInfoCopyWithImpl<$Res>
 
 class _$_VivaUserInfo implements _VivaUserInfo {
   const _$_VivaUserInfo(
-      {required this.stakingBalance, required this.rewardDebt});
+      {required this.stakingBalance,
+      required this.rewardDebt,
+      required this.lastInteractionBlock});
 
   @override
   final BigInt stakingBalance;
   @override
   final BigInt rewardDebt;
+  @override
+  final BigInt lastInteractionBlock;
 
   @override
   String toString() {
-    return 'VivaUserInfo(stakingBalance: $stakingBalance, rewardDebt: $rewardDebt)';
+    return 'VivaUserInfo(stakingBalance: $stakingBalance, rewardDebt: $rewardDebt, lastInteractionBlock: $lastInteractionBlock)';
   }
 
   @override
@@ -893,11 +910,14 @@ class _$_VivaUserInfo implements _VivaUserInfo {
             (identical(other.stakingBalance, stakingBalance) ||
                 other.stakingBalance == stakingBalance) &&
             (identical(other.rewardDebt, rewardDebt) ||
-                other.rewardDebt == rewardDebt));
+                other.rewardDebt == rewardDebt) &&
+            (identical(other.lastInteractionBlock, lastInteractionBlock) ||
+                other.lastInteractionBlock == lastInteractionBlock));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, stakingBalance, rewardDebt);
+  int get hashCode => Object.hash(
+      runtimeType, stakingBalance, rewardDebt, lastInteractionBlock);
 
   @JsonKey(ignore: true)
   @override
@@ -909,12 +929,15 @@ class _$_VivaUserInfo implements _VivaUserInfo {
 abstract class _VivaUserInfo implements VivaUserInfo {
   const factory _VivaUserInfo(
       {required final BigInt stakingBalance,
-      required final BigInt rewardDebt}) = _$_VivaUserInfo;
+      required final BigInt rewardDebt,
+      required final BigInt lastInteractionBlock}) = _$_VivaUserInfo;
 
   @override
   BigInt get stakingBalance;
   @override
   BigInt get rewardDebt;
+  @override
+  BigInt get lastInteractionBlock;
   @override
   @JsonKey(ignore: true)
   _$$_VivaUserInfoCopyWith<_$_VivaUserInfo> get copyWith =>

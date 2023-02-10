@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'viteconnect_types.dart';
 
@@ -3446,6 +3446,7 @@ abstract class _VCSignResponseCancelled implements VCSignResponse {
 
 /// @nodoc
 mixin _$VCHistoryItem {
+  Object get request => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
@@ -3730,6 +3731,7 @@ abstract class _VCHistoryItemTx extends VCHistoryItem {
       required final DateTime timestamp}) = _$_VCHistoryItemTx;
   const _VCHistoryItemTx._() : super._();
 
+  @override
   VCTxRequest get request;
   VCTxResponse get response;
   DateTime get timestamp;
@@ -3938,6 +3940,7 @@ abstract class _VCHistoryItemSign extends VCHistoryItem {
       required final DateTime timestamp}) = _$_VCHistoryItemSign;
   const _VCHistoryItemSign._() : super._();
 
+  @override
   VCSignRequest get request;
   VCSignResponse get response;
   DateTime get timestamp;
@@ -4133,6 +4136,7 @@ abstract class _VCHistoryItemInvalid extends VCHistoryItem {
       required final DateTime timestamp}) = _$_VCHistoryItemInvalid;
   const _VCHistoryItemInvalid._() : super._();
 
+  @override
   JsonRpcRequest get request;
   Object get error;
   DateTime get timestamp;
@@ -4309,6 +4313,7 @@ abstract class _VCHistoryItemCurrent extends VCHistoryItem {
       _$_VCHistoryItemCurrent;
   const _VCHistoryItemCurrent._() : super._();
 
+  @override
   VCRequest get request;
   @JsonKey(ignore: true)
   _$$_VCHistoryItemCurrentCopyWith<_$_VCHistoryItemCurrent> get copyWith =>
