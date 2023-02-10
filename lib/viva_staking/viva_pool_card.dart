@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../main_card/main_card.dart';
 import '../tokens/token_pair_widget.dart';
 import '../util/numberutil.dart';
 import '../widgets/sheet_util.dart';
@@ -103,9 +102,9 @@ class VivaPoolCard extends ConsumerWidget {
                                   style: styles.textStyleTransactionUnit
                                       .copyWith(color: theme.text60),
                                 ),
+                                const SizedBox(width: 16),
                               ],
                               if (hasMinDeposit) ...[
-                                const SizedBox(width: 16),
                                 Icon(
                                   Icons.chevron_right,
                                   color: theme.text60,

@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../accounts/accounts_sheet.dart';
 import '../app_providers.dart';
-import '../main_card/main_card.dart';
 import '../util/ui_util.dart';
 import 'address_widgets.dart';
 import 'sheet_util.dart';

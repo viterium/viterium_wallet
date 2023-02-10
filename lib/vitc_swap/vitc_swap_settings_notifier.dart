@@ -27,7 +27,8 @@ extension VitcSwapSettingsExtension on SettingsRepository {
           token: Token.parse('tti_22d0b205bed4d268a05dfc3c'),
           decimals: 18,
           owner: Address.parse(
-              'vite_7038a3f5c9b08d33385de84b0c3a61718922b8a2331fa34528'),
+            'vite_7038a3f5c9b08d33385de84b0c3a61718922b8a2331fa34528',
+          ),
           maxSupply: BigInt.from(998119868),
           totalSupply: BigInt.from(998119868),
         ),

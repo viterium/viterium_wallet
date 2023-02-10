@@ -20,8 +20,8 @@ class NumberUtil {
 
   static String formatedAmount(
     Amount amount, {
-    bool showApprox: false,
-    bool showLessThan: true,
+    bool showApprox = false,
+    bool showLessThan = true,
   }) {
     var value = amount.value;
     if (value == Decimal.zero) {

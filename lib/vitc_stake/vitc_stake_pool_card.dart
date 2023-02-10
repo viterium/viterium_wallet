@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
-import '../main_card/main_card.dart';
 import '../tokens/token_pair_widget.dart';
 import '../widgets/sheet_util.dart';
 import 'vitc_stake_providers.dart';
