@@ -12,16 +12,13 @@ import '../tokens/token_icon_widget.dart';
 import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
-import '../widgets/address_widgets.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
-import '../widgets/sheet_handle.dart';
 import '../widgets/sheet_util.dart';
 import '../widgets/tap_outside_unfocus.dart';
-import 'vitc_swap_slippage_dialog.dart';
 import 'vitc_swap_token_select_sheet.dart';
+import 'vitc_swap_widgets.dart';
 
 class VitcSwapPage extends HookConsumerWidget {
   const VitcSwapPage({Key? key}) : super(key: key);
@@ -32,7 +29,6 @@ class VitcSwapPage extends HookConsumerWidget {
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
-    final account = ref.watch(selectedAccountProvider);
     final settings = ref.watch(vitcSwapSettingsProvider);
 
     final state = ref.watch(vitcSwapStateProvider);
@@ -49,23 +45,32 @@ class VitcSwapPage extends HookConsumerWidget {
     final toAmountController = useTextEditingController();
 
     bool fromTokenChanged = false;
+
     useEffect(() {
-      if (settings.fromToken == state.fromToken) {
-        return;
+      if (settings.fromToken.token == state.fromToken.token) {
+        return null;
       }
       fromTokenChanged = true;
       Future.delayed(Duration.zero, () {
         final notifier = ref.read(vitcSwapStateProvider.notifier);
-        if (settings.fromToken == state.toToken) {
-          final text = NumberUtil.textFieldFormatedAmount(state.toAmount);
-          fromAmountController.value = TextEditingValue(
-            text: text,
-            selection: TextSelection.collapsed(offset: text.length),
-          );
+        if (settings.fromToken.token == state.toToken.token) {
+          if (state.toAmount.value == Decimal.zero) {
+            fromAmountController.value = TextEditingValue.empty;
+          } else {
+            final text = NumberUtil.textFieldFormatedAmount(state.toAmount);
+            fromAmountController.value = TextEditingValue(
+              text: text,
+              selection: TextSelection.collapsed(offset: text.length),
+            );
+          }
         }
         notifier.updateFromToken(
           settings.fromToken,
           onRemoteAmount: (amount) {
+            if (amount == null) {
+              toAmountController.value = TextEditingValue.empty;
+              return;
+            }
             final text = NumberUtil.textFieldFormatedAmount(amount);
             toAmountController.value = TextEditingValue(
               text: text,
@@ -75,10 +80,10 @@ class VitcSwapPage extends HookConsumerWidget {
         );
       });
       return null;
-    }, [settings.fromToken]);
+    }, [settings.fromToken.token]);
 
     useEffect(() {
-      if (fromTokenChanged || settings.toToken == state.toToken) {
+      if (fromTokenChanged || settings.toToken.token == state.toToken.token) {
         return;
       }
       Future.delayed(Duration.zero, () {
@@ -86,29 +91,17 @@ class VitcSwapPage extends HookConsumerWidget {
         notifier.updateToToken(
           settings.toToken,
           onRemoteAmount: (amount) {
+            if (amount == null) {
+              toAmountController.value = TextEditingValue.empty;
+              return;
+            }
             final text = NumberUtil.textFieldFormatedAmount(amount);
             toAmountController.text = text;
           },
         );
       });
       return null;
-    }, [settings.toToken]);
-
-    final rate = useMemoized(() {
-      if (toAmount.raw == BigInt.zero || fromAmount.raw == BigInt.zero) {
-        return Decimal.zero;
-      }
-
-      final value = (fromAmount.value / toAmount.value)
-              .toDecimal(scaleOnInfinitePrecision: 8) *
-          Decimal.ten.pow(8);
-      return NumberUtil.textFieldFormatedAmount(
-        Amount.raw(
-          value.toBigInt(),
-          tokenInfo: TokenInfo.vite.copyWith(decimals: 8),
-        ),
-      );
-    }, [state.callId]);
+    }, [settings.toToken.token]);
 
     final formatter = useMemoized(
       () => NumberFormat.currency(name: ''),
@@ -149,6 +142,10 @@ class VitcSwapPage extends HookConsumerWidget {
       }
 
       notifier.updateFromValue(value, onRemoteAmount: (amount) {
+        if (amount == null) {
+          toAmountController.value = TextEditingValue.empty;
+          return;
+        }
         final text = NumberUtil.textFieldFormatedAmount(amount);
         toAmountController.text = text;
       });
@@ -168,9 +165,32 @@ class VitcSwapPage extends HookConsumerWidget {
       }
 
       notifier.updateToValue(value, onRemoteAmount: (amount) {
+        if (amount == null) {
+          fromAmountController.value = TextEditingValue.empty;
+          return;
+        }
         final text = NumberUtil.textFieldFormatedAmount(amount);
         fromAmountController.text = text;
       });
+    }
+
+    void onChangeToken({
+      required String title,
+      required TokenCardAction action,
+    }) {
+      Sheets.showAppHeightEightSheet(
+        context: context,
+        widget: ProviderScope(
+          overrides: [
+            tokenCardActionProvider.overrideWithValue(action),
+          ],
+          child: VitcSwapTokenSelectSheet(
+            title: title,
+          ),
+        ),
+        theme: theme,
+        backgroundColor: theme.background,
+      );
     }
 
     void onMaxPressed() {
@@ -190,6 +210,10 @@ class VitcSwapPage extends HookConsumerWidget {
 
       final notifier = ref.read(vitcSwapStateProvider.notifier);
       notifier.updateFromValue(amount.value, onRemoteAmount: (amount) {
+        if (amount == null) {
+          toAmountController.value = TextEditingValue.empty;
+          return;
+        }
         final text = NumberUtil.textFieldFormatedAmount(amount);
         toAmountController.text = text;
       });
@@ -258,20 +282,6 @@ class VitcSwapPage extends HookConsumerWidget {
       }
     }
 
-    Future<void> changeSlippage() async {
-      final slippage = await showAppDialog<double>(
-        context: context,
-        builder: (_) => VitcSwapSlippageDialog(
-          slippage: settings.slippage,
-        ),
-      );
-
-      if (slippage != null) {
-        final notifier = ref.read(vitcSwapSettingsProvider.notifier);
-        notifier.updateSlippage(slippage / 100.0);
-      }
-    }
-
     return SafeArea(
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
@@ -286,101 +296,45 @@ class VitcSwapPage extends HookConsumerWidget {
           ],
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(width: 60, height: 60),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        const SheetHandle(),
-                        Container(
-                          margin: const EdgeInsets.only(top: 15),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'VITCSwap',
-                              style: styles.textStyleHeader(context),
-                              textAlign: TextAlign.center,
-                              maxLines: 1,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 60, height: 60),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                  top: 10,
-                  left: 30,
-                  right: 30,
-                  bottom: 10,
-                ),
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        account.name,
-                        style: styles.textStyleAccountName,
-                      ),
-                      AddressShortText(address: account.viteAddress),
-                      const SizedBox(height: 8),
-                      const BalanceTextWidget(),
-                    ],
-                  ),
-                ),
-              ),
+              const HeaderWidget(),
+              const AccountWidget(),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      AppTextField(
-                        style: styles.textStyleParagraphPrimary,
-                        controller: fromAmountController,
-                        inputFormatters: [
-                          fromCurrencyFormatter,
-                        ],
-                        onChanged: onFromChanged,
-                        textInputAction: TextInputAction.done,
-                        maxLines: null,
-                        autocorrect: false,
-                        hintText: l10n.enterAmount,
-                        prefixButton: TextFieldButton(
-                          icon: AppIcons.swapcurrency,
-                          widget:
-                              TokenIconWidget(tokenId: state.fromToken.tokenId),
-                          onPressed: () {
-                            Sheets.showAppHeightEightSheet(
-                              context: context,
-                              widget: ProviderScope(
-                                overrides: [
-                                  tokenCardActionProvider.overrideWithValue(
-                                    TokenCardAction.vitcSwapSelectFromToken,
-                                  ),
-                                ],
-                                child: VitcSwapTokenSelectSheet(
-                                  title: 'Swap from',
-                                ),
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          AppTextField(
+                            style: styles.textStyleParagraphPrimary,
+                            controller: fromAmountController,
+                            inputFormatters: [fromCurrencyFormatter],
+                            onChanged: onFromChanged,
+                            textInputAction: TextInputAction.done,
+                            maxLines: null,
+                            autocorrect: false,
+                            hintText: l10n.enterAmount,
+                            prefixButton: TextFieldButton(
+                              icon: AppIcons.swapcurrency,
+                              widget: TokenIconWidget(
+                                  tokenId: state.fromToken.tokenId),
+                              onPressed: () => onChangeToken(
+                                title: 'Swap From',
+                                action: TokenCardAction.vitcSwapSelectFromToken,
                               ),
-                              theme: theme,
-                              backgroundColor: theme.background,
-                            );
-                          },
-                        ),
-                        suffixButton: TextFieldButton(
-                          icon: AppIcons.max,
-                          onPressed: onMaxPressed,
-                        ),
-                        fadeSuffixOnCondition: true,
-                        suffixShowFirstCondition: !isMaxSwap,
-                        keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
-                        textAlign: TextAlign.center,
+                            ),
+                            suffixButton: TextFieldButton(
+                              icon: AppIcons.max,
+                              onPressed: onMaxPressed,
+                            ),
+                            fadeSuffixOnCondition: true,
+                            suffixShowFirstCondition: !isMaxSwap,
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            textAlign: TextAlign.center,
+                          ),
+                          FiatValueWidget(amount: fromAmount),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -393,71 +347,43 @@ class VitcSwapPage extends HookConsumerWidget {
                           onPressed: onSwitchTokens,
                         ),
                       ),
-                      AppTextField(
-                        style: styles.textStyleParagraphPrimary,
-                        controller: toAmountController,
-                        inputFormatters: [
-                          toCurrencyFormatter,
-                        ],
-                        onChanged: onToChanged,
-                        textInputAction: TextInputAction.done,
-                        maxLines: null,
-                        autocorrect: false,
-                        hintText: l10n.enterAmount,
-                        prefixButton: TextFieldButton(
-                          icon: AppIcons.swapcurrency,
-                          widget:
-                              TokenIconWidget(tokenId: state.toToken.tokenId),
-                          onPressed: () {
-                            Sheets.showAppHeightEightSheet(
-                              context: context,
-                              widget: ProviderScope(
-                                overrides: [
-                                  tokenCardActionProvider.overrideWithValue(
-                                    TokenCardAction.vitcSwapSelectToToken,
-                                  ),
-                                ],
-                                child: VitcSwapTokenSelectSheet(
-                                  title: 'Swap To',
-                                ),
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          AppTextField(
+                            style: styles.textStyleParagraphPrimary,
+                            controller: toAmountController,
+                            inputFormatters: [toCurrencyFormatter],
+                            onChanged: onToChanged,
+                            textInputAction: TextInputAction.done,
+                            maxLines: null,
+                            autocorrect: false,
+                            hintText: l10n.enterAmount,
+                            prefixButton: TextFieldButton(
+                              icon: AppIcons.swapcurrency,
+                              widget: TokenIconWidget(tokenId: toToken.tokenId),
+                              onPressed: () => onChangeToken(
+                                title: 'Swap To',
+                                action: TokenCardAction.vitcSwapSelectToToken,
                               ),
-                              theme: theme,
-                              backgroundColor: theme.background,
-                            );
-                          },
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
-                        textAlign: TextAlign.center,
+                            ),
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
+                            textAlign: TextAlign.center,
+                          ),
+                          FiatValueWidget(amount: toAmount),
+                        ],
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 10),
+                      VitcSwapLowLiquidity(
+                        fromToken: fromToken.token,
+                        toToken: toToken.token,
+                      ),
                       if (fromAmount.raw != BigInt.zero) ...[
-                        Text(
-                          'Rate:',
-                          style: styles.textStyleTransactionType,
-                        ),
-                        Text(
-                          '$rate ${fromToken.symbolLabel} per ${toToken.symbolLabel}',
-                          style: styles.textStyleAddressPrimary,
-                        ),
+                        const RateWidget(),
                         const SizedBox(height: 12),
                       ],
-                      TextButton(
-                        style: styles.dialogButtonStyle,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Slippage Tolerance:',
-                              style: styles.textStyleTransactionType,
-                            ),
-                            Text(
-                              '${(settings.slippage * 100).toStringAsFixed(2)}%',
-                              style: styles.textStyleAddressPrimary,
-                            ),
-                          ],
-                        ),
-                        onPressed: changeSlippage,
-                      ),
+                      const SlippageWidget(),
                     ],
                   ),
                 ),
@@ -473,12 +399,7 @@ class VitcSwapPage extends HookConsumerWidget {
                     const SizedBox(height: 16),
                     PrimaryOutlineButton(
                       title: l10n.close,
-                      onPressed: () {
-                        final notifier =
-                            ref.read(vitcSwapStateProvider.notifier);
-                        notifier.updateFromValue(null);
-                        Navigator.of(context).pop();
-                      },
+                      onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
                 ),

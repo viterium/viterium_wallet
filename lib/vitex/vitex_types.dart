@@ -82,5 +82,5 @@ class VitexExchangeRate with _$VitexExchangeRate {
     }
   }
 
-  Decimal get btcRateDecimal => Decimal.parse(btcRate.toStringAsFixed(8));
+  Decimal get btcRateDecimal => Decimal.parse(btcRate.toStringAsFixed(18));
 }

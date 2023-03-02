@@ -6,12 +6,30 @@ part of 'vitc_swap_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_VitcSwapSettings _$$_VitcSwapSettingsFromJson(Map json) =>
-    _$_VitcSwapSettings(
+_$_VitcSwapTokenCache _$$_VitcSwapTokenCacheFromJson(Map json) =>
+    _$_VitcSwapTokenCache(
       tradingTokens: json['tradingTokens'] == null
-          ? const IListConst([])
+          ? const IListConst(kVitcSwapTokenIdList)
           : IList<String>.fromJson(
               json['tradingTokens'], (value) => value as String),
+      lastHeight: json['lastHeight'] as int? ?? kVitcSwapLastHeight,
+    );
+
+Map<String, dynamic> _$$_VitcSwapTokenCacheToJson(
+        _$_VitcSwapTokenCache instance) =>
+    <String, dynamic>{
+      'tradingTokens': instance.tradingTokens.toJson(
+        (value) => value,
+      ),
+      'lastHeight': instance.lastHeight,
+    };
+
+_$_VitcSwapSettings _$$_VitcSwapSettingsFromJson(Map json) =>
+    _$_VitcSwapSettings(
+      tokenCache: json['tokenCache'] == null
+          ? const VitcSwapTokenCache()
+          : VitcSwapTokenCache.fromJson(
+              Map<String, dynamic>.from(json['tokenCache'] as Map)),
       fromToken: TokenInfo.fromJson(
           Map<String, dynamic>.from(json['fromToken'] as Map)),
       toToken:
@@ -21,9 +39,7 @@ _$_VitcSwapSettings _$$_VitcSwapSettingsFromJson(Map json) =>
 
 Map<String, dynamic> _$$_VitcSwapSettingsToJson(_$_VitcSwapSettings instance) =>
     <String, dynamic>{
-      'tradingTokens': instance.tradingTokens.toJson(
-        (value) => value,
-      ),
+      'tokenCache': instance.tokenCache.toJson(),
       'fromToken': instance.fromToken.toJson(),
       'toToken': instance.toToken.toJson(),
       'slippage': instance.slippage,

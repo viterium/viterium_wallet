@@ -5,7 +5,7 @@ import 'package:vite/vite.dart';
 import 'vitc_swap_service.dart';
 import 'vitc_swap_types.dart';
 
-typedef RemoteAmountCallback = void Function(Amount amount);
+typedef RemoteAmountCallback = void Function(Amount? amount);
 
 class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
   final VitcSwapService service;
@@ -19,7 +19,7 @@ class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
     TokenInfo fromToken, {
     RemoteAmountCallback? onRemoteAmount,
   }) {
-    if (fromToken == state.toToken) {
+    if (fromToken.tokenId == state.toToken.tokenId) {
       return switchTokens(onRemoteAmount: onRemoteAmount);
     }
 
@@ -100,8 +100,13 @@ class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
   Future<void> _fetchFromAmount({
     RemoteAmountCallback? onRemoteAmount,
   }) async {
+    if (state.fromAmount.raw == BigInt.zero) {
+      onRemoteAmount?.call(null);
+      return;
+    }
+
+    final requestId = state.requestId + 1;
     try {
-      final requestId = state.requestId + 1;
       state = state.copyWith(requestId: requestId);
       final fromAmount = await service.getInversedConversion(
         from: state.fromToken,
@@ -115,14 +120,28 @@ class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
         );
         onRemoteAmount?.call(fromAmount);
       }
-    } catch (e) {}
+    } catch (e) {
+      if (state.requestId == requestId) {
+        state = state.copyWith(
+          fromAmount: Amount.value(Decimal.zero, tokenInfo: state.fromToken),
+          callId: state.callId + 1,
+        );
+        onRemoteAmount?.call(null);
+      }
+      print(e);
+    }
   }
 
   Future<void> _fetchToAmount({
     RemoteAmountCallback? onRemoteAmount,
   }) async {
+    if (state.fromAmount.raw == BigInt.zero) {
+      onRemoteAmount?.call(null);
+      return;
+    }
+
+    final requestId = state.requestId + 1;
     try {
-      final requestId = state.requestId + 1;
       state = state.copyWith(requestId: requestId);
       final toAmount = await service.getConversion(
         fromAmount: state.fromAmount,
@@ -136,7 +155,15 @@ class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
         );
         onRemoteAmount?.call(toAmount);
       }
-    } catch (e) {}
+    } catch (e) {
+      if (state.requestId == requestId) {
+        state = state.copyWith(
+          toAmount: Amount.value(Decimal.zero, tokenInfo: state.toToken),
+          callId: state.callId + 1,
+        );
+        onRemoteAmount?.call(null);
+      }
+    }
   }
 
   Amount _getMinimum() {

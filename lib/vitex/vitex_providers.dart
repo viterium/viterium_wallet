@@ -209,3 +209,28 @@ final totalFiatFormatedProvider = Provider.autoDispose((ref) {
     name: currency.getIso4217Code(),
   ).format(DecimalIntl(balance));
 });
+
+final fiatForAmountProvider =
+    Provider.autoDispose.family<Decimal, Amount>((ref, amount) {
+  final exchangeRate =
+      ref.watch(aprExchangeRateForTokenIdProvider(amount.tokenId));
+  final coingeckoRates = ref.watch(coingeckoRatesProvider);
+  final currency = ref.watch(currencyProvider).currency;
+  var fiatRate = exchangeRate.fiatRate(currency);
+  if (fiatRate == Decimal.zero) {
+    final btcRate = coingeckoRates.fiatRate(currency);
+    fiatRate = btcRate * exchangeRate.btcRateDecimal;
+  }
+  return amount.value * fiatRate;
+});
+
+final fiatFormatedForAmountProvider =
+    Provider.autoDispose.family<String, Amount>((ref, amount) {
+  final fiat = ref.watch(fiatForAmountProvider(amount));
+  final currency = ref.watch(currencyProvider);
+
+  return NumberFormat.currency(
+    symbol: currency.getCurrencySymbol(),
+    name: currency.getIso4217Code(),
+  ).format(DecimalIntl(fiat));
+});
