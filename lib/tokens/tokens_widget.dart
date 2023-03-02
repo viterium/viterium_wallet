@@ -23,7 +23,7 @@ class TokensWidget extends HookConsumerWidget {
 
     final account = ref.watch(selectedAccountProvider);
     final items = ref.watch(sortedBalancesForAccountProvider(account));
-    final sortOption = ref.watch(tokensSettingsProvider(account)).sortOption;
+    final sortOption = ref.watch(tokensSortOptionProvider);
 
     final isRefreshing = useState(false);
 

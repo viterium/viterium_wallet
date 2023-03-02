@@ -168,9 +168,7 @@ final sortedBalancesForAccountProvider =
     Provider.autoDispose.family<IList<BalanceInfo>, Account>((ref, account) {
   final accountInfo = ref.watch(accountInfoProvider(account));
   final mapping = ref.watch(tokenStateMappingProvider(account));
-  final sortOption = ref.watch(
-    tokensSettingsProvider(account).select((value) => value.sortOption),
-  );
+  final sortOption = ref.watch(tokensSortOptionProvider);
   final sortedIds = ref.watch(tokenOrderProvider(account));
   final remainingBalances =
       mapping.states.where((key, value) => value.enabled).map((key, value) {

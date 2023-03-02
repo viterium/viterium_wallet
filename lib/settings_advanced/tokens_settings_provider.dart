@@ -47,3 +47,9 @@ final tokensSettingsProvider = StateNotifierProvider.family<
   final key = ref.watch(_tokensSettingsKeyProvider(account));
   return TokensSettingsNotifier(repository, key);
 });
+
+final tokensSortOptionProvider = Provider.autoDispose<TokenSortOption>((ref) {
+  final account = ref.watch(selectedAccountProvider);
+  final settings = ref.watch(tokensSettingsProvider(account));
+  return settings.sortOption;
+});
