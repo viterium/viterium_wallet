@@ -1,12 +1,10 @@
 import 'package:automatic_animated_list/automatic_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../widgets/reactive_refresh.dart';
 import 'transaction_card.dart';
 import 'transaction_empty_list.dart';
 import 'transaction_types.dart';
@@ -48,19 +46,8 @@ class TransactionHistoryWidget extends HookConsumerWidget {
     final txHistory = ref.watch(transactionHistoryProvider(pair));
     final items = ref.watch(_txListItemsProvider(pair));
 
-    final isLoading = txHistory.loading;
-    final isRefreshing = useState(false);
-    final isMounted = useIsMounted();
-
     Future<void> refresh() async {
-      isRefreshing.value = true;
       ref.read(hapticUtilProvider).success();
-
-      Future.delayed(const Duration(seconds: 3), () {
-        if (isMounted()) {
-          isRefreshing.value = false;
-        }
-      });
 
       final networkError = ref.read(networkErrorProvider);
       if (networkError) {
@@ -69,22 +56,20 @@ class TransactionHistoryWidget extends HookConsumerWidget {
 
       ref.invalidate(unreceivedRemoteProvider(account.address));
       await txHistory.refresh();
+    }
 
-      if (isMounted()) {
-        isRefreshing.value = false;
-      }
+    Future<void> loadMore() async {
+      await Future.delayed(const Duration(milliseconds: 500));
+      txHistory.loadMore();
     }
 
     return LazyLoadScrollView(
-      onEndOfPage: () async {
-        await Future.delayed(const Duration(milliseconds: 500));
-        txHistory.loadMore();
-      },
-      child: ReactiveRefreshIndicator(
+      onEndOfPage: loadMore,
+      child: RefreshIndicator(
+        color: theme.primary,
         backgroundColor: theme.backgroundDark,
-        isRefreshing: isRefreshing.value,
         onRefresh: refresh,
-        child: !isLoading && items.length == 1
+        child: !txHistory.loading && items.length == 1
             ? TransactionEmptyList(tokenSymbol: tokenSymbol)
             : AutomaticAnimatedList<TxListItem>(
                 key: ValueKey(account),

@@ -2,19 +2,16 @@ import 'dart:ui';
 
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vite/vite.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
 import '../settings_advanced/tokens_settings.dart';
 import '../settings_advanced/tokens_settings_provider.dart';
 import '../util/platform.dart';
 import '../util/ui_util.dart';
-import '../widgets/reactive_refresh.dart';
 import 'token_card.dart';
 
-class TokensWidget extends HookConsumerWidget {
+class TokensWidget extends ConsumerWidget {
   const TokensWidget({Key? key}) : super(key: key);
 
   @override
@@ -25,29 +22,11 @@ class TokensWidget extends HookConsumerWidget {
     final items = ref.watch(sortedBalancesForAccountProvider(account));
     final sortOption = ref.watch(tokensSortOptionProvider);
 
-    final isRefreshing = useState(false);
-
-    ref.listen<AsyncValue<AccountInfo>>(
-        accountInfoRemoteProvider(account.address), (_, next) {
-      next.whenOrNull(
-        data: (_) {
-          isRefreshing.value = false;
-        },
-        error: (e, st) {
-          final log = ref.read(loggerProvider);
-          log.e('Failed to update balances', e, st);
-
-          isRefreshing.value = false;
-          UIUtil.showSnackbar('Failed to update balances.', context);
-        },
-      );
-    });
+    final buildDefaultDragHandles = (kPlatformIsIOS || kPlatformIsAndroid) &&
+        sortOption == TokenSortOption.custom;
 
     Future<void> refresh() async {
-      isRefreshing.value = true;
-
-      final hapticUtil = ref.read(hapticUtilProvider);
-      hapticUtil.success();
+      ref.read(hapticUtilProvider).success();
 
       final networkError = ref.read(networkErrorProvider);
       if (networkError) {
@@ -56,6 +35,15 @@ class TokensWidget extends HookConsumerWidget {
 
       ref.read(remoteRefreshProvider.notifier).update((state) => state + 1);
       ref.invalidate(accountInfoRemoteProvider(account.address));
+
+      try {
+        await ref.read(accountInfoRemoteProvider(account.address).future);
+      } catch (e, st) {
+        final log = ref.read(loggerProvider);
+        log.e('Failed to update balances', e, st);
+
+        UIUtil.showSnackbar('Failed to update balances.', context);
+      }
     }
 
     Widget proxyDecorator(
@@ -79,12 +67,9 @@ class TokensWidget extends HookConsumerWidget {
       );
     }
 
-    final buildDefaultDragHandles = (kPlatformIsIOS || kPlatformIsAndroid) &&
-        sortOption == TokenSortOption.custom;
-
-    return ReactiveRefreshIndicator(
+    return RefreshIndicator(
+      color: theme.primary,
       backgroundColor: theme.backgroundDark,
-      isRefreshing: isRefreshing.value,
       onRefresh: refresh,
       child: ReorderableListView.builder(
         key: const PageStorageKey('TokensWidget'),
