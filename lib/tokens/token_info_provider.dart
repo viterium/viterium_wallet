@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import '../database/database.dart';
 import '../node_settings/node_types.dart';
 
-final tokenInfoBoxProvider = Provider((ref) {
+final _tokenInfoBoxProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
   final network = ref.watch(viteNetworkProvider);
   String boxId;
@@ -35,7 +35,7 @@ final tokenInfoProvider =
     return TokenInfo.zero;
   }
   final client = ref.watch(viteClientProvider);
-  final tokenInfoBox = ref.watch(tokenInfoBoxProvider);
+  final tokenInfoBox = ref.watch(_tokenInfoBoxProvider);
 
   final cachedTokenInfo = tokenInfoBox.tryGet(tokenId);
 
@@ -56,7 +56,7 @@ final tokenInfoMapProvider =
     FutureProvider<Map<TokenId, TokenInfo>>((ref) async {
   final client = ref.watch(rpcClientProvider);
 
-  final tokenInfoBox = ref.watch(tokenInfoBoxProvider);
+  final tokenInfoBox = ref.watch(_tokenInfoBoxProvider);
   final allTokens = tokenInfoBox.getAll();
 
   Future<void> updateTokens(int pageIndex, int pageSize) async {

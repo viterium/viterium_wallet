@@ -24,9 +24,9 @@ class TokensSettingsNotifier extends StateNotifier<TokensSettings> {
   TokensSettingsNotifier(this.repository, this.key)
       : super(repository.getTokensSettings(key));
 
-  Future<void> updateSettings(TokensSettings settings) async {
-    await repository.setTokensSettings(key, settings);
+  Future<void> updateSettings(TokensSettings settings) {
     state = settings;
+    return repository.setTokensSettings(key, settings);
   }
 
   Future<void> updateTokenSortOption(TokenSortOption sortOption) {

@@ -26,8 +26,10 @@ final _searchProvider = StreamProvider.autoDispose
     yield tokenInfoList;
     return;
   }
+
   search = search.toLowerCase().trim();
   final isTti = search.startsWith('tti_');
+
   bool disposed = false;
   ref.onDispose(() {
     disposed = true;
@@ -65,6 +67,7 @@ final _tokenInfoListProvider = StateNotifierProvider.autoDispose<
     AsyncValue<IList<TokenInfo>>>((ref) {
   final notifier =
       GenericStateNotifier<AsyncValue<IList<TokenInfo>>>(AsyncValue.loading());
+
   ref.listen<AsyncValue<IList<TokenInfo>>>(
     _tokenInfoListStreamProvider,
     (_, next) => next.mapOrNull(data: (data) => notifier.updateState(data)),

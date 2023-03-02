@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
+import '../database/boxes.dart';
 import '../database/database.dart';
 import 'token_constants.dart';
 import 'token_types.dart';
@@ -17,12 +19,25 @@ final tokenIconBoxProvider = Provider((ref) {
 final tokenIconProvider =
     StateNotifierProvider.family<TokenIconNotifier, TokenIcon, TokenId>(
         (ref, tokenId) {
-  return TokenIconNotifier(ref.read, tokenId);
+  final log = ref.read(loggerProvider);
+  final iconBox = ref.read(tokenIconBoxProvider);
+
+  return TokenIconNotifier(
+    tokenId: tokenId,
+    iconBox: iconBox,
+    log: log,
+  );
 });
 
 class TokenIconNotifier extends StateNotifier<TokenIcon> {
-  final Reader read;
-  TokenIconNotifier(this.read, TokenId tokenId) : super(TokenIcon.defaultIcon) {
+  final TypedBox<CachedTokenIcon> iconBox;
+  final Logger log;
+
+  TokenIconNotifier({
+    required TokenId tokenId,
+    required this.iconBox,
+    required this.log,
+  }) : super(TokenIcon.defaultIcon) {
     final tokenMapping = testnetTokenIdMapping[tokenId];
     if (tokenMapping != null) {
       tokenId = tokenMapping;
@@ -32,7 +47,6 @@ class TokenIconNotifier extends StateNotifier<TokenIcon> {
       state = TokenIcon.asset(path: 'assets/token_icons/$tokenId.png');
       return;
     }
-    final iconBox = read(tokenIconBoxProvider);
     final cache = iconBox.tryGet(tokenId);
     if (cache != null) {
       state = cache.icon;
@@ -42,7 +56,6 @@ class TokenIconNotifier extends StateNotifier<TokenIcon> {
         return;
       }
     }
-    final log = read(loggerProvider);
     log.i('Fetching icon for $tokenId');
 
     final url = 'https://vitex.vite.net/api/v1/token/detail?tokenId=${tokenId}';
@@ -60,7 +73,6 @@ class TokenIconNotifier extends StateNotifier<TokenIcon> {
           tokenIcon = TokenIcon.url(url: tokenIconUrl);
         }
         // cache icon url
-        final iconBox = read(tokenIconBoxProvider);
         iconBox.set(
           tokenId,
           CachedTokenIcon(
@@ -71,7 +83,6 @@ class TokenIconNotifier extends StateNotifier<TokenIcon> {
 
         state = tokenIcon;
       } catch (e, st) {
-        final log = read(loggerProvider);
         log.e('Failed to fetch icon for $tokenId', e, st);
       }
     });
