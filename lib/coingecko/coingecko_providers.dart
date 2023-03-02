@@ -5,37 +5,8 @@ import 'package:http/http.dart' as http;
 
 import '../core/core_providers.dart';
 import '../settings/settings.dart';
+import 'coingecko_rates_notifier.dart';
 import 'coingecko_types.dart';
-
-const _kCoinGeckoRatesKey = '_coingeckoRatesKey';
-
-extension CoinGeckoRatesExtension on SettingsRepository {
-  CoinGeckoRates getCoinGeckoRates() {
-    return box.tryGet<CoinGeckoRates>(
-          _kCoinGeckoRatesKey,
-          typeFactory: <T>(value) => CoinGeckoRates.fromJson(value) as T,
-        ) ??
-        const CoinGeckoRates();
-  }
-
-  Future<void> setCoinGeckoRates(CoinGeckoRates rates) {
-    return box.set(_kCoinGeckoRatesKey, rates);
-  }
-}
-
-class CoinGeckoRatesNotifier extends StateNotifier<CoinGeckoRates> {
-  final SettingsRepository repository;
-
-  CoinGeckoRates get rates => state;
-
-  CoinGeckoRatesNotifier(this.repository)
-      : super(repository.getCoinGeckoRates());
-
-  Future<void> updateRates(CoinGeckoRates rates) {
-    state = rates;
-    return repository.setCoinGeckoRates(rates);
-  }
-}
 
 final _coingeckoRatesCacheProvider =
     StateNotifierProvider<CoinGeckoRatesNotifier, CoinGeckoRates>((ref) {
@@ -59,7 +30,7 @@ final _coingeckoRatesRemoteProvider =
   try {
     final data = json.decode(response.body);
     if (data is! Map) {
-      throw Exception('Retuned data is not a Map');
+      throw Exception('Returned data is not a Map');
     }
     final rates = CoinGeckoRates.fromJson(data.cast<String, dynamic>());
     return rates;
@@ -74,7 +45,7 @@ final coingeckoRatesProvider = Provider((ref) {
   final remote = ref.watch(_coingeckoRatesRemoteProvider);
 
   remote.whenOrNull(data: (data) {
-    cache.updateRates(data);
+    Future.microtask(() => cache.updateRates(data));
   });
 
   return remote.asData?.value ?? cache.rates;
