@@ -8,6 +8,7 @@ class AdvancedSettings with _$AdvancedSettings {
   const factory AdvancedSettings({
     @Default(true) bool defiEnabled,
     @Default(true) bool autoReceiveEnabled,
+    @Default(true) bool showFiatValue,
   }) = _AdvancedSettings;
 
   factory AdvancedSettings.fromJson(Map<String, dynamic> json) =>

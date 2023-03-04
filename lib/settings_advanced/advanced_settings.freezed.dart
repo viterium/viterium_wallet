@@ -22,6 +22,7 @@ AdvancedSettings _$AdvancedSettingsFromJson(Map<String, dynamic> json) {
 mixin _$AdvancedSettings {
   bool get defiEnabled => throw _privateConstructorUsedError;
   bool get autoReceiveEnabled => throw _privateConstructorUsedError;
+  bool get showFiatValue => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $AdvancedSettingsCopyWith<$Res> {
           AdvancedSettings value, $Res Function(AdvancedSettings) then) =
       _$AdvancedSettingsCopyWithImpl<$Res, AdvancedSettings>;
   @useResult
-  $Res call({bool defiEnabled, bool autoReceiveEnabled});
+  $Res call({bool defiEnabled, bool autoReceiveEnabled, bool showFiatValue});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$AdvancedSettingsCopyWithImpl<$Res, $Val extends AdvancedSettings>
   $Res call({
     Object? defiEnabled = null,
     Object? autoReceiveEnabled = null,
+    Object? showFiatValue = null,
   }) {
     return _then(_value.copyWith(
       defiEnabled: null == defiEnabled
@@ -62,6 +64,10 @@ class _$AdvancedSettingsCopyWithImpl<$Res, $Val extends AdvancedSettings>
       autoReceiveEnabled: null == autoReceiveEnabled
           ? _value.autoReceiveEnabled
           : autoReceiveEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showFiatValue: null == showFiatValue
+          ? _value.showFiatValue
+          : showFiatValue // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -75,7 +81,7 @@ abstract class _$$_AdvancedSettingsCopyWith<$Res>
       __$$_AdvancedSettingsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool defiEnabled, bool autoReceiveEnabled});
+  $Res call({bool defiEnabled, bool autoReceiveEnabled, bool showFiatValue});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$_AdvancedSettingsCopyWithImpl<$Res>
   $Res call({
     Object? defiEnabled = null,
     Object? autoReceiveEnabled = null,
+    Object? showFiatValue = null,
   }) {
     return _then(_$_AdvancedSettings(
       defiEnabled: null == defiEnabled
@@ -101,6 +108,10 @@ class __$$_AdvancedSettingsCopyWithImpl<$Res>
           ? _value.autoReceiveEnabled
           : autoReceiveEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      showFiatValue: null == showFiatValue
+          ? _value.showFiatValue
+          : showFiatValue // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -109,7 +120,9 @@ class __$$_AdvancedSettingsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AdvancedSettings implements _AdvancedSettings {
   const _$_AdvancedSettings(
-      {this.defiEnabled = true, this.autoReceiveEnabled = true});
+      {this.defiEnabled = true,
+      this.autoReceiveEnabled = true,
+      this.showFiatValue = true});
 
   factory _$_AdvancedSettings.fromJson(Map<String, dynamic> json) =>
       _$$_AdvancedSettingsFromJson(json);
@@ -120,10 +133,13 @@ class _$_AdvancedSettings implements _AdvancedSettings {
   @override
   @JsonKey()
   final bool autoReceiveEnabled;
+  @override
+  @JsonKey()
+  final bool showFiatValue;
 
   @override
   String toString() {
-    return 'AdvancedSettings(defiEnabled: $defiEnabled, autoReceiveEnabled: $autoReceiveEnabled)';
+    return 'AdvancedSettings(defiEnabled: $defiEnabled, autoReceiveEnabled: $autoReceiveEnabled, showFiatValue: $showFiatValue)';
   }
 
   @override
@@ -134,12 +150,15 @@ class _$_AdvancedSettings implements _AdvancedSettings {
             (identical(other.defiEnabled, defiEnabled) ||
                 other.defiEnabled == defiEnabled) &&
             (identical(other.autoReceiveEnabled, autoReceiveEnabled) ||
-                other.autoReceiveEnabled == autoReceiveEnabled));
+                other.autoReceiveEnabled == autoReceiveEnabled) &&
+            (identical(other.showFiatValue, showFiatValue) ||
+                other.showFiatValue == showFiatValue));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, defiEnabled, autoReceiveEnabled);
+  int get hashCode =>
+      Object.hash(runtimeType, defiEnabled, autoReceiveEnabled, showFiatValue);
 
   @JsonKey(ignore: true)
   @override
@@ -158,7 +177,8 @@ class _$_AdvancedSettings implements _AdvancedSettings {
 abstract class _AdvancedSettings implements AdvancedSettings {
   const factory _AdvancedSettings(
       {final bool defiEnabled,
-      final bool autoReceiveEnabled}) = _$_AdvancedSettings;
+      final bool autoReceiveEnabled,
+      final bool showFiatValue}) = _$_AdvancedSettings;
 
   factory _AdvancedSettings.fromJson(Map<String, dynamic> json) =
       _$_AdvancedSettings.fromJson;
@@ -167,6 +187,8 @@ abstract class _AdvancedSettings implements AdvancedSettings {
   bool get defiEnabled;
   @override
   bool get autoReceiveEnabled;
+  @override
+  bool get showFiatValue;
   @override
   @JsonKey(ignore: true)
   _$$_AdvancedSettingsCopyWith<_$_AdvancedSettings> get copyWith =>

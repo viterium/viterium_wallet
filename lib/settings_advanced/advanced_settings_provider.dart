@@ -38,6 +38,11 @@ class AdvancedSettingsNotifier extends StateNotifier<AdvancedSettings> {
     final settings = state.copyWith(autoReceiveEnabled: enabled);
     return _updateSettings(settings);
   }
+
+  Future<void> updateShowFiatValue(bool enabled) async {
+    final settings = state.copyWith(showFiatValue: enabled);
+    return _updateSettings(settings);
+  }
 }
 
 final _advancedSettingsKeyProvider = Provider((ref) {
@@ -60,4 +65,9 @@ final defiEnabledProvider = Provider((ref) {
 final autoReceiveEnabledProvider = Provider((ref) {
   final settings = ref.watch(advancedSettingsProvider);
   return settings.autoReceiveEnabled;
+});
+
+final showFiatValueProvider = Provider((ref) {
+  final settings = ref.watch(advancedSettingsProvider);
+  return settings.showFiatValue;
 });

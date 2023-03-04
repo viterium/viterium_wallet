@@ -23,6 +23,7 @@ import '../util/vite_util.dart';
 import '../widgets/address_widgets.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
+import '../widgets/fiat_value_container.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/one_or_three_address_text.dart';
 import '../widgets/sheet_handle.dart';
@@ -674,81 +675,91 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         setState(() => _amountValidationText = '');
       });
 
-      return AppTextField(
-        focusNode: _amountFocusNode,
-        controller: _amountController,
-        topMargin: 15,
-        cursorColor: theme.primary,
-        style: styles.textStyleParagraphPrimary,
-        inputFormatters: [
-          currencyFormatter,
-        ],
-        onChanged: (text) {
-          text = text
-              .replaceAll(currencyFormatter.groupSeparator, '')
-              .replaceAll(currencyFormatter.decimalSeparator, '.');
-          final amountDecimal = Decimal.tryParse(text);
-          if (amountDecimal == null) {
-            amountRaw = null;
-            return;
-          }
-          amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
-          // Always reset the error message to be less annoying
-          setState(() => _amountValidationText = '');
-        },
-        textInputAction: TextInputAction.done,
-        maxLines: null,
-        autocorrect: false,
-        hintText: _amountHint ?? l10n.enterAmount,
-        prefixButton: TextFieldButton(
-          icon: AppIcons.swapcurrency,
-          widget: TokenIconWidget(tokenId: tokenInfo.tokenId),
-          onPressed: () {
-            Sheets.showAppHeightEightSheet(
-              context: context,
-              widget: ProviderScope(
-                overrides: [
-                  tokenCardActionProvider.overrideWithValue(
-                    TokenCardAction.selectToken,
-                  ),
-                ],
-                child: const TokenSelectSheet(),
-              ),
-              theme: theme,
-              backgroundColor: theme.background,
-            );
-          },
-        ),
-        suffixButton: TextFieldButton(
-          icon: AppIcons.max,
-          onPressed: () {
-            if (isMaxSend) {
+      final amount = Amount.raw(
+        amountRaw ?? BigInt.zero,
+        tokenInfo: tokenInfo,
+      );
+
+      return FiatValueContainer(
+        amount: amount,
+        child: AppTextField(
+          focusNode: _amountFocusNode,
+          controller: _amountController,
+          topMargin: 15,
+          cursorColor: theme.primary,
+          style: styles.textStyleParagraphPrimary,
+          inputFormatters: [
+            currencyFormatter,
+          ],
+          onChanged: (text) {
+            text = text
+                .replaceAll(currencyFormatter.groupSeparator, '')
+                .replaceAll(currencyFormatter.decimalSeparator, '.');
+            final amountDecimal = Decimal.tryParse(text);
+            if (amountDecimal == null) {
+              amountRaw = null;
+              setState(() {});
               return;
             }
-            final tokenInfo = ref.read(selectedTokenProvider);
-            amountRaw = ref.read(balanceForTokenProvider(tokenInfo.tokenId));
+            amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
+            // Always reset the error message to be less annoying
+            setState(() => _amountValidationText = '');
+          },
+          textInputAction: TextInputAction.done,
+          maxLines: null,
+          autocorrect: false,
+          hintText: _amountHint ?? l10n.enterAmount,
+          prefixButton: TextFieldButton(
+            icon: AppIcons.swapcurrency,
+            widget: TokenIconWidget(tokenId: tokenInfo.tokenId),
+            onPressed: () {
+              Sheets.showAppHeightEightSheet(
+                context: context,
+                widget: ProviderScope(
+                  overrides: [
+                    tokenCardActionProvider.overrideWithValue(
+                      TokenCardAction.selectToken,
+                    ),
+                  ],
+                  child: const TokenSelectSheet(),
+                ),
+                theme: theme,
+                backgroundColor: theme.background,
+              );
+            },
+          ),
+          suffixButton: TextFieldButton(
+            icon: AppIcons.max,
+            onPressed: () {
+              if (isMaxSend) {
+                return;
+              }
+              final tokenInfo = ref.read(selectedTokenProvider);
+              amountRaw = ref.read(balanceForTokenProvider(tokenInfo.tokenId));
 
-            final amount =
-                Amount.raw(amountRaw ?? BigInt.zero, tokenInfo: tokenInfo);
-            _amountController.text = NumberUtil.textFieldFormatedAmount(amount);
-            ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
+              final amount =
+                  Amount.raw(amountRaw ?? BigInt.zero, tokenInfo: tokenInfo);
+              _amountController.text =
+                  NumberUtil.textFieldFormatedAmount(amount);
+              ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
 
-            _addressController.selection = TextSelection.fromPosition(
-              TextPosition(offset: _addressController.text.length),
-            );
-            _addressFocusNode.requestFocus();
+              _addressController.selection = TextSelection.fromPosition(
+                TextPosition(offset: _addressController.text.length),
+              );
+              _addressFocusNode.requestFocus();
+            },
+          ),
+          fadeSuffixOnCondition: true,
+          suffixShowFirstCondition: !isMaxSend,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          textAlign: TextAlign.center,
+          onSubmitted: (text) {
+            //FocusScope.of(context).unfocus();
+            if (Address.tryParse(_addressController.text) == null) {
+              FocusScope.of(context).requestFocus(_addressFocusNode);
+            }
           },
         ),
-        fadeSuffixOnCondition: true,
-        suffixShowFirstCondition: !isMaxSend,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        textAlign: TextAlign.center,
-        onSubmitted: (text) {
-          //FocusScope.of(context).unfocus();
-          if (Address.tryParse(_addressController.text) == null) {
-            FocusScope.of(context).requestFocus(_addressFocusNode);
-          }
-        },
       );
     });
   }

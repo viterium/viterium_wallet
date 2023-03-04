@@ -182,8 +182,6 @@ VitcSwapSettings _$VitcSwapSettingsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VitcSwapSettings {
-//@Default(IListConst(kVitcSwapTokenIdList)) IList<TokenId> tradingTokens,
-//@Default(kVitcSwapLastHeight) int lastHeight,
   VitcSwapTokenCache get tokenCache => throw _privateConstructorUsedError;
   TokenInfo get fromToken => throw _privateConstructorUsedError;
   TokenInfo get toToken => throw _privateConstructorUsedError;
@@ -346,8 +344,6 @@ class _$_VitcSwapSettings implements _VitcSwapSettings {
   factory _$_VitcSwapSettings.fromJson(Map<String, dynamic> json) =>
       _$$_VitcSwapSettingsFromJson(json);
 
-//@Default(IListConst(kVitcSwapTokenIdList)) IList<TokenId> tradingTokens,
-//@Default(kVitcSwapLastHeight) int lastHeight,
   @override
   @JsonKey()
   final VitcSwapTokenCache tokenCache;
@@ -407,8 +403,7 @@ abstract class _VitcSwapSettings implements VitcSwapSettings {
   factory _VitcSwapSettings.fromJson(Map<String, dynamic> json) =
       _$_VitcSwapSettings.fromJson;
 
-  @override //@Default(IListConst(kVitcSwapTokenIdList)) IList<TokenId> tradingTokens,
-//@Default(kVitcSwapLastHeight) int lastHeight,
+  @override
   VitcSwapTokenCache get tokenCache;
   @override
   TokenInfo get fromToken;

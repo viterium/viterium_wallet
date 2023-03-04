@@ -51,6 +51,7 @@ class RateWidget extends HookConsumerWidget {
         Text(
           '$rate ${fromToken.symbolLabel} per ${toToken.symbolLabel}',
           style: styles.textStyleAddressPrimary,
+          textAlign: TextAlign.center,
         )
       ],
     );

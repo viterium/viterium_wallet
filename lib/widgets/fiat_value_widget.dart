@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
-import '../../core/core_providers.dart';
-import '../../vitex/vitex_providers.dart';
+import '../app_providers.dart';
 
 class FiatValueWidget extends ConsumerWidget {
   final Amount amount;

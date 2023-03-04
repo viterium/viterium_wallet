@@ -15,6 +15,7 @@ import 'auto_receive_dialog.dart';
 import 'defi_enabled_dialog.dart';
 import 'setting_enabled_item.dart';
 import 'setting_token_sort_option.dart';
+import 'show_fiat_value_dialog.dart';
 import 'token_sort_dialog.dart';
 import 'tokens_settings.dart';
 import 'tokens_settings_provider.dart';
@@ -72,6 +73,17 @@ class AdvancedMenu extends ConsumerWidget {
       if (enabled != null) {
         final notifier = ref.read(advancedSettingsProvider.notifier);
         return notifier.updateAutoReceiveEnabled(enabled);
+      }
+    }
+
+    Future<void> changeShowFiatValue() async {
+      final enabled = await showAppDialog<bool>(
+        context: context,
+        builder: (_) => const ShowFiatValueDialog(),
+      );
+      if (enabled != null) {
+        final notifier = ref.read(advancedSettingsProvider.notifier);
+        return notifier.updateShowFiatValue(enabled);
       }
     }
 
@@ -168,6 +180,17 @@ class AdvancedMenu extends ConsumerWidget {
                           icon: Icons.receipt,
                           iconSize: 24,
                           onPressed: changeAutoReceiveEnabled,
+                        );
+                      }),
+                      Divider(height: 2, color: theme.text15),
+                      Consumer(builder: (context, ref, _) {
+                        final enabled = ref.watch(showFiatValueProvider);
+                        return DoubleLineItem(
+                          heading: 'Show Fiat Value',
+                          defaultMethod: SettingEnabledItem(enabled),
+                          icon: Icons.attach_money,
+                          iconSize: 24,
+                          onPressed: changeShowFiatValue,
                         );
                       }),
                     ],

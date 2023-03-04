@@ -15,6 +15,7 @@ import '../util/ui_util.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
+import '../widgets/fiat_value_container.dart';
 import '../widgets/sheet_util.dart';
 import '../widgets/tap_outside_unfocus.dart';
 import 'vitc_swap_token_select_sheet.dart';
@@ -302,39 +303,36 @@ class VitcSwapPage extends HookConsumerWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          AppTextField(
-                            style: styles.textStyleParagraphPrimary,
-                            controller: fromAmountController,
-                            inputFormatters: [fromCurrencyFormatter],
-                            onChanged: onFromChanged,
-                            textInputAction: TextInputAction.done,
-                            maxLines: null,
-                            autocorrect: false,
-                            hintText: l10n.enterAmount,
-                            prefixButton: TextFieldButton(
-                              icon: AppIcons.swapcurrency,
-                              widget: TokenIconWidget(
-                                  tokenId: state.fromToken.tokenId),
-                              onPressed: () => onChangeToken(
-                                title: 'Swap From',
-                                action: TokenCardAction.vitcSwapSelectFromToken,
-                              ),
+                      FiatValueContainer(
+                        amount: fromAmount,
+                        child: AppTextField(
+                          style: styles.textStyleParagraphPrimary,
+                          controller: fromAmountController,
+                          inputFormatters: [fromCurrencyFormatter],
+                          onChanged: onFromChanged,
+                          textInputAction: TextInputAction.done,
+                          maxLines: null,
+                          autocorrect: false,
+                          hintText: l10n.enterAmount,
+                          prefixButton: TextFieldButton(
+                            icon: AppIcons.swapcurrency,
+                            widget: TokenIconWidget(
+                                tokenId: state.fromToken.tokenId),
+                            onPressed: () => onChangeToken(
+                              title: 'Swap From',
+                              action: TokenCardAction.vitcSwapSelectFromToken,
                             ),
-                            suffixButton: TextFieldButton(
-                              icon: AppIcons.max,
-                              onPressed: onMaxPressed,
-                            ),
-                            fadeSuffixOnCondition: true,
-                            suffixShowFirstCondition: !isMaxSwap,
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            textAlign: TextAlign.center,
                           ),
-                          FiatValueWidget(amount: fromAmount),
-                        ],
+                          suffixButton: TextFieldButton(
+                            icon: AppIcons.max,
+                            onPressed: onMaxPressed,
+                          ),
+                          fadeSuffixOnCondition: true,
+                          suffixShowFirstCondition: !isMaxSwap,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -347,32 +345,29 @@ class VitcSwapPage extends HookConsumerWidget {
                           onPressed: onSwitchTokens,
                         ),
                       ),
-                      Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          AppTextField(
-                            style: styles.textStyleParagraphPrimary,
-                            controller: toAmountController,
-                            inputFormatters: [toCurrencyFormatter],
-                            onChanged: onToChanged,
-                            textInputAction: TextInputAction.done,
-                            maxLines: null,
-                            autocorrect: false,
-                            hintText: l10n.enterAmount,
-                            prefixButton: TextFieldButton(
-                              icon: AppIcons.swapcurrency,
-                              widget: TokenIconWidget(tokenId: toToken.tokenId),
-                              onPressed: () => onChangeToken(
-                                title: 'Swap To',
-                                action: TokenCardAction.vitcSwapSelectToToken,
-                              ),
+                      FiatValueContainer(
+                        amount: toAmount,
+                        child: AppTextField(
+                          style: styles.textStyleParagraphPrimary,
+                          controller: toAmountController,
+                          inputFormatters: [toCurrencyFormatter],
+                          onChanged: onToChanged,
+                          textInputAction: TextInputAction.done,
+                          maxLines: null,
+                          autocorrect: false,
+                          hintText: l10n.enterAmount,
+                          prefixButton: TextFieldButton(
+                            icon: AppIcons.swapcurrency,
+                            widget: TokenIconWidget(tokenId: toToken.tokenId),
+                            onPressed: () => onChangeToken(
+                              title: 'Swap To',
+                              action: TokenCardAction.vitcSwapSelectToToken,
                             ),
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            textAlign: TextAlign.center,
                           ),
-                          FiatValueWidget(amount: toAmount),
-                        ],
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                       const SizedBox(height: 10),
                       VitcSwapLowLiquidity(
