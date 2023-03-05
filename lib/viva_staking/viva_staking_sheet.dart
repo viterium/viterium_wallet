@@ -27,9 +27,6 @@ class VivaStakingSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = ref.watch(l10nProvider);
 
-    // FIXME
-    ref.watch(vivaPoolInfoForPoolIdProvider(poolInfo.poolId));
-
     final rewardTokenInfo = poolInfo.rewardTokenInfo;
 
     Future<void> claim() async {
@@ -58,18 +55,15 @@ class VivaStakingSheet extends ConsumerWidget {
           address: account.address,
           accountService: accountService,
         );
-        autoreceiveService.resumeAutoreceive();
-        Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Claim request sent', context);
       } catch (e, st) {
         final log = ref.read(loggerProvider);
         log.e('Failed to send transaction', e, st);
 
-        autoreceiveService.resumeAutoreceive();
-
         UIUtil.showSnackbar(l10n.sendError, context);
-
+      } finally {
+        autoreceiveService.resumeAutoreceive();
         Navigator.of(context).pop();
       }
     }
@@ -90,8 +84,10 @@ class VivaStakingSheet extends ConsumerWidget {
       }
 
       final authUtil = ref.read(authUtilProvider);
-      final message =
-          'Withdraw ${NumberUtil.formatedAmount(amount)} ${poolInfo.rewardTokenInfo.symbolLabel}';
+
+      final value = NumberUtil.formatedAmount(amount);
+      final symbol = poolInfo.stakingTokenInfo.symbolLabel;
+      final message = 'Withdraw $value ${symbol}';
       final auth = await authUtil.authenticate(context, message, message);
       if (auth != true) {
         return;
@@ -163,20 +159,16 @@ class VivaStakingSheet extends ConsumerWidget {
           amount: amount,
           accountService: accountService,
         );
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Stake request sent', context);
       } catch (e) {
         final log = ref.read(loggerProvider);
         log.e('Failed to stake', e);
 
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
-
         UIUtil.showSnackbar('Failed to send stake request', context);
+      } finally {
+        autoreceiveService.resumeAutoreceive();
+        Navigator.of(context).pop();
       }
     }
 
@@ -190,12 +182,8 @@ class VivaStakingSheet extends ConsumerWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                const SheetHandle(),
-                VivaPoolDetailsCard(poolInfo: poolInfo),
-              ],
-            ),
+            const SheetHandle(),
+            Expanded(child: VivaPoolDetailsCard(poolInfo: poolInfo)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(

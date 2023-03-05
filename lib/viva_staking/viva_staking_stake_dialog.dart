@@ -12,6 +12,7 @@ import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
+import '../widgets/fiat_value_container.dart';
 import 'viva_staking_types.dart';
 
 class VivaStakingStakeDialog extends HookConsumerWidget {
@@ -32,7 +33,7 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
     final tokenBalance =
         ref.watch(formatedTokenBalanceProvider(poolInfo.stakingTokenId));
 
-    final amountRaw = useRef(BigInt.zero);
+    final amountRaw = useState(BigInt.zero);
 
     final controller = useTextEditingController();
 
@@ -46,8 +47,15 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
     });
 
     void onMax() {
+      var maxStake =
+          poolInfo.maximumTotalStakingBalance - poolInfo.totalStakingBalance;
+
+      if (balance < maxStake || maxStake < BigInt.zero) {
+        maxStake = balance;
+      }
+
       final amount = Amount.raw(
-        balance,
+        maxStake,
         tokenInfo: poolInfo.stakingTokenInfo,
       );
       final text = NumberUtil.textFieldFormatedAmount(amount);
@@ -56,7 +64,7 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
         selection: TextSelection.collapsed(offset: text.length),
       );
 
-      amountRaw.value = balance;
+      amountRaw.value = maxStake;
     }
 
     void onAmountChanged(String text) {
@@ -113,29 +121,36 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
           const SizedBox(height: 8),
           Container(
             width: constraints.maxWidth * 0.7,
-            child: AppTextField(
-              leftMargin: 0,
-              rightMargin: 0,
-              controller: controller,
-              cursorColor: theme.primary,
-              textInputAction: TextInputAction.done,
-              maxLines: null,
-              autocorrect: false,
-              hintText: l10n.enterAmount,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              textAlign: TextAlign.center,
-              inputFormatters: [formatter],
-              prefixButton: TextFieldButton(
-                icon: AppIcons.swapcurrency,
-                widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+            child: FiatValueContainer(
+              amount: Amount.raw(
+                amountRaw.value,
+                tokenInfo: poolInfo.stakingTokenInfo,
               ),
-              suffixButton: TextFieldButton(
-                icon: AppIcons.max,
-                onPressed: onMax,
+              child: AppTextField(
+                leftMargin: 0,
+                rightMargin: 0,
+                controller: controller,
+                cursorColor: theme.primary,
+                style: styles.textStyleParagraphPrimary,
+                textInputAction: TextInputAction.done,
+                maxLines: null,
+                autocorrect: false,
+                hintText: l10n.enterAmount,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+                inputFormatters: [formatter],
+                prefixButton: TextFieldButton(
+                  icon: AppIcons.swapcurrency,
+                  widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+                ),
+                suffixButton: TextFieldButton(
+                  icon: AppIcons.max,
+                  onPressed: onMax,
+                ),
+                onChanged: onAmountChanged,
+                onSubmitted: (_) => onStake(),
               ),
-              onChanged: onAmountChanged,
-              onSubmitted: (_) => onStake(),
             ),
           ),
           const SizedBox(height: 8),

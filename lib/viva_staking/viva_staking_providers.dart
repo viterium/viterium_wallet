@@ -9,63 +9,52 @@ import '../app_providers.dart';
 import '../contracts/viva_staking_v4.dart';
 import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
-import '../tokens/token_info_provider.dart';
+import 'viva_pools_notifier.dart';
 import 'viva_staking_service.dart';
 import 'viva_staking_types.dart';
+import 'viva_user_info_notifier.dart';
 
-final _vivaPoolsCacheProvider = StateProvider<IList<VivaPoolInfoAll>>((ref) {
-  return IList();
+final vivaPoolsNotifierProvider =
+    StateNotifierProvider.autoDispose<VivaPoolsNotifier, AsyncPoolsInfo>((ref) {
+  final notifier = VivaPoolsNotifier(ref: ref);
+
+  ref.listen(vivaStakingServiceV4Provider, (_, service) {
+    notifier.service = service;
+  }, fireImmediately: true);
+
+  ref.listen(vivaLastEventProvider, (_, next) {
+    if (next != null) {
+      notifier.onEvent(next);
+    }
+  });
+
+  return notifier;
 });
 
-final _vivaPoolsRemoteProvider =
-    FutureProvider.autoDispose<IList<VivaPoolInfoAll>>((ref) async {
-  ref.watch(vivaLastEventProvider);
+final vivaPoolsInfoProvider =
+    Provider.autoDispose<IList<VivaPoolInfoAll>?>((ref) {
+  final pools = ref.watch(vivaPoolsNotifierProvider);
 
-  final service = ref.watch(vivaStakingServiceV4Provider);
-
-  final allPoolInfo = await service.getAllPoolInfo();
-  final allExtra = await service.getAllExtraPoolInfo();
-
-  final poolInfoAllList = <VivaPoolInfoAll>[];
-  for (int i = 0; i < allPoolInfo.length; ++i) {
-    final poolInfo = allPoolInfo[i];
-
-    final stakingTokenInfo =
-        await ref.read(tokenInfoProvider(poolInfo.stakingTokenId).future);
-    final rewardsTokenInfo =
-        await ref.read(tokenInfoProvider(poolInfo.rewardTokenId).future);
-
-    final poolInfoAll = VivaPoolInfoAll(
-      poolInfo: allPoolInfo[i],
-      extra: allExtra[i],
-      stakingTokenInfo: stakingTokenInfo,
-      rewardTokenInfo: rewardsTokenInfo,
-    );
-
-    poolInfoAllList.add(poolInfoAll);
+  if (pools.isLoading) {
+    return null;
   }
 
-  return poolInfoAllList.lock;
-});
-
-final vivaPoolsProvider = Provider.autoDispose<IList<VivaPoolInfoAll>>((ref) {
-  final notifier = ref.watch(_vivaPoolsCacheProvider.notifier);
-  final remote = ref.watch(_vivaPoolsRemoteProvider);
-
-  remote.whenData((value) => notifier.state = value);
-
-  return remote.value ?? notifier.state;
+  return IList(pools.valueOrNull?.values);
 });
 
 final vivaPoolsFilterProvider = StateProvider((ref) => PoolFilter());
 
 final filteredVivaPoolsProvider =
-    FutureProvider.autoDispose<IList<VivaPoolInfoAll>>((ref) async {
-  final address = ref.watch(selectedAddressProvider);
-  final service = ref.watch(vivaStakingServiceV4Provider);
-  final vivaPools = ref.watch(vivaPoolsProvider);
+    Provider.autoDispose<AsyncValue<IList<VivaPoolInfoAll>>>((ref) {
+  final vivaPools = ref.watch(vivaPoolsInfoProvider);
+  final userInfo = ref.watch(vivaUserInfoCacheProvider);
+
   final filter = ref.watch(vivaPoolsFilterProvider);
   final height = ref.read(lastKnownSnapshotHeightProvider);
+
+  if (vivaPools == null) {
+    return const AsyncValue.loading();
+  }
 
   IList<VivaPoolInfoAll> pools;
   if (filter.ended) {
@@ -75,115 +64,74 @@ final filteredVivaPoolsProvider =
   }
 
   if (!filter.stakedOnly) {
-    return pools;
+    return AsyncValue.data(pools);
   }
 
-  final filtered = await Future.wait(
-    pools.map((pool) async {
-      final cache = ref.read(_vivaUserInfoCacheProvider);
-      var userInfo = cache[pool.poolId];
-      if (userInfo == null) {
-        final remoteUserInfo = await service.getUserInfo(
-          poolId: pool.poolId,
-          address: address,
-        );
-        final notifier = ref.read(_vivaUserInfoCacheProvider.notifier);
-        notifier.update(
-          (state) => state.add(
-            pool.poolId,
-            remoteUserInfo,
-          ),
-        );
-        userInfo = remoteUserInfo;
-      }
-      if (userInfo.stakingBalance == BigInt.zero) {
-        return null;
-      }
-      return pool;
-    }),
-  );
-  return filtered.whereType<VivaPoolInfoAll>().toIList();
-});
+  final notifier = ref.watch(vivaUserInfoCacheProvider.notifier);
+  notifier.cache(pools.map((pool) => pool.poolId));
 
-final vivaSelectedPoolIdProvider =
-    StateProvider<BigInt>((ref) => throw UnimplementedError());
+  pools = pools.removeWhere((pool) {
+    final info = userInfo[pool.poolId];
+    return info == null || info.stakingBalance == BigInt.zero;
+  });
+
+  if (pools.isEmpty && notifier.loading) {
+    return const AsyncValue.loading();
+  }
+
+  return AsyncValue.data(pools);
+});
 
 final vivaPoolInfoForPoolIdProvider =
     Provider.autoDispose.family<VivaPoolInfoAll?, BigInt>((ref, poolId) {
-  final pools = ref.watch(vivaPoolsProvider);
+  final pools = ref.watch(vivaPoolsInfoProvider);
 
-  return pools[poolId.toInt()];
+  return pools?[poolId.toInt()];
 });
 
 // VivaUserInfo providers
 
-// Only emits events that change userInfo for selected address and given poolId
-final _vivaUserInfoChangedEventProvider =
-    StreamProvider.autoDispose.family<VivaEvent, BigInt>((ref, poolId) async* {
+final vivaUserInfoCacheProvider =
+    StateNotifierProvider.autoDispose<VivaUserInfoNotifier, VivaUserInfoCache>(
+        (ref) {
   final address = ref.watch(selectedAddressProvider);
-  final event = ref.watch(vivaLastEventProvider);
 
-  if (event == null) {
-    return;
-  }
+  final notifier = VivaUserInfoNotifier(address: address);
 
-  final userEvent = event.mapOrNull(
-    withdraw: (event) => event.poolId == poolId &&
-            event.address == address &&
-            event.amount > BigInt.zero
-        ? event
-        : null,
-    deposit: (event) => event.poolId == poolId &&
-            event.address == address &&
-            event.amount > BigInt.zero
-        ? event
-        : null,
-    emergencyWithdraw: (event) => event.poolId == poolId &&
-            event.address == address &&
-            event.amount > BigInt.zero
-        ? event
-        : null,
-  );
+  ref.listen(vivaStakingServiceV4Provider, (_, service) {
+    notifier.service = service;
+  }, fireImmediately: true);
 
-  if (userEvent != null) {
-    yield userEvent;
-  }
-});
+  ref.listen(vivaLastEventProvider, (_, next) {
+    if (next == null) {
+      return;
+    }
 
-final _vivaUserInfoCacheProvider =
-    StateProvider<IMap<BigInt, VivaUserInfo>>((ref) {
-  return IMap();
-});
+    final userEvent = next.mapOrNull(
+      withdraw: (event) => event.address == address ? event : null,
+      deposit: (event) => event.address == address ? event : null,
+      emergencyWithdraw: (event) => event.address == address ? event : null,
+    );
 
-final _vivaUserInfoRemoteProvider = FutureProvider.autoDispose
-    .family<VivaUserInfo, BigInt>((ref, poolId) async {
-  final address = ref.watch(selectedAddressProvider);
-  final service = ref.watch(vivaStakingServiceV4Provider);
+    if (userEvent != null) {
+      notifier.updatePoolId(userEvent.poolId);
+    }
+  });
 
-  // refresh on new event
-  ref.watch(_vivaUserInfoChangedEventProvider(poolId));
-
-  final userInfo = await service.getUserInfo(
-    poolId: poolId,
-    address: address,
-  );
-
-  return userInfo;
+  return notifier;
 });
 
 final vivaUserInfoProvider =
-    Provider.autoDispose.family<VivaUserInfo?, BigInt>((ref, poolId) {
-  final cache = ref.watch(_vivaUserInfoCacheProvider);
-  final remote = ref.watch(_vivaUserInfoRemoteProvider(poolId));
+    Provider.autoDispose.family<VivaUserInfo, BigInt>((ref, poolId) {
+  final cache = ref.watch(vivaUserInfoCacheProvider);
+  final userInfo = cache[poolId];
 
-  remote.whenData((value) {
-    Future.delayed(Duration.zero, () {
-      final notifier = ref.read(_vivaUserInfoCacheProvider.notifier);
-      notifier.state = cache.add(poolId, value);
-    });
-  });
+  if (userInfo == null) {
+    final notifier = ref.watch(vivaUserInfoCacheProvider.notifier);
+    notifier.cachePoolId(poolId);
+  }
 
-  return remote.asData?.value ?? cache[poolId];
+  return userInfo ?? VivaUserInfo.empty;
 });
 
 // VivaEvent
@@ -233,12 +181,16 @@ final vivaLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vivaEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vivaStakingServiceV4Provider);
-      final event = service.decodeEvent(data.value.vmLog);
-      // ignore claim events
-      event.maybeMap(
-        claim: (_) {},
-        orElse: () => notifier.updateState(event),
-      );
+      final event = service.decodePackedEvent(data.value.vmLog);
+
+      // ignore unknown events
+      event.whenOrNull(known: (event) {
+        // ignore claim events
+        event.maybeMap(
+          claim: (_) {},
+          orElse: () => notifier.updateState(event),
+        );
+      });
     });
   });
 
@@ -263,7 +215,10 @@ final vivaStakingServiceV4Provider = Provider((ref) {
 final vivaAprForPoolInfoProvider =
     FutureProvider.autoDispose.family<String, VivaPoolInfoAll>((ref, poolInfo) {
   final height = ref.read(lastKnownSnapshotHeightProvider);
-  if (poolInfo.endBlock <= height ||
+
+  // Don't show APR if pool is not active
+  if (poolInfo.startBlock >= height ||
+      poolInfo.endBlock <= height ||
       poolInfo.latestRewardBlock == poolInfo.endBlock) {
     return '';
   }

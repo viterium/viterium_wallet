@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../core/core_providers.dart';
 import '../tokens/token_pair_widget.dart';
+import '../widgets/gradient_widgets.dart';
 import 'viva_pool_info_widget.dart';
 import 'viva_staking_types.dart';
 
@@ -24,45 +25,54 @@ class VivaPoolDetailsCard extends ConsumerWidget {
     final stakingTokenInfo = poolInfo.stakingTokenInfo;
 
     return Container(
-      margin: const EdgeInsets.only(left: 14, right: 14, top: 10),
+      margin: const EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 16),
       decoration: BoxDecoration(
         color: theme.backgroundDark,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [theme.boxShadow],
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        child: Column(
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(children: [
-                  TokenPairWidget(
-                    mainTokenId: rewardTokenId,
-                    secondaryTokenId: stakingTokenId,
-                  ),
-                  const SizedBox(width: 16),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Earn ${rewardTokenInfo.tokenName}',
-                          style: styles.textStyleTransactionType,
+            SingleChildScrollView(
+              padding: EdgeInsets.only(top: 15, bottom: 10),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [
+                        TokenPairWidget(
+                          mainTokenId: rewardTokenId,
+                          secondaryTokenId: stakingTokenId,
                         ),
-                        Text(
-                          'Stake ${stakingTokenInfo.tokenName}',
-                          textAlign: TextAlign.start,
-                          style: styles.textStyleTransactionUnit,
+                        const SizedBox(width: 16),
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Earn ${rewardTokenInfo.tokenName}',
+                                style: styles.textStyleTransactionType,
+                              ),
+                              Text(
+                                'Stake ${stakingTokenInfo.tokenName}',
+                                textAlign: TextAlign.start,
+                                style: styles.textStyleTransactionUnit,
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ]),
+                    ],
                   ),
-                ]),
-              ],
+                  VivaPoolInfoWidget(poolInfo: poolInfo),
+                ],
+              ),
             ),
-            VivaPoolInfoWidget(poolInfo: poolInfo),
+            const ListTopGradient(),
+            const ListBottomGradient(),
           ],
         ),
       ),

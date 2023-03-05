@@ -5,6 +5,11 @@ import 'package:vite/vite.dart';
 
 import 'viva_staking_types.dart';
 
+Hash mapLocation({required Hash slot, required Hash key}) {
+  final data = Uint8List.fromList(key.bytes + slot.bytes);
+  return Hash(digest(data: data));
+}
+
 class VivaStakingService {
   final ViteClient client;
   final Contract contract;
@@ -16,13 +21,7 @@ class VivaStakingService {
 
   late ContractAbi abi = contract.contractAbi;
 
-  VivaEvent decodeEvent(VmLog vmLog) {
-    final event = abi.findEventByTopicsHash(vmLog.topics);
-    if (event == null) {
-      return VivaEvent.unknown(vmLog: vmLog);
-    }
-    final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
-
+  VivaEvent? decodeEvent(EventEntry event, {required List<Object> params}) {
     switch (event.name) {
       case 'PoolCreated':
         return VivaEvent.poolCreated(
@@ -53,8 +52,23 @@ class VivaStakingService {
           amount: params[2] as BigInt,
         );
       default:
-        return VivaEvent.unknown(vmLog: vmLog);
+        return null;
     }
+  }
+
+  VivaPackedEvent decodePackedEvent(VmLog vmLog) {
+    final event = abi.findEventByTopicsHash(vmLog.topics);
+    if (event == null) {
+      return VivaPackedEvent.unknown(vmLog: vmLog);
+    }
+    final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
+
+    final vivaEvent = decodeEvent(event, params: params);
+    if (vivaEvent == null) {
+      return VivaPackedEvent.unknown(vmLog: vmLog);
+    }
+
+    return VivaPackedEvent.known(event: vivaEvent);
   }
 
   late final offchainParams = ContractCallParams(
@@ -146,12 +160,52 @@ class VivaStakingService {
     return extra;
   }
 
+  Future<BigInt> getLastInteractionBlock({
+    required BigInt poolId,
+    required Address address,
+  }) async {
+    final uintType = SolidityType.getType('uint');
+    final addressType = SolidityType.getType('address');
+
+    final poolKey = mapLocation(
+      key: Hash(uintType.encode(poolId)),
+      slot: Hash(uintType.encode(3)),
+    );
+
+    final userInfoKey = mapLocation(
+      key: Hash(addressType.encode(address)),
+      slot: poolKey,
+    );
+
+    final key = uintType
+        .encode((uintType.decode(userInfoKey.bytes) as BigInt) + BigInt.two);
+
+    final storage = await client.getContractStorage(
+      contract.address,
+      HashPrefix(key),
+    );
+
+    if (storage.isEmpty) {
+      return BigInt.zero;
+    }
+
+    final encoded = leftPadBytes(storage.values.first, 32);
+    final decoded = uintType.decode(encoded);
+
+    return decoded as BigInt;
+  }
+
   Future<VivaUserInfo> getUserInfo({
     required BigInt poolId,
     required Address address,
   }) async {
     final method = 'getUserInfo';
     final result = await callOffchainMethod(method, [poolId, address]);
+    final lastInteractionBlock = await getLastInteractionBlock(
+      poolId: poolId,
+      address: address,
+    );
+    result.add(lastInteractionBlock);
     final userInfo = VivaUserInfo.fromList(result);
     return userInfo;
   }

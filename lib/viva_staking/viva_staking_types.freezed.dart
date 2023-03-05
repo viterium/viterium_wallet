@@ -945,7 +945,358 @@ abstract class _VivaUserInfo implements VivaUserInfo {
 }
 
 /// @nodoc
+mixin _$VivaPackedEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(VivaEvent event) known,
+    required TResult Function(VmLog vmLog) unknown,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(VivaEvent event)? known,
+    TResult? Function(VmLog vmLog)? unknown,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(VivaEvent event)? known,
+    TResult Function(VmLog vmLog)? unknown,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_VivaPackedEventKnown value) known,
+    required TResult Function(_VivaPackedEventUnknown value) unknown,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_VivaPackedEventKnown value)? known,
+    TResult? Function(_VivaPackedEventUnknown value)? unknown,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_VivaPackedEventKnown value)? known,
+    TResult Function(_VivaPackedEventUnknown value)? unknown,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VivaPackedEventCopyWith<$Res> {
+  factory $VivaPackedEventCopyWith(
+          VivaPackedEvent value, $Res Function(VivaPackedEvent) then) =
+      _$VivaPackedEventCopyWithImpl<$Res, VivaPackedEvent>;
+}
+
+/// @nodoc
+class _$VivaPackedEventCopyWithImpl<$Res, $Val extends VivaPackedEvent>
+    implements $VivaPackedEventCopyWith<$Res> {
+  _$VivaPackedEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_VivaPackedEventKnownCopyWith<$Res> {
+  factory _$$_VivaPackedEventKnownCopyWith(_$_VivaPackedEventKnown value,
+          $Res Function(_$_VivaPackedEventKnown) then) =
+      __$$_VivaPackedEventKnownCopyWithImpl<$Res>;
+  @useResult
+  $Res call({VivaEvent event});
+
+  $VivaEventCopyWith<$Res> get event;
+}
+
+/// @nodoc
+class __$$_VivaPackedEventKnownCopyWithImpl<$Res>
+    extends _$VivaPackedEventCopyWithImpl<$Res, _$_VivaPackedEventKnown>
+    implements _$$_VivaPackedEventKnownCopyWith<$Res> {
+  __$$_VivaPackedEventKnownCopyWithImpl(_$_VivaPackedEventKnown _value,
+      $Res Function(_$_VivaPackedEventKnown) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? event = null,
+  }) {
+    return _then(_$_VivaPackedEventKnown(
+      event: null == event
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as VivaEvent,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VivaEventCopyWith<$Res> get event {
+    return $VivaEventCopyWith<$Res>(_value.event, (value) {
+      return _then(_value.copyWith(event: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_VivaPackedEventKnown implements _VivaPackedEventKnown {
+  const _$_VivaPackedEventKnown({required this.event});
+
+  @override
+  final VivaEvent event;
+
+  @override
+  String toString() {
+    return 'VivaPackedEvent.known(event: $event)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_VivaPackedEventKnown &&
+            (identical(other.event, event) || other.event == event));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, event);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VivaPackedEventKnownCopyWith<_$_VivaPackedEventKnown> get copyWith =>
+      __$$_VivaPackedEventKnownCopyWithImpl<_$_VivaPackedEventKnown>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(VivaEvent event) known,
+    required TResult Function(VmLog vmLog) unknown,
+  }) {
+    return known(event);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(VivaEvent event)? known,
+    TResult? Function(VmLog vmLog)? unknown,
+  }) {
+    return known?.call(event);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(VivaEvent event)? known,
+    TResult Function(VmLog vmLog)? unknown,
+    required TResult orElse(),
+  }) {
+    if (known != null) {
+      return known(event);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_VivaPackedEventKnown value) known,
+    required TResult Function(_VivaPackedEventUnknown value) unknown,
+  }) {
+    return known(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_VivaPackedEventKnown value)? known,
+    TResult? Function(_VivaPackedEventUnknown value)? unknown,
+  }) {
+    return known?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_VivaPackedEventKnown value)? known,
+    TResult Function(_VivaPackedEventUnknown value)? unknown,
+    required TResult orElse(),
+  }) {
+    if (known != null) {
+      return known(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _VivaPackedEventKnown implements VivaPackedEvent {
+  const factory _VivaPackedEventKnown({required final VivaEvent event}) =
+      _$_VivaPackedEventKnown;
+
+  VivaEvent get event;
+  @JsonKey(ignore: true)
+  _$$_VivaPackedEventKnownCopyWith<_$_VivaPackedEventKnown> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_VivaPackedEventUnknownCopyWith<$Res> {
+  factory _$$_VivaPackedEventUnknownCopyWith(_$_VivaPackedEventUnknown value,
+          $Res Function(_$_VivaPackedEventUnknown) then) =
+      __$$_VivaPackedEventUnknownCopyWithImpl<$Res>;
+  @useResult
+  $Res call({VmLog vmLog});
+
+  $VmLogCopyWith<$Res> get vmLog;
+}
+
+/// @nodoc
+class __$$_VivaPackedEventUnknownCopyWithImpl<$Res>
+    extends _$VivaPackedEventCopyWithImpl<$Res, _$_VivaPackedEventUnknown>
+    implements _$$_VivaPackedEventUnknownCopyWith<$Res> {
+  __$$_VivaPackedEventUnknownCopyWithImpl(_$_VivaPackedEventUnknown _value,
+      $Res Function(_$_VivaPackedEventUnknown) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? vmLog = null,
+  }) {
+    return _then(_$_VivaPackedEventUnknown(
+      vmLog: null == vmLog
+          ? _value.vmLog
+          : vmLog // ignore: cast_nullable_to_non_nullable
+              as VmLog,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $VmLogCopyWith<$Res> get vmLog {
+    return $VmLogCopyWith<$Res>(_value.vmLog, (value) {
+      return _then(_value.copyWith(vmLog: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_VivaPackedEventUnknown implements _VivaPackedEventUnknown {
+  const _$_VivaPackedEventUnknown({required this.vmLog});
+
+  @override
+  final VmLog vmLog;
+
+  @override
+  String toString() {
+    return 'VivaPackedEvent.unknown(vmLog: $vmLog)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_VivaPackedEventUnknown &&
+            (identical(other.vmLog, vmLog) || other.vmLog == vmLog));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, vmLog);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VivaPackedEventUnknownCopyWith<_$_VivaPackedEventUnknown> get copyWith =>
+      __$$_VivaPackedEventUnknownCopyWithImpl<_$_VivaPackedEventUnknown>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(VivaEvent event) known,
+    required TResult Function(VmLog vmLog) unknown,
+  }) {
+    return unknown(vmLog);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(VivaEvent event)? known,
+    TResult? Function(VmLog vmLog)? unknown,
+  }) {
+    return unknown?.call(vmLog);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(VivaEvent event)? known,
+    TResult Function(VmLog vmLog)? unknown,
+    required TResult orElse(),
+  }) {
+    if (unknown != null) {
+      return unknown(vmLog);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_VivaPackedEventKnown value) known,
+    required TResult Function(_VivaPackedEventUnknown value) unknown,
+  }) {
+    return unknown(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_VivaPackedEventKnown value)? known,
+    TResult? Function(_VivaPackedEventUnknown value)? unknown,
+  }) {
+    return unknown?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_VivaPackedEventKnown value)? known,
+    TResult Function(_VivaPackedEventUnknown value)? unknown,
+    required TResult orElse(),
+  }) {
+    if (unknown != null) {
+      return unknown(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _VivaPackedEventUnknown implements VivaPackedEvent {
+  const factory _VivaPackedEventUnknown({required final VmLog vmLog}) =
+      _$_VivaPackedEventUnknown;
+
+  VmLog get vmLog;
+  @JsonKey(ignore: true)
+  _$$_VivaPackedEventUnknownCopyWith<_$_VivaPackedEventUnknown> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$VivaEvent {
+  BigInt get poolId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BigInt poolId) poolCreated,
@@ -957,7 +1308,6 @@ mixin _$VivaEvent {
         emergencyWithdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -968,7 +1318,6 @@ mixin _$VivaEvent {
     TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -979,7 +1328,6 @@ mixin _$VivaEvent {
     TResult Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -991,7 +1339,6 @@ mixin _$VivaEvent {
     required TResult Function(_VivaEventEmergencyWithdraw value)
         emergencyWithdraw,
     required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1001,7 +1348,6 @@ mixin _$VivaEvent {
     TResult? Function(_VivaEventWithdraw value)? withdraw,
     TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1011,9 +1357,12 @@ mixin _$VivaEvent {
     TResult Function(_VivaEventWithdraw value)? withdraw,
     TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $VivaEventCopyWith<VivaEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1021,6 +1370,8 @@ mixin _$VivaEvent {
 abstract class $VivaEventCopyWith<$Res> {
   factory $VivaEventCopyWith(VivaEvent value, $Res Function(VivaEvent) then) =
       _$VivaEventCopyWithImpl<$Res, VivaEvent>;
+  @useResult
+  $Res call({BigInt poolId});
 }
 
 /// @nodoc
@@ -1032,13 +1383,28 @@ class _$VivaEventCopyWithImpl<$Res, $Val extends VivaEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? poolId = null,
+  }) {
+    return _then(_value.copyWith(
+      poolId: null == poolId
+          ? _value.poolId
+          : poolId // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_VivaEventPoolCreatedCopyWith<$Res> {
+abstract class _$$_VivaEventPoolCreatedCopyWith<$Res>
+    implements $VivaEventCopyWith<$Res> {
   factory _$$_VivaEventPoolCreatedCopyWith(_$_VivaEventPoolCreated value,
           $Res Function(_$_VivaEventPoolCreated) then) =
       __$$_VivaEventPoolCreatedCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({BigInt poolId});
 }
@@ -1108,7 +1474,6 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
         emergencyWithdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return poolCreated(poolId);
   }
@@ -1122,7 +1487,6 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
     TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return poolCreated?.call(poolId);
   }
@@ -1136,7 +1500,6 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
     TResult Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (poolCreated != null) {
@@ -1154,7 +1517,6 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
     required TResult Function(_VivaEventEmergencyWithdraw value)
         emergencyWithdraw,
     required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
   }) {
     return poolCreated(this);
   }
@@ -1167,7 +1529,6 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
     TResult? Function(_VivaEventWithdraw value)? withdraw,
     TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return poolCreated?.call(this);
   }
@@ -1180,7 +1541,6 @@ class _$_VivaEventPoolCreated implements _VivaEventPoolCreated {
     TResult Function(_VivaEventWithdraw value)? withdraw,
     TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (poolCreated != null) {
@@ -1194,17 +1554,21 @@ abstract class _VivaEventPoolCreated implements VivaEvent {
   const factory _VivaEventPoolCreated({required final BigInt poolId}) =
       _$_VivaEventPoolCreated;
 
+  @override
   BigInt get poolId;
+  @override
   @JsonKey(ignore: true)
   _$$_VivaEventPoolCreatedCopyWith<_$_VivaEventPoolCreated> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VivaEventDepositCopyWith<$Res> {
+abstract class _$$_VivaEventDepositCopyWith<$Res>
+    implements $VivaEventCopyWith<$Res> {
   factory _$$_VivaEventDepositCopyWith(
           _$_VivaEventDeposit value, $Res Function(_$_VivaEventDeposit) then) =
       __$$_VivaEventDepositCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1300,7 +1664,6 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
         emergencyWithdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return deposit(address, poolId, amount);
   }
@@ -1314,7 +1677,6 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
     TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return deposit?.call(address, poolId, amount);
   }
@@ -1328,7 +1690,6 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
     TResult Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (deposit != null) {
@@ -1346,7 +1707,6 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
     required TResult Function(_VivaEventEmergencyWithdraw value)
         emergencyWithdraw,
     required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
   }) {
     return deposit(this);
   }
@@ -1359,7 +1719,6 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
     TResult? Function(_VivaEventWithdraw value)? withdraw,
     TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return deposit?.call(this);
   }
@@ -1372,7 +1731,6 @@ class _$_VivaEventDeposit implements _VivaEventDeposit {
     TResult Function(_VivaEventWithdraw value)? withdraw,
     TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (deposit != null) {
@@ -1389,18 +1747,22 @@ abstract class _VivaEventDeposit implements VivaEvent {
       required final BigInt amount}) = _$_VivaEventDeposit;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VivaEventDepositCopyWith<_$_VivaEventDeposit> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VivaEventWithdrawCopyWith<$Res> {
+abstract class _$$_VivaEventWithdrawCopyWith<$Res>
+    implements $VivaEventCopyWith<$Res> {
   factory _$$_VivaEventWithdrawCopyWith(_$_VivaEventWithdraw value,
           $Res Function(_$_VivaEventWithdraw) then) =
       __$$_VivaEventWithdrawCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1497,7 +1859,6 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
         emergencyWithdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return withdraw(address, poolId, amount);
   }
@@ -1511,7 +1872,6 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
     TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return withdraw?.call(address, poolId, amount);
   }
@@ -1525,7 +1885,6 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
     TResult Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (withdraw != null) {
@@ -1543,7 +1902,6 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
     required TResult Function(_VivaEventEmergencyWithdraw value)
         emergencyWithdraw,
     required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
   }) {
     return withdraw(this);
   }
@@ -1556,7 +1914,6 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
     TResult? Function(_VivaEventWithdraw value)? withdraw,
     TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return withdraw?.call(this);
   }
@@ -1569,7 +1926,6 @@ class _$_VivaEventWithdraw implements _VivaEventWithdraw {
     TResult Function(_VivaEventWithdraw value)? withdraw,
     TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (withdraw != null) {
@@ -1586,19 +1942,23 @@ abstract class _VivaEventWithdraw implements VivaEvent {
       required final BigInt amount}) = _$_VivaEventWithdraw;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VivaEventWithdrawCopyWith<_$_VivaEventWithdraw> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VivaEventEmergencyWithdrawCopyWith<$Res> {
+abstract class _$$_VivaEventEmergencyWithdrawCopyWith<$Res>
+    implements $VivaEventCopyWith<$Res> {
   factory _$$_VivaEventEmergencyWithdrawCopyWith(
           _$_VivaEventEmergencyWithdraw value,
           $Res Function(_$_VivaEventEmergencyWithdraw) then) =
       __$$_VivaEventEmergencyWithdrawCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1696,7 +2056,6 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
         emergencyWithdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return emergencyWithdraw(address, poolId, amount);
   }
@@ -1710,7 +2069,6 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
     TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return emergencyWithdraw?.call(address, poolId, amount);
   }
@@ -1724,7 +2082,6 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
     TResult Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (emergencyWithdraw != null) {
@@ -1742,7 +2099,6 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
     required TResult Function(_VivaEventEmergencyWithdraw value)
         emergencyWithdraw,
     required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
   }) {
     return emergencyWithdraw(this);
   }
@@ -1755,7 +2111,6 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
     TResult? Function(_VivaEventWithdraw value)? withdraw,
     TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return emergencyWithdraw?.call(this);
   }
@@ -1768,7 +2123,6 @@ class _$_VivaEventEmergencyWithdraw implements _VivaEventEmergencyWithdraw {
     TResult Function(_VivaEventWithdraw value)? withdraw,
     TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (emergencyWithdraw != null) {
@@ -1785,18 +2139,22 @@ abstract class _VivaEventEmergencyWithdraw implements VivaEvent {
       required final BigInt amount}) = _$_VivaEventEmergencyWithdraw;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VivaEventEmergencyWithdrawCopyWith<_$_VivaEventEmergencyWithdraw>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VivaEventClaimCopyWith<$Res> {
+abstract class _$$_VivaEventClaimCopyWith<$Res>
+    implements $VivaEventCopyWith<$Res> {
   factory _$$_VivaEventClaimCopyWith(
           _$_VivaEventClaim value, $Res Function(_$_VivaEventClaim) then) =
       __$$_VivaEventClaimCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1892,7 +2250,6 @@ class _$_VivaEventClaim implements _VivaEventClaim {
         emergencyWithdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return claim(address, poolId, amount);
   }
@@ -1906,7 +2263,6 @@ class _$_VivaEventClaim implements _VivaEventClaim {
     TResult? Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return claim?.call(address, poolId, amount);
   }
@@ -1920,7 +2276,6 @@ class _$_VivaEventClaim implements _VivaEventClaim {
     TResult Function(Address address, BigInt poolId, BigInt amount)?
         emergencyWithdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (claim != null) {
@@ -1938,7 +2293,6 @@ class _$_VivaEventClaim implements _VivaEventClaim {
     required TResult Function(_VivaEventEmergencyWithdraw value)
         emergencyWithdraw,
     required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
   }) {
     return claim(this);
   }
@@ -1951,7 +2305,6 @@ class _$_VivaEventClaim implements _VivaEventClaim {
     TResult? Function(_VivaEventWithdraw value)? withdraw,
     TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
   }) {
     return claim?.call(this);
   }
@@ -1964,7 +2317,6 @@ class _$_VivaEventClaim implements _VivaEventClaim {
     TResult Function(_VivaEventWithdraw value)? withdraw,
     TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
     TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (claim != null) {
@@ -1981,185 +2333,12 @@ abstract class _VivaEventClaim implements VivaEvent {
       required final BigInt amount}) = _$_VivaEventClaim;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VivaEventClaimCopyWith<_$_VivaEventClaim> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_VivaEventUnknownCopyWith<$Res> {
-  factory _$$_VivaEventUnknownCopyWith(
-          _$_VivaEventUnknown value, $Res Function(_$_VivaEventUnknown) then) =
-      __$$_VivaEventUnknownCopyWithImpl<$Res>;
-  @useResult
-  $Res call({VmLog vmLog});
-
-  $VmLogCopyWith<$Res> get vmLog;
-}
-
-/// @nodoc
-class __$$_VivaEventUnknownCopyWithImpl<$Res>
-    extends _$VivaEventCopyWithImpl<$Res, _$_VivaEventUnknown>
-    implements _$$_VivaEventUnknownCopyWith<$Res> {
-  __$$_VivaEventUnknownCopyWithImpl(
-      _$_VivaEventUnknown _value, $Res Function(_$_VivaEventUnknown) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vmLog = null,
-  }) {
-    return _then(_$_VivaEventUnknown(
-      vmLog: null == vmLog
-          ? _value.vmLog
-          : vmLog // ignore: cast_nullable_to_non_nullable
-              as VmLog,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VmLogCopyWith<$Res> get vmLog {
-    return $VmLogCopyWith<$Res>(_value.vmLog, (value) {
-      return _then(_value.copyWith(vmLog: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_VivaEventUnknown implements _VivaEventUnknown {
-  const _$_VivaEventUnknown({required this.vmLog});
-
-  @override
-  final VmLog vmLog;
-
-  @override
-  String toString() {
-    return 'VivaEvent.unknown(vmLog: $vmLog)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_VivaEventUnknown &&
-            (identical(other.vmLog, vmLog) || other.vmLog == vmLog));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vmLog);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_VivaEventUnknownCopyWith<_$_VivaEventUnknown> get copyWith =>
-      __$$_VivaEventUnknownCopyWithImpl<_$_VivaEventUnknown>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BigInt poolId) poolCreated,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        deposit,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        withdraw,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        emergencyWithdraw,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        claim,
-    required TResult Function(VmLog vmLog) unknown,
-  }) {
-    return unknown(vmLog);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BigInt poolId)? poolCreated,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)?
-        emergencyWithdraw,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
-  }) {
-    return unknown?.call(vmLog);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)?
-        emergencyWithdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(vmLog);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VivaEventPoolCreated value) poolCreated,
-    required TResult Function(_VivaEventDeposit value) deposit,
-    required TResult Function(_VivaEventWithdraw value) withdraw,
-    required TResult Function(_VivaEventEmergencyWithdraw value)
-        emergencyWithdraw,
-    required TResult Function(_VivaEventClaim value) claim,
-    required TResult Function(_VivaEventUnknown value) unknown,
-  }) {
-    return unknown(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult? Function(_VivaEventDeposit value)? deposit,
-    TResult? Function(_VivaEventWithdraw value)? withdraw,
-    TResult? Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult? Function(_VivaEventClaim value)? claim,
-    TResult? Function(_VivaEventUnknown value)? unknown,
-  }) {
-    return unknown?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VivaEventPoolCreated value)? poolCreated,
-    TResult Function(_VivaEventDeposit value)? deposit,
-    TResult Function(_VivaEventWithdraw value)? withdraw,
-    TResult Function(_VivaEventEmergencyWithdraw value)? emergencyWithdraw,
-    TResult Function(_VivaEventClaim value)? claim,
-    TResult Function(_VivaEventUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VivaEventUnknown implements VivaEvent {
-  const factory _VivaEventUnknown({required final VmLog vmLog}) =
-      _$_VivaEventUnknown;
-
-  VmLog get vmLog;
-  @JsonKey(ignore: true)
-  _$$_VivaEventUnknownCopyWith<_$_VivaEventUnknown> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

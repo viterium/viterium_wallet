@@ -86,17 +86,31 @@ class VivaUserInfo with _$VivaUserInfo {
   const factory VivaUserInfo({
     required BigInt stakingBalance,
     required BigInt rewardDebt,
+    required BigInt lastInteractionBlock,
   }) = _VivaUserInfo;
 
   factory VivaUserInfo.fromList(List<Object> list) => VivaUserInfo(
         stakingBalance: list[0] as BigInt,
         rewardDebt: list[1] as BigInt,
+        lastInteractionBlock: list[2] as BigInt,
       );
 
   static final empty = VivaUserInfo(
     stakingBalance: BigInt.zero,
     rewardDebt: BigInt.zero,
+    lastInteractionBlock: BigInt.zero,
   );
+}
+
+@freezed
+class VivaPackedEvent with _$VivaPackedEvent {
+  const factory VivaPackedEvent.known({
+    required VivaEvent event,
+  }) = _VivaPackedEventKnown;
+
+  const factory VivaPackedEvent.unknown({
+    required VmLog vmLog,
+  }) = _VivaPackedEventUnknown;
 }
 
 @freezed
@@ -128,10 +142,6 @@ class VivaEvent with _$VivaEvent {
     required BigInt poolId,
     required BigInt amount,
   }) = _VivaEventClaim;
-
-  const factory VivaEvent.unknown({
-    required VmLog vmLog,
-  }) = _VivaEventUnknown;
 }
 
 enum PoolSortOrder {

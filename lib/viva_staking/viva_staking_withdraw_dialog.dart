@@ -12,6 +12,7 @@ import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
+import '../widgets/fiat_value_container.dart';
 import 'viva_staking_providers.dart';
 import 'viva_staking_types.dart';
 
@@ -29,10 +30,9 @@ class VivaStakingWithdrawDialog extends HookConsumerWidget {
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
-    final userInfo =
-        ref.watch(vivaUserInfoProvider(poolInfo.poolId)) ?? VivaUserInfo.empty;
+    final userInfo = ref.watch(vivaUserInfoProvider(poolInfo.poolId));
 
-    final amountRaw = useRef(BigInt.zero);
+    final amountRaw = useState(BigInt.zero);
 
     final stakingValue = useMemoized(() {
       final amount = Amount.raw(userInfo.stakingBalance,
@@ -119,29 +119,36 @@ class VivaStakingWithdrawDialog extends HookConsumerWidget {
           const SizedBox(height: 8),
           Container(
             width: constraints.maxWidth * 0.7,
-            child: AppTextField(
-              leftMargin: 0,
-              rightMargin: 0,
-              controller: controller,
-              cursorColor: theme.primary,
-              textInputAction: TextInputAction.done,
-              maxLines: null,
-              autocorrect: false,
-              hintText: l10n.enterAmount,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              textAlign: TextAlign.center,
-              inputFormatters: [formatter],
-              prefixButton: TextFieldButton(
-                icon: AppIcons.swapcurrency,
-                widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+            child: FiatValueContainer(
+              amount: Amount.raw(
+                amountRaw.value,
+                tokenInfo: poolInfo.stakingTokenInfo,
               ),
-              suffixButton: TextFieldButton(
-                icon: AppIcons.max,
-                onPressed: onMax,
+              child: AppTextField(
+                leftMargin: 0,
+                rightMargin: 0,
+                controller: controller,
+                cursorColor: theme.primary,
+                style: styles.textStyleParagraphPrimary,
+                textInputAction: TextInputAction.done,
+                maxLines: null,
+                autocorrect: false,
+                hintText: l10n.enterAmount,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+                inputFormatters: [formatter],
+                prefixButton: TextFieldButton(
+                  icon: AppIcons.swapcurrency,
+                  widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+                ),
+                suffixButton: TextFieldButton(
+                  icon: AppIcons.max,
+                  onPressed: onMax,
+                ),
+                onChanged: onAmountChanged,
+                onSubmitted: (_) => onWithdraw(),
               ),
-              onChanged: onAmountChanged,
-              onSubmitted: (_) => onWithdraw(),
             ),
           ),
           const SizedBox(height: 8),
