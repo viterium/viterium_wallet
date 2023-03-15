@@ -370,7 +370,7 @@ class VitcSwapPage extends HookConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      VitcSwapLowLiquidity(
+                      LowLiquidityWidget(
                         fromToken: fromToken.token,
                         toToken: toToken.token,
                       ),
