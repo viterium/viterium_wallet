@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vite/core.dart';
+import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../util/numberutil.dart';
@@ -26,9 +26,6 @@ class VitcStakeSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = ref.watch(l10nProvider);
-
-    // FIXME
-    ref.watch(vitcPoolInfoForPoolIdProvider(poolInfo.poolId));
 
     final rewardTokenInfo = poolInfo.rewardTokenInfo;
 
@@ -58,18 +55,15 @@ class VitcStakeSheet extends ConsumerWidget {
           address: account.address,
           accountService: accountService,
         );
-        autoreceiveService.resumeAutoreceive();
-        Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Claim request sent', context);
       } catch (e, st) {
         final log = ref.read(loggerProvider);
         log.e('Failed to send transaction', e, st);
 
-        autoreceiveService.resumeAutoreceive();
-
         UIUtil.showSnackbar(l10n.sendError, context);
-
+      } finally {
+        autoreceiveService.resumeAutoreceive();
         Navigator.of(context).pop();
       }
     }
@@ -90,8 +84,10 @@ class VitcStakeSheet extends ConsumerWidget {
       }
 
       final authUtil = ref.read(authUtilProvider);
-      final message =
-          'Withdraw ${NumberUtil.formatedAmount(amount)} ${poolInfo.rewardTokenInfo.symbolLabel}';
+
+      final value = NumberUtil.formatedAmount(amount);
+      final symbol = poolInfo.stakingTokenInfo.symbolLabel;
+      final message = 'Withdraw $value $symbol';
       final auth = await authUtil.authenticate(context, message, message);
       if (auth != true) {
         return;
@@ -103,7 +99,6 @@ class VitcStakeSheet extends ConsumerWidget {
           'VITCStake',
           'Sending withdraw request',
         );
-
         await autoreceiveService.pauseAutoreceive();
         await service.withdraw(
           poolId: poolInfo.poolId,
@@ -111,20 +106,16 @@ class VitcStakeSheet extends ConsumerWidget {
           rawValue: amount.raw,
           accountService: accountService,
         );
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Withdraw request sent', context);
       } catch (e) {
         final log = ref.read(loggerProvider);
         log.e('Failed to withdraw', e);
 
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
-
         UIUtil.showSnackbar('Failed to withdraw. Please try again', context);
+      } finally {
+        autoreceiveService.resumeAutoreceive();
+        Navigator.of(context).pop();
       }
     }
 
@@ -164,20 +155,16 @@ class VitcStakeSheet extends ConsumerWidget {
           amount: amount,
           accountService: accountService,
         );
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Stake request sent', context);
       } catch (e) {
         final log = ref.read(loggerProvider);
         log.e('Failed to stake', e);
 
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
-
         UIUtil.showSnackbar('Failed to send stake request', context);
+      } finally {
+        autoreceiveService.resumeAutoreceive();
+        Navigator.of(context).pop();
       }
     }
 
@@ -191,18 +178,14 @@ class VitcStakeSheet extends ConsumerWidget {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                const SheetHandle(),
-                VitcPoolDetailsCard(poolInfo: poolInfo),
-              ],
-            ),
+            const SheetHandle(),
+            Expanded(child: VitcPoolDetailsCard(poolInfo: poolInfo)),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28),
               child: Column(
                 children: [
                   PrimaryButton(
-                    title: 'Claim ${rewardTokenInfo.symbolLabel}',
+                    title: 'Claim ${rewardTokenInfo.tokenSymbol}',
                     onPressed: claim,
                   ),
                   const SizedBox(height: 16),

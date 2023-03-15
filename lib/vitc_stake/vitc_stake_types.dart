@@ -40,6 +40,9 @@ class VitcPoolInfo with _$VitcPoolInfo {
 
   TokenId get stakingTokenId => stakingToken.tokenId;
   TokenId get rewardTokenId => rewardToken.tokenId;
+
+  bool get hasShortTimeLock =>
+      timelock > BigInt.zero && timelock < endBlock - startBlock;
 }
 
 @freezed
@@ -66,6 +69,8 @@ class VitcPoolInfoAll with _$VitcPoolInfoAll {
   BigInt get removedDecimals => poolInfo.removedDecimals;
   BigInt get timelock => poolInfo.timelock;
   BigInt get poolId => poolInfo.poolId;
+
+  bool get hasShortTimeLock => poolInfo.hasShortTimeLock;
 }
 
 @freezed
@@ -112,8 +117,4 @@ class VitcStakeEvent with _$VitcStakeEvent {
     required BigInt poolId,
     required BigInt amount,
   }) = _VitcStakeEventClaim;
-
-  const factory VitcStakeEvent.unknown({
-    required VmLog vmLog,
-  }) = _VitcStakeEventUnknown;
 }

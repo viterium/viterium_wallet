@@ -790,6 +790,7 @@ abstract class _VitcStakeUserInfo implements VitcStakeUserInfo {
 
 /// @nodoc
 mixin _$VitcStakeEvent {
+  BigInt get poolId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(BigInt poolId) poolCreated,
@@ -799,7 +800,6 @@ mixin _$VitcStakeEvent {
         withdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -808,7 +808,6 @@ mixin _$VitcStakeEvent {
     TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -817,7 +816,6 @@ mixin _$VitcStakeEvent {
     TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -827,7 +825,6 @@ mixin _$VitcStakeEvent {
     required TResult Function(_VitcStakeEventDeposit value) deposit,
     required TResult Function(_VitcStakeEventWithdraw value) withdraw,
     required TResult Function(_VitcStakeEventClaim value) claim,
-    required TResult Function(_VitcStakeEventUnknown value) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -836,7 +833,6 @@ mixin _$VitcStakeEvent {
     TResult? Function(_VitcStakeEventDeposit value)? deposit,
     TResult? Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult? Function(_VitcStakeEventClaim value)? claim,
-    TResult? Function(_VitcStakeEventUnknown value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -845,9 +841,12 @@ mixin _$VitcStakeEvent {
     TResult Function(_VitcStakeEventDeposit value)? deposit,
     TResult Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult Function(_VitcStakeEventClaim value)? claim,
-    TResult Function(_VitcStakeEventUnknown value)? unknown,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $VitcStakeEventCopyWith<VitcStakeEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -856,6 +855,8 @@ abstract class $VitcStakeEventCopyWith<$Res> {
   factory $VitcStakeEventCopyWith(
           VitcStakeEvent value, $Res Function(VitcStakeEvent) then) =
       _$VitcStakeEventCopyWithImpl<$Res, VitcStakeEvent>;
+  @useResult
+  $Res call({BigInt poolId});
 }
 
 /// @nodoc
@@ -867,14 +868,29 @@ class _$VitcStakeEventCopyWithImpl<$Res, $Val extends VitcStakeEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? poolId = null,
+  }) {
+    return _then(_value.copyWith(
+      poolId: null == poolId
+          ? _value.poolId
+          : poolId // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventPoolCreatedCopyWith<$Res> {
+abstract class _$$_VitcStakeEventPoolCreatedCopyWith<$Res>
+    implements $VitcStakeEventCopyWith<$Res> {
   factory _$$_VitcStakeEventPoolCreatedCopyWith(
           _$_VitcStakeEventPoolCreated value,
           $Res Function(_$_VitcStakeEventPoolCreated) then) =
       __$$_VitcStakeEventPoolCreatedCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({BigInt poolId});
 }
@@ -943,7 +959,6 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
         withdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return poolCreated(poolId);
   }
@@ -955,7 +970,6 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
     TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return poolCreated?.call(poolId);
   }
@@ -967,7 +981,6 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
     TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (poolCreated != null) {
@@ -983,7 +996,6 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
     required TResult Function(_VitcStakeEventDeposit value) deposit,
     required TResult Function(_VitcStakeEventWithdraw value) withdraw,
     required TResult Function(_VitcStakeEventClaim value) claim,
-    required TResult Function(_VitcStakeEventUnknown value) unknown,
   }) {
     return poolCreated(this);
   }
@@ -995,7 +1007,6 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
     TResult? Function(_VitcStakeEventDeposit value)? deposit,
     TResult? Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult? Function(_VitcStakeEventClaim value)? claim,
-    TResult? Function(_VitcStakeEventUnknown value)? unknown,
   }) {
     return poolCreated?.call(this);
   }
@@ -1007,7 +1018,6 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
     TResult Function(_VitcStakeEventDeposit value)? deposit,
     TResult Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult Function(_VitcStakeEventClaim value)? claim,
-    TResult Function(_VitcStakeEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (poolCreated != null) {
@@ -1021,17 +1031,21 @@ abstract class _VitcStakeEventPoolCreated implements VitcStakeEvent {
   const factory _VitcStakeEventPoolCreated({required final BigInt poolId}) =
       _$_VitcStakeEventPoolCreated;
 
+  @override
   BigInt get poolId;
+  @override
   @JsonKey(ignore: true)
   _$$_VitcStakeEventPoolCreatedCopyWith<_$_VitcStakeEventPoolCreated>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventDepositCopyWith<$Res> {
+abstract class _$$_VitcStakeEventDepositCopyWith<$Res>
+    implements $VitcStakeEventCopyWith<$Res> {
   factory _$$_VitcStakeEventDepositCopyWith(_$_VitcStakeEventDeposit value,
           $Res Function(_$_VitcStakeEventDeposit) then) =
       __$$_VitcStakeEventDepositCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1126,7 +1140,6 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
         withdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return deposit(address, poolId, amount);
   }
@@ -1138,7 +1151,6 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
     TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return deposit?.call(address, poolId, amount);
   }
@@ -1150,7 +1162,6 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
     TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (deposit != null) {
@@ -1166,7 +1177,6 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
     required TResult Function(_VitcStakeEventDeposit value) deposit,
     required TResult Function(_VitcStakeEventWithdraw value) withdraw,
     required TResult Function(_VitcStakeEventClaim value) claim,
-    required TResult Function(_VitcStakeEventUnknown value) unknown,
   }) {
     return deposit(this);
   }
@@ -1178,7 +1188,6 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
     TResult? Function(_VitcStakeEventDeposit value)? deposit,
     TResult? Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult? Function(_VitcStakeEventClaim value)? claim,
-    TResult? Function(_VitcStakeEventUnknown value)? unknown,
   }) {
     return deposit?.call(this);
   }
@@ -1190,7 +1199,6 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
     TResult Function(_VitcStakeEventDeposit value)? deposit,
     TResult Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult Function(_VitcStakeEventClaim value)? claim,
-    TResult Function(_VitcStakeEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (deposit != null) {
@@ -1207,18 +1215,22 @@ abstract class _VitcStakeEventDeposit implements VitcStakeEvent {
       required final BigInt amount}) = _$_VitcStakeEventDeposit;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VitcStakeEventDepositCopyWith<_$_VitcStakeEventDeposit> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventWithdrawCopyWith<$Res> {
+abstract class _$$_VitcStakeEventWithdrawCopyWith<$Res>
+    implements $VitcStakeEventCopyWith<$Res> {
   factory _$$_VitcStakeEventWithdrawCopyWith(_$_VitcStakeEventWithdraw value,
           $Res Function(_$_VitcStakeEventWithdraw) then) =
       __$$_VitcStakeEventWithdrawCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1313,7 +1325,6 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
         withdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return withdraw(address, poolId, amount);
   }
@@ -1325,7 +1336,6 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
     TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return withdraw?.call(address, poolId, amount);
   }
@@ -1337,7 +1347,6 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
     TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (withdraw != null) {
@@ -1353,7 +1362,6 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
     required TResult Function(_VitcStakeEventDeposit value) deposit,
     required TResult Function(_VitcStakeEventWithdraw value) withdraw,
     required TResult Function(_VitcStakeEventClaim value) claim,
-    required TResult Function(_VitcStakeEventUnknown value) unknown,
   }) {
     return withdraw(this);
   }
@@ -1365,7 +1373,6 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
     TResult? Function(_VitcStakeEventDeposit value)? deposit,
     TResult? Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult? Function(_VitcStakeEventClaim value)? claim,
-    TResult? Function(_VitcStakeEventUnknown value)? unknown,
   }) {
     return withdraw?.call(this);
   }
@@ -1377,7 +1384,6 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
     TResult Function(_VitcStakeEventDeposit value)? deposit,
     TResult Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult Function(_VitcStakeEventClaim value)? claim,
-    TResult Function(_VitcStakeEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (withdraw != null) {
@@ -1394,18 +1400,22 @@ abstract class _VitcStakeEventWithdraw implements VitcStakeEvent {
       required final BigInt amount}) = _$_VitcStakeEventWithdraw;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VitcStakeEventWithdrawCopyWith<_$_VitcStakeEventWithdraw> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventClaimCopyWith<$Res> {
+abstract class _$$_VitcStakeEventClaimCopyWith<$Res>
+    implements $VitcStakeEventCopyWith<$Res> {
   factory _$$_VitcStakeEventClaimCopyWith(_$_VitcStakeEventClaim value,
           $Res Function(_$_VitcStakeEventClaim) then) =
       __$$_VitcStakeEventClaimCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
 
@@ -1500,7 +1510,6 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
         withdraw,
     required TResult Function(Address address, BigInt poolId, BigInt amount)
         claim,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return claim(address, poolId, amount);
   }
@@ -1512,7 +1521,6 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
     TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return claim?.call(address, poolId, amount);
   }
@@ -1524,7 +1532,6 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
     TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
     TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
     TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (claim != null) {
@@ -1540,7 +1547,6 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
     required TResult Function(_VitcStakeEventDeposit value) deposit,
     required TResult Function(_VitcStakeEventWithdraw value) withdraw,
     required TResult Function(_VitcStakeEventClaim value) claim,
-    required TResult Function(_VitcStakeEventUnknown value) unknown,
   }) {
     return claim(this);
   }
@@ -1552,7 +1558,6 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
     TResult? Function(_VitcStakeEventDeposit value)? deposit,
     TResult? Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult? Function(_VitcStakeEventClaim value)? claim,
-    TResult? Function(_VitcStakeEventUnknown value)? unknown,
   }) {
     return claim?.call(this);
   }
@@ -1564,7 +1569,6 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
     TResult Function(_VitcStakeEventDeposit value)? deposit,
     TResult Function(_VitcStakeEventWithdraw value)? withdraw,
     TResult Function(_VitcStakeEventClaim value)? claim,
-    TResult Function(_VitcStakeEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (claim != null) {
@@ -1581,175 +1585,11 @@ abstract class _VitcStakeEventClaim implements VitcStakeEvent {
       required final BigInt amount}) = _$_VitcStakeEventClaim;
 
   Address get address;
+  @override
   BigInt get poolId;
   BigInt get amount;
+  @override
   @JsonKey(ignore: true)
   _$$_VitcStakeEventClaimCopyWith<_$_VitcStakeEventClaim> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_VitcStakeEventUnknownCopyWith<$Res> {
-  factory _$$_VitcStakeEventUnknownCopyWith(_$_VitcStakeEventUnknown value,
-          $Res Function(_$_VitcStakeEventUnknown) then) =
-      __$$_VitcStakeEventUnknownCopyWithImpl<$Res>;
-  @useResult
-  $Res call({VmLog vmLog});
-
-  $VmLogCopyWith<$Res> get vmLog;
-}
-
-/// @nodoc
-class __$$_VitcStakeEventUnknownCopyWithImpl<$Res>
-    extends _$VitcStakeEventCopyWithImpl<$Res, _$_VitcStakeEventUnknown>
-    implements _$$_VitcStakeEventUnknownCopyWith<$Res> {
-  __$$_VitcStakeEventUnknownCopyWithImpl(_$_VitcStakeEventUnknown _value,
-      $Res Function(_$_VitcStakeEventUnknown) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vmLog = null,
-  }) {
-    return _then(_$_VitcStakeEventUnknown(
-      vmLog: null == vmLog
-          ? _value.vmLog
-          : vmLog // ignore: cast_nullable_to_non_nullable
-              as VmLog,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VmLogCopyWith<$Res> get vmLog {
-    return $VmLogCopyWith<$Res>(_value.vmLog, (value) {
-      return _then(_value.copyWith(vmLog: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_VitcStakeEventUnknown implements _VitcStakeEventUnknown {
-  const _$_VitcStakeEventUnknown({required this.vmLog});
-
-  @override
-  final VmLog vmLog;
-
-  @override
-  String toString() {
-    return 'VitcStakeEvent.unknown(vmLog: $vmLog)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_VitcStakeEventUnknown &&
-            (identical(other.vmLog, vmLog) || other.vmLog == vmLog));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vmLog);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_VitcStakeEventUnknownCopyWith<_$_VitcStakeEventUnknown> get copyWith =>
-      __$$_VitcStakeEventUnknownCopyWithImpl<_$_VitcStakeEventUnknown>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(BigInt poolId) poolCreated,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        deposit,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        withdraw,
-    required TResult Function(Address address, BigInt poolId, BigInt amount)
-        claim,
-    required TResult Function(VmLog vmLog) unknown,
-  }) {
-    return unknown(vmLog);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(BigInt poolId)? poolCreated,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult? Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult? Function(VmLog vmLog)? unknown,
-  }) {
-    return unknown?.call(vmLog);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(BigInt poolId)? poolCreated,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? deposit,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? withdraw,
-    TResult Function(Address address, BigInt poolId, BigInt amount)? claim,
-    TResult Function(VmLog vmLog)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(vmLog);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VitcStakeEventPoolCreated value) poolCreated,
-    required TResult Function(_VitcStakeEventDeposit value) deposit,
-    required TResult Function(_VitcStakeEventWithdraw value) withdraw,
-    required TResult Function(_VitcStakeEventClaim value) claim,
-    required TResult Function(_VitcStakeEventUnknown value) unknown,
-  }) {
-    return unknown(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_VitcStakeEventPoolCreated value)? poolCreated,
-    TResult? Function(_VitcStakeEventDeposit value)? deposit,
-    TResult? Function(_VitcStakeEventWithdraw value)? withdraw,
-    TResult? Function(_VitcStakeEventClaim value)? claim,
-    TResult? Function(_VitcStakeEventUnknown value)? unknown,
-  }) {
-    return unknown?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VitcStakeEventPoolCreated value)? poolCreated,
-    TResult Function(_VitcStakeEventDeposit value)? deposit,
-    TResult Function(_VitcStakeEventWithdraw value)? withdraw,
-    TResult Function(_VitcStakeEventClaim value)? claim,
-    TResult Function(_VitcStakeEventUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VitcStakeEventUnknown implements VitcStakeEvent {
-  const factory _VitcStakeEventUnknown({required final VmLog vmLog}) =
-      _$_VitcStakeEventUnknown;
-
-  VmLog get vmLog;
-  @JsonKey(ignore: true)
-  _$$_VitcStakeEventUnknownCopyWith<_$_VitcStakeEventUnknown> get copyWith =>
       throw _privateConstructorUsedError;
 }

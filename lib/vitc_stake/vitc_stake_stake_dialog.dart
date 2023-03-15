@@ -12,6 +12,9 @@ import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
+import '../widgets/fiat_value_container.dart';
+import '../widgets/warning_widget.dart';
+import 'vitc_stake_providers.dart';
 import 'vitc_stake_types.dart';
 
 class VitcStakeStakeDialog extends HookConsumerWidget {
@@ -32,9 +35,15 @@ class VitcStakeStakeDialog extends HookConsumerWidget {
     final tokenBalance =
         ref.watch(formatedTokenBalanceProvider(poolInfo.stakingTokenId));
 
-    final amountRaw = useRef(BigInt.zero);
+    final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId));
+
+    final amountRaw = useState(BigInt.zero);
 
     final controller = useTextEditingController();
+    final isFirstStakeWithTimeLock = useMemoized(() {
+      return userInfo.stakingBalance == BigInt.zero &&
+          poolInfo.timelock > BigInt.zero;
+    }, [userInfo]);
 
     final formatter = useMemoized(() {
       final format = NumberFormat.currency(name: '');
@@ -113,33 +122,45 @@ class VitcStakeStakeDialog extends HookConsumerWidget {
           const SizedBox(height: 8),
           Container(
             width: constraints.maxWidth * 0.7,
-            child: AppTextField(
-              leftMargin: 0,
-              rightMargin: 0,
-              controller: controller,
-              cursorColor: theme.primary,
-              textInputAction: TextInputAction.done,
-              maxLines: null,
-              autocorrect: false,
-              hintText: l10n.enterAmount,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              textAlign: TextAlign.center,
-              inputFormatters: [
-                formatter,
-              ],
-              prefixButton: TextFieldButton(
-                icon: AppIcons.swapcurrency,
-                widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+            child: FiatValueContainer(
+              amount: Amount.raw(
+                amountRaw.value,
+                tokenInfo: poolInfo.stakingTokenInfo,
               ),
-              suffixButton: TextFieldButton(
-                icon: AppIcons.max,
-                onPressed: onMax,
+              child: AppTextField(
+                leftMargin: 0,
+                rightMargin: 0,
+                controller: controller,
+                cursorColor: theme.primary,
+                style: styles.textStyleParagraphPrimary,
+                textInputAction: TextInputAction.done,
+                maxLines: null,
+                autocorrect: false,
+                hintText: l10n.enterAmount,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+                inputFormatters: [formatter],
+                prefixButton: TextFieldButton(
+                  icon: AppIcons.swapcurrency,
+                  widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+                ),
+                suffixButton: TextFieldButton(
+                  icon: AppIcons.max,
+                  onPressed: onMax,
+                ),
+                onChanged: onAmountChanged,
+                onSubmitted: (_) => onStake(),
               ),
-              onChanged: onAmountChanged,
-              onSubmitted: (_) => onStake(),
             ),
           ),
+          if (isFirstStakeWithTimeLock) ...[
+            const SizedBox(height: 8),
+            WarningWidget(text: 'This pool has a time lock'),
+          ] else if (poolInfo.hasShortTimeLock) ...[
+            const SizedBox(height: 8),
+            WarningWidget(text: 'Staking will reset time lock'),
+          ],
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

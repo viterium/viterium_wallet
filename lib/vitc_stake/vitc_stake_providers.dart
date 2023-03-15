@@ -9,63 +9,54 @@ import '../app_providers.dart';
 import '../contracts/vitc_stake_v2.dart';
 import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
-import '../tokens/token_info_provider.dart';
 import '../viva_staking/viva_staking_types.dart';
+import 'vitc_pools_notifier.dart';
 import 'vitc_stake_service.dart';
 import 'vitc_stake_types.dart';
+import 'vitc_user_info_notifier.dart';
 
-final _vitcPoolsCacheProvider = StateProvider<IList<VitcPoolInfoAll>>((ref) {
-  return IList();
+final vitcPoolsNotifierProvider =
+    StateNotifierProvider.autoDispose<VitcPoolsNotifier, AsyncVitcPoolsInfo>(
+        (ref) {
+  final notifier = VitcPoolsNotifier(ref: ref);
+
+  ref.listen(vitcStakeServiceV2Provider, (_, service) {
+    notifier.service = service;
+  }, fireImmediately: true);
+
+  ref.listen(vitcStakeLastEventProvider, (_, next) {
+    if (next != null) {
+      notifier.onEvent(next);
+    }
+  });
+
+  return notifier;
 });
 
-final _vitcPoolsRemoteProvider =
-    FutureProvider.autoDispose<IList<VitcPoolInfoAll>>((ref) async {
-  // update on new events (except Claim)
-  ref.watch(vitcStakeLastEventProvider);
+final vitcPoolsInfoProvider =
+    Provider.autoDispose<IList<VitcPoolInfoAll>?>((ref) {
+  final pools = ref.watch(vitcPoolsNotifierProvider);
 
-  final service = ref.watch(vitcStakeServiceV2Provider);
-
-  final allPoolInfo = await service.getAllPoolInfo();
-
-  final poolInfoAllList = <VitcPoolInfoAll>[];
-  for (int i = 0; i < allPoolInfo.length; ++i) {
-    final poolInfo = allPoolInfo[i];
-
-    final stakingTokenInfo =
-        await ref.read(tokenInfoProvider(poolInfo.stakingTokenId).future);
-    final rewardsTokenInfo =
-        await ref.read(tokenInfoProvider(poolInfo.rewardTokenId).future);
-
-    final poolInfoAll = VitcPoolInfoAll(
-      poolInfo: allPoolInfo[i],
-      stakingTokenInfo: stakingTokenInfo,
-      rewardTokenInfo: rewardsTokenInfo,
-    );
-
-    poolInfoAllList.add(poolInfoAll);
+  if (pools.isLoading) {
+    return null;
   }
 
-  return poolInfoAllList.lock;
-});
-
-final vitcPoolsProvider = Provider.autoDispose<IList<VitcPoolInfoAll>>((ref) {
-  final notifier = ref.watch(_vitcPoolsCacheProvider.notifier);
-  final remote = ref.watch(_vitcPoolsRemoteProvider);
-
-  remote.whenData((value) => notifier.state = value);
-
-  return remote.asData?.value ?? notifier.state;
+  return IList(pools.valueOrNull?.values);
 });
 
 final vitcPoolsFilterProvider = StateProvider((ref) => PoolFilter());
 
 final filteredVitcPoolsProvider =
-    FutureProvider.autoDispose<IList<VitcPoolInfoAll>>((ref) async {
-  final address = ref.watch(selectedAddressProvider);
-  final service = ref.watch(vitcStakeServiceV2Provider);
-  final vitcPools = ref.watch(vitcPoolsProvider);
+    Provider.autoDispose<AsyncValue<IList<VitcPoolInfoAll>>>((ref) {
+  final vitcPools = ref.watch(vitcPoolsInfoProvider);
+  final userInfo = ref.watch(vitcStakeUserInfoCacheProvider);
+
   final filter = ref.watch(vitcPoolsFilterProvider);
   final height = ref.read(lastKnownSnapshotHeightProvider);
+
+  if (vitcPools == null) {
+    return const AsyncValue.loading();
+  }
 
   IList<VitcPoolInfoAll> pools;
   if (filter.ended) {
@@ -75,106 +66,74 @@ final filteredVitcPoolsProvider =
   }
 
   if (!filter.stakedOnly) {
-    return pools;
+    return AsyncValue.data(pools);
   }
 
-  final filtered = await Future.wait(
-    pools.map((pool) async {
-      final cache = ref.read(_vitcUserInfoCacheProvider);
-      var userInfo = cache[pool.poolId];
-      if (userInfo == null) {
-        final remoteUserInfo = await service.getUserInfo(
-          poolId: pool.poolId,
-          address: address,
-        );
-        ref.read(_vitcUserInfoCacheProvider.notifier).update(
-              (state) => state.add(pool.poolId, remoteUserInfo),
-            );
-        userInfo = remoteUserInfo;
-      }
-      if (userInfo.stakingBalance == BigInt.zero) {
-        return null;
-      }
-      return pool;
-    }),
-  );
-  return filtered.whereType<VitcPoolInfoAll>().toIList();
-});
+  final notifier = ref.watch(vitcStakeUserInfoCacheProvider.notifier);
+  notifier.cache(pools.map((pool) => pool.poolId));
 
-final vitcSelectedPoolIdProvider =
-    StateProvider<BigInt>((ref) => throw UnimplementedError());
+  pools = pools.removeWhere((pool) {
+    final info = userInfo[pool.poolId];
+    return info == null || info.stakingBalance == BigInt.zero;
+  });
+
+  if (pools.isEmpty && notifier.loading) {
+    return const AsyncValue.loading();
+  }
+
+  return AsyncValue.data(pools);
+});
 
 final vitcPoolInfoForPoolIdProvider =
     Provider.autoDispose.family<VitcPoolInfoAll?, BigInt>((ref, poolId) {
-  final pools = ref.watch(vitcPoolsProvider);
+  final pools = ref.watch(vitcPoolsInfoProvider);
 
-  return pools[poolId.toInt()];
+  return pools?[poolId.toInt()];
 });
 
 // VitcStakeUserInfo providers
 
-// Only emits events that change userInfo for selected address and given poolId
-final _vivaUserInfoChangedEventProvider = StreamProvider.autoDispose
-    .family<VitcStakeEvent, BigInt>((ref, poolId) async* {
+final vitcStakeUserInfoCacheProvider =
+    StateNotifierProvider.autoDispose<VitcUserInfoNotifier, VitcUserInfoCache>(
+        (ref) {
   final address = ref.watch(selectedAddressProvider);
-  final event = ref.watch(vitcStakeLastEventProvider);
 
-  if (event == null) {
-    return;
-  }
+  final notifier = VitcUserInfoNotifier(address: address);
 
-  final userEvent = event.mapOrNull(
-    withdraw: (event) => event.poolId == poolId &&
-            event.address == address &&
-            event.amount > BigInt.zero
-        ? event
-        : null,
-    deposit: (event) => event.poolId == poolId &&
-            event.address == address &&
-            event.amount > BigInt.zero
-        ? event
-        : null,
-  );
+  ref.listen(vitcStakeServiceV2Provider, (_, service) {
+    notifier.service = service;
+  }, fireImmediately: true);
 
-  if (userEvent != null) {
-    yield userEvent;
-  }
-});
+  ref.listen(vitcStakeLastEventProvider, (_, event) {
+    if (event == null) {
+      return;
+    }
 
-final _vitcUserInfoCacheProvider =
-    StateProvider<IMap<BigInt, VitcStakeUserInfo>>((ref) {
-  return IMap();
-});
+    final userEvent = event.mapOrNull(
+      claim: (event) => event.address == address ? event : null,
+      withdraw: (event) => event.address == address ? event : null,
+      deposit: (event) => event.address == address ? event : null,
+    );
 
-final _vitcUserInfoRemoteProvider = FutureProvider.autoDispose
-    .family<VitcStakeUserInfo, BigInt>((ref, poolId) async {
-  final address = ref.watch(selectedAddressProvider);
-  final service = ref.watch(vitcStakeServiceV2Provider);
+    if (userEvent != null) {
+      notifier.updatePoolId(userEvent.poolId);
+    }
+  });
 
-  // refresh on new event
-  ref.watch(_vivaUserInfoChangedEventProvider(poolId));
-
-  final userInfo = await service.getUserInfo(
-    poolId: poolId,
-    address: address,
-  );
-
-  return userInfo;
+  return notifier;
 });
 
 final vitcStakeUserInfoProvider =
-    Provider.autoDispose.family<VitcStakeUserInfo?, BigInt>((ref, poolId) {
-  final cache = ref.watch(_vitcUserInfoCacheProvider);
-  final remote = ref.watch(_vitcUserInfoRemoteProvider(poolId));
+    Provider.autoDispose.family<VitcStakeUserInfo, BigInt>((ref, poolId) {
+  final cache = ref.watch(vitcStakeUserInfoCacheProvider);
+  final userInfo = cache[poolId];
 
-  remote.whenData((value) {
-    Future.delayed(Duration.zero, () {
-      final notifier = ref.read(_vitcUserInfoCacheProvider.notifier);
-      notifier.state = cache.add(poolId, value);
-    });
-  });
+  if (userInfo == null) {
+    final notifier = ref.watch(vitcStakeUserInfoCacheProvider.notifier);
+    notifier.cachePoolId(poolId);
+  }
 
-  return remote.asData?.value ?? cache[poolId];
+  return userInfo ?? VitcStakeUserInfo.empty;
 });
 
 // VitcStakeEvent
@@ -216,7 +175,6 @@ final vitcStakeEventProvider =
   yield* controller.stream;
 });
 
-// does not update on Claim events
 final vitcStakeLastEventProvider = StateNotifierProvider.autoDispose<
     GenericStateNotifier<VitcStakeEvent?>, VitcStakeEvent?>((ref) {
   final notifier = GenericStateNotifier<VitcStakeEvent?>(null);
@@ -224,11 +182,10 @@ final vitcStakeLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vitcStakeEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vitcStakeServiceV2Provider);
-      final event = service.decodeEvent(data.value.vmLog);
-      // ignore claim events
-      event.maybeMap(
-        claim: (_) {},
-        orElse: () => notifier.updateState(event),
+      final vmLogEvent = service.decodeVmLogEvent(data.value.vmLog);
+
+      vmLogEvent.whenOrNull(
+        decoded: (_, event) => notifier.updateState(event),
       );
     });
   });
@@ -254,18 +211,39 @@ final vitcStakeServiceV2Provider = Provider((ref) {
 final vitcStakeAprForPoolInfoProvider =
     FutureProvider.autoDispose.family<String, VitcPoolInfoAll>((ref, poolInfo) {
   final height = ref.read(lastKnownSnapshotHeightProvider);
-  if (poolInfo.endBlock <= height ||
+
+  // Don't show APR if pool is not active
+  if (poolInfo.startBlock >= height ||
+      poolInfo.endBlock <= height ||
       poolInfo.latestRewardBlock == poolInfo.endBlock) {
     return '';
   }
 
-  final rewardTokenPrice =
-      ref.watch(exchangeRateForTokenIdProvider(poolInfo.rewardTokenId));
-  final stakingTokenPrice =
-      ref.watch(exchangeRateForTokenIdProvider(poolInfo.stakingTokenId));
-
   final totalTime = poolInfo.endBlock - poolInfo.startBlock;
   final secondsInYear = BigInt.from(Duration(days: 365).inSeconds);
+
+  // Check if same token pool
+  if (poolInfo.rewardTokenId == poolInfo.stakingTokenId) {
+    final rewardAmount = poolInfo.totalRewardBalance.toDecimal();
+    final stakingAmount = poolInfo.totalStakingBalance.toDecimal();
+
+    final aprValue = (rewardAmount *
+            Decimal.fromBigInt(secondsInYear) *
+            Decimal.fromInt(100) /
+            (stakingAmount * Decimal.fromBigInt(totalTime)))
+        .toDecimal(scaleOnInfinitePrecision: 2);
+
+    if (aprValue == Decimal.zero) {
+      return '';
+    }
+
+    return '${aprValue.toStringAsFixed(2)}%';
+  }
+
+  final rewardTokenPrice =
+      ref.watch(aprExchangeRateForTokenIdProvider(poolInfo.rewardTokenId));
+  final stakingTokenPrice =
+      ref.watch(aprExchangeRateForTokenIdProvider(poolInfo.stakingTokenId));
 
   final rewardAmount = Amount(
     raw: poolInfo.totalRewardBalance,

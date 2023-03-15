@@ -12,6 +12,7 @@ import '../util/formatters.dart';
 import '../util/numberutil.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
+import '../widgets/fiat_value_container.dart';
 import 'vitc_stake_providers.dart';
 import 'vitc_stake_types.dart';
 
@@ -29,10 +30,9 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
-    final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId)) ??
-        VitcStakeUserInfo.empty;
+    final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId));
 
-    final amountRaw = useRef(BigInt.zero);
+    final amountRaw = useState(BigInt.zero);
 
     final stakingValue = useMemoized(() {
       final amount = Amount.raw(userInfo.stakingBalance,
@@ -75,7 +75,7 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
       amountRaw.value = amount.raw;
     }
 
-    void onWithdraw(String text) {
+    void onWithdraw() {
       final amount = Amount.raw(
         amountRaw.value,
         tokenInfo: poolInfo.stakingTokenInfo,
@@ -119,31 +119,39 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
           const SizedBox(height: 8),
           Container(
             width: constraints.maxWidth * 0.7,
-            child: AppTextField(
-              leftMargin: 0,
-              rightMargin: 0,
-              controller: controller,
-              cursorColor: theme.primary,
-              textInputAction: TextInputAction.done,
-              maxLines: null,
-              autocorrect: false,
-              hintText: l10n.enterAmount,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              textAlign: TextAlign.center,
-              inputFormatters: [formatter],
-              prefixButton: TextFieldButton(
-                icon: AppIcons.swapcurrency,
-                widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+            child: FiatValueContainer(
+              amount: Amount.raw(
+                amountRaw.value,
+                tokenInfo: poolInfo.stakingTokenInfo,
               ),
-              suffixButton: TextFieldButton(
-                icon: AppIcons.max,
-                onPressed: onMax,
+              child: AppTextField(
+                leftMargin: 0,
+                rightMargin: 0,
+                controller: controller,
+                cursorColor: theme.primary,
+                style: styles.textStyleParagraphPrimary,
+                textInputAction: TextInputAction.done,
+                maxLines: null,
+                autocorrect: false,
+                hintText: l10n.enterAmount,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                textAlign: TextAlign.center,
+                inputFormatters: [formatter],
+                prefixButton: TextFieldButton(
+                  icon: AppIcons.swapcurrency,
+                  widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+                ),
+                suffixButton: TextFieldButton(
+                  icon: AppIcons.max,
+                  onPressed: onMax,
+                ),
+                onChanged: onAmountChanged,
+                onSubmitted: (_) => onWithdraw(),
               ),
-              onChanged: onAmountChanged,
-              onSubmitted: onWithdraw,
             ),
           ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -161,7 +169,7 @@ class VitcStakeWithdrawDialog extends HookConsumerWidget {
                   'WITHDRAW',
                   style: styles.textStyleDialogButtonText,
                 ),
-                onPressed: () => onWithdraw(controller.text),
+                onPressed: onWithdraw,
               ),
             ],
           ),

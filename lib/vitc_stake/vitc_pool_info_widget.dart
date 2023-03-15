@@ -18,12 +18,8 @@ class VitcPoolInfoWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final styles = ref.watch(stylesProvider);
 
-    final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId)) ??
-        VitcStakeUserInfo(
-          stakingBalance: BigInt.zero,
-          rewardDebt: BigInt.zero,
-          depositBlock: BigInt.zero,
-        );
+    final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId));
+
     final newInfo =
         ref.watch(vitcPoolInfoForPoolIdProvider(poolInfo.poolId)) ?? poolInfo;
 
@@ -33,23 +29,15 @@ class VitcPoolInfoWidget extends ConsumerWidget {
     final stakingSymbol = stakingTokenInfo.tokenSymbol;
     final rewardSymbol = rewardTokenInfo.tokenSymbol;
 
-    var height = ref.watch(lastKnownSnapshotHeightProvider);
+    final lastSnapshotHeight = ref.watch(lastKnownSnapshotHeightProvider);
+    var height = lastSnapshotHeight;
 
     final started = newInfo.startBlock < height;
     final ended = newInfo.endBlock < height;
-    //final locked = poolInfo.timelock > BigInt.zero;
 
     if (height > newInfo.endBlock) {
       height = newInfo.endBlock;
     }
-
-    // final unlocksInDelta = height - userInfo.lastInteractionBlock;
-    // final unlocksInRaw = poolInfo.lockTime - unlocksInDelta;
-    // final unlocksIn = Duration(seconds: unlocksInRaw.toInt());
-    // final unlocksInStr = unlocksIn.inDays > 0
-    //     ? '${unlocksIn.inDays} Days ${unlocksIn.inHours.remainder(24)} Hours'
-    //     : '${unlocksIn.inHours} Hours ${unlocksIn.inMinutes.remainder(60)} Minutes';
-    // final isLocked = unlocksInRaw.sign > 0;
 
     var blocks = BigInt.zero;
     var blocksStr = '-';
@@ -113,47 +101,53 @@ class VitcPoolInfoWidget extends ConsumerWidget {
       );
     }
 
+    var unlocksInRaw = (ended
+        ? BigInt.zero
+        : userInfo.depositBlock + newInfo.timelock - lastSnapshotHeight);
+    if (unlocksInRaw > end) {
+      unlocksInRaw = end;
+    }
+
+    final unlocksIn = Duration(seconds: unlocksInRaw.toInt());
+    final unlocksInStr = unlocksIn.inDays > 0
+        ? '${unlocksIn.inDays} Days ${unlocksIn.inHours.remainder(24)} Hours'
+        : unlocksIn.inHours > 0
+            ? '${unlocksIn.inHours} Hours ${unlocksIn.inMinutes.remainder(60)} Minutes'
+            : '${unlocksIn.inMinutes} Minutes ${unlocksIn.inSeconds.remainder(60)} Seconds';
+    final isLocked =
+        unlocksInRaw.sign > 0 && userInfo.stakingBalance > BigInt.zero;
+
     return Container(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 12),
       width: double.infinity,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Pool total $rewardSymbol earned',
-                      style: styles.textStyleTransactionType,
-                    ),
-                    Text(
-                      '${NumberUtil.formatedAmount(totalEarned)} / ${NumberUtil.formatedAmount(poolTotal)}',
-                      style: styles.textStyleAddressPrimary,
-                    ),
-                  ],
-                ),
+              Text(
+                'Pool total $rewardSymbol earned',
+                style: styles.textStyleTransactionType,
               ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Pool total $stakingSymbol staked',
-                      style: styles.textStyleTransactionType,
-                    ),
-                    Text(
-                      '${NumberUtil.formatedAmount(totalStaked)}',
-                      style: styles.textStyleAddressPrimary,
-                    ),
-                  ],
-                ),
+              Text(
+                '${NumberUtil.formatedAmount(totalEarned)} / ${NumberUtil.formatedAmount(poolTotal)}',
+                style: styles.textStyleAddressPrimary,
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Pool total $stakingSymbol staked',
+                style: styles.textStyleTransactionType,
+              ),
+              Text(
+                '${NumberUtil.formatedAmount(totalStaked)}',
+                style: styles.textStyleAddressPrimary,
               ),
             ],
           ),
@@ -178,25 +172,25 @@ class VitcPoolInfoWidget extends ConsumerWidget {
                   ],
                 ),
               ),
-              // if (isLocked)
-              //   Expanded(
-              //     flex: 1,
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.stretch,
-              //       children: [
-              //         Text(
-              //           'Unlocks in',
-              //           style: styles.textStyleTransactionType,
-              //         ),
-              //         Text(
-              //           '$unlocksInRaw Blocks',
-              //           style: styles.textStyleAddressPrimary,
-              //         ),
-              //         Text(unlocksInStr,
-              //             style: styles.textStyleTransactionUnit),
-              //       ],
-              //     ),
-              //   ),
+              if (isLocked)
+                Expanded(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Unlocks in',
+                        style: styles.textStyleTransactionType,
+                      ),
+                      Text(
+                        '$unlocksInRaw Blocks',
+                        style: styles.textStyleAddressPrimary,
+                      ),
+                      Text(unlocksInStr,
+                          style: styles.textStyleTransactionUnit),
+                    ],
+                  ),
+                ),
             ],
           ),
           const SizedBox(height: 40),

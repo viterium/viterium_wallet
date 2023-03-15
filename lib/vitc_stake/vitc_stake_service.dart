@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:vite/vite.dart';
 
+import '../vite_dart/vite_dart_types.dart';
 import 'vitc_stake_types.dart';
 
 class VitcStakeService {
@@ -16,13 +17,10 @@ class VitcStakeService {
 
   late ContractAbi abi = contract.contractAbi;
 
-  VitcStakeEvent decodeEvent(VmLog vmLog) {
-    final event = abi.findEventByTopicsHash(vmLog.topics);
-    if (event == null) {
-      return VitcStakeEvent.unknown(vmLog: vmLog);
-    }
-    final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
-
+  VitcStakeEvent? decodeEvent(
+    EventEntry event, {
+    required List<Object> params,
+  }) {
     switch (event.name) {
       case 'PoolCreated':
         return VitcStakeEvent.poolCreated(
@@ -47,8 +45,23 @@ class VitcStakeService {
           amount: params[2] as BigInt,
         );
       default:
-        return VitcStakeEvent.unknown(vmLog: vmLog);
+        return null;
     }
+  }
+
+  VmLogEvent<VitcStakeEvent> decodeVmLogEvent(VmLog vmLog) {
+    final event = abi.findEventByTopicsHash(vmLog.topics);
+    if (event == null) {
+      return VmLogEvent.unknown(vmLog: vmLog);
+    }
+    final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
+
+    final vitcStakeEvent = decodeEvent(event, params: params);
+    if (vitcStakeEvent == null) {
+      return VmLogEvent.unknown(vmLog: vmLog, event: event);
+    }
+
+    return VmLogEvent.decoded(vmLog: vmLog, event: vitcStakeEvent);
   }
 
   late final offchainParams = ContractCallParams(
