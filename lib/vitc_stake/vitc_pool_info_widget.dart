@@ -64,11 +64,11 @@ class VitcPoolInfoWidget extends ConsumerWidget {
             ? (height - newInfo.startBlock) * newInfo.rewardPerPeriod
             : BigInt.zero;
     final totalEarned = Amount.raw(
-      totalEarnedRaw,
+      totalEarnedRaw * newInfo.removedDecimals,
       tokenInfo: rewardTokenInfo,
     );
     final poolTotal = Amount.raw(
-      poolInfo.totalRewardBalance,
+      newInfo.totalRewardBalance * newInfo.removedDecimals,
       tokenInfo: rewardTokenInfo,
     );
 
@@ -97,7 +97,7 @@ class VitcPoolInfoWidget extends ConsumerWidget {
           userInfo.stakingBalance * rewardPerToken ~/ rewardFactor -
               userInfo.rewardDebt;
       rewards = Amount.raw(
-        pendingAmount,
+        pendingAmount * newInfo.removedDecimals,
         tokenInfo: rewardTokenInfo,
       );
     }
