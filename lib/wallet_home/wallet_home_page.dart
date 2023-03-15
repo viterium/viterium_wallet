@@ -43,6 +43,7 @@ class WalletHomePage extends HookConsumerWidget {
     final l10n = ref.watch(l10nProvider);
 
     final account = ref.watch(selectedAccountProvider);
+    final defiEnabled = ref.watch(defiEnabledProvider);
     ref.watch(_homePageWatcherProvider(account));
 
     useAutomaticKeepAlive();
@@ -170,8 +171,6 @@ class WalletHomePage extends HookConsumerWidget {
         widget: const TokensManageSheet(),
       );
     }
-
-    final defiEnabled = ref.watch(defiEnabledProvider);
 
     return Column(
       children: [
