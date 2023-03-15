@@ -55,11 +55,10 @@ final _searchProvider = StreamProvider.autoDispose
   yield result;
 });
 
-final _tokenInfoListStreamProvider =
-    StreamProvider.autoDispose<IList<TokenInfo>>((ref) async* {
+final _tokenInfoListSearchProvider = Provider.autoDispose((ref) {
   final searchTerm = ref.watch(_searchTermProvider);
-  final tokenInfoList = ref.watch(_searchProvider(searchTerm).stream);
-  yield* tokenInfoList;
+  final result = ref.watch(_searchProvider(searchTerm));
+  return result;
 });
 
 final _tokenInfoListProvider = StateNotifierProvider.autoDispose<
@@ -69,7 +68,7 @@ final _tokenInfoListProvider = StateNotifierProvider.autoDispose<
       GenericStateNotifier<AsyncValue<IList<TokenInfo>>>(AsyncValue.loading());
 
   ref.listen<AsyncValue<IList<TokenInfo>>>(
-    _tokenInfoListStreamProvider,
+    _tokenInfoListSearchProvider,
     (_, next) => next.mapOrNull(data: (data) => notifier.updateState(data)),
     fireImmediately: true,
   );
