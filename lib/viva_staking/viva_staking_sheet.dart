@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:vite/core.dart';
+import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../util/numberutil.dart';
@@ -68,6 +68,17 @@ class VivaStakingSheet extends ConsumerWidget {
       }
     }
 
+    Future<void> checkTimeLock() async {
+      AppDialogs.showConfirmDialog(
+        context,
+        'Note',
+        'Claiming rewards will reset time lock',
+        'CLAIM',
+        claim,
+        cancelText: 'CANCEL',
+      );
+    }
+
     Future<void> withdraw() async {
       final service = ref.read(vivaStakingServiceV4Provider);
       final account = ref.read(selectedAccountProvider);
@@ -87,7 +98,7 @@ class VivaStakingSheet extends ConsumerWidget {
 
       final value = NumberUtil.formatedAmount(amount);
       final symbol = poolInfo.stakingTokenInfo.symbolLabel;
-      final message = 'Withdraw $value ${symbol}';
+      final message = 'Withdraw $value $symbol';
       final auth = await authUtil.authenticate(context, message, message);
       if (auth != true) {
         return;
@@ -106,20 +117,16 @@ class VivaStakingSheet extends ConsumerWidget {
           rawValue: amount.raw,
           accountService: accountService,
         );
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
 
         UIUtil.showSnackbar('Withdraw request sent', context);
       } catch (e) {
         final log = ref.read(loggerProvider);
         log.e('Failed to withdraw', e);
 
-        autoreceiveService.resumeAutoreceive();
-
-        Navigator.of(context).pop();
-
         UIUtil.showSnackbar('Failed to send withdraw request', context);
+      } finally {
+        autoreceiveService.resumeAutoreceive();
+        Navigator.of(context).pop();
       }
     }
 
@@ -190,7 +197,8 @@ class VivaStakingSheet extends ConsumerWidget {
                 children: [
                   PrimaryButton(
                     title: 'Claim ${rewardTokenInfo.tokenSymbol}',
-                    onPressed: claim,
+                    onPressed:
+                        poolInfo.hasShortLockTime ? checkTimeLock : claim,
                   ),
                   const SizedBox(height: 16),
                   Row(

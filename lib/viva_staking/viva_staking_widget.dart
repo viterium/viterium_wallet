@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/core_providers.dart';
 import 'viva_pool_card.dart';
 import 'viva_staking_header.dart';
 import 'viva_staking_providers.dart';
 
-class VivaStakingWidget extends HookConsumerWidget {
+class VivaStakingWidget extends ConsumerWidget {
   const VivaStakingWidget({Key? key}) : super(key: key);
 
   @override
@@ -19,9 +19,10 @@ class VivaStakingWidget extends HookConsumerWidget {
     final data = ref.watch(filteredVivaPoolsProvider);
 
     final itemCount = data.maybeWhen(
-        data: (pools) => max(pools.length, 1) + 1,
-        orElse: () => 2,
-        skipLoadingOnReload: true);
+      data: (pools) => max(pools.length, 1) + 1,
+      orElse: () => 2,
+      skipLoadingOnReload: true,
+    );
 
     Future<void> refreshPools() async {
       final notifier = ref.read(vivaPoolsNotifierProvider.notifier);

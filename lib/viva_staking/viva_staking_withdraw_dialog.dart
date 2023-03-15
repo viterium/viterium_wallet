@@ -13,6 +13,7 @@ import '../util/numberutil.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/fiat_value_container.dart';
+import '../widgets/warning_widget.dart';
 import 'viva_staking_providers.dart';
 import 'viva_staking_types.dart';
 
@@ -151,6 +152,10 @@ class VivaStakingWithdrawDialog extends HookConsumerWidget {
               ),
             ),
           ),
+          if (poolInfo.hasShortLockTime) ...[
+            const SizedBox(height: 8),
+            WarningWidget(text: 'Withdrawing will reset time lock'),
+          ],
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

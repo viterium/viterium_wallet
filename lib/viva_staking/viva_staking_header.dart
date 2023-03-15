@@ -6,6 +6,7 @@ import 'viva_staking_providers.dart';
 
 class VivaStakingHeader extends ConsumerWidget {
   const VivaStakingHeader({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -16,6 +17,11 @@ class VivaStakingHeader extends ConsumerWidget {
     void setStakedOnlyFilter(bool? value) {
       final notifier = ref.read(vivaPoolsFilterProvider.notifier);
       notifier.update((state) => state.copyWith(stakedOnly: value ?? false));
+    }
+
+    void toggleEndedFilter(bool value) {
+      final notifier = ref.read(vivaPoolsFilterProvider.notifier);
+      notifier.update((state) => state.copyWith(ended: !value));
     }
 
     return Container(
@@ -61,13 +67,10 @@ class VivaStakingHeader extends ConsumerWidget {
                   style: styles.textStyleTransactionType,
                 ),
                 Switch.adaptive(
-                    activeColor: theme.primary,
-                    value: !filter.ended,
-                    onChanged: (value) {
-                      final notifier =
-                          ref.read(vivaPoolsFilterProvider.notifier);
-                      notifier.update((state) => state.copyWith(ended: !value));
-                    }),
+                  activeColor: theme.primary,
+                  value: !filter.ended,
+                  onChanged: toggleEndedFilter,
+                ),
                 Text(
                   'Live',
                   style: styles.textStyleTransactionType,

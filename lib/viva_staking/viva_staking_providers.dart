@@ -15,7 +15,8 @@ import 'viva_staking_types.dart';
 import 'viva_user_info_notifier.dart';
 
 final vivaPoolsNotifierProvider =
-    StateNotifierProvider.autoDispose<VivaPoolsNotifier, AsyncPoolsInfo>((ref) {
+    StateNotifierProvider.autoDispose<VivaPoolsNotifier, AsyncVivaPoolsInfo>(
+        (ref) {
   final notifier = VivaPoolsNotifier(ref: ref);
 
   ref.listen(vivaStakingServiceV4Provider, (_, service) {
@@ -68,7 +69,10 @@ final filteredVivaPoolsProvider =
   }
 
   final notifier = ref.watch(vivaUserInfoCacheProvider.notifier);
-  notifier.cache(pools.map((pool) => pool.poolId));
+  notifier.cache(
+    pools.map((pool) => pool.poolId),
+    includeLastInteractionBlock: !filter.ended,
+  );
 
   pools = pools.removeWhere((pool) {
     final info = userInfo[pool.poolId];
@@ -89,7 +93,7 @@ final vivaPoolInfoForPoolIdProvider =
   return pools?[poolId.toInt()];
 });
 
-// VivaUserInfo providers
+// VivaStakingUserInfo providers
 
 final vivaUserInfoCacheProvider =
     StateNotifierProvider.autoDispose<VivaUserInfoNotifier, VivaUserInfoCache>(
@@ -102,12 +106,12 @@ final vivaUserInfoCacheProvider =
     notifier.service = service;
   }, fireImmediately: true);
 
-  ref.listen(vivaLastEventProvider, (_, next) {
-    if (next == null) {
+  ref.listen(vivaLastEventProvider, (_, event) {
+    if (event == null) {
       return;
     }
 
-    final userEvent = next.mapOrNull(
+    final userEvent = event.mapOrNull(
       withdraw: (event) => event.address == address ? event : null,
       deposit: (event) => event.address == address ? event : null,
       emergencyWithdraw: (event) => event.address == address ? event : null,
@@ -134,7 +138,7 @@ final vivaUserInfoProvider =
   return userInfo ?? VivaUserInfo.empty;
 });
 
-// VivaEvent
+// VivaStakingEvent
 
 final vivaEventProvider =
     StreamProvider.autoDispose<VmLogMessage>((ref) async* {
@@ -166,14 +170,13 @@ final vivaEventProvider =
       }
     } catch (e, st) {
       final log = ref.read(loggerProvider);
-      log.e('Dispose viva event provider', e, st);
+      log.e('Dispose viva staking event provider', e, st);
     }
   });
 
   yield* controller.stream;
 });
 
-// does not update on Claim events
 final vivaLastEventProvider = StateNotifierProvider.autoDispose<
     GenericStateNotifier<VivaEvent?>, VivaEvent?>((ref) {
   final notifier = GenericStateNotifier<VivaEvent?>(null);
@@ -181,16 +184,15 @@ final vivaLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vivaEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vivaStakingServiceV4Provider);
-      final event = service.decodePackedEvent(data.value.vmLog);
+      final event = service.decodeVmLogEvent(data.value.vmLog);
 
       // ignore unknown events
-      event.whenOrNull(known: (event) {
-        // ignore claim events
-        event.maybeMap(
-          claim: (_) {},
+      event.whenOrNull(
+        decoded: (_, event) => event.maybeMap(
+          claim: (_) {/* Do nothing on claim */},
           orElse: () => notifier.updateState(event),
-        );
-      });
+        ),
+      );
     });
   });
 
@@ -223,13 +225,31 @@ final vivaAprForPoolInfoProvider =
     return '';
   }
 
+  final totalTime = poolInfo.endBlock - poolInfo.startBlock;
+  final secondsInYear = BigInt.from(Duration(days: 365).inSeconds);
+
+  // Check if same token pool
+  if (poolInfo.rewardTokenId == poolInfo.stakingTokenId) {
+    final rewardAmount = poolInfo.totalRewardBalance.toDecimal();
+    final stakingAmount = poolInfo.totalStakingBalance.toDecimal();
+
+    final aprValue = (rewardAmount *
+            Decimal.fromBigInt(secondsInYear) *
+            Decimal.fromInt(100) /
+            (stakingAmount * Decimal.fromBigInt(totalTime)))
+        .toDecimal(scaleOnInfinitePrecision: 2);
+
+    if (aprValue == Decimal.zero) {
+      return '';
+    }
+
+    return '${aprValue.toStringAsFixed(2)}%';
+  }
+
   final rewardTokenPrice =
       ref.watch(aprExchangeRateForTokenIdProvider(poolInfo.rewardTokenId));
   final stakingTokenPrice =
       ref.watch(aprExchangeRateForTokenIdProvider(poolInfo.stakingTokenId));
-
-  final totalTime = poolInfo.endBlock - poolInfo.startBlock;
-  final secondsInYear = BigInt.from(Duration(days: 365).inSeconds);
 
   final rewardAmount = Amount(
     raw: poolInfo.totalRewardBalance,

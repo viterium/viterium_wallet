@@ -39,6 +39,21 @@ class VivaPoolInfo with _$VivaPoolInfo {
 }
 
 @freezed
+class VivaExtraPoolInfo with _$VivaExtraPoolInfo {
+  const factory VivaExtraPoolInfo({
+    required BigInt minimumDeposit,
+    required BigInt maximumTotalStakingBalance,
+    required BigInt lockTime,
+  }) = _VivaExtraPoolInfo;
+
+  factory VivaExtraPoolInfo.fromList(List<Object> list) => VivaExtraPoolInfo(
+        minimumDeposit: list[0] as BigInt,
+        maximumTotalStakingBalance: list[1] as BigInt,
+        lockTime: list[2] as BigInt,
+      );
+}
+
+@freezed
 class VivaPoolInfoAll with _$VivaPoolInfoAll {
   const VivaPoolInfoAll._();
   const factory VivaPoolInfoAll({
@@ -64,21 +79,9 @@ class VivaPoolInfoAll with _$VivaPoolInfoAll {
   BigInt get minimumDeposit => extra.minimumDeposit;
   BigInt get maximumTotalStakingBalance => extra.maximumTotalStakingBalance;
   BigInt get lockTime => extra.lockTime;
-}
 
-@freezed
-class VivaExtraPoolInfo with _$VivaExtraPoolInfo {
-  const factory VivaExtraPoolInfo({
-    required BigInt minimumDeposit,
-    required BigInt maximumTotalStakingBalance,
-    required BigInt lockTime,
-  }) = _VivaExtraPoolInfo;
-
-  factory VivaExtraPoolInfo.fromList(List<Object> list) => VivaExtraPoolInfo(
-        minimumDeposit: list[0] as BigInt,
-        maximumTotalStakingBalance: list[1] as BigInt,
-        lockTime: list[2] as BigInt,
-      );
+  bool get hasShortLockTime =>
+      lockTime > BigInt.zero && lockTime < endBlock - startBlock;
 }
 
 @freezed
@@ -100,17 +103,6 @@ class VivaUserInfo with _$VivaUserInfo {
     rewardDebt: BigInt.zero,
     lastInteractionBlock: BigInt.zero,
   );
-}
-
-@freezed
-class VivaPackedEvent with _$VivaPackedEvent {
-  const factory VivaPackedEvent.known({
-    required VivaEvent event,
-  }) = _VivaPackedEventKnown;
-
-  const factory VivaPackedEvent.unknown({
-    required VmLog vmLog,
-  }) = _VivaPackedEventUnknown;
 }
 
 @freezed

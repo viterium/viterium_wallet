@@ -3,12 +3,9 @@ import 'dart:typed_data';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:vite/vite.dart';
 
+import '../vite_dart/vite_dart_types.dart';
+import '../vite_dart/vite_dart_utils.dart';
 import 'viva_staking_types.dart';
-
-Hash mapLocation({required Hash slot, required Hash key}) {
-  final data = Uint8List.fromList(key.bytes + slot.bytes);
-  return Hash(digest(data: data));
-}
 
 class VivaStakingService {
   final ViteClient client;
@@ -21,7 +18,10 @@ class VivaStakingService {
 
   late ContractAbi abi = contract.contractAbi;
 
-  VivaEvent? decodeEvent(EventEntry event, {required List<Object> params}) {
+  VivaEvent? decodeEvent(
+    EventEntry event, {
+    required List<Object> params,
+  }) {
     switch (event.name) {
       case 'PoolCreated':
         return VivaEvent.poolCreated(
@@ -56,19 +56,19 @@ class VivaStakingService {
     }
   }
 
-  VivaPackedEvent decodePackedEvent(VmLog vmLog) {
+  VmLogEvent<VivaEvent> decodeVmLogEvent(VmLog vmLog) {
     final event = abi.findEventByTopicsHash(vmLog.topics);
     if (event == null) {
-      return VivaPackedEvent.unknown(vmLog: vmLog);
+      return VmLogEvent.unknown(vmLog: vmLog);
     }
     final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
 
     final vivaEvent = decodeEvent(event, params: params);
     if (vivaEvent == null) {
-      return VivaPackedEvent.unknown(vmLog: vmLog);
+      return VmLogEvent.unknown(vmLog: vmLog, event: event);
     }
 
-    return VivaPackedEvent.known(event: vivaEvent);
+    return VmLogEvent.decoded(vmLog: vmLog, event: vivaEvent);
   }
 
   late final offchainParams = ContractCallParams(
@@ -198,13 +198,16 @@ class VivaStakingService {
   Future<VivaUserInfo> getUserInfo({
     required BigInt poolId,
     required Address address,
+    bool includeLastInteractionBlock = true,
   }) async {
     final method = 'getUserInfo';
     final result = await callOffchainMethod(method, [poolId, address]);
-    final lastInteractionBlock = await getLastInteractionBlock(
-      poolId: poolId,
-      address: address,
-    );
+    final lastInteractionBlock = includeLastInteractionBlock
+        ? await getLastInteractionBlock(
+            poolId: poolId,
+            address: address,
+          )
+        : BigInt.zero;
     result.add(lastInteractionBlock);
     final userInfo = VivaUserInfo.fromList(result);
     return userInfo;

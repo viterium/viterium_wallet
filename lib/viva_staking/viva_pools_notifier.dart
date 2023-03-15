@@ -6,16 +6,16 @@ import '../tokens/token_info_provider.dart';
 import 'viva_staking_service.dart';
 import 'viva_staking_types.dart';
 
-typedef AsyncPoolsInfo = AsyncValue<IMap<BigInt, VivaPoolInfoAll>>;
+typedef AsyncVivaPoolsInfo = AsyncValue<IMap<BigInt, VivaPoolInfoAll>>;
 
-class VivaPoolsNotifier extends StateNotifier<AsyncPoolsInfo> {
+class VivaPoolsNotifier extends StateNotifier<AsyncVivaPoolsInfo> {
   final Ref ref;
   late VivaStakingService service;
 
   VivaPoolsNotifier({
     required this.ref,
   }) : super(const AsyncValue.loading()) {
-    Future.microtask(() => refreshPoolsInfo());
+    Future.microtask(refreshPoolsInfo);
   }
 
   Future<void> refreshPoolsInfo() async {
@@ -68,6 +68,10 @@ class VivaPoolsNotifier extends StateNotifier<AsyncPoolsInfo> {
         await ref.read(tokenInfoProvider(poolInfo.stakingTokenId).future);
     final TokenInfo rewardsTokenInfo = oldInfo?.rewardTokenInfo ??
         await ref.read(tokenInfoProvider(poolInfo.rewardTokenId).future);
+
+    if (!mounted) {
+      return;
+    }
 
     final newInfo = VivaPoolInfoAll(
       poolInfo: poolInfo,

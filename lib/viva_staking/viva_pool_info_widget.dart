@@ -57,9 +57,11 @@ class VivaPoolInfoWidget extends ConsumerWidget {
       newInfo.totalStakingBalance,
       tokenInfo: stakingTokenInfo,
     );
-    final totalEarnedRaw = started
-        ? (height - newInfo.startBlock) * newInfo.rewardPerPeriod
-        : BigInt.zero;
+    final totalEarnedRaw = ended
+        ? newInfo.totalRewardBalance
+        : started
+            ? (height - newInfo.startBlock) * newInfo.rewardPerPeriod
+            : BigInt.zero;
     final totalEarned = Amount.raw(
       totalEarnedRaw,
       tokenInfo: rewardTokenInfo,

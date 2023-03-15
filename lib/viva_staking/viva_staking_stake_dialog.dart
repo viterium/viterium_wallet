@@ -13,6 +13,8 @@ import '../util/numberutil.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/fiat_value_container.dart';
+import '../widgets/warning_widget.dart';
+import 'viva_staking_providers.dart';
 import 'viva_staking_types.dart';
 
 class VivaStakingStakeDialog extends HookConsumerWidget {
@@ -33,9 +35,15 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
     final tokenBalance =
         ref.watch(formatedTokenBalanceProvider(poolInfo.stakingTokenId));
 
+    final userInfo = ref.watch(vivaUserInfoProvider(poolInfo.poolId));
+
     final amountRaw = useState(BigInt.zero);
 
     final controller = useTextEditingController();
+    final isFirstStakeWithTimeLock = useMemoized(() {
+      return userInfo.stakingBalance == BigInt.zero &&
+          poolInfo.lockTime > BigInt.zero;
+    }, [userInfo]);
 
     final formatter = useMemoized(() {
       final format = NumberFormat.currency(name: '');
@@ -153,6 +161,13 @@ class VivaStakingStakeDialog extends HookConsumerWidget {
               ),
             ),
           ),
+          if (isFirstStakeWithTimeLock) ...[
+            const SizedBox(height: 8),
+            WarningWidget(text: 'This pool has a time lock'),
+          ] else if (poolInfo.hasShortLockTime) ...[
+            const SizedBox(height: 8),
+            WarningWidget(text: 'Staking will reset time lock'),
+          ],
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
