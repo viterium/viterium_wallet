@@ -9,6 +9,7 @@ import 'vitc_stake_types.dart';
 
 class VitcPoolInfoWidget extends ConsumerWidget {
   final VitcPoolInfoAll poolInfo;
+
   const VitcPoolInfoWidget({
     Key? key,
     required this.poolInfo,
@@ -23,8 +24,8 @@ class VitcPoolInfoWidget extends ConsumerWidget {
     final newInfo =
         ref.watch(vitcPoolInfoForPoolIdProvider(poolInfo.poolId)) ?? poolInfo;
 
-    final rewardTokenInfo = poolInfo.rewardTokenInfo;
-    final stakingTokenInfo = poolInfo.stakingTokenInfo;
+    final rewardTokenInfo = newInfo.rewardTokenInfo;
+    final stakingTokenInfo = newInfo.stakingTokenInfo;
 
     final stakingSymbol = stakingTokenInfo.tokenSymbol;
     final rewardSymbol = rewardTokenInfo.tokenSymbol;
@@ -42,10 +43,10 @@ class VitcPoolInfoWidget extends ConsumerWidget {
     var blocks = BigInt.zero;
     var blocksStr = '-';
 
-    final end = poolInfo.endBlock - height;
+    final end = newInfo.endBlock - height;
     var blockDelta = height - newInfo.latestRewardBlock;
     if (!started) {
-      blocks = poolInfo.startBlock - height;
+      blocks = newInfo.startBlock - height;
       blocksStr = '$blocks';
     } else if (!ended) {
       blocks = end;
