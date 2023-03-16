@@ -82,6 +82,9 @@ class VivaPoolInfoAll with _$VivaPoolInfoAll {
 
   bool get hasShortLockTime =>
       lockTime > BigInt.zero && lockTime < endBlock - startBlock;
+
+  bool get shouldDepositClaim =>
+      lockTime > BigInt.zero && minimumDeposit == BigInt.zero;
 }
 
 @freezed

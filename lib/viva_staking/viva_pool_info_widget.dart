@@ -23,8 +23,11 @@ class VivaPoolInfoWidget extends ConsumerWidget {
     final newInfo =
         ref.watch(vivaPoolInfoForPoolIdProvider(poolInfo.poolId)) ?? poolInfo;
 
-    final rewardTokenInfo = poolInfo.rewardTokenInfo;
-    final stakingTokenInfo = poolInfo.stakingTokenInfo;
+    final unlocksInRaw = ref.watch(vivaPoolUnlockInRawProvider(newInfo));
+    final isLocked = ref.watch(vivaPoolIsLockedProvider(newInfo));
+
+    final rewardTokenInfo = newInfo.rewardTokenInfo;
+    final stakingTokenInfo = newInfo.stakingTokenInfo;
 
     final stakingSymbol = stakingTokenInfo.tokenSymbol;
     final rewardSymbol = rewardTokenInfo.tokenSymbol;
@@ -42,10 +45,10 @@ class VivaPoolInfoWidget extends ConsumerWidget {
     var blocks = BigInt.zero;
     var blocksStr = '-';
 
-    final end = poolInfo.endBlock - height;
+    final end = newInfo.endBlock - height;
     var blockDelta = height - newInfo.latestRewardBlock;
     if (!started) {
-      blocks = poolInfo.startBlock - height;
+      blocks = newInfo.startBlock - height;
       blocksStr = '$blocks';
     } else if (!ended) {
       blocks = end;
@@ -67,7 +70,7 @@ class VivaPoolInfoWidget extends ConsumerWidget {
       tokenInfo: rewardTokenInfo,
     );
     final poolTotal = Amount.raw(
-      poolInfo.totalRewardBalance,
+      newInfo.totalRewardBalance,
       tokenInfo: rewardTokenInfo,
     );
 
@@ -101,21 +104,12 @@ class VivaPoolInfoWidget extends ConsumerWidget {
       );
     }
 
-    var unlocksInRaw = (ended ? BigInt.from(100) : poolInfo.lockTime) +
-        userInfo.lastInteractionBlock -
-        lastSnapshotHeight;
-    if (unlocksInRaw > end) {
-      unlocksInRaw = end;
-    }
-
     final unlocksIn = Duration(seconds: unlocksInRaw.toInt());
     final unlocksInStr = unlocksIn.inDays > 0
         ? '${unlocksIn.inDays} Days ${unlocksIn.inHours.remainder(24)} Hours'
         : unlocksIn.inHours > 0
             ? '${unlocksIn.inHours} Hours ${unlocksIn.inMinutes.remainder(60)} Minutes'
             : '${unlocksIn.inMinutes} Minutes ${unlocksIn.inSeconds.remainder(60)} Seconds';
-    final isLocked =
-        unlocksInRaw.sign > 0 && userInfo.stakingBalance > BigInt.zero;
 
     return Container(
       padding: const EdgeInsets.only(top: 12),

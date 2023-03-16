@@ -278,3 +278,47 @@ final vivaAprForPoolInfoProvider =
 
   return '${aprValue.toStringAsFixed(2)}%';
 });
+
+final vivaPoolUnlockInRawProvider =
+    Provider.autoDispose.family<BigInt, VivaPoolInfoAll>((ref, poolInfo) {
+  final userInfo = ref.watch(vivaUserInfoProvider(poolInfo.poolId));
+  final lastSnapshotHeight = ref.watch(lastKnownSnapshotHeightProvider);
+
+  var height = lastSnapshotHeight;
+
+  final ended = poolInfo.endBlock < height;
+
+  if (height > poolInfo.endBlock) {
+    height = poolInfo.endBlock;
+  }
+
+  final end = poolInfo.endBlock - height;
+
+  var unlocksInRaw = (ended ? BigInt.from(100) : poolInfo.lockTime) +
+      userInfo.lastInteractionBlock -
+      lastSnapshotHeight;
+
+  if (unlocksInRaw > end) {
+    unlocksInRaw = end;
+  }
+
+  return unlocksInRaw;
+});
+
+final vivaPoolIsLockedProvider =
+    Provider.autoDispose.family<bool, VivaPoolInfoAll>((ref, poolInfo) {
+  final unlocksInRaw = ref.watch(vivaPoolUnlockInRawProvider(poolInfo));
+  final userInfo = ref.watch(vivaUserInfoProvider(poolInfo.poolId));
+
+  final isLocked =
+      unlocksInRaw.sign > 0 && userInfo.stakingBalance > BigInt.zero;
+
+  return isLocked;
+});
+
+final vivaPoolIsClaimLockedProvider =
+    Provider.autoDispose.family<bool, VivaPoolInfoAll>((ref, poolInfo) {
+  final isLocked = ref.watch(vivaPoolIsLockedProvider(poolInfo));
+
+  return isLocked && poolInfo.minimumDeposit > BigInt.zero;
+});
