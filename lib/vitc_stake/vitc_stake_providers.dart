@@ -272,3 +272,40 @@ final vitcStakeAprForPoolInfoProvider =
 
   return '${aprValue.toStringAsFixed(2)}%';
 });
+
+final vitcPoolUnlockInRawProvider =
+    Provider.autoDispose.family<BigInt, VitcPoolInfoAll>((ref, poolInfo) {
+  final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId));
+  final lastSnapshotHeight = ref.watch(lastKnownSnapshotHeightProvider);
+
+  var height = lastSnapshotHeight;
+
+  final ended = poolInfo.endBlock < height;
+
+  if (height > poolInfo.endBlock) {
+    height = poolInfo.endBlock;
+  }
+
+  final end = poolInfo.endBlock - height;
+
+  var unlocksInRaw = (ended
+      ? BigInt.zero
+      : userInfo.depositBlock + poolInfo.timelock - lastSnapshotHeight);
+
+  if (unlocksInRaw > end) {
+    unlocksInRaw = end;
+  }
+
+  return unlocksInRaw;
+});
+
+final vitcPoolIsLockedProvider =
+    Provider.autoDispose.family<bool, VitcPoolInfoAll>((ref, poolInfo) {
+  final unlocksInRaw = ref.watch(vitcPoolUnlockInRawProvider(poolInfo));
+  final userInfo = ref.watch(vitcStakeUserInfoProvider(poolInfo.poolId));
+
+  final isLocked =
+      unlocksInRaw.sign > 0 && userInfo.stakingBalance > BigInt.zero;
+
+  return isLocked;
+});

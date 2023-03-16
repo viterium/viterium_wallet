@@ -24,6 +24,9 @@ class VitcPoolInfoWidget extends ConsumerWidget {
     final newInfo =
         ref.watch(vitcPoolInfoForPoolIdProvider(poolInfo.poolId)) ?? poolInfo;
 
+    final unlocksInRaw = ref.watch(vitcPoolUnlockInRawProvider(newInfo));
+    final isLocked = ref.watch(vitcPoolIsLockedProvider(newInfo));
+
     final rewardTokenInfo = newInfo.rewardTokenInfo;
     final stakingTokenInfo = newInfo.stakingTokenInfo;
 
@@ -102,21 +105,12 @@ class VitcPoolInfoWidget extends ConsumerWidget {
       );
     }
 
-    var unlocksInRaw = (ended
-        ? BigInt.zero
-        : userInfo.depositBlock + newInfo.timelock - lastSnapshotHeight);
-    if (unlocksInRaw > end) {
-      unlocksInRaw = end;
-    }
-
     final unlocksIn = Duration(seconds: unlocksInRaw.toInt());
     final unlocksInStr = unlocksIn.inDays > 0
         ? '${unlocksIn.inDays} Days ${unlocksIn.inHours.remainder(24)} Hours'
         : unlocksIn.inHours > 0
             ? '${unlocksIn.inHours} Hours ${unlocksIn.inMinutes.remainder(60)} Minutes'
             : '${unlocksIn.inMinutes} Minutes ${unlocksIn.inSeconds.remainder(60)} Seconds';
-    final isLocked =
-        unlocksInRaw.sign > 0 && userInfo.stakingBalance > BigInt.zero;
 
     return Container(
       padding: const EdgeInsets.only(top: 12),
