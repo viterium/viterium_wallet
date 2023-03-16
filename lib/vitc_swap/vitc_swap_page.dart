@@ -52,7 +52,7 @@ class VitcSwapPage extends HookConsumerWidget {
         return null;
       }
       fromTokenChanged = true;
-      Future.delayed(Duration.zero, () {
+      Future.microtask(() {
         final notifier = ref.read(vitcSwapStateProvider.notifier);
         if (settings.fromToken.token == state.toToken.token) {
           if (state.toAmount.value == Decimal.zero) {
@@ -87,7 +87,7 @@ class VitcSwapPage extends HookConsumerWidget {
       if (fromTokenChanged || settings.toToken.token == state.toToken.token) {
         return;
       }
-      Future.delayed(Duration.zero, () {
+      Future.microtask(() {
         final notifier = ref.read(vitcSwapStateProvider.notifier);
         notifier.updateToToken(
           settings.toToken,
