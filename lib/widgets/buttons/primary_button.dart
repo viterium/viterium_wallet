@@ -7,6 +7,7 @@ class PrimaryButton extends ConsumerWidget {
   final String title;
   final EdgeInsetsGeometry margin;
   final bool disabled;
+  final bool locked;
   final Function? onPressed;
 
   const PrimaryButton({
@@ -14,6 +15,7 @@ class PrimaryButton extends ConsumerWidget {
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
+    this.locked = false,
     this.onPressed,
   }) : super(key: key);
 
@@ -38,15 +40,23 @@ class PrimaryButton extends ConsumerWidget {
                   : styles.primaryButtonStyle,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: styles.textStyleButtonPrimary,
-                  maxLines: 1,
+                child: Visibility(
+                  visible: !locked,
+                  replacement: Icon(
+                    Icons.lock,
+                    color: theme.backgroundDark,
+                    size: 28,
+                  ),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: styles.textStyleButtonPrimary,
+                    maxLines: 1,
+                  ),
                 ),
               ),
               onPressed: () {
-                if (!disabled) {
+                if (!disabled && !locked) {
                   onPressed?.call();
                 }
               },

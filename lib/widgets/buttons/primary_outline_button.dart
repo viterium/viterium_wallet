@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../app_icons.dart';
 import '../../app_providers.dart';
 
 class PrimaryOutlineButton extends ConsumerWidget {
@@ -8,12 +9,14 @@ class PrimaryOutlineButton extends ConsumerWidget {
   final EdgeInsetsGeometry margin;
   final Function? onPressed;
   final bool disabled;
+  final bool locked;
 
   const PrimaryOutlineButton({
     Key? key,
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
+    this.locked = false,
     this.onPressed,
   }) : super(key: key);
 
@@ -37,22 +40,30 @@ class PrimaryOutlineButton extends ConsumerWidget {
               style: disabled
                   ? styles.disabledPrimaryOutlinedButtonStyle
                   : styles.outlinedPrimaryButtonStyle,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Visibility(
+                  visible: !locked,
+                  replacement: Icon(
+                    AppIcons.lock,
+                    color: theme.primary,
+                    size: 28,
+                  ),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: disabled
+                        ? styles.textStyleButtonPrimaryOutlineDisabled
+                        : styles.textStyleButtonPrimaryOutline,
+                    maxLines: 1,
+                  ),
+                ),
+              ),
               onPressed: () {
-                if (!disabled) {
+                if (!disabled && !locked) {
                   onPressed?.call();
                 }
               },
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: disabled
-                      ? styles.textStyleButtonPrimaryOutlineDisabled
-                      : styles.textStyleButtonPrimaryOutline,
-                  maxLines: 1,
-                ),
-              ),
             ),
           ),
         ),
@@ -66,12 +77,14 @@ class PrimaryOutlineDarkButton extends ConsumerWidget {
   final EdgeInsetsGeometry margin;
   final Function? onPressed;
   final bool disabled;
+  final bool locked;
 
   const PrimaryOutlineDarkButton({
     Key? key,
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
+    this.locked = false,
     this.onPressed,
   }) : super(key: key);
 
@@ -95,22 +108,30 @@ class PrimaryOutlineDarkButton extends ConsumerWidget {
               style: disabled
                   ? styles.disabledPrimaryOutlinedDarkButtonStyle
                   : styles.outlinedPrimaryDarkButtonStyle,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Visibility(
+                  visible: !locked,
+                  replacement: Icon(
+                    AppIcons.lock,
+                    color: theme.primary,
+                    size: 28,
+                  ),
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: disabled
+                        ? styles.textStyleButtonPrimaryOutlineDisabled
+                        : styles.textStyleButtonPrimaryOutline,
+                    maxLines: 1,
+                  ),
+                ),
+              ),
               onPressed: () {
-                if (!disabled) {
+                if (!disabled && !locked) {
                   onPressed?.call();
                 }
               },
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: disabled
-                      ? styles.textStyleButtonPrimaryOutlineDisabled
-                      : styles.textStyleButtonPrimaryOutline,
-                  maxLines: 1,
-                ),
-              ),
             ),
           ),
         ),
