@@ -383,6 +383,174 @@ abstract class _VivaPoolInfo extends VivaPoolInfo {
 }
 
 /// @nodoc
+mixin _$VivaExtraPoolInfo {
+  BigInt get minimumDeposit => throw _privateConstructorUsedError;
+  BigInt get maximumTotalStakingBalance => throw _privateConstructorUsedError;
+  BigInt get lockTime => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $VivaExtraPoolInfoCopyWith<VivaExtraPoolInfo> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VivaExtraPoolInfoCopyWith<$Res> {
+  factory $VivaExtraPoolInfoCopyWith(
+          VivaExtraPoolInfo value, $Res Function(VivaExtraPoolInfo) then) =
+      _$VivaExtraPoolInfoCopyWithImpl<$Res, VivaExtraPoolInfo>;
+  @useResult
+  $Res call(
+      {BigInt minimumDeposit,
+      BigInt maximumTotalStakingBalance,
+      BigInt lockTime});
+}
+
+/// @nodoc
+class _$VivaExtraPoolInfoCopyWithImpl<$Res, $Val extends VivaExtraPoolInfo>
+    implements $VivaExtraPoolInfoCopyWith<$Res> {
+  _$VivaExtraPoolInfoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? minimumDeposit = null,
+    Object? maximumTotalStakingBalance = null,
+    Object? lockTime = null,
+  }) {
+    return _then(_value.copyWith(
+      minimumDeposit: null == minimumDeposit
+          ? _value.minimumDeposit
+          : minimumDeposit // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      maximumTotalStakingBalance: null == maximumTotalStakingBalance
+          ? _value.maximumTotalStakingBalance
+          : maximumTotalStakingBalance // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      lockTime: null == lockTime
+          ? _value.lockTime
+          : lockTime // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_VivaExtraPoolInfoCopyWith<$Res>
+    implements $VivaExtraPoolInfoCopyWith<$Res> {
+  factory _$$_VivaExtraPoolInfoCopyWith(_$_VivaExtraPoolInfo value,
+          $Res Function(_$_VivaExtraPoolInfo) then) =
+      __$$_VivaExtraPoolInfoCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {BigInt minimumDeposit,
+      BigInt maximumTotalStakingBalance,
+      BigInt lockTime});
+}
+
+/// @nodoc
+class __$$_VivaExtraPoolInfoCopyWithImpl<$Res>
+    extends _$VivaExtraPoolInfoCopyWithImpl<$Res, _$_VivaExtraPoolInfo>
+    implements _$$_VivaExtraPoolInfoCopyWith<$Res> {
+  __$$_VivaExtraPoolInfoCopyWithImpl(
+      _$_VivaExtraPoolInfo _value, $Res Function(_$_VivaExtraPoolInfo) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? minimumDeposit = null,
+    Object? maximumTotalStakingBalance = null,
+    Object? lockTime = null,
+  }) {
+    return _then(_$_VivaExtraPoolInfo(
+      minimumDeposit: null == minimumDeposit
+          ? _value.minimumDeposit
+          : minimumDeposit // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      maximumTotalStakingBalance: null == maximumTotalStakingBalance
+          ? _value.maximumTotalStakingBalance
+          : maximumTotalStakingBalance // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      lockTime: null == lockTime
+          ? _value.lockTime
+          : lockTime // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_VivaExtraPoolInfo implements _VivaExtraPoolInfo {
+  const _$_VivaExtraPoolInfo(
+      {required this.minimumDeposit,
+      required this.maximumTotalStakingBalance,
+      required this.lockTime});
+
+  @override
+  final BigInt minimumDeposit;
+  @override
+  final BigInt maximumTotalStakingBalance;
+  @override
+  final BigInt lockTime;
+
+  @override
+  String toString() {
+    return 'VivaExtraPoolInfo(minimumDeposit: $minimumDeposit, maximumTotalStakingBalance: $maximumTotalStakingBalance, lockTime: $lockTime)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_VivaExtraPoolInfo &&
+            (identical(other.minimumDeposit, minimumDeposit) ||
+                other.minimumDeposit == minimumDeposit) &&
+            (identical(other.maximumTotalStakingBalance,
+                    maximumTotalStakingBalance) ||
+                other.maximumTotalStakingBalance ==
+                    maximumTotalStakingBalance) &&
+            (identical(other.lockTime, lockTime) ||
+                other.lockTime == lockTime));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, minimumDeposit, maximumTotalStakingBalance, lockTime);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VivaExtraPoolInfoCopyWith<_$_VivaExtraPoolInfo> get copyWith =>
+      __$$_VivaExtraPoolInfoCopyWithImpl<_$_VivaExtraPoolInfo>(
+          this, _$identity);
+}
+
+abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
+  const factory _VivaExtraPoolInfo(
+      {required final BigInt minimumDeposit,
+      required final BigInt maximumTotalStakingBalance,
+      required final BigInt lockTime}) = _$_VivaExtraPoolInfo;
+
+  @override
+  BigInt get minimumDeposit;
+  @override
+  BigInt get maximumTotalStakingBalance;
+  @override
+  BigInt get lockTime;
+  @override
+  @JsonKey(ignore: true)
+  _$$_VivaExtraPoolInfoCopyWith<_$_VivaExtraPoolInfo> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$VivaPoolInfoAll {
   VivaPoolInfo get poolInfo => throw _privateConstructorUsedError;
   VivaExtraPoolInfo get extra => throw _privateConstructorUsedError;
@@ -612,174 +780,6 @@ abstract class _VivaPoolInfoAll extends VivaPoolInfoAll {
   @override
   @JsonKey(ignore: true)
   _$$_VivaPoolInfoAllCopyWith<_$_VivaPoolInfoAll> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$VivaExtraPoolInfo {
-  BigInt get minimumDeposit => throw _privateConstructorUsedError;
-  BigInt get maximumTotalStakingBalance => throw _privateConstructorUsedError;
-  BigInt get lockTime => throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $VivaExtraPoolInfoCopyWith<VivaExtraPoolInfo> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $VivaExtraPoolInfoCopyWith<$Res> {
-  factory $VivaExtraPoolInfoCopyWith(
-          VivaExtraPoolInfo value, $Res Function(VivaExtraPoolInfo) then) =
-      _$VivaExtraPoolInfoCopyWithImpl<$Res, VivaExtraPoolInfo>;
-  @useResult
-  $Res call(
-      {BigInt minimumDeposit,
-      BigInt maximumTotalStakingBalance,
-      BigInt lockTime});
-}
-
-/// @nodoc
-class _$VivaExtraPoolInfoCopyWithImpl<$Res, $Val extends VivaExtraPoolInfo>
-    implements $VivaExtraPoolInfoCopyWith<$Res> {
-  _$VivaExtraPoolInfoCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? minimumDeposit = null,
-    Object? maximumTotalStakingBalance = null,
-    Object? lockTime = null,
-  }) {
-    return _then(_value.copyWith(
-      minimumDeposit: null == minimumDeposit
-          ? _value.minimumDeposit
-          : minimumDeposit // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      maximumTotalStakingBalance: null == maximumTotalStakingBalance
-          ? _value.maximumTotalStakingBalance
-          : maximumTotalStakingBalance // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      lockTime: null == lockTime
-          ? _value.lockTime
-          : lockTime // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$_VivaExtraPoolInfoCopyWith<$Res>
-    implements $VivaExtraPoolInfoCopyWith<$Res> {
-  factory _$$_VivaExtraPoolInfoCopyWith(_$_VivaExtraPoolInfo value,
-          $Res Function(_$_VivaExtraPoolInfo) then) =
-      __$$_VivaExtraPoolInfoCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {BigInt minimumDeposit,
-      BigInt maximumTotalStakingBalance,
-      BigInt lockTime});
-}
-
-/// @nodoc
-class __$$_VivaExtraPoolInfoCopyWithImpl<$Res>
-    extends _$VivaExtraPoolInfoCopyWithImpl<$Res, _$_VivaExtraPoolInfo>
-    implements _$$_VivaExtraPoolInfoCopyWith<$Res> {
-  __$$_VivaExtraPoolInfoCopyWithImpl(
-      _$_VivaExtraPoolInfo _value, $Res Function(_$_VivaExtraPoolInfo) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? minimumDeposit = null,
-    Object? maximumTotalStakingBalance = null,
-    Object? lockTime = null,
-  }) {
-    return _then(_$_VivaExtraPoolInfo(
-      minimumDeposit: null == minimumDeposit
-          ? _value.minimumDeposit
-          : minimumDeposit // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      maximumTotalStakingBalance: null == maximumTotalStakingBalance
-          ? _value.maximumTotalStakingBalance
-          : maximumTotalStakingBalance // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      lockTime: null == lockTime
-          ? _value.lockTime
-          : lockTime // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_VivaExtraPoolInfo implements _VivaExtraPoolInfo {
-  const _$_VivaExtraPoolInfo(
-      {required this.minimumDeposit,
-      required this.maximumTotalStakingBalance,
-      required this.lockTime});
-
-  @override
-  final BigInt minimumDeposit;
-  @override
-  final BigInt maximumTotalStakingBalance;
-  @override
-  final BigInt lockTime;
-
-  @override
-  String toString() {
-    return 'VivaExtraPoolInfo(minimumDeposit: $minimumDeposit, maximumTotalStakingBalance: $maximumTotalStakingBalance, lockTime: $lockTime)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_VivaExtraPoolInfo &&
-            (identical(other.minimumDeposit, minimumDeposit) ||
-                other.minimumDeposit == minimumDeposit) &&
-            (identical(other.maximumTotalStakingBalance,
-                    maximumTotalStakingBalance) ||
-                other.maximumTotalStakingBalance ==
-                    maximumTotalStakingBalance) &&
-            (identical(other.lockTime, lockTime) ||
-                other.lockTime == lockTime));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, minimumDeposit, maximumTotalStakingBalance, lockTime);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_VivaExtraPoolInfoCopyWith<_$_VivaExtraPoolInfo> get copyWith =>
-      __$$_VivaExtraPoolInfoCopyWithImpl<_$_VivaExtraPoolInfo>(
-          this, _$identity);
-}
-
-abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
-  const factory _VivaExtraPoolInfo(
-      {required final BigInt minimumDeposit,
-      required final BigInt maximumTotalStakingBalance,
-      required final BigInt lockTime}) = _$_VivaExtraPoolInfo;
-
-  @override
-  BigInt get minimumDeposit;
-  @override
-  BigInt get maximumTotalStakingBalance;
-  @override
-  BigInt get lockTime;
-  @override
-  @JsonKey(ignore: true)
-  _$$_VivaExtraPoolInfoCopyWith<_$_VivaExtraPoolInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
