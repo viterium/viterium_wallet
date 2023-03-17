@@ -21,6 +21,9 @@ import '../widgets/network_banner.dart';
 
 final showOverlayProvider = StateProvider((ref) => false);
 
+final lockStreamListenerProvider =
+    StateProvider<StreamSubscription?>((ref) => null);
+
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -31,29 +34,27 @@ class HomeScreen extends HookConsumerWidget {
     // whether we should avoid locking the app
     final lockDisabled = ref.watch(lockDisabledProvider);
     // To lock and unlock the app
-    final lockStreamListener = useRef<StreamSubscription?>(null);
+    final lockStreamListener = ref.watch(lockStreamListenerProvider.notifier);
 
-    void setAppLockEvent() {
+    Future<void> setAppLockEvent() async {
       final auth = ref.read(walletAuthProvider);
       final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
       final locked = sharedPrefsUtil.getLock();
 
       if ((locked || auth.encryptedSecret != null) && !lockDisabled) {
-        lockStreamListener.value?.cancel();
+        lockStreamListener.state?.cancel();
 
         final timeout = sharedPrefsUtil.getLockTimeout();
         Future<void> delayed = Future.delayed(timeout.getDuration());
-        lockStreamListener.value = delayed.asStream().listen((_) {
+        lockStreamListener.state = delayed.asStream().listen((_) {
           final notifier = ref.read(walletAuthNotifierProvider);
           notifier?.lock();
-
-          Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
         });
       }
     }
 
     Future<void> cancelLockEvent() async {
-      await lockStreamListener.value?.cancel();
+      await lockStreamListener.state?.cancel();
     }
 
     useOnAppLifecycleStateChange((previous, state) async {
@@ -69,6 +70,10 @@ class HomeScreen extends HookConsumerWidget {
           break;
         case AppLifecycleState.resumed:
           await cancelLockEvent();
+          final notifier = ref.read(walletAuthNotifierProvider);
+          if (notifier?.walletLocked == true) {
+            Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
+          }
 
           final inBackground = ref.read(inBackgroundProvider.notifier);
           Future.delayed(const Duration(milliseconds: 100), () {
