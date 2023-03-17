@@ -156,9 +156,9 @@ class VitcSwapPage extends HookConsumerWidget {
       text = text
           .replaceAll(toCurrencyFormatter.groupSeparator, '')
           .replaceAll(toCurrencyFormatter.decimalSeparator, '.');
-      final value = Decimal.tryParse(text);
 
       final notifier = ref.read(vitcSwapStateProvider.notifier);
+      final value = Decimal.tryParse(text);
       if (value == null) {
         notifier.updateToValue(null);
         fromAmountController.value = TextEditingValue.empty;

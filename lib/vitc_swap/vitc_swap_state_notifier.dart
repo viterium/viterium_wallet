@@ -100,7 +100,7 @@ class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
   Future<void> _fetchFromAmount({
     RemoteAmountCallback? onRemoteAmount,
   }) async {
-    if (state.fromAmount.raw == BigInt.zero) {
+    if (state.toAmount.raw == BigInt.zero) {
       onRemoteAmount?.call(null);
       return;
     }
@@ -128,7 +128,6 @@ class VitcSwapStateNotifier extends StateNotifier<VitcSwapState> {
         );
         onRemoteAmount?.call(null);
       }
-      print(e);
     }
   }
 
