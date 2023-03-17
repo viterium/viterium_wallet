@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.3.1
+
+* New fiat currencies powered by CoinGecko API
+* Show fiat value equivalent for token amounts
+* Disable auto-receive
+* Notifications update
+* Quick account change (tap on account name / address)
+* Quick account address copy (long press on account name / address)
+* DeFi Center improvements
+* Viva Staking & Vitc Stake pool lock info
+* VitcSwap low liquidity warning
+* Bug fixes
+
 ## 1.3.0
 
 * DeFi Center
