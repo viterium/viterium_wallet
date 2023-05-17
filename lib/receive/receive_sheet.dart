@@ -146,7 +146,7 @@ class ReceiveSheet extends HookConsumerWidget {
                           shape: BoxShape.rectangle,
                           border: Border.all(color: theme.primary, width: 2),
                         ),
-                        child: QrImage(
+                        child: QrImageView(
                           data: 'vite:$address',
                           gapless: false,
                           backgroundColor: Colors.white,
