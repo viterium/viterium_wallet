@@ -280,6 +280,7 @@ final vitcPoolUnlockInRawProvider =
 
   var height = lastSnapshotHeight;
 
+  final started = poolInfo.startBlock < height;
   final ended = poolInfo.endBlock < height;
 
   if (height > poolInfo.endBlock) {
@@ -288,7 +289,7 @@ final vitcPoolUnlockInRawProvider =
 
   final end = poolInfo.endBlock - height;
 
-  var unlocksInRaw = (ended
+  var unlocksInRaw = (ended || !started
       ? BigInt.zero
       : userInfo.depositBlock + poolInfo.timelock - lastSnapshotHeight);
 
