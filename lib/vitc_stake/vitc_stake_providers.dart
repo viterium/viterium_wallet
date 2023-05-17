@@ -224,7 +224,8 @@ final vitcStakeAprForPoolInfoProvider =
 
   // Check if same token pool
   if (poolInfo.rewardTokenId == poolInfo.stakingTokenId) {
-    final rewardAmount = poolInfo.totalRewardBalance.toDecimal();
+    final rewardAmount =
+        (poolInfo.totalRewardBalance * poolInfo.removedDecimals).toDecimal();
     final stakingAmount = poolInfo.totalStakingBalance.toDecimal();
 
     final aprValue = (rewardAmount *
@@ -246,7 +247,7 @@ final vitcStakeAprForPoolInfoProvider =
       ref.watch(aprExchangeRateForTokenIdProvider(poolInfo.stakingTokenId));
 
   final rewardAmount = Amount(
-    raw: poolInfo.totalRewardBalance,
+    raw: poolInfo.totalRewardBalance * poolInfo.removedDecimals,
     tokenInfo: poolInfo.rewardTokenInfo,
   );
   final stakingAmount = Amount(
