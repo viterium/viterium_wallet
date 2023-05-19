@@ -50,20 +50,24 @@ class VitcSwapSettingsNotifier extends StateNotifier<VitcSwapSettings> {
   }
 
   Future<void> _refreshTradingTokens() async {
-    final heightRange = HeightRange(
-      fromHeight: BigInt.from(state.tokenCache.lastHeight),
-      toHeight: BigInt.zero,
-    );
     final latestBlock =
         await service.client.getLatestAccountBlock(service.contract.address);
-    final lastHeight = latestBlock.height.toInt();
-    final newTokens = await service.getTradingTokensForHeightRange(heightRange);
-
-    final tradingTokens = state.tokenCache.tradingTokens.addAll(
-      newTokens.map((token) => token.tokenId),
+    final lastHeight = latestBlock.height;
+    final fromHeight = max(kVitcSwapLastHeight, state.tokenCache.lastHeight);
+    final heightRange = HeightRange(
+      fromHeight: BigInt.from(fromHeight + 1),
+      toHeight: lastHeight,
     );
 
-    _updateTradingTokens(tradingTokens, lastHeight: lastHeight);
+    final cachedTokenIds = state.tokenCache.tradingTokens;
+    final newTokens = await service.getTradingTokensForHeightRange(heightRange);
+    final newTokenIds = newTokens
+        .map((token) => token.tokenId)
+        .where((tokenId) => !cachedTokenIds.contains(tokenId));
+
+    final tradingTokens = cachedTokenIds.addAll(newTokenIds);
+
+    await _updateTradingTokens(tradingTokens, lastHeight: lastHeight.toInt());
   }
 
   Future<void> _updateSettings(VitcSwapSettings settings) async {

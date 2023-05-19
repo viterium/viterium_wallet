@@ -31,6 +31,8 @@ final _homePageWatcherProvider =
   ref.watch(autoreceiveServiceProvider(account));
   ref.watch(pushSettingsForAccountProvider(account));
   ref.watch(quotaProvider(account.address));
+  // Fetch VITCSwap new pairs
+  ref.watch(vitcSwapSettingsProvider);
 });
 
 class WalletHomePage extends HookConsumerWidget {

@@ -33,17 +33,37 @@ class VitcSwapService {
   Future<IList<Token>> getTradingTokensForHeightRange(
       HeightRange heightRange) async {
     final event = abi.topicForEvent('NewPair');
-    final filter = VmLogFilter(
-      addressHeightRange: {
-        contract.contractAddress: heightRange,
-      },
-      topics: [
-        [event]
-      ],
-      pageIndex: 0,
-      pageSize: 1000,
-    );
-    final vmLogs = await client.getVmLogsByFilter(filter);
+
+    if (heightRange.toHeight == BigInt.zero) {
+      final latestBlock = await client.getLatestAccountBlock(contract.address);
+      heightRange = heightRange.copyWith(toHeight: latestBlock.height);
+    }
+
+    final pageSize = BigInt.from(1000);
+    final vmLogs = <VmLogMessage>[];
+    for (BigInt i = heightRange.fromHeight;
+        i < heightRange.toHeight;
+        i += pageSize) {
+      var toHeight = i + pageSize;
+      if (toHeight > heightRange.toHeight) {
+        toHeight = heightRange.toHeight;
+      }
+      final filter = VmLogFilter(
+        addressHeightRange: {
+          contract.contractAddress: HeightRange(
+            fromHeight: i,
+            toHeight: toHeight,
+          ),
+        },
+        topics: [
+          [event]
+        ],
+        pageIndex: 0,
+        pageSize: 1000,
+      );
+      final vmLogsPage = await client.getVmLogsByFilter(filter);
+      vmLogs.addAll(vmLogsPage);
+    }
 
     final tokens = IList(vmLogs.map((e) {
       final vmlog = e.vmLog;
@@ -56,9 +76,6 @@ class VitcSwapService {
     }));
     return tokens;
   }
-
-  Future<IList<Token>> getTradingTokens() =>
-      getTradingTokensForHeightRange(HeightRange.all);
 
   Future<Amount> getConversion({
     required Amount fromAmount,

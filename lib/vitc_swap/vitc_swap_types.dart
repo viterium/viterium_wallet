@@ -5,7 +5,7 @@ import 'package:vite/vite.dart';
 part 'vitc_swap_types.freezed.dart';
 part 'vitc_swap_types.g.dart';
 
-const kVitcSwapLastHeight = 249000;
+const kVitcSwapLastHeight = 329800;
 
 const kVitcSwapTokenIdList = [
   'tti_5649544520544f4b454e6e40',
@@ -40,6 +40,10 @@ const kVitcSwapTokenIdList = [
   'tti_fb901364ef662c25cf43125c',
   'tti_1ef6a8bef889022e0351886e',
   'tti_5c3e2df1729d8d402a8275b8',
+  'tti_f446e57bcdb252282bdb8137',
+  'tti_3eb2bbf86d2f5873b62452b0',
+  'tti_b18e6488eeb30541da7f5010',
+  'tti_2ebf3bd74d4895b0ee81257d',
 ];
 
 @freezed
