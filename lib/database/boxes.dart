@@ -97,6 +97,19 @@ class GenericBox {
     return [];
   }
 
+  List<T>? tryGetList<T>(String key, {TypeFactory<T>? typeFactory}) {
+    final value = box.get(key);
+    if (value is List) {
+      if (typeFactory != null) {
+        return value
+            .map((e) => typeFactory(e.cast<String, dynamic>()))
+            .toList();
+      }
+      return value.cast<T>();
+    }
+    return null;
+  }
+
   Future<void> setList<T>(
     String key,
     List<T> list, {
@@ -143,4 +156,3 @@ class GenericBox {
 
   Future<void> close() => box.close();
 }
-

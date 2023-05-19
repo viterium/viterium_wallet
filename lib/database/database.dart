@@ -9,21 +9,11 @@ import '../contacts/contact.dart';
 import '../core/vault.dart';
 import '../push_notifications/push_types.dart';
 import '../tokens/token_types.dart';
-import '../util/random_util.dart';
 import '../vitex/vitex_types.dart';
 import 'boxes.dart';
 import 'json_type_adapter.dart';
 
 typedef BoxKey = String;
-
-late final BoxKey kContactsBox;
-late final BoxKey kTokenInfoBoxMainnet;
-final BoxKey kTokenInfoBoxTestnet = 'tokenInfoBoxTestnet';
-final BoxKey kTokenInfoBoxDevnet = 'tokenInfoBoxDevnet';
-late final BoxKey kTokenIconBox;
-late final BoxKey kPushInfoBox;
-late final BoxKey kSettingsBox;
-late final BoxKey kExchangeRateBox;
 
 int _getTypeId<T>() {
   switch (T) {
@@ -76,7 +66,50 @@ final exchangeRateAdapter = JsonTypeAdapter(
 );
 
 class Database {
-  const Database();
+  Database._();
+
+  static late Database _instance;
+  factory Database() => _instance;
+
+  static bool _isInitialized = false;
+  static Future<void> _initHive() async {
+    await Hive.initFlutter('viterium_wallet');
+
+    Hive.registerAdapter(accountAdapter);
+    Hive.registerAdapter(accountInfoAdapter);
+    Hive.registerAdapter(contactAdapter);
+    Hive.registerAdapter(tokenInfoAdapter);
+    Hive.registerAdapter(cachedTokenIconAdapter);
+    Hive.registerAdapter(pushInfoAdapter);
+    Hive.registerAdapter(exchangeRateAdapter);
+  }
+
+  static Future<void> init() async {
+    if (_isInitialized) return;
+    await _initHive();
+    _instance = Database._();
+    await _instance._init();
+    _isInitialized = true;
+  }
+
+  static Future<Database> reset() async {
+    await closeBox<TokenInfo>(_instance.tokenInfoBoxTestnet);
+    await closeBox<TokenInfo>(_instance.tokenInfoBoxDevnet);
+    await Hive.deleteFromDisk();
+
+    _instance = Database._();
+    await _instance._init();
+    return _instance;
+  }
+
+  late final BoxKey contactsBox;
+  late final BoxKey tokenInfoBoxMainnet;
+  final BoxKey tokenInfoBoxTestnet = 'tokenInfoBoxTestnet';
+  final BoxKey tokenInfoBoxDevnet = 'tokenInfoBoxDevnet';
+  late final BoxKey tokenIconBox;
+  late final BoxKey pushInfoBox;
+  late final BoxKey settingsBox;
+  late final BoxKey exchangeRateBox;
 
   static Future<HiveCipher> _getBoxCipher(BoxKey boxKey, Vault vault) async {
     var secureKey = await vault.get(boxKey);
@@ -87,16 +120,8 @@ class Database {
     return HiveAesCipher(base64Decode(secureKey));
   }
 
-  static Future<void> init() async {
+  Future<void> _init() async {
     await Hive.initFlutter('viterium_wallet');
-
-    final vault = Vault();
-    const key = 'aa721440b4f52bca';
-    var secureKey = await vault.get(key);
-    if (secureKey == null) {
-      secureKey = RandomUtil.generateKey();
-      await vault.set(key, secureKey);
-    }
 
     const kContactsBoxId = '_contactsBox';
     const kTokenInfoBoxId = '_tokenInfoBox';
@@ -105,28 +130,20 @@ class Database {
     const kPushInfoBoxId = '_pushInfoBox';
     const kExchangeRateBoxId = '_exchangeRateBox';
 
-    kContactsBox =
-        digest(data: stringToBytesUtf8('$kContactsBoxId#$secureKey')).hex;
-    kTokenInfoBoxMainnet = digest(
-        data: stringToBytesUtf8(
-      '$kTokenInfoBoxId#mainnet#$secureKey',
-    )).hex;
-    kTokenIconBox =
-        digest(data: stringToBytesUtf8('$kTokenIconBoxId#$secureKey')).hex;
-    kSettingsBox =
-        digest(data: stringToBytesUtf8('$kSettingsBoxId#$secureKey')).hex;
-    kPushInfoBox =
-        digest(data: stringToBytesUtf8('$kPushInfoBoxId#$secureKey')).hex;
-    kExchangeRateBox =
-        digest(data: stringToBytesUtf8('$kExchangeRateBoxId#$secureKey')).hex;
+    final vault = Vault();
+    final dbKey = await vault.getDbKey();
 
-    Hive.registerAdapter(accountAdapter);
-    Hive.registerAdapter(accountInfoAdapter);
-    Hive.registerAdapter(contactAdapter);
-    Hive.registerAdapter(tokenInfoAdapter);
-    Hive.registerAdapter(cachedTokenIconAdapter);
-    Hive.registerAdapter(pushInfoAdapter);
-    Hive.registerAdapter(exchangeRateAdapter);
+    contactsBox = digest(data: stringToBytesUtf8('$kContactsBoxId#$dbKey')).hex;
+    tokenInfoBoxMainnet = digest(
+        data: stringToBytesUtf8(
+      '$kTokenInfoBoxId#mainnet#$dbKey',
+    )).hex;
+    tokenIconBox =
+        digest(data: stringToBytesUtf8('$kTokenIconBoxId#$dbKey')).hex;
+    settingsBox = digest(data: stringToBytesUtf8('$kSettingsBoxId#$dbKey')).hex;
+    pushInfoBox = digest(data: stringToBytesUtf8('$kPushInfoBoxId#$dbKey')).hex;
+    exchangeRateBox =
+        digest(data: stringToBytesUtf8('$kExchangeRateBoxId#$dbKey')).hex;
 
     Future<Box> _openBox<T>(String box, {bool encrypted = false}) async {
       return Hive.openBox<T>(
@@ -137,15 +154,15 @@ class Database {
 
     await Future.wait([
       // typed boxes
-      _openBox<Contact>(kContactsBox, encrypted: true),
-      _openBox<TokenInfo>(kTokenInfoBoxMainnet),
-      Hive.openBox<TokenInfo>(kTokenInfoBoxTestnet, bytes: Uint8List(0)),
-      Hive.openBox<TokenInfo>(kTokenInfoBoxDevnet, bytes: Uint8List(0)),
-      _openBox<CachedTokenIcon>(kTokenIconBox),
-      _openBox<PushInfo>(kPushInfoBox, encrypted: true),
-      _openBox<ExchangeRate>(kExchangeRateBox),
+      _openBox<Contact>(contactsBox, encrypted: true),
+      _openBox<TokenInfo>(tokenInfoBoxMainnet),
+      Hive.openBox<TokenInfo>(tokenInfoBoxTestnet, bytes: Uint8List(0)),
+      Hive.openBox<TokenInfo>(tokenInfoBoxDevnet, bytes: Uint8List(0)),
+      _openBox<CachedTokenIcon>(tokenIconBox),
+      _openBox<PushInfo>(pushInfoBox, encrypted: true),
+      _openBox<ExchangeRate>(exchangeRateBox),
       // generic boxes
-      _openBox(kSettingsBox, encrypted: true),
+      _openBox(settingsBox, encrypted: true),
     ]);
   }
 

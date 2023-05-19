@@ -7,13 +7,12 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../database/boxes.dart';
-import '../database/database.dart';
 import 'token_constants.dart';
 import 'token_types.dart';
 
 final tokenIconBoxProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
-  return db.getTypedBox<CachedTokenIcon>(kTokenIconBox);
+  return db.getTypedBox<CachedTokenIcon>(db.tokenIconBox);
 });
 
 final tokenIconProvider =

@@ -10,12 +10,11 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../coingecko/coingecko_providers.dart';
-import '../database/database.dart';
 import 'vitex_types.dart';
 
 final _exchangeRateBoxProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
-  return db.getTypedBox<ExchangeRate>(kExchangeRateBox);
+  return db.getTypedBox<ExchangeRate>(db.exchangeRateBox);
 });
 
 final _vitexExchangeRatesRemoteProvider =

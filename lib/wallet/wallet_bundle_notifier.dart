@@ -45,7 +45,7 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
   }
 
   Future<void> addWallet(WalletInfo wallet) async {
-    final wallets = state.wallets;
+    final wallets = state.wallets ?? IList(const []);
     if (wallets.contains(wallet)) {
       throw Exception('Wallet already exists');
     }
@@ -107,7 +107,7 @@ class WalletBundleNotifier extends StateNotifier<WalletBundle> {
     await repository.settings.remove(wallet.selectionKey);
 
     // remove wallet from bundle
-    final wallets = state.wallets.remove(wallet);
+    final wallets = state.wallets?.remove(wallet) ?? IList(const []);
     await repository.updateWallets(wallets);
     state = state.copyWith(wallets: wallets);
   }

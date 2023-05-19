@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../database/database.dart';
 import '../node_settings/node_types.dart';
 
 final _tokenInfoBoxProvider = Provider((ref) {
@@ -12,13 +11,13 @@ final _tokenInfoBoxProvider = Provider((ref) {
   String boxId;
   switch (network) {
     case ViteNetwork.mainnet:
-      boxId = kTokenInfoBoxMainnet;
+      boxId = db.tokenInfoBoxMainnet;
       break;
     case ViteNetwork.testnet:
-      boxId = kTokenInfoBoxTestnet;
+      boxId = db.tokenInfoBoxTestnet;
       break;
     case ViteNetwork.devnet:
-      boxId = kTokenInfoBoxDevnet;
+      boxId = db.tokenInfoBoxDevnet;
       break;
   }
   return db.getTypedBox<TokenInfo>(boxId);

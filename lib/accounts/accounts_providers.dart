@@ -3,7 +3,6 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../database/boxes.dart';
-import '../database/database.dart';
 import '../wallet/wallet_types.dart';
 import 'account.dart';
 import 'account_selection.dart';
@@ -20,7 +19,7 @@ final _accountsBoxProvider =
 final _accountSelectionBoxProvider =
     Provider.autoDispose.family<GenericBox, WalletInfo>((ref, wallet) {
   final db = ref.watch(dbProvider);
-  return db.getGenericBox(kSettingsBox);
+  return db.getGenericBox(db.settingsBox);
 });
 
 final _accountSelectionProvider =

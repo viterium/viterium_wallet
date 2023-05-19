@@ -4,7 +4,6 @@ import 'package:vite/utils.dart';
 
 import '../accounts/account.dart';
 import '../app_providers.dart';
-import '../database/database.dart';
 import 'push_contract.dart';
 import 'push_info_repository.dart';
 import 'push_service.dart';
@@ -40,7 +39,7 @@ final pushServiceProvider = Provider((ref) {
 
 final pushInfoBoxProvider = Provider((ref) {
   final db = ref.watch(dbProvider);
-  return db.getTypedBox<PushInfo>(kPushInfoBox);
+  return db.getTypedBox<PushInfo>(db.pushInfoBox);
 });
 
 final pushInfoRepositoryProvider = Provider((ref) {

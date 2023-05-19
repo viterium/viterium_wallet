@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
+import '../database/database.dart';
 import '../intro/intro_providers.dart';
 import '../push_notifications/push_types.dart';
 import '../util/ui_util.dart';
-import '../wallet/wallet_types.dart';
 import '../widgets/notice_dialog.dart';
 
 final _noticeShownProvider = StateProvider<bool>((ref) {
@@ -42,7 +42,10 @@ class SplashScreen extends HookConsumerWidget {
         try {
           await Future.delayed(const Duration(milliseconds: 1000));
           final wallets = ref.read(walletsProvider);
-          final newWallet = wallets.firstWhere((w) => w.wid == walletId);
+          final newWallet = wallets?.firstWhere((w) => w.wid == walletId);
+          if (newWallet == null) {
+            throw Exception('Wallet not found');
+          }
           final notifier = ref.read(walletBundleProvider.notifier);
           await notifier.switchWallet(newWallet);
         } catch (e) {
@@ -72,36 +75,17 @@ class SplashScreen extends HookConsumerWidget {
     Future<void> checkWalletStatus() async {
       await handleNotificationId();
 
-      final wallets = ref.read(walletBundleProvider);
-      final wallet = wallets.selected;
+      final walletBundle = ref.read(walletBundleProvider);
+      final wallet = walletBundle.selected;
       if (wallet == null) {
         final vault = ref.read(vaultProvider);
         final pinIsSet = await vault.pinIsSet;
-        // if pin is set but no wallets
-        if (pinIsSet && wallets.wallets.isEmpty) {
-          final seedKey = 'fviterium_seed';
-          final mnemonicKey = 'fviterium_mnemonic';
-          // check for alpha version seed
-          final seed = await vault.get(seedKey);
-          if (seed != null) {
-            try {
-              final mnemonic = await vault.get(mnemonicKey);
-              final notifier = ref.read(walletBundleProvider.notifier);
-              final data = WalletData(
-                name: 'Viterium Wallet ',
-                seed: seed,
-                mnemonic: mnemonic,
-              );
-              await notifier.setupWallet(data);
-              await vault.delete(seedKey);
-              await vault.delete(mnemonicKey);
-            } catch (_) {
-              await vault.deletePin();
-            }
-          } else {
-            // no alpha seed so remove pin and any vault data
-            await vault.deleteAll();
-          }
+        // on iOS the Vault is not cleared on app uninstall
+        // check if pin is set but wallets is null then reset vault and database
+        if (pinIsSet && walletBundle.wallets == null) {
+          await vault.deleteAll();
+          final db = await Database.reset();
+          ref.read(dbProvider.notifier).state = db;
         }
 
         ref.read(introDataProvider.notifier).clear();

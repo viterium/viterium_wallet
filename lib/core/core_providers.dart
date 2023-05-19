@@ -48,7 +48,7 @@ final networkErrorProvider = Provider.autoDispose<bool>((ref) {
 
 final maxAccountsProvider = Provider((ref) => kMaxAccounts);
 
-final dbProvider = Provider((ref) => const Database());
+final dbProvider = StateProvider((ref) => Database());
 
 final stylesProvider = Provider((ref) {
   final theme = ref.watch(themeProvider);
