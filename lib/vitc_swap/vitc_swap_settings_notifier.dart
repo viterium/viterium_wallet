@@ -46,17 +46,42 @@ class VitcSwapSettingsNotifier extends StateNotifier<VitcSwapSettings> {
     required this.repository,
     required this.service,
   }) : super(repository.getVitcSwapSettings()) {
-    _refreshTradingTokens();
+    _updateCachedTokens().then((_) => _refreshTradingTokens());
+  }
+
+  Future<void> _updateCachedTokens() async {
+    if (state.tokenCache.lastHeight >= kVitcSwapLastHeight) {
+      return;
+    }
+
+    final cachedTokens = state.tokenCache.tradingTokens.toSet();
+    final newTokens = kVitcSwapTokenIdList
+        .where((tokenId) => !cachedTokens.contains(tokenId));
+
+    final tradingTokens = state.tokenCache.tradingTokens.addAll(newTokens);
+    await _updateTradingTokens(tradingTokens, lastHeight: kVitcSwapLastHeight);
   }
 
   Future<void> _refreshTradingTokens() async {
-    final latestBlock =
+    final latestBlockBlock =
         await service.client.getLatestAccountBlock(service.contract.address);
-    final lastHeight = latestBlock.height;
-    final fromHeight = max(kVitcSwapLastHeight, state.tokenCache.lastHeight);
+    final accountHeight = latestBlockBlock.height;
+
+    try {
+      _fetchNewTradingTokensPaged(accountHeight.toInt());
+    } catch (_) {}
+  }
+
+  Future<void> _fetchNewTradingTokensPaged(
+    int accountHeight, {
+    int pageSize = 1000,
+  }) async {
+    final cachedHeight = state.tokenCache.lastHeight;
+    final fromHeight = max(kVitcSwapLastHeight, cachedHeight) + 1;
+    final toHeight = min(accountHeight.toInt(), fromHeight + pageSize);
     final heightRange = HeightRange(
-      fromHeight: BigInt.from(fromHeight + 1),
-      toHeight: lastHeight,
+      fromHeight: BigInt.from(fromHeight),
+      toHeight: BigInt.from(toHeight),
     );
 
     final cachedTokenIds = state.tokenCache.tradingTokens;
@@ -67,7 +92,10 @@ class VitcSwapSettingsNotifier extends StateNotifier<VitcSwapSettings> {
 
     final tradingTokens = cachedTokenIds.addAll(newTokenIds);
 
-    await _updateTradingTokens(tradingTokens, lastHeight: lastHeight.toInt());
+    await _updateTradingTokens(tradingTokens, lastHeight: toHeight);
+    if (toHeight < accountHeight.toInt()) {
+      _fetchNewTradingTokensPaged(accountHeight, pageSize: pageSize);
+    }
   }
 
   Future<void> _updateSettings(VitcSwapSettings settings) async {

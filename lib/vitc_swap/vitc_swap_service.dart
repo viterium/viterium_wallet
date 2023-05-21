@@ -31,7 +31,8 @@ class VitcSwapService {
   }
 
   Future<IList<Token>> getTradingTokensForHeightRange(
-      HeightRange heightRange) async {
+    HeightRange heightRange,
+  ) async {
     final event = abi.topicForEvent('NewPair');
 
     if (heightRange.toHeight == BigInt.zero) {
