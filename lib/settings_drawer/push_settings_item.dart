@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:push/push.dart';
 
 import '../app_icons.dart';
 import '../app_providers.dart';
-import '../util/platform.dart';
 import '../util/ui_util.dart';
 import '../widgets/app_simpledialog.dart';
 import '../widgets/dialog.dart';
@@ -81,23 +79,20 @@ class PushSettingsItem extends ConsumerWidget {
       );
 
       if (auth) {
-        changePushSettings(enable);
+        await changePushSettings(enable);
       }
     }
 
-    Future<bool> iOSCheckPermissions() async {
-      if (kPlatformIsIOS) {
-        final permission = await Push.instance.requestPermission();
-        if (permission == false) {
-          AppDialogs.showInfoDialog(
-            context,
-            'Notifications Disabled',
-            'Please enable notifications fron iOS settings',
-          );
-          return false;
-        }
+    Future<bool> checkPermissions() async {
+      final permission = await Push.instance.requestPermission();
+      if (permission == false) {
+        AppDialogs.showInfoDialog(
+          context,
+          'Notifications Disabled',
+          'Please enable notifications from settings',
+        );
       }
-      return true;
+      return permission;
     }
 
     Future<void> showPushSettingsDialog() async {
@@ -110,7 +105,7 @@ class PushSettingsItem extends ConsumerWidget {
       }
 
       if (selection) {
-        if (!await iOSCheckPermissions()) {
+        if (!await checkPermissions()) {
           return;
         }
       }

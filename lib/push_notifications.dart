@@ -18,11 +18,18 @@ void Function() setupPushNotifications(WidgetRef ref) {
     notifier.updateToken(token);
   });
 
+  Hash? getIdFromData(Map<String?, Object?> data) {
+    return switch (data) {
+      {'data': {'id': String id}} || {'id': String id} => Hash.tryParse(id),
+      _ => null,
+    };
+  }
+
   Push.instance.notificationTapWhichLaunchedAppFromTerminated.then((data) {
     if (data == null) {
       return;
     }
-    final id = Hash.tryParse(data['id'] as String? ?? '');
+    final id = getIdFromData(data);
     if (id == null) {
       return;
     }
@@ -32,10 +39,11 @@ void Function() setupPushNotifications(WidgetRef ref) {
 
   final onNotificationTapSubscription =
       Push.instance.onNotificationTap.listen((data) {
-    final id = Hash.tryParse(data['id'] as String? ?? '');
+    final id = getIdFromData(data);
     if (id == null) {
       return;
     }
+
     final notifier = ref.read(notificationIdProvider.notifier);
     notifier.state = id;
   });
