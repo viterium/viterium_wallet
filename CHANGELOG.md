@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0
+
+* Update how push notifications are handled
+* Fix missing pairs on VITCSwap
+* Fix lock state for pending pools on VITCStake
+* Fix reported reward amount on ended pools
+* Other Bug fixes
+
 ## 1.3.1
 
 * New fiat currencies powered by CoinGecko API
