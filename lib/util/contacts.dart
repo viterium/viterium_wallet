@@ -32,18 +32,24 @@ Future<void> exportContacts(WidgetRef ref, BuildContext context) async {
   final baseDirectory = await getTemporaryDirectory();
   final contactsFile = File("${baseDirectory.path}/$filename");
   await contactsFile.writeAsString(json.encode(jsonList));
-  //UIUtil.cancelLockEvent();
+  final lockDisabled = ref.read(lockDisabledProvider.notifier);
+  lockDisabled.state = true;
   Share.shareXFiles([XFile(contactsFile.path)]);
+  lockDisabled.state = false;
 }
 
 Future<void> importContacts(WidgetRef ref, BuildContext context) async {
   final l10n = ref.read(l10nProvider);
-  //UIUtil.cancelLockEvent();
+
+  final lockDisabled = ref.read(lockDisabledProvider.notifier);
+  lockDisabled.state = true;
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     allowMultiple: false,
     type: FileType.custom,
     allowedExtensions: ["txt"],
   );
+  lockDisabled.state = false;
+
   if (result != null) {
     File f = File(result.files.single.path!);
 
@@ -75,8 +81,7 @@ Future<void> importContacts(WidgetRef ref, BuildContext context) async {
       int numSaved = await contactsManager.saveContacts(contactsToAdd);
       if (numSaved > 0) {
         final message =
-            l10n.contactsImportSuccess
-            .replaceAll("%1", numSaved.toString());
+            l10n.contactsImportSuccess.replaceAll("%1", numSaved.toString());
         UIUtil.showSnackbar(message, context);
       } else {
         UIUtil.showSnackbar(l10n.noContactsImport, context);

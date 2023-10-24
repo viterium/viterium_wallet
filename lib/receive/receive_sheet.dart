@@ -60,6 +60,8 @@ class ReceiveSheet extends HookConsumerWidget {
     }
 
     Future<void> shareAddress() async {
+      final lockDisabled = ref.read(lockDisabledProvider.notifier);
+      lockDisabled.state = true;
       try {
         showShareCard.value = true;
         await Future.delayed(Duration(milliseconds: 50));
@@ -91,6 +93,8 @@ class ReceiveSheet extends HookConsumerWidget {
         final log = ref.read(loggerProvider);
         log.e('Failed to share address', e, st);
       }
+
+      lockDisabled.state = false;
     }
 
     return SafeArea(
