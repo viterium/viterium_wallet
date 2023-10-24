@@ -30,7 +30,6 @@ class AccountListItem extends ConsumerWidget {
         context: context,
         theme: ref.read(themeProvider),
         widget: AccountDetailsSheet(account: account),
-        onDisposed: () => AccountDetailsSheet.saveChanges(ref, account),
       );
     }
 

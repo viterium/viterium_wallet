@@ -152,14 +152,14 @@ class AccountsNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeAccountName(Account account, String name) {
+  Future<void> changeAccountName(Account account, String name) async {
     final newAccount = account.copyWith(name: name);
     final index = account.index;
     if (index == _mainAccount.index) {
       _mainAccount = newAccount;
     }
     _accounts[index] = newAccount;
-    _accountsBox.set(accountKey(index), newAccount);
+    await _accountsBox.set(accountKey(index), newAccount);
 
     notifyListeners();
   }

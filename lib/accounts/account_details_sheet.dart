@@ -16,8 +16,6 @@ import '../widgets/tap_outside_unfocus.dart';
 import '../widgets/trashcan_button.dart';
 import 'account.dart';
 
-final _accountNameProvider = StateProvider<String?>((ref) => null);
-
 final _timerProvider = StateProvider.autoDispose<Timer?>((ref) {
   final Timer? timer = null;
 
@@ -35,15 +33,6 @@ class AccountDetailsSheet extends HookConsumerWidget {
     Key? key,
     required this.account,
   }) : super(key: key);
-
-  // FIXME - remove workaround
-  static void saveChanges(WidgetRef ref, Account account) {
-    final name = ref.read(_accountNameProvider);
-    if (name != null && account.name != name && name.trim().isNotEmpty) {
-      final accounts = ref.read(accountsProvider);
-      accounts.changeAccountName(account, name);
-    }
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,12 +59,7 @@ class AccountDetailsSheet extends HookConsumerWidget {
       );
     }
 
-    void updateName(String value) {
-      ref.read(_accountNameProvider.notifier).state = value;
-    }
-
     void deleteAccount() {
-      ref.read(_accountNameProvider.notifier).state = null;
       ref.read(accountsProvider).removeAccount(account);
 
       Navigator.of(context).pop();
@@ -103,8 +87,13 @@ class AccountDetailsSheet extends HookConsumerWidget {
     }
 
     useEffect(() {
-      Future.microtask(() => updateName(account.name));
-      return;
+      final notifier = ref.read(accountsProvider.notifier);
+      return () {
+        final name = nameController.text.trim();
+        if (name.isNotEmpty && account.name != name) {
+          notifier.changeAccountName(account, name);
+        }
+      };
     }, const []);
 
     return TapOutsideUnfocus(
@@ -137,7 +126,6 @@ class AccountDetailsSheet extends HookConsumerWidget {
                 LengthLimitingTextInputFormatter(25),
               ],
               style: styles.textStyleAppTextField,
-              onChanged: updateName,
             ),
           ],
         ),
