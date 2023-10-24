@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:vite/core.dart';
 
 import '../accounts/account.dart';
+import '../util/safe_change_notifier.dart';
 
-class TransactionHistoryNotifier extends ChangeNotifier {
+class TransactionHistoryNotifier extends SafeChangeNotifier {
   final Account account;
   final Token? token;
   final ViteClient client;
@@ -16,8 +16,6 @@ class TransactionHistoryNotifier extends ChangeNotifier {
   final _unconfirmedHashes = <Hash>{};
   bool _refreshingUnconfirmed = false;
   bool get hasUnconfirmed => _unconfirmedHashes.isNotEmpty;
-
-  bool disposed = false;
 
   BigInt _lastSnapshotHeight = BigInt.zero;
   BigInt get lastSnapshotHeight => _lastSnapshotHeight;
@@ -41,27 +39,6 @@ class TransactionHistoryNotifier extends ChangeNotifier {
   bool _loading = false;
   bool get loading => _loading;
   bool _loadedLess = false;
-
-  @override
-  void notifyListeners() {
-    if (disposed) {
-      return;
-    }
-
-    assert(() {
-      if (token != null) {
-        return true;
-      }
-      for (int i = 1; i < history.length; ++i) {
-        if (history[i - 1].height != history[i].height + BigInt.one) {
-          return false;
-        }
-      }
-      return true;
-    }());
-
-    super.notifyListeners();
-  }
 
   Future<void> loadMore([int count = 20]) async {
     if (_loading) {

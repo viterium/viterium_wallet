@@ -1,8 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:vite/vite.dart';
 
-class QuotaStakeListNotifier extends ChangeNotifier {
+import '../util/safe_change_notifier.dart';
+
+class QuotaStakeListNotifier extends SafeChangeNotifier {
   final ViteAddress address;
   final RpcClient client;
   final Logger log;
@@ -13,8 +14,6 @@ class QuotaStakeListNotifier extends ChangeNotifier {
   int? totalStakeCount;
   BigInt? totalStakeAmount;
 
-  bool disposed = false;
-
   bool get hasMore =>
       totalStakeCount == null || totalStakeCount! > stakeList.length;
 
@@ -24,14 +23,6 @@ class QuotaStakeListNotifier extends ChangeNotifier {
     required this.log,
   }) {
     loadMore();
-  }
-
-  @override
-  void notifyListeners() {
-    if (disposed) {
-      return;
-    }
-    super.notifyListeners();
   }
 
   Future<RpcStakeListInfo> getStakeList([

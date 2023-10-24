@@ -1,13 +1,13 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/foundation.dart';
 import 'package:vite/vite.dart';
 
 import '../database/boxes.dart';
+import '../util/safe_change_notifier.dart';
 import 'account.dart';
 import 'account_selection.dart';
 import 'selection_history.dart';
 
-class AccountsNotifier extends ChangeNotifier {
+class AccountsNotifier extends SafeChangeNotifier {
   static String accountKey(int index) => '$index';
   late final SelectionHistory<int> _recents;
   late final Map<int, Account> _accounts;
@@ -36,17 +36,6 @@ class AccountsNotifier extends ChangeNotifier {
       }
     }
     return null;
-  }
-
-  // TODO - fix workaround
-  bool disposed = false;
-
-  @override
-  void notifyListeners() {
-    if (disposed) {
-      return;
-    }
-    super.notifyListeners();
   }
 
   AccountsNotifier({
