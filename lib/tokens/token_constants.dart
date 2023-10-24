@@ -11,8 +11,5 @@ const testnetTokenIdMapping = {
 };
 
 const assetTokenIds = {
-  'tti_b18e6488eeb30541da7f5010',
-  'tti_5649544520544f4b454e6e40',
-  'tti_564954455820434f494e69b5',
-  'tti_251a3e67a41b5ea2373936c8',
+  'tti_b18e6488eeb30541da7f5010', // VT
 };
