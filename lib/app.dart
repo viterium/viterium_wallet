@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -69,102 +69,104 @@ class App extends HookConsumerWidget {
             minHeight: 480,
             maxWidth: 720,
           ),
-          child: OKToast(
-            position: ToastPosition(align: Alignment.topCenter, offset: 40),
-            textStyle: styles.textStyleSnackbar,
-            backgroundColor: theme.backgroundDark,
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Viterium',
-              theme: ThemeData(
-                dialogBackgroundColor: theme.backgroundDark,
-                primaryColor: theme.primary,
-                colorScheme: ThemeData().colorScheme.copyWith(
-                      brightness: Brightness.dark,
-                      secondary: theme.primary10,
-                      background: theme.backgroundDark,
+          child: Portal(
+            child: OKToast(
+              position: ToastPosition(align: Alignment.topCenter, offset: 40),
+              textStyle: styles.textStyleSnackbar,
+              backgroundColor: theme.backgroundDark,
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Viterium',
+                theme: ThemeData(
+                  dialogBackgroundColor: theme.backgroundDark,
+                  primaryColor: theme.primary,
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        brightness: Brightness.dark,
+                        secondary: theme.primary10,
+                        background: theme.backgroundDark,
+                      ),
+                  fontFamily: kDefaultFontFamily,
+                  brightness: Brightness.dark,
+                  tooltipTheme: TooltipThemeData(
+                    preferBelow: false,
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 10,
                     ),
-                fontFamily: kDefaultFontFamily,
-                brightness: Brightness.dark,
-                tooltipTheme: TooltipThemeData(
-                  preferBelow: false,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 10,
+                    decoration: BoxDecoration(
+                      color: theme.backgroundDarkest,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    textStyle: styles.textStyleAddressText60,
                   ),
-                  decoration: BoxDecoration(
-                    color: theme.backgroundDarkest,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  textStyle: styles.textStyleAddressText60,
                 ),
+                localizationsDelegates: [
+                  AppLocalizationsDelegate(language),
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate
+                ],
+                locale: language.language == AvailableLanguage.DEFAULT
+                    ? null
+                    : language.getLocale(),
+                supportedLocales: supportedLocales,
+                initialRoute: '/',
+                onGenerateRoute: (RouteSettings settings) {
+                  switch (settings.name) {
+                    case '/intro':
+                      return NoTransitionRoute(
+                        builder: (_) => const IntroScreen(),
+                        settings: settings,
+                      );
+                    case '/home':
+                      return NoTransitionRoute(
+                        builder: (_) => const HomeScreen(),
+                        settings: settings,
+                      );
+                    // case '/home_transition':
+                    //   return NoPopTransitionRoute(
+                    //     builder: (_) => const HomeScreen(),
+                    //     settings: settings,
+                    //   );
+                    case '/lock_screen':
+                      return NoTransitionRoute(
+                        builder: (_) => const LockScreen(),
+                        settings: settings,
+                      );
+                    case '/lock_screen_transition':
+                      return MaterialPageRoute(
+                        builder: (_) => const LockScreen(),
+                        settings: settings,
+                      );
+                    case '/password_lock_screen':
+                      return NoTransitionRoute(
+                        builder: (_) => const PasswordLockScreen(),
+                        settings: settings,
+                      );
+                    case '/logout':
+                      return NoTransitionRoute(
+                        builder: (_) => const LogoutScreen(),
+                        settings: settings,
+                      );
+                    case '/wallet_setup':
+                      return NoTransitionRoute(
+                        builder: (_) => const SetupWalletScreen(),
+                        settings: settings,
+                      );
+                    case '/vite_connect':
+                      return MaterialPageRoute(
+                        builder: (_) => const ViteConnectScreen(),
+                        settings: settings,
+                      );
+                    default:
+                      return NoTransitionRoute(
+                        builder: (_) => const SplashScreen(),
+                        settings: settings,
+                      );
+                  }
+                },
               ),
-              localizationsDelegates: [
-                AppLocalizationsDelegate(language),
-                GlobalMaterialLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate
-              ],
-              locale: language.language == AvailableLanguage.DEFAULT
-                  ? null
-                  : language.getLocale(),
-              supportedLocales: supportedLocales,
-              initialRoute: '/',
-              onGenerateRoute: (RouteSettings settings) {
-                switch (settings.name) {
-                  case '/intro':
-                    return NoTransitionRoute(
-                      builder: (_) => const IntroScreen(),
-                      settings: settings,
-                    );
-                  case '/home':
-                    return NoTransitionRoute(
-                      builder: (_) => const HomeScreen(),
-                      settings: settings,
-                    );
-                  // case '/home_transition':
-                  //   return NoPopTransitionRoute(
-                  //     builder: (_) => const HomeScreen(),
-                  //     settings: settings,
-                  //   );
-                  case '/lock_screen':
-                    return NoTransitionRoute(
-                      builder: (_) => const LockScreen(),
-                      settings: settings,
-                    );
-                  case '/lock_screen_transition':
-                    return MaterialPageRoute(
-                      builder: (_) => const LockScreen(),
-                      settings: settings,
-                    );
-                  case '/password_lock_screen':
-                    return NoTransitionRoute(
-                      builder: (_) => const PasswordLockScreen(),
-                      settings: settings,
-                    );
-                  case '/logout':
-                    return NoTransitionRoute(
-                      builder: (_) => const LogoutScreen(),
-                      settings: settings,
-                    );
-                  case '/wallet_setup':
-                    return NoTransitionRoute(
-                      builder: (_) => const SetupWalletScreen(),
-                      settings: settings,
-                    );
-                  case '/vite_connect':
-                    return MaterialPageRoute(
-                      builder: (_) => const ViteConnectScreen(),
-                      settings: settings,
-                    );
-                  default:
-                    return NoTransitionRoute(
-                      builder: (_) => const SplashScreen(),
-                      settings: settings,
-                    );
-                }
-              },
             ),
           ),
         ),
