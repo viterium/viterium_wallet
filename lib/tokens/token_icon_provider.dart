@@ -44,7 +44,6 @@ class TokenIconNotifier extends StateNotifier<TokenIcon> {
 
     if (assetTokenIds.contains(tokenId)) {
       state = TokenIcon.asset(path: 'assets/token_icons/$tokenId.png');
-      return;
     }
     final cache = iconBox.tryGet(tokenId);
     if (cache != null) {
