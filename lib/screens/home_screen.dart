@@ -174,14 +174,16 @@ class HomeScreen extends HookConsumerWidget {
                         //   ),
                         // ),
                         const WalletHomePage(),
-                        WillPopScope(
-                          onWillPop: () async {
-                            final state = _defiNavigatorKey.value.currentState;
-                            if (state == null || !state.canPop()) {
-                              return true;
+                        PopScope(
+                          canPop: false,
+                          onPopInvoked: (bool didPop) {
+                            if (didPop) {
+                              return;
                             }
-                            state.pop();
-                            return false;
+                            final state = _defiNavigatorKey.value.currentState;
+                            if (state != null && state.canPop()) {
+                              state.pop();
+                            }
                           },
                           child: Navigator(
                             key: _defiNavigatorKey.value,

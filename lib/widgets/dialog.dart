@@ -17,8 +17,8 @@ class AppDialogs {
     showAppDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => WillPopScope(
-        onWillPop: () async => false,
+      builder: (context) => PopScope(
+        canPop: false,
         child: Consumer(builder: (context, ref, _) {
           final l10n = ref.watch(l10nProvider);
           final styles = ref.watch(stylesProvider);
@@ -69,8 +69,8 @@ class AppDialogs {
     showAppDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => WillPopScope(
-        onWillPop: () async => false,
+      builder: (context) => PopScope(
+        canPop: false,
         child: Consumer(builder: (context, ref, _) {
           final l10n = ref.watch(l10nProvider);
           final styles = ref.watch(stylesProvider);

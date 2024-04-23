@@ -44,7 +44,6 @@ class AccountDetailsSheet extends HookConsumerWidget {
     final nameFocusNode = useFocusNode();
     final nameController = useTextEditingController(text: account.name);
     final addressCopied = useState(false);
-    final isMounted = useIsMounted();
 
     Future<void> copyAddress() async {
       await Clipboard.setData(ClipboardData(text: account.viteAddress));
@@ -53,7 +52,7 @@ class AccountDetailsSheet extends HookConsumerWidget {
       addressCopiedTimer.state = Timer(
         const Duration(milliseconds: 800),
         () {
-          if (!isMounted()) return;
+          if (!context.mounted) return;
           addressCopied.value = false;
         },
       );

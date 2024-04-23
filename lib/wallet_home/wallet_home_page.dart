@@ -49,7 +49,6 @@ class WalletHomePage extends HookConsumerWidget {
     ref.watch(_homePageWatcherProvider(account));
 
     useAutomaticKeepAlive();
-    final isMounted = useIsMounted();
 
     Future<void> publishToken(PushTokenSettings settings) async {
       try {
@@ -127,7 +126,7 @@ class WalletHomePage extends HookConsumerWidget {
       }
 
       await Future.delayed(const Duration(milliseconds: 100));
-      if (!isMounted()) {
+      if (!context.mounted) {
         return;
       }
 
