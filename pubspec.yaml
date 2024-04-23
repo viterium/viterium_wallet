@@ -68,14 +68,6 @@ dev_dependencies:
   json_serializable: 6.7.1
   flutter_lints: 3.0.2
   freezed: 2.5.2
-  flutter_launcher_icons: 0.13.1
-
-# Flutter launcher icons
-flutter_icons:
-  android: "ic_launcher"
-  ios: true
-  image_path_android: "assets/icon/icon_android.png"
-  image_path_ios: "assets/icon/icon.png"
 
 # The following section is specific to Flutter.
 flutter:
