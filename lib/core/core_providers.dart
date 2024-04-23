@@ -350,3 +350,7 @@ final lockDisabledProvider = StateProvider((ref) => false);
 
 final homePageScaffoldKeyProvider =
     Provider((ref) => GlobalKey<ScaffoldState>());
+
+final appLinkProvider = StateProvider<String?>((ref) {
+  return null;
+});
