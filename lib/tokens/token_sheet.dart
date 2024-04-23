@@ -10,12 +10,16 @@ import '../transactions/transaction_history_widget.dart';
 import '../transactions/unreceived_providers.dart';
 import '../util/caseconverter.dart';
 import '../util/numberutil.dart';
+import '../util/ui_util.dart';
 import '../util/util.dart';
 import '../widgets/app_icon_button.dart';
+import '../widgets/app_simpledialog.dart';
 import '../widgets/buttons.dart';
+import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_handle.dart';
 import '../widgets/sheet_util.dart';
+import 'token_burn_dialog.dart';
 import 'token_icon_widget.dart';
 
 class TokenSheet extends ConsumerWidget {
@@ -36,6 +40,9 @@ class TokenSheet extends ConsumerWidget {
     final balance = ref.watch(formatedTokenBalanceProvider(tokenId));
     final exactBalance = ref.watch(exactTokenBalanceProvider(tokenId));
     final fiatValue = ref.watch(formatedFiatValueForTokenProvider(tokenId));
+    final balanceRaw = ref.watch(balanceForTokenProvider(tokenId));
+
+    final canBurnToken = balanceRaw > BigInt.zero && !tokenInfo.isOwnerBurnOnly;
 
     final unreceivedBalance =
         ref.watch(unreceivedBalanceForTokenProvider(tokenId));
@@ -49,6 +56,57 @@ class TokenSheet extends ConsumerWidget {
     void showTokenInfo() {
       final explorer = ref.read(blockExplorerProvider);
       openUrl(explorer.urlForTokenId(tokenId));
+    }
+
+    Future<void> burnToken() async {
+      final account = ref.read(selectedAccountProvider);
+      final accountService = ref.read(accountServiceProvider);
+      final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
+
+      final amount = await showAppDialog<Amount>(
+        context: context,
+        builder: (_) => TokenBurnDialog(tokenInfo: tokenInfo),
+      );
+
+      if (amount == null || amount.raw > balanceRaw) {
+        return;
+      }
+
+      final authUtil = ref.read(authUtilProvider);
+      final message =
+          'Burn ${NumberUtil.formatedAmount(amount)} ${tokenInfo.symbolLabel}';
+      final auth = await authUtil.authenticate(context, message, message);
+      if (auth != true) {
+        return;
+      }
+
+      try {
+        AppDialogs.showInProgressDialog(
+          context,
+          'Token Burn',
+          'Sending burn request',
+        );
+        await autoreceiveService.pauseAutoreceive();
+        final data =
+            tokenIssuanceContract.contractAbi.encodeFunction('Burn', []);
+        await accountService.callContract(
+          address: account.address,
+          contractAddress: tokenIssuanceContract.address,
+          token: tokenInfo.token,
+          amount: amount.raw,
+          data: data,
+        );
+
+        UIUtil.showSnackbar('Burn request sent', context);
+      } catch (e) {
+        final log = ref.read(loggerProvider);
+        log.e('Failed to burn token', e);
+
+        UIUtil.showSnackbar('Failed to send burn request', context);
+      } finally {
+        autoreceiveService.resumeAutoreceive();
+        Navigator.of(context).pop();
+      }
     }
 
     void sendToken() {
@@ -160,18 +218,33 @@ class TokenSheet extends ConsumerWidget {
                             const SizedBox(height: 8),
                             Row(
                               mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Unreceived $unreceivedCount',
-                                  style: styles.textStyleTransactionType,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Unreceived $unreceivedCount',
+                                      style: styles.textStyleTransactionType,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      unreceivedBalanceDisplay,
+                                      style: styles.textStyleAddressPrimary,
+                                      maxLines: 1,
+                                    ),
+                                  ],
                                 ),
+                                if (canBurnToken)
+                                  TextButton(
+                                    style: styles.dialogButtonStyle,
+                                    child: Text(
+                                      'BURN',
+                                      style: styles.textStyleDialogButtonText,
+                                    ),
+                                    onPressed: burnToken,
+                                  ),
                               ],
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              unreceivedBalanceDisplay,
-                              style: styles.textStyleAddressPrimary,
-                              maxLines: 1,
                             ),
                           ],
                         ),
