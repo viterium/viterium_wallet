@@ -78,6 +78,7 @@ class App extends HookConsumerWidget {
                 debugShowCheckedModeBanner: false,
                 title: 'Viterium',
                 theme: ThemeData(
+                  useMaterial3: false,
                   dialogBackgroundColor: theme.backgroundDark,
                   primaryColor: theme.primary,
                   colorScheme: ThemeData().colorScheme.copyWith(
