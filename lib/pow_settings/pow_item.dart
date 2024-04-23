@@ -1,4 +1,3 @@
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -27,8 +26,8 @@ class PowItem extends ConsumerWidget {
     final config = ref.watch(powConfigProvider);
 
     final display = item.map(
-      defaultNode: (_) => Tuple2(node.name, node.http),
-      custom: (config) => Tuple2(config.name, config.url),
+      defaultNode: (_) => (node.name, node.http),
+      custom: (config) => (config.name, config.url),
     );
 
     final canDelete = item.map(
@@ -97,11 +96,11 @@ class PowItem extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          display.first,
+                          display.$1,
                           style: styles.textStyleSettingItemHeader,
                         ),
                         Text(
-                          display.second,
+                          display.$2,
                           style: styles.textStyleAddressText60.copyWith(
                             fontSize: AppFontSizes.smallest,
                             height: 1.2,
