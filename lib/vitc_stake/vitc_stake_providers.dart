@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../contracts/vitc_stake_v2.dart';
+import '../contracts/vitc_stake_v2_contract.dart';
 import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
 import '../viva_staking/viva_staking_types.dart';
@@ -182,7 +182,7 @@ final vitcStakeLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vitcStakeEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vitcStakeServiceV2Provider);
-      final vmLogEvent = service.decodeVmLogEvent(data.value.vmLog);
+      final vmLogEvent = service.decodeVmLog(data.value.vmLog);
 
       vmLogEvent.whenOrNull(
         decoded: (_, event) => notifier.updateState(event),

@@ -3,31 +3,54 @@ import 'dart:typed_data';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:vite/vite.dart';
 
+import '../contract_service/contract_query.dart';
+import '../contract_service/contract_service.dart';
+import '../contract_service/vmlog_decoder.dart';
 import 'vitc_swap_types.dart';
 
-class VitcSwapService {
-  final ViteClient client;
-  final Contract contract;
+class VitcSwapService extends ContractService with ContractQuery, VmLogDecoder {
+  VitcSwapService({required super.client, required super.contract});
 
-  VitcSwapService({
-    required this.client,
-    required this.contract,
-  });
-
-  late final abi = contract.contractAbi;
-
-  Future<List<Object>> query(String function, List<Object> args) async {
-    final data = abi.encodeFunction(
-      function,
-      args,
-    );
-    final params = QueryParams(
-      address: contract.address,
-      data: data,
-    );
-    final encoded = await client.query(params);
-    final decoded = abi.decodeFunctionOutput(function, encoded);
-    return decoded;
+  @override
+  VitcSwapEvent? decodeEvent(
+    EventEntry event, {
+    required List<Object> params,
+  }) {
+    return switch (event.name) {
+      'Swap' => VitcSwapEvent.swap(
+          address: params[0] as Address,
+          fromToken: params[1] as Token,
+          toToken: params[2] as Token,
+          fromAmount: params[3] as BigInt,
+          toAmount: params[4] as BigInt,
+        ),
+      'SwapInternal' => VitcSwapEvent.swapInternal(
+          address: params[0] as Address,
+          fromToken: params[1] as Token,
+          toToken: params[2] as Token,
+          fromAmount: params[3] as BigInt,
+          toAmount: params[4] as BigInt,
+          total: params[5] as BigInt,
+          totalVite: params[6] as BigInt,
+        ),
+      'AddLiquidity' => VitcSwapEvent.addLiquidity(
+          address: params[0] as Address,
+          token: params[1] as Token,
+          tokenAmount: params[2] as BigInt,
+          viteAmount: params[3] as BigInt,
+          tokenTotal: params[4] as BigInt,
+          viteTotal: params[5] as BigInt,
+        ),
+      'RemoveLiquidity' => VitcSwapEvent.removeLiquidity(
+          address: params[0] as Address,
+          token: params[1] as Token,
+          tokenAmount: params[2] as BigInt,
+          viteAmount: params[3] as BigInt,
+          tokenTotal: params[4] as BigInt,
+          viteTotal: params[5] as BigInt,
+        ),
+      _ => null,
+    };
   }
 
   Future<IList<Token>> getTradingTokensForHeightRange(

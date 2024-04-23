@@ -154,7 +154,4 @@ class VitcSwapEvent with _$VitcSwapEvent {
     required BigInt tokenTotal,
     required BigInt viteTotal,
   }) = _VitcSwapEventRemoveLiquidity;
-
-  const factory VitcSwapEvent.unknown({required VmLog vmLog}) =
-      _VitcSwapEventUnknown;
 }

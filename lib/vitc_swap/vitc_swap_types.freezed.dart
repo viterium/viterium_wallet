@@ -870,6 +870,7 @@ abstract class _TokenLiquidity implements TokenLiquidity {
 
 /// @nodoc
 mixin _$VitcSwapEvent {
+  Address get address => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Address address, Token fromToken, Token toToken,
@@ -884,7 +885,6 @@ mixin _$VitcSwapEvent {
     required TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
         removeLiquidity,
-    required TResult Function(VmLog vmLog) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -901,7 +901,6 @@ mixin _$VitcSwapEvent {
     TResult? Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult? Function(VmLog vmLog)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -918,7 +917,6 @@ mixin _$VitcSwapEvent {
     TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -929,7 +927,6 @@ mixin _$VitcSwapEvent {
     required TResult Function(_VitcSwapEventAddLiquidity value) addLiquidity,
     required TResult Function(_VitcSwapEventRemoveLiquidity value)
         removeLiquidity,
-    required TResult Function(_VitcSwapEventUnknown value) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -938,7 +935,6 @@ mixin _$VitcSwapEvent {
     TResult? Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult? Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult? Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult? Function(_VitcSwapEventUnknown value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -947,9 +943,12 @@ mixin _$VitcSwapEvent {
     TResult Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult Function(_VitcSwapEventUnknown value)? unknown,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $VitcSwapEventCopyWith<VitcSwapEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -958,6 +957,10 @@ abstract class $VitcSwapEventCopyWith<$Res> {
   factory $VitcSwapEventCopyWith(
           VitcSwapEvent value, $Res Function(VitcSwapEvent) then) =
       _$VitcSwapEventCopyWithImpl<$Res, VitcSwapEvent>;
+  @useResult
+  $Res call({Address address});
+
+  $AddressCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -969,13 +972,36 @@ class _$VitcSwapEventCopyWithImpl<$Res, $Val extends VitcSwapEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? address = null,
+  }) {
+    return _then(_value.copyWith(
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as Address,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AddressCopyWith<$Res> get address {
+    return $AddressCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$VitcSwapEventSwapImplCopyWith<$Res> {
+abstract class _$$VitcSwapEventSwapImplCopyWith<$Res>
+    implements $VitcSwapEventCopyWith<$Res> {
   factory _$$VitcSwapEventSwapImplCopyWith(_$VitcSwapEventSwapImpl value,
           $Res Function(_$VitcSwapEventSwapImpl) then) =
       __$$VitcSwapEventSwapImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {Address address,
@@ -984,6 +1010,7 @@ abstract class _$$VitcSwapEventSwapImplCopyWith<$Res> {
       BigInt fromAmount,
       BigInt toAmount});
 
+  @override
   $AddressCopyWith<$Res> get address;
   $TokenCopyWith<$Res> get fromToken;
   $TokenCopyWith<$Res> get toToken;
@@ -1028,14 +1055,6 @@ class __$$VitcSwapEventSwapImplCopyWithImpl<$Res>
           : toAmount // ignore: cast_nullable_to_non_nullable
               as BigInt,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value));
-    });
   }
 
   @override
@@ -1122,7 +1141,6 @@ class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
     required TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
         removeLiquidity,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return swap(address, fromToken, toToken, fromAmount, toAmount);
   }
@@ -1142,7 +1160,6 @@ class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
     TResult? Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return swap?.call(address, fromToken, toToken, fromAmount, toAmount);
   }
@@ -1162,7 +1179,6 @@ class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
     TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (swap != null) {
@@ -1179,7 +1195,6 @@ class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
     required TResult Function(_VitcSwapEventAddLiquidity value) addLiquidity,
     required TResult Function(_VitcSwapEventRemoveLiquidity value)
         removeLiquidity,
-    required TResult Function(_VitcSwapEventUnknown value) unknown,
   }) {
     return swap(this);
   }
@@ -1191,7 +1206,6 @@ class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
     TResult? Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult? Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult? Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult? Function(_VitcSwapEventUnknown value)? unknown,
   }) {
     return swap?.call(this);
   }
@@ -1203,7 +1217,6 @@ class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
     TResult Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult Function(_VitcSwapEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (swap != null) {
@@ -1221,22 +1234,26 @@ abstract class _VitcSwapEventSwap implements VitcSwapEvent {
       required final BigInt fromAmount,
       required final BigInt toAmount}) = _$VitcSwapEventSwapImpl;
 
+  @override
   Address get address;
   Token get fromToken;
   Token get toToken;
   BigInt get fromAmount;
   BigInt get toAmount;
+  @override
   @JsonKey(ignore: true)
   _$$VitcSwapEventSwapImplCopyWith<_$VitcSwapEventSwapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$VitcSwapEventSwapInternalImplCopyWith<$Res> {
+abstract class _$$VitcSwapEventSwapInternalImplCopyWith<$Res>
+    implements $VitcSwapEventCopyWith<$Res> {
   factory _$$VitcSwapEventSwapInternalImplCopyWith(
           _$VitcSwapEventSwapInternalImpl value,
           $Res Function(_$VitcSwapEventSwapInternalImpl) then) =
       __$$VitcSwapEventSwapInternalImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {Address address,
@@ -1247,6 +1264,7 @@ abstract class _$$VitcSwapEventSwapInternalImplCopyWith<$Res> {
       BigInt total,
       BigInt totalVite});
 
+  @override
   $AddressCopyWith<$Res> get address;
   $TokenCopyWith<$Res> get fromToken;
   $TokenCopyWith<$Res> get toToken;
@@ -1302,14 +1320,6 @@ class __$$VitcSwapEventSwapInternalImplCopyWithImpl<$Res>
           : totalVite // ignore: cast_nullable_to_non_nullable
               as BigInt,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value));
-    });
   }
 
   @override
@@ -1405,7 +1415,6 @@ class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
     required TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
         removeLiquidity,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return swapInternal(
         address, fromToken, toToken, fromAmount, toAmount, total, totalVite);
@@ -1426,7 +1435,6 @@ class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
     TResult? Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return swapInternal?.call(
         address, fromToken, toToken, fromAmount, toAmount, total, totalVite);
@@ -1447,7 +1455,6 @@ class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
     TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (swapInternal != null) {
@@ -1465,7 +1472,6 @@ class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
     required TResult Function(_VitcSwapEventAddLiquidity value) addLiquidity,
     required TResult Function(_VitcSwapEventRemoveLiquidity value)
         removeLiquidity,
-    required TResult Function(_VitcSwapEventUnknown value) unknown,
   }) {
     return swapInternal(this);
   }
@@ -1477,7 +1483,6 @@ class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
     TResult? Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult? Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult? Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult? Function(_VitcSwapEventUnknown value)? unknown,
   }) {
     return swapInternal?.call(this);
   }
@@ -1489,7 +1494,6 @@ class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
     TResult Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult Function(_VitcSwapEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (swapInternal != null) {
@@ -1509,6 +1513,7 @@ abstract class _VitcSwapEventSwapInternal implements VitcSwapEvent {
       required final BigInt total,
       required final BigInt totalVite}) = _$VitcSwapEventSwapInternalImpl;
 
+  @override
   Address get address;
   Token get fromToken;
   Token get toToken;
@@ -1516,17 +1521,20 @@ abstract class _VitcSwapEventSwapInternal implements VitcSwapEvent {
   BigInt get toAmount;
   BigInt get total;
   BigInt get totalVite;
+  @override
   @JsonKey(ignore: true)
   _$$VitcSwapEventSwapInternalImplCopyWith<_$VitcSwapEventSwapInternalImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$VitcSwapEventAddLiquidityImplCopyWith<$Res> {
+abstract class _$$VitcSwapEventAddLiquidityImplCopyWith<$Res>
+    implements $VitcSwapEventCopyWith<$Res> {
   factory _$$VitcSwapEventAddLiquidityImplCopyWith(
           _$VitcSwapEventAddLiquidityImpl value,
           $Res Function(_$VitcSwapEventAddLiquidityImpl) then) =
       __$$VitcSwapEventAddLiquidityImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {Address address,
@@ -1536,6 +1544,7 @@ abstract class _$$VitcSwapEventAddLiquidityImplCopyWith<$Res> {
       BigInt tokenTotal,
       BigInt viteTotal});
 
+  @override
   $AddressCopyWith<$Res> get address;
   $TokenCopyWith<$Res> get token;
 }
@@ -1585,14 +1594,6 @@ class __$$VitcSwapEventAddLiquidityImplCopyWithImpl<$Res>
           : viteTotal // ignore: cast_nullable_to_non_nullable
               as BigInt,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value));
-    });
   }
 
   @override
@@ -1676,7 +1677,6 @@ class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
     required TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
         removeLiquidity,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return addLiquidity(
         address, token, tokenAmount, viteAmount, tokenTotal, viteTotal);
@@ -1697,7 +1697,6 @@ class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
     TResult? Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return addLiquidity?.call(
         address, token, tokenAmount, viteAmount, tokenTotal, viteTotal);
@@ -1718,7 +1717,6 @@ class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
     TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (addLiquidity != null) {
@@ -1736,7 +1734,6 @@ class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
     required TResult Function(_VitcSwapEventAddLiquidity value) addLiquidity,
     required TResult Function(_VitcSwapEventRemoveLiquidity value)
         removeLiquidity,
-    required TResult Function(_VitcSwapEventUnknown value) unknown,
   }) {
     return addLiquidity(this);
   }
@@ -1748,7 +1745,6 @@ class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
     TResult? Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult? Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult? Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult? Function(_VitcSwapEventUnknown value)? unknown,
   }) {
     return addLiquidity?.call(this);
   }
@@ -1760,7 +1756,6 @@ class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
     TResult Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult Function(_VitcSwapEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (addLiquidity != null) {
@@ -1779,23 +1774,27 @@ abstract class _VitcSwapEventAddLiquidity implements VitcSwapEvent {
       required final BigInt tokenTotal,
       required final BigInt viteTotal}) = _$VitcSwapEventAddLiquidityImpl;
 
+  @override
   Address get address;
   Token get token;
   BigInt get tokenAmount;
   BigInt get viteAmount;
   BigInt get tokenTotal;
   BigInt get viteTotal;
+  @override
   @JsonKey(ignore: true)
   _$$VitcSwapEventAddLiquidityImplCopyWith<_$VitcSwapEventAddLiquidityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$VitcSwapEventRemoveLiquidityImplCopyWith<$Res> {
+abstract class _$$VitcSwapEventRemoveLiquidityImplCopyWith<$Res>
+    implements $VitcSwapEventCopyWith<$Res> {
   factory _$$VitcSwapEventRemoveLiquidityImplCopyWith(
           _$VitcSwapEventRemoveLiquidityImpl value,
           $Res Function(_$VitcSwapEventRemoveLiquidityImpl) then) =
       __$$VitcSwapEventRemoveLiquidityImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {Address address,
@@ -1805,6 +1804,7 @@ abstract class _$$VitcSwapEventRemoveLiquidityImplCopyWith<$Res> {
       BigInt tokenTotal,
       BigInt viteTotal});
 
+  @override
   $AddressCopyWith<$Res> get address;
   $TokenCopyWith<$Res> get token;
 }
@@ -1855,14 +1855,6 @@ class __$$VitcSwapEventRemoveLiquidityImplCopyWithImpl<$Res>
           : viteTotal // ignore: cast_nullable_to_non_nullable
               as BigInt,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AddressCopyWith<$Res> get address {
-    return $AddressCopyWith<$Res>(_value.address, (value) {
-      return _then(_value.copyWith(address: value));
-    });
   }
 
   @override
@@ -1948,7 +1940,6 @@ class _$VitcSwapEventRemoveLiquidityImpl
     required TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
         removeLiquidity,
-    required TResult Function(VmLog vmLog) unknown,
   }) {
     return removeLiquidity(
         address, token, tokenAmount, viteAmount, tokenTotal, viteTotal);
@@ -1969,7 +1960,6 @@ class _$VitcSwapEventRemoveLiquidityImpl
     TResult? Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult? Function(VmLog vmLog)? unknown,
   }) {
     return removeLiquidity?.call(
         address, token, tokenAmount, viteAmount, tokenTotal, viteTotal);
@@ -1990,7 +1980,6 @@ class _$VitcSwapEventRemoveLiquidityImpl
     TResult Function(Address address, Token token, BigInt tokenAmount,
             BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
         removeLiquidity,
-    TResult Function(VmLog vmLog)? unknown,
     required TResult orElse(),
   }) {
     if (removeLiquidity != null) {
@@ -2008,7 +1997,6 @@ class _$VitcSwapEventRemoveLiquidityImpl
     required TResult Function(_VitcSwapEventAddLiquidity value) addLiquidity,
     required TResult Function(_VitcSwapEventRemoveLiquidity value)
         removeLiquidity,
-    required TResult Function(_VitcSwapEventUnknown value) unknown,
   }) {
     return removeLiquidity(this);
   }
@@ -2020,7 +2008,6 @@ class _$VitcSwapEventRemoveLiquidityImpl
     TResult? Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult? Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult? Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult? Function(_VitcSwapEventUnknown value)? unknown,
   }) {
     return removeLiquidity?.call(this);
   }
@@ -2032,7 +2019,6 @@ class _$VitcSwapEventRemoveLiquidityImpl
     TResult Function(_VitcSwapEventSwapInternal value)? swapInternal,
     TResult Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
     TResult Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult Function(_VitcSwapEventUnknown value)? unknown,
     required TResult orElse(),
   }) {
     if (removeLiquidity != null) {
@@ -2051,203 +2037,16 @@ abstract class _VitcSwapEventRemoveLiquidity implements VitcSwapEvent {
       required final BigInt tokenTotal,
       required final BigInt viteTotal}) = _$VitcSwapEventRemoveLiquidityImpl;
 
+  @override
   Address get address;
   Token get token;
   BigInt get tokenAmount;
   BigInt get viteAmount;
   BigInt get tokenTotal;
   BigInt get viteTotal;
+  @override
   @JsonKey(ignore: true)
   _$$VitcSwapEventRemoveLiquidityImplCopyWith<
           _$VitcSwapEventRemoveLiquidityImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$VitcSwapEventUnknownImplCopyWith<$Res> {
-  factory _$$VitcSwapEventUnknownImplCopyWith(_$VitcSwapEventUnknownImpl value,
-          $Res Function(_$VitcSwapEventUnknownImpl) then) =
-      __$$VitcSwapEventUnknownImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({VmLog vmLog});
-
-  $VmLogCopyWith<$Res> get vmLog;
-}
-
-/// @nodoc
-class __$$VitcSwapEventUnknownImplCopyWithImpl<$Res>
-    extends _$VitcSwapEventCopyWithImpl<$Res, _$VitcSwapEventUnknownImpl>
-    implements _$$VitcSwapEventUnknownImplCopyWith<$Res> {
-  __$$VitcSwapEventUnknownImplCopyWithImpl(_$VitcSwapEventUnknownImpl _value,
-      $Res Function(_$VitcSwapEventUnknownImpl) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? vmLog = null,
-  }) {
-    return _then(_$VitcSwapEventUnknownImpl(
-      vmLog: null == vmLog
-          ? _value.vmLog
-          : vmLog // ignore: cast_nullable_to_non_nullable
-              as VmLog,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $VmLogCopyWith<$Res> get vmLog {
-    return $VmLogCopyWith<$Res>(_value.vmLog, (value) {
-      return _then(_value.copyWith(vmLog: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$VitcSwapEventUnknownImpl implements _VitcSwapEventUnknown {
-  const _$VitcSwapEventUnknownImpl({required this.vmLog});
-
-  @override
-  final VmLog vmLog;
-
-  @override
-  String toString() {
-    return 'VitcSwapEvent.unknown(vmLog: $vmLog)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$VitcSwapEventUnknownImpl &&
-            (identical(other.vmLog, vmLog) || other.vmLog == vmLog));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, vmLog);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$VitcSwapEventUnknownImplCopyWith<_$VitcSwapEventUnknownImpl>
-      get copyWith =>
-          __$$VitcSwapEventUnknownImplCopyWithImpl<_$VitcSwapEventUnknownImpl>(
-              this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Address address, Token fromToken, Token toToken,
-            BigInt fromAmount, BigInt toAmount)
-        swap,
-    required TResult Function(Address address, Token fromToken, Token toToken,
-            BigInt fromAmount, BigInt toAmount, BigInt total, BigInt totalVite)
-        swapInternal,
-    required TResult Function(Address address, Token token, BigInt tokenAmount,
-            BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
-        addLiquidity,
-    required TResult Function(Address address, Token token, BigInt tokenAmount,
-            BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)
-        removeLiquidity,
-    required TResult Function(VmLog vmLog) unknown,
-  }) {
-    return unknown(vmLog);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Address address, Token fromToken, Token toToken,
-            BigInt fromAmount, BigInt toAmount)?
-        swap,
-    TResult? Function(Address address, Token fromToken, Token toToken,
-            BigInt fromAmount, BigInt toAmount, BigInt total, BigInt totalVite)?
-        swapInternal,
-    TResult? Function(Address address, Token token, BigInt tokenAmount,
-            BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
-        addLiquidity,
-    TResult? Function(Address address, Token token, BigInt tokenAmount,
-            BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
-        removeLiquidity,
-    TResult? Function(VmLog vmLog)? unknown,
-  }) {
-    return unknown?.call(vmLog);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Address address, Token fromToken, Token toToken,
-            BigInt fromAmount, BigInt toAmount)?
-        swap,
-    TResult Function(Address address, Token fromToken, Token toToken,
-            BigInt fromAmount, BigInt toAmount, BigInt total, BigInt totalVite)?
-        swapInternal,
-    TResult Function(Address address, Token token, BigInt tokenAmount,
-            BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
-        addLiquidity,
-    TResult Function(Address address, Token token, BigInt tokenAmount,
-            BigInt viteAmount, BigInt tokenTotal, BigInt viteTotal)?
-        removeLiquidity,
-    TResult Function(VmLog vmLog)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(vmLog);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_VitcSwapEventSwap value) swap,
-    required TResult Function(_VitcSwapEventSwapInternal value) swapInternal,
-    required TResult Function(_VitcSwapEventAddLiquidity value) addLiquidity,
-    required TResult Function(_VitcSwapEventRemoveLiquidity value)
-        removeLiquidity,
-    required TResult Function(_VitcSwapEventUnknown value) unknown,
-  }) {
-    return unknown(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_VitcSwapEventSwap value)? swap,
-    TResult? Function(_VitcSwapEventSwapInternal value)? swapInternal,
-    TResult? Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
-    TResult? Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult? Function(_VitcSwapEventUnknown value)? unknown,
-  }) {
-    return unknown?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_VitcSwapEventSwap value)? swap,
-    TResult Function(_VitcSwapEventSwapInternal value)? swapInternal,
-    TResult Function(_VitcSwapEventAddLiquidity value)? addLiquidity,
-    TResult Function(_VitcSwapEventRemoveLiquidity value)? removeLiquidity,
-    TResult Function(_VitcSwapEventUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _VitcSwapEventUnknown implements VitcSwapEvent {
-  const factory _VitcSwapEventUnknown({required final VmLog vmLog}) =
-      _$VitcSwapEventUnknownImpl;
-
-  VmLog get vmLog;
-  @JsonKey(ignore: true)
-  _$$VitcSwapEventUnknownImplCopyWith<_$VitcSwapEventUnknownImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

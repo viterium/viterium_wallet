@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../contracts/vitc_swap.dart';
+import '../contracts/vitc_swap_contract.dart';
 import '../tokens/token_info_provider.dart';
 import 'vitc_swap_liquidity_notifier.dart';
 import 'vitc_swap_service.dart';

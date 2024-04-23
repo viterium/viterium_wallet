@@ -1,23 +1,17 @@
-import 'dart:typed_data';
-
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:vite/vite.dart';
 
-import '../vite_dart/vite_dart_types.dart';
+import '../contract_service/contract_offchain.dart';
+import '../contract_service/contract_service.dart';
+import '../contract_service/vmlog_decoder.dart';
 import '../vite_dart/vite_dart_utils.dart';
 import 'viva_staking_types.dart';
 
-class VivaStakingService {
-  final ViteClient client;
-  final Contract contract;
+class VivaStakingService extends ContractService
+    with ContractOffchain, VmLogDecoder<VivaEvent> {
+  VivaStakingService({required super.client, required super.contract});
 
-  VivaStakingService({
-    required this.client,
-    required this.contract,
-  });
-
-  late ContractAbi abi = contract.contractAbi;
-
+  @override
   VivaEvent? decodeEvent(
     EventEntry event, {
     required List<Object> params,
@@ -54,41 +48,6 @@ class VivaStakingService {
       default:
         return null;
     }
-  }
-
-  VmLogEvent<VivaEvent> decodeVmLogEvent(VmLog vmLog) {
-    final event = abi.findEventByTopicsHash(vmLog.topics);
-    if (event == null) {
-      return VmLogEvent.unknown(vmLog: vmLog);
-    }
-    final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
-
-    final vivaEvent = decodeEvent(event, params: params);
-    if (vivaEvent == null) {
-      return VmLogEvent.unknown(vmLog: vmLog, event: event);
-    }
-
-    return VmLogEvent.decoded(vmLog: vmLog, event: vivaEvent);
-  }
-
-  late final offchainParams = ContractCallParams(
-    address: contract.address,
-    code: hexToBytes(contract.offchainCode),
-    data: Uint8List(0),
-  );
-
-  ContractCallParams offchainCall(String method, List<Object> args) {
-    final encoded = abi.encodeOffchain(method, args);
-    final params = offchainParams.copyWith(data: encoded);
-    return params;
-  }
-
-  Future<List<Object>> callOffchainMethod(
-      String method, List<Object> args) async {
-    final call = offchainCall(method, args);
-    final encoded = await client.callOffchainMethod(call);
-    final decoded = abi.decodeOffchainOutput(method, encoded);
-    return decoded;
   }
 
   Future<IList<VivaPoolInfo>> getAllPoolInfo() async {

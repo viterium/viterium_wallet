@@ -1,87 +1,41 @@
-import 'dart:typed_data';
-
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:vite/vite.dart';
 
-import '../vite_dart/vite_dart_types.dart';
+import '../contract_service/contract_offchain.dart';
+import '../contract_service/contract_service.dart';
+import '../contract_service/vmlog_decoder.dart';
 import 'vitc_stake_types.dart';
 
-class VitcStakeService {
-  final ViteClient client;
-  final Contract contract;
+class VitcStakeService extends ContractService
+    with ContractOffchain, VmLogDecoder<VitcStakeEvent> {
+  VitcStakeService({required super.client, required super.contract});
 
-  VitcStakeService({
-    required this.client,
-    required this.contract,
-  });
-
-  late ContractAbi abi = contract.contractAbi;
-
+  @override
   VitcStakeEvent? decodeEvent(
     EventEntry event, {
     required List<Object> params,
   }) {
-    switch (event.name) {
-      case 'PoolCreated':
-        return VitcStakeEvent.poolCreated(
+    return switch (event.name) {
+      'PoolCreated' => VitcStakeEvent.poolCreated(
           poolId: params[0] as BigInt,
-        );
-      case 'Deposit':
-        return VitcStakeEvent.deposit(
+        ),
+      'Deposit' => VitcStakeEvent.deposit(
           address: params[0] as Address,
           poolId: params[1] as BigInt,
           amount: params[2] as BigInt,
-        );
-      case 'Withdraw':
-        return VitcStakeEvent.withdraw(
+        ),
+      'Withdraw' => VitcStakeEvent.withdraw(
           address: params[0] as Address,
           poolId: params[1] as BigInt,
           amount: params[2] as BigInt,
-        );
-      case 'Claim':
-        return VitcStakeEvent.claim(
+        ),
+      'Claim' => VitcStakeEvent.claim(
           address: params[0] as Address,
           poolId: params[1] as BigInt,
           amount: params[2] as BigInt,
-        );
-      default:
-        return null;
-    }
-  }
-
-  VmLogEvent<VitcStakeEvent> decodeVmLogEvent(VmLog vmLog) {
-    final event = abi.findEventByTopicsHash(vmLog.topics);
-    if (event == null) {
-      return VmLogEvent.unknown(vmLog: vmLog);
-    }
-    final params = abi.decodeEvent(vmLog.data ?? Uint8List(0), vmLog.topics);
-
-    final vitcStakeEvent = decodeEvent(event, params: params);
-    if (vitcStakeEvent == null) {
-      return VmLogEvent.unknown(vmLog: vmLog, event: event);
-    }
-
-    return VmLogEvent.decoded(vmLog: vmLog, event: vitcStakeEvent);
-  }
-
-  late final offchainParams = ContractCallParams(
-    address: contract.address,
-    code: hexToBytes(contract.offchainCode),
-    data: Uint8List(0),
-  );
-
-  ContractCallParams offchainCall(String method, List<Object> args) {
-    final encoded = abi.encodeOffchain(method, args);
-    final params = offchainParams.copyWith(data: encoded);
-    return params;
-  }
-
-  Future<List<Object>> callOffchainMethod(
-      String method, List<Object> args) async {
-    final call = offchainCall(method, args);
-    final encoded = await client.callOffchainMethod(call);
-    final decoded = abi.decodeOffchainOutput(method, encoded);
-    return decoded;
+        ),
+      _ => null,
+    };
   }
 
   Future<IList<VitcPoolInfo>> getAllPoolInfo() async {

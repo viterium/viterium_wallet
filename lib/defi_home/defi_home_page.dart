@@ -3,9 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../app_providers.dart';
-import '../contracts/vitc_stake_v2.dart';
-import '../contracts/vitc_swap.dart';
-import '../contracts/viva_staking_v4.dart';
+import '../contracts/vitc_stake_v2_contract.dart';
+import '../contracts/vitc_swap_contract.dart';
+import '../contracts/viva_staking_v4_contract.dart';
 import '../node_settings/node_types.dart';
 import '../vitc_swap/vitc_swap_page.dart';
 import '../widgets/gradient_widgets.dart';

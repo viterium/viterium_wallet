@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
-import '../contracts/viva_staking_v4.dart';
+import '../contracts/viva_staking_v4_contract.dart';
 import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
 import 'viva_pools_notifier.dart';
@@ -184,7 +184,7 @@ final vivaLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vivaEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vivaStakingServiceV4Provider);
-      final event = service.decodeVmLogEvent(data.value.vmLog);
+      final event = service.decodeVmLog(data.value.vmLog);
 
       // ignore unknown events
       event.whenOrNull(
