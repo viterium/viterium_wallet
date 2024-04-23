@@ -1,4 +1,3 @@
-
 import 'package:barcode_finder/barcode_finder.dart' as bf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +23,7 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   bool _shouldScan = true;
   bool _flashOn = false;
   bool _flashToggled = false;
+  bool _checkedPermission = false;
 
   @override
   void reassemble() {
@@ -157,7 +157,11 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
   }
 
   void _onPermissionSet(QRViewController ctrl, bool p) {
-    if (!p) {
+    if (!p && !_checkedPermission && context.mounted) {
+      _checkedPermission = true;
+      if (kPlatformIsAndroid) {
+        Navigator.of(context).pop();
+      }
       UIUtil.showSnackbar('Check Camera Permission', context);
     }
   }
