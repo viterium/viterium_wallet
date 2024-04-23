@@ -48,15 +48,15 @@ void Function() setupPushNotifications(WidgetRef ref) {
     notifier.state = id;
   });
 
-  final onMessageSubscription = Push.instance.onMessage.listen((message) {});
+  final onMessageCancel = Push.instance.addOnMessage((message) {});
 
-  final onBackgroundMessageSubscription =
-      Push.instance.onBackgroundMessage.listen((message) {});
+  final onBackgroundMessageCancel =
+      Push.instance.addOnBackgroundMessage((message) {});
 
   return () {
     onNewTokenSubscription.cancel();
     onNotificationTapSubscription.cancel();
-    onMessageSubscription.cancel();
-    onBackgroundMessageSubscription.cancel();
+    onMessageCancel();
+    onBackgroundMessageCancel();
   };
 }
