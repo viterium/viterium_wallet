@@ -7,8 +7,8 @@ import 'package:vite/vite.dart';
 
 class ViteUri {
   final Address address;
-  final Token token;
-  final Decimal amount;
+  final Token? token;
+  final Decimal? amount;
   final Decimal? fee;
   final Uint8List? data;
   final String? function;
@@ -16,8 +16,8 @@ class ViteUri {
 
   const ViteUri({
     required this.address,
-    required this.token,
-    required this.amount,
+    this.token,
+    this.amount,
     this.fee,
     this.data,
     this.function,
@@ -38,8 +38,8 @@ class ViteUri {
 
   static ViteUri? tryParse(String value) {
     Address? address;
-    Decimal amount = Decimal.zero;
-    Token token = Token.vite;
+    Decimal? amount;
+    Token? token;
     Decimal? fee;
     Uint8List? data;
     String? function;
@@ -64,9 +64,11 @@ class ViteUri {
         if (pathComp.length >= 2) {
           function = pathComp[1];
         }
-        token = Token.tryParse(uri.queryParameters['tti'] ?? '') ?? Token.vite;
-        amount = Decimal.tryParse(uri.queryParameters['amount'] ?? '') ??
-            Decimal.zero;
+        token = Token.tryParse(uri.queryParameters['tti'] ?? '');
+        amount = Decimal.tryParse(uri.queryParameters['amount'] ?? '');
+        if (amount != null) {
+          token = Token.vite;
+        }
         fee = Decimal.tryParse(uri.queryParameters['fee'] ?? '');
         final tryData = uri.queryParameters['data'];
         if (tryData != null) {

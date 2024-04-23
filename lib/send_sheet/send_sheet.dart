@@ -248,8 +248,9 @@ class _SendSheetState extends ConsumerState<SendSheet> {
       }
 
       if (viteUri != null) {
-        final amount = viteUri.amount;
-        final tokenId = viteUri.token.tokenId;
+        final token = ref.read(selectedTokenProvider);
+        final amountValue = viteUri.amount;
+        final tokenId = viteUri.token?.tokenId ?? token.tokenId;
         final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
 
         _data = viteUri.data;
@@ -260,17 +261,14 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         final selectedToken = ref.read(selectedTokenProvider.notifier);
         selectedToken.state = tokenInfo;
 
-        // set amount
-        final amountBigInt = NumberUtil.getRawFromDecimal(
-          amount,
-          tokenInfo.decimals,
-        );
-
-        amountRaw = amountBigInt;
-        _amountController.text = NumberUtil.approxAmountRaw(
-          amountBigInt,
-          tokenInfo.decimals,
-        );
+        if (amountValue != null) {
+          final amount = Amount.value(amountValue, tokenInfo: tokenInfo);
+          amountRaw = amount.raw;
+          _amountController.text = NumberUtil.approxAmountRaw(
+            amount.raw,
+            tokenInfo.decimals,
+          );
+        }
 
         if (viteUri.fee != null) {
           feeRaw = Amount.value(viteUri.fee!, tokenInfo: TokenInfo.vite).raw;

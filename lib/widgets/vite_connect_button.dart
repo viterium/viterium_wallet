@@ -8,6 +8,7 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../core/vite_uri.dart';
+import '../send_sheet/balance_text_widget.dart';
 import '../send_sheet/send_confirm_sheet.dart';
 import '../send_sheet/send_sheet.dart';
 import '../tokens/token_info_provider.dart';
@@ -127,9 +128,19 @@ class ViteConnectButton extends HookConsumerWidget {
         return;
       }
 
-      final tokenId = viteUri.token.tokenId;
+      final amountValue = viteUri.amount;
+      if (amountValue == null) {
+        Sheets.showAppHeightNineSheet(
+          context: context,
+          theme: theme,
+          widget: SendSheet(address: viteUri.address.viteAddress),
+        );
+        return;
+      }
+      final token = ref.read(selectedTokenProvider);
+      final tokenId = viteUri.token?.tokenId ?? token.tokenId;
       final tokenInfo = await ref.read(tokenInfoProvider(tokenId).future);
-      final amount = Amount.value(viteUri.amount, tokenInfo: tokenInfo);
+      final amount = Amount.value(amountValue, tokenInfo: tokenInfo);
 
       Amount? fee;
       if (viteUri.fee != null) {
