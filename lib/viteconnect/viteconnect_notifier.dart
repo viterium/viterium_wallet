@@ -144,11 +144,12 @@ class ViteConnectStateNotifier extends StateNotifier<VCState>
         state.mapOrNull(connected: (prev) {
           final txRequest = VCRequest.transaction(request);
           try {
-            final block = request.params?.first['block'];
+            final block =
+                request.params?.first['block'] as Map<String, dynamic>;
+            block['blockType'] ??= BlockType.transferRequest.rawValue;
             final tx = RawTransaction.fromJson(block);
             if (tx.type.isReceiveType) {
-              final id = request.id;
-              service.sendError(id: id, error: VCError.requestRejected);
+              service.sendError(id: request.id, error: VCError.requestRejected);
               return;
             }
           } catch (_) {
