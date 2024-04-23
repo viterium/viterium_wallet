@@ -6,20 +6,20 @@ part of 'vitex_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ExchangeRateVitex _$$_ExchangeRateVitexFromJson(Map json) =>
-    _$_ExchangeRateVitex(
+_$ExchangeRateVitexImpl _$$ExchangeRateVitexImplFromJson(Map json) =>
+    _$ExchangeRateVitexImpl(
       VitexExchangeRate.fromJson(
           Map<String, dynamic>.from(json['exchangeRate'] as Map)),
     );
 
-Map<String, dynamic> _$$_ExchangeRateVitexToJson(
-        _$_ExchangeRateVitex instance) =>
+Map<String, dynamic> _$$ExchangeRateVitexImplToJson(
+        _$ExchangeRateVitexImpl instance) =>
     <String, dynamic>{
       'exchangeRate': instance.exchangeRate.toJson(),
     };
 
-_$_VitexExchangeRate _$$_VitexExchangeRateFromJson(Map json) =>
-    _$_VitexExchangeRate(
+_$VitexExchangeRateImpl _$$VitexExchangeRateImplFromJson(Map json) =>
+    _$VitexExchangeRateImpl(
       tokenId: json['tokenId'] as String,
       tokenSymbol: json['tokenSymbol'] as String?,
       usdRate: (json['usdRate'] as num).toDouble(),
@@ -51,8 +51,8 @@ _$_VitexExchangeRate _$$_VitexExchangeRateFromJson(Map json) =>
       btcRate: (json['btcRate'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$$_VitexExchangeRateToJson(
-    _$_VitexExchangeRate instance) {
+Map<String, dynamic> _$$VitexExchangeRateImplToJson(
+    _$VitexExchangeRateImpl instance) {
   final val = <String, dynamic>{
     'tokenId': instance.tokenId,
   };

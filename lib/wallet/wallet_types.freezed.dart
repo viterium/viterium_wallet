@@ -12,7 +12,7 @@ part of 'wallet_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 WalletInfo _$WalletInfoFromJson(Map<String, dynamic> json) {
   return _WalletInfo.fromJson(json);
@@ -112,11 +112,11 @@ class _$WalletInfoCopyWithImpl<$Res, $Val extends WalletInfo>
 }
 
 /// @nodoc
-abstract class _$$_WalletInfoCopyWith<$Res>
+abstract class _$$WalletInfoImplCopyWith<$Res>
     implements $WalletInfoCopyWith<$Res> {
-  factory _$$_WalletInfoCopyWith(
-          _$_WalletInfo value, $Res Function(_$_WalletInfo) then) =
-      __$$_WalletInfoCopyWithImpl<$Res>;
+  factory _$$WalletInfoImplCopyWith(
+          _$WalletInfoImpl value, $Res Function(_$WalletInfoImpl) then) =
+      __$$WalletInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -131,11 +131,11 @@ abstract class _$$_WalletInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_WalletInfoCopyWithImpl<$Res>
-    extends _$WalletInfoCopyWithImpl<$Res, _$_WalletInfo>
-    implements _$$_WalletInfoCopyWith<$Res> {
-  __$$_WalletInfoCopyWithImpl(
-      _$_WalletInfo _value, $Res Function(_$_WalletInfo) _then)
+class __$$WalletInfoImplCopyWithImpl<$Res>
+    extends _$WalletInfoCopyWithImpl<$Res, _$WalletInfoImpl>
+    implements _$$WalletInfoImplCopyWith<$Res> {
+  __$$WalletInfoImplCopyWithImpl(
+      _$WalletInfoImpl _value, $Res Function(_$WalletInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_WalletInfoCopyWithImpl<$Res>
     Object? selectionKey = null,
     Object? publicKey = null,
   }) {
-    return _then(_$_WalletInfo(
+    return _then(_$WalletInfoImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -189,8 +189,8 @@ class __$$_WalletInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_WalletInfo implements _WalletInfo {
-  const _$_WalletInfo(
+class _$WalletInfoImpl implements _WalletInfo {
+  const _$WalletInfoImpl(
       {required this.name,
       required this.wid,
       required this.accountsBoxKey,
@@ -200,8 +200,8 @@ class _$_WalletInfo implements _WalletInfo {
       required this.selectionKey,
       required this.publicKey});
 
-  factory _$_WalletInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_WalletInfoFromJson(json);
+  factory _$WalletInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletInfoImplFromJson(json);
 
   @override
   final String name;
@@ -226,10 +226,10 @@ class _$_WalletInfo implements _WalletInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WalletInfo &&
+            other is _$WalletInfoImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.wid, wid) || other.wid == wid) &&
             (identical(other.accountsBoxKey, accountsBoxKey) ||
@@ -263,12 +263,12 @@ class _$_WalletInfo implements _WalletInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WalletInfoCopyWith<_$_WalletInfo> get copyWith =>
-      __$$_WalletInfoCopyWithImpl<_$_WalletInfo>(this, _$identity);
+  _$$WalletInfoImplCopyWith<_$WalletInfoImpl> get copyWith =>
+      __$$WalletInfoImplCopyWithImpl<_$WalletInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WalletInfoToJson(
+    return _$$WalletInfoImplToJson(
       this,
     );
   }
@@ -283,10 +283,10 @@ abstract class _WalletInfo implements WalletInfo {
       required final String accountInfoBoxKey,
       required final String accountInfoEncryptionKey,
       required final String selectionKey,
-      required final String publicKey}) = _$_WalletInfo;
+      required final String publicKey}) = _$WalletInfoImpl;
 
   factory _WalletInfo.fromJson(Map<String, dynamic> json) =
-      _$_WalletInfo.fromJson;
+      _$WalletInfoImpl.fromJson;
 
   @override
   String get name;
@@ -306,7 +306,7 @@ abstract class _WalletInfo implements WalletInfo {
   String get publicKey;
   @override
   @JsonKey(ignore: true)
-  _$$_WalletInfoCopyWith<_$_WalletInfo> get copyWith =>
+  _$$WalletInfoImplCopyWith<_$WalletInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -378,11 +378,11 @@ class _$WalletBundleCopyWithImpl<$Res, $Val extends WalletBundle>
 }
 
 /// @nodoc
-abstract class _$$_WalletBundleCopyWith<$Res>
+abstract class _$$WalletBundleImplCopyWith<$Res>
     implements $WalletBundleCopyWith<$Res> {
-  factory _$$_WalletBundleCopyWith(
-          _$_WalletBundle value, $Res Function(_$_WalletBundle) then) =
-      __$$_WalletBundleCopyWithImpl<$Res>;
+  factory _$$WalletBundleImplCopyWith(
+          _$WalletBundleImpl value, $Res Function(_$WalletBundleImpl) then) =
+      __$$WalletBundleImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IList<WalletInfo>? wallets, WalletInfo? selected});
@@ -392,11 +392,11 @@ abstract class _$$_WalletBundleCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_WalletBundleCopyWithImpl<$Res>
-    extends _$WalletBundleCopyWithImpl<$Res, _$_WalletBundle>
-    implements _$$_WalletBundleCopyWith<$Res> {
-  __$$_WalletBundleCopyWithImpl(
-      _$_WalletBundle _value, $Res Function(_$_WalletBundle) _then)
+class __$$WalletBundleImplCopyWithImpl<$Res>
+    extends _$WalletBundleCopyWithImpl<$Res, _$WalletBundleImpl>
+    implements _$$WalletBundleImplCopyWith<$Res> {
+  __$$WalletBundleImplCopyWithImpl(
+      _$WalletBundleImpl _value, $Res Function(_$WalletBundleImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -405,7 +405,7 @@ class __$$_WalletBundleCopyWithImpl<$Res>
     Object? wallets = freezed,
     Object? selected = freezed,
   }) {
-    return _then(_$_WalletBundle(
+    return _then(_$WalletBundleImpl(
       wallets: freezed == wallets
           ? _value.wallets
           : wallets // ignore: cast_nullable_to_non_nullable
@@ -420,11 +420,11 @@ class __$$_WalletBundleCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_WalletBundle implements _WalletBundle {
-  const _$_WalletBundle({this.wallets, this.selected});
+class _$WalletBundleImpl implements _WalletBundle {
+  const _$WalletBundleImpl({this.wallets, this.selected});
 
-  factory _$_WalletBundle.fromJson(Map<String, dynamic> json) =>
-      _$$_WalletBundleFromJson(json);
+  factory _$WalletBundleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletBundleImplFromJson(json);
 
   @override
   final IList<WalletInfo>? wallets;
@@ -437,10 +437,10 @@ class _$_WalletBundle implements _WalletBundle {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WalletBundle &&
+            other is _$WalletBundleImpl &&
             const DeepCollectionEquality().equals(other.wallets, wallets) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
@@ -454,12 +454,12 @@ class _$_WalletBundle implements _WalletBundle {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WalletBundleCopyWith<_$_WalletBundle> get copyWith =>
-      __$$_WalletBundleCopyWithImpl<_$_WalletBundle>(this, _$identity);
+  _$$WalletBundleImplCopyWith<_$WalletBundleImpl> get copyWith =>
+      __$$WalletBundleImplCopyWithImpl<_$WalletBundleImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WalletBundleToJson(
+    return _$$WalletBundleImplToJson(
       this,
     );
   }
@@ -468,10 +468,10 @@ class _$_WalletBundle implements _WalletBundle {
 abstract class _WalletBundle implements WalletBundle {
   const factory _WalletBundle(
       {final IList<WalletInfo>? wallets,
-      final WalletInfo? selected}) = _$_WalletBundle;
+      final WalletInfo? selected}) = _$WalletBundleImpl;
 
   factory _WalletBundle.fromJson(Map<String, dynamic> json) =
-      _$_WalletBundle.fromJson;
+      _$WalletBundleImpl.fromJson;
 
   @override
   IList<WalletInfo>? get wallets;
@@ -479,7 +479,7 @@ abstract class _WalletBundle implements WalletBundle {
   WalletInfo? get selected;
   @override
   @JsonKey(ignore: true)
-  _$$_WalletBundleCopyWith<_$_WalletBundle> get copyWith =>
+  _$$WalletBundleImplCopyWith<_$WalletBundleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -544,22 +544,22 @@ class _$WalletDataCopyWithImpl<$Res, $Val extends WalletData>
 }
 
 /// @nodoc
-abstract class _$$_WalletDataCopyWith<$Res>
+abstract class _$$WalletDataImplCopyWith<$Res>
     implements $WalletDataCopyWith<$Res> {
-  factory _$$_WalletDataCopyWith(
-          _$_WalletData value, $Res Function(_$_WalletData) then) =
-      __$$_WalletDataCopyWithImpl<$Res>;
+  factory _$$WalletDataImplCopyWith(
+          _$WalletDataImpl value, $Res Function(_$WalletDataImpl) then) =
+      __$$WalletDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String seed, String? mnemonic, String? password});
 }
 
 /// @nodoc
-class __$$_WalletDataCopyWithImpl<$Res>
-    extends _$WalletDataCopyWithImpl<$Res, _$_WalletData>
-    implements _$$_WalletDataCopyWith<$Res> {
-  __$$_WalletDataCopyWithImpl(
-      _$_WalletData _value, $Res Function(_$_WalletData) _then)
+class __$$WalletDataImplCopyWithImpl<$Res>
+    extends _$WalletDataCopyWithImpl<$Res, _$WalletDataImpl>
+    implements _$$WalletDataImplCopyWith<$Res> {
+  __$$WalletDataImplCopyWithImpl(
+      _$WalletDataImpl _value, $Res Function(_$WalletDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -570,7 +570,7 @@ class __$$_WalletDataCopyWithImpl<$Res>
     Object? mnemonic = freezed,
     Object? password = freezed,
   }) {
-    return _then(_$_WalletData(
+    return _then(_$WalletDataImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -593,8 +593,8 @@ class __$$_WalletDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WalletData implements _WalletData {
-  const _$_WalletData(
+class _$WalletDataImpl implements _WalletData {
+  const _$WalletDataImpl(
       {required this.name, required this.seed, this.mnemonic, this.password});
 
   @override
@@ -612,10 +612,10 @@ class _$_WalletData implements _WalletData {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WalletData &&
+            other is _$WalletDataImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.seed, seed) || other.seed == seed) &&
             (identical(other.mnemonic, mnemonic) ||
@@ -630,8 +630,8 @@ class _$_WalletData implements _WalletData {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WalletDataCopyWith<_$_WalletData> get copyWith =>
-      __$$_WalletDataCopyWithImpl<_$_WalletData>(this, _$identity);
+  _$$WalletDataImplCopyWith<_$WalletDataImpl> get copyWith =>
+      __$$WalletDataImplCopyWithImpl<_$WalletDataImpl>(this, _$identity);
 }
 
 abstract class _WalletData implements WalletData {
@@ -639,7 +639,7 @@ abstract class _WalletData implements WalletData {
       {required final String name,
       required final String seed,
       final String? mnemonic,
-      final String? password}) = _$_WalletData;
+      final String? password}) = _$WalletDataImpl;
 
   @override
   String get name;
@@ -651,6 +651,6 @@ abstract class _WalletData implements WalletData {
   String? get password;
   @override
   @JsonKey(ignore: true)
-  _$$_WalletDataCopyWith<_$_WalletData> get copyWith =>
+  _$$WalletDataImplCopyWith<_$WalletDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

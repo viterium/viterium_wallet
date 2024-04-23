@@ -6,7 +6,7 @@ part of 'transaction_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Transaction _$$_TransactionFromJson(Map json) => _$_Transaction(
+_$TransactionImpl _$$TransactionImplFromJson(Map json) => _$TransactionImpl(
       blockType: const BlockTypeConverter().fromJson(json['blockType'] as int),
       address: Address.fromJson(json['address'] as String),
       fromAddress: Address.fromJson(json['fromAddress'] as String),
@@ -19,7 +19,7 @@ _$_Transaction _$$_TransactionFromJson(Map json) => _$_Transaction(
           Map<String, dynamic>.from(json['tokenInfo'] as Map)),
     );
 
-Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
+Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
     <String, dynamic>{
       'blockType': const BlockTypeConverter().toJson(instance.blockType),
       'address': instance.address.toJson(),
@@ -32,7 +32,8 @@ Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
       'tokenInfo': instance.tokenInfo.toJson(),
     };
 
-_$_AccountHistory _$$_AccountHistoryFromJson(Map json) => _$_AccountHistory(
+_$AccountHistoryImpl _$$AccountHistoryImplFromJson(Map json) =>
+    _$AccountHistoryImpl(
       history: IMap<int, Transaction>.fromJson(
           Map<String, Object?>.from(json['history'] as Map),
           (value) => value as int,
@@ -40,7 +41,8 @@ _$_AccountHistory _$$_AccountHistoryFromJson(Map json) => _$_AccountHistory(
               Transaction.fromJson(Map<String, dynamic>.from(value as Map))),
     );
 
-Map<String, dynamic> _$$_AccountHistoryToJson(_$_AccountHistory instance) =>
+Map<String, dynamic> _$$AccountHistoryImplToJson(
+        _$AccountHistoryImpl instance) =>
     <String, dynamic>{
       'history': instance.history.toJson(
         (value) => value,

@@ -12,7 +12,7 @@ part of 'send_tx.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SendTx {
@@ -128,11 +128,11 @@ class _$SendTxCopyWithImpl<$Res, $Val extends SendTx>
 }
 
 /// @nodoc
-abstract class _$$_SendTxSendTransferCopyWith<$Res>
+abstract class _$$SendTxSendTransferImplCopyWith<$Res>
     implements $SendTxCopyWith<$Res> {
-  factory _$$_SendTxSendTransferCopyWith(_$_SendTxSendTransfer value,
-          $Res Function(_$_SendTxSendTransfer) then) =
-      __$$_SendTxSendTransferCopyWithImpl<$Res>;
+  factory _$$SendTxSendTransferImplCopyWith(_$SendTxSendTransferImpl value,
+          $Res Function(_$SendTxSendTransferImpl) then) =
+      __$$SendTxSendTransferImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({RawTransaction rawTx, TokenInfo tokenInfo});
@@ -144,11 +144,11 @@ abstract class _$$_SendTxSendTransferCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SendTxSendTransferCopyWithImpl<$Res>
-    extends _$SendTxCopyWithImpl<$Res, _$_SendTxSendTransfer>
-    implements _$$_SendTxSendTransferCopyWith<$Res> {
-  __$$_SendTxSendTransferCopyWithImpl(
-      _$_SendTxSendTransfer _value, $Res Function(_$_SendTxSendTransfer) _then)
+class __$$SendTxSendTransferImplCopyWithImpl<$Res>
+    extends _$SendTxCopyWithImpl<$Res, _$SendTxSendTransferImpl>
+    implements _$$SendTxSendTransferImplCopyWith<$Res> {
+  __$$SendTxSendTransferImplCopyWithImpl(_$SendTxSendTransferImpl _value,
+      $Res Function(_$SendTxSendTransferImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -157,7 +157,7 @@ class __$$_SendTxSendTransferCopyWithImpl<$Res>
     Object? rawTx = null,
     Object? tokenInfo = null,
   }) {
-    return _then(_$_SendTxSendTransfer(
+    return _then(_$SendTxSendTransferImpl(
       rawTx: null == rawTx
           ? _value.rawTx
           : rawTx // ignore: cast_nullable_to_non_nullable
@@ -172,8 +172,8 @@ class __$$_SendTxSendTransferCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SendTxSendTransfer extends _SendTxSendTransfer {
-  const _$_SendTxSendTransfer({required this.rawTx, required this.tokenInfo})
+class _$SendTxSendTransferImpl extends _SendTxSendTransfer {
+  const _$SendTxSendTransferImpl({required this.rawTx, required this.tokenInfo})
       : super._();
 
   @override
@@ -187,10 +187,10 @@ class _$_SendTxSendTransfer extends _SendTxSendTransfer {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SendTxSendTransfer &&
+            other is _$SendTxSendTransferImpl &&
             (identical(other.rawTx, rawTx) || other.rawTx == rawTx) &&
             (identical(other.tokenInfo, tokenInfo) ||
                 other.tokenInfo == tokenInfo));
@@ -202,8 +202,8 @@ class _$_SendTxSendTransfer extends _SendTxSendTransfer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SendTxSendTransferCopyWith<_$_SendTxSendTransfer> get copyWith =>
-      __$$_SendTxSendTransferCopyWithImpl<_$_SendTxSendTransfer>(
+  _$$SendTxSendTransferImplCopyWith<_$SendTxSendTransferImpl> get copyWith =>
+      __$$SendTxSendTransferImplCopyWithImpl<_$SendTxSendTransferImpl>(
           this, _$identity);
 
   @override
@@ -282,7 +282,7 @@ class _$_SendTxSendTransfer extends _SendTxSendTransfer {
 abstract class _SendTxSendTransfer extends SendTx {
   const factory _SendTxSendTransfer(
       {required final RawTransaction rawTx,
-      required final TokenInfo tokenInfo}) = _$_SendTxSendTransfer;
+      required final TokenInfo tokenInfo}) = _$SendTxSendTransferImpl;
   const _SendTxSendTransfer._() : super._();
 
   @override
@@ -291,16 +291,16 @@ abstract class _SendTxSendTransfer extends SendTx {
   TokenInfo get tokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_SendTxSendTransferCopyWith<_$_SendTxSendTransfer> get copyWith =>
+  _$$SendTxSendTransferImplCopyWith<_$SendTxSendTransferImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SendTxCallContractCopyWith<$Res>
+abstract class _$$SendTxCallContractImplCopyWith<$Res>
     implements $SendTxCopyWith<$Res> {
-  factory _$$_SendTxCallContractCopyWith(_$_SendTxCallContract value,
-          $Res Function(_$_SendTxCallContract) then) =
-      __$$_SendTxCallContractCopyWithImpl<$Res>;
+  factory _$$SendTxCallContractImplCopyWith(_$SendTxCallContractImpl value,
+          $Res Function(_$SendTxCallContractImpl) then) =
+      __$$SendTxCallContractImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({RawTransaction rawTx, TokenInfo tokenInfo});
@@ -312,11 +312,11 @@ abstract class _$$_SendTxCallContractCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SendTxCallContractCopyWithImpl<$Res>
-    extends _$SendTxCopyWithImpl<$Res, _$_SendTxCallContract>
-    implements _$$_SendTxCallContractCopyWith<$Res> {
-  __$$_SendTxCallContractCopyWithImpl(
-      _$_SendTxCallContract _value, $Res Function(_$_SendTxCallContract) _then)
+class __$$SendTxCallContractImplCopyWithImpl<$Res>
+    extends _$SendTxCopyWithImpl<$Res, _$SendTxCallContractImpl>
+    implements _$$SendTxCallContractImplCopyWith<$Res> {
+  __$$SendTxCallContractImplCopyWithImpl(_$SendTxCallContractImpl _value,
+      $Res Function(_$SendTxCallContractImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -325,7 +325,7 @@ class __$$_SendTxCallContractCopyWithImpl<$Res>
     Object? rawTx = null,
     Object? tokenInfo = null,
   }) {
-    return _then(_$_SendTxCallContract(
+    return _then(_$SendTxCallContractImpl(
       rawTx: null == rawTx
           ? _value.rawTx
           : rawTx // ignore: cast_nullable_to_non_nullable
@@ -340,8 +340,8 @@ class __$$_SendTxCallContractCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SendTxCallContract extends _SendTxCallContract {
-  const _$_SendTxCallContract({required this.rawTx, required this.tokenInfo})
+class _$SendTxCallContractImpl extends _SendTxCallContract {
+  const _$SendTxCallContractImpl({required this.rawTx, required this.tokenInfo})
       : super._();
 
   @override
@@ -355,10 +355,10 @@ class _$_SendTxCallContract extends _SendTxCallContract {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SendTxCallContract &&
+            other is _$SendTxCallContractImpl &&
             (identical(other.rawTx, rawTx) || other.rawTx == rawTx) &&
             (identical(other.tokenInfo, tokenInfo) ||
                 other.tokenInfo == tokenInfo));
@@ -370,8 +370,8 @@ class _$_SendTxCallContract extends _SendTxCallContract {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SendTxCallContractCopyWith<_$_SendTxCallContract> get copyWith =>
-      __$$_SendTxCallContractCopyWithImpl<_$_SendTxCallContract>(
+  _$$SendTxCallContractImplCopyWith<_$SendTxCallContractImpl> get copyWith =>
+      __$$SendTxCallContractImplCopyWithImpl<_$SendTxCallContractImpl>(
           this, _$identity);
 
   @override
@@ -450,7 +450,7 @@ class _$_SendTxCallContract extends _SendTxCallContract {
 abstract class _SendTxCallContract extends SendTx {
   const factory _SendTxCallContract(
       {required final RawTransaction rawTx,
-      required final TokenInfo tokenInfo}) = _$_SendTxCallContract;
+      required final TokenInfo tokenInfo}) = _$SendTxCallContractImpl;
   const _SendTxCallContract._() : super._();
 
   @override
@@ -459,16 +459,16 @@ abstract class _SendTxCallContract extends SendTx {
   TokenInfo get tokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_SendTxCallContractCopyWith<_$_SendTxCallContract> get copyWith =>
+  _$$SendTxCallContractImplCopyWith<_$SendTxCallContractImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SendTxCreateContractCopyWith<$Res>
+abstract class _$$SendTxCreateContractImplCopyWith<$Res>
     implements $SendTxCopyWith<$Res> {
-  factory _$$_SendTxCreateContractCopyWith(_$_SendTxCreateContract value,
-          $Res Function(_$_SendTxCreateContract) then) =
-      __$$_SendTxCreateContractCopyWithImpl<$Res>;
+  factory _$$SendTxCreateContractImplCopyWith(_$SendTxCreateContractImpl value,
+          $Res Function(_$SendTxCreateContractImpl) then) =
+      __$$SendTxCreateContractImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({RawTransaction rawTx, TokenInfo tokenInfo});
@@ -480,11 +480,11 @@ abstract class _$$_SendTxCreateContractCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SendTxCreateContractCopyWithImpl<$Res>
-    extends _$SendTxCopyWithImpl<$Res, _$_SendTxCreateContract>
-    implements _$$_SendTxCreateContractCopyWith<$Res> {
-  __$$_SendTxCreateContractCopyWithImpl(_$_SendTxCreateContract _value,
-      $Res Function(_$_SendTxCreateContract) _then)
+class __$$SendTxCreateContractImplCopyWithImpl<$Res>
+    extends _$SendTxCopyWithImpl<$Res, _$SendTxCreateContractImpl>
+    implements _$$SendTxCreateContractImplCopyWith<$Res> {
+  __$$SendTxCreateContractImplCopyWithImpl(_$SendTxCreateContractImpl _value,
+      $Res Function(_$SendTxCreateContractImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -493,7 +493,7 @@ class __$$_SendTxCreateContractCopyWithImpl<$Res>
     Object? rawTx = null,
     Object? tokenInfo = null,
   }) {
-    return _then(_$_SendTxCreateContract(
+    return _then(_$SendTxCreateContractImpl(
       rawTx: null == rawTx
           ? _value.rawTx
           : rawTx // ignore: cast_nullable_to_non_nullable
@@ -508,8 +508,9 @@ class __$$_SendTxCreateContractCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SendTxCreateContract extends _SendTxCreateContract {
-  const _$_SendTxCreateContract({required this.rawTx, required this.tokenInfo})
+class _$SendTxCreateContractImpl extends _SendTxCreateContract {
+  const _$SendTxCreateContractImpl(
+      {required this.rawTx, required this.tokenInfo})
       : super._();
 
   @override
@@ -523,10 +524,10 @@ class _$_SendTxCreateContract extends _SendTxCreateContract {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SendTxCreateContract &&
+            other is _$SendTxCreateContractImpl &&
             (identical(other.rawTx, rawTx) || other.rawTx == rawTx) &&
             (identical(other.tokenInfo, tokenInfo) ||
                 other.tokenInfo == tokenInfo));
@@ -538,9 +539,10 @@ class _$_SendTxCreateContract extends _SendTxCreateContract {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SendTxCreateContractCopyWith<_$_SendTxCreateContract> get copyWith =>
-      __$$_SendTxCreateContractCopyWithImpl<_$_SendTxCreateContract>(
-          this, _$identity);
+  _$$SendTxCreateContractImplCopyWith<_$SendTxCreateContractImpl>
+      get copyWith =>
+          __$$SendTxCreateContractImplCopyWithImpl<_$SendTxCreateContractImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -618,7 +620,7 @@ class _$_SendTxCreateContract extends _SendTxCreateContract {
 abstract class _SendTxCreateContract extends SendTx {
   const factory _SendTxCreateContract(
       {required final RawTransaction rawTx,
-      required final TokenInfo tokenInfo}) = _$_SendTxCreateContract;
+      required final TokenInfo tokenInfo}) = _$SendTxCreateContractImpl;
   const _SendTxCreateContract._() : super._();
 
   @override
@@ -627,6 +629,6 @@ abstract class _SendTxCreateContract extends SendTx {
   TokenInfo get tokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_SendTxCreateContractCopyWith<_$_SendTxCreateContract> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SendTxCreateContractImplCopyWith<_$SendTxCreateContractImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

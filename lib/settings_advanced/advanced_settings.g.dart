@@ -6,14 +6,15 @@ part of 'advanced_settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AdvancedSettings _$$_AdvancedSettingsFromJson(Map json) =>
-    _$_AdvancedSettings(
+_$AdvancedSettingsImpl _$$AdvancedSettingsImplFromJson(Map json) =>
+    _$AdvancedSettingsImpl(
       defiEnabled: json['defiEnabled'] as bool? ?? true,
       autoReceiveEnabled: json['autoReceiveEnabled'] as bool? ?? true,
       showFiatValue: json['showFiatValue'] as bool? ?? true,
     );
 
-Map<String, dynamic> _$$_AdvancedSettingsToJson(_$_AdvancedSettings instance) =>
+Map<String, dynamic> _$$AdvancedSettingsImplToJson(
+        _$AdvancedSettingsImpl instance) =>
     <String, dynamic>{
       'defiEnabled': instance.defiEnabled,
       'autoReceiveEnabled': instance.autoReceiveEnabled,

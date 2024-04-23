@@ -12,7 +12,7 @@ part of 'coingecko_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 CoinGeckoRate _$CoinGeckoRateFromJson(Map<String, dynamic> json) {
   return _CoinGeckoRate.fromJson(json);
@@ -80,22 +80,22 @@ class _$CoinGeckoRateCopyWithImpl<$Res, $Val extends CoinGeckoRate>
 }
 
 /// @nodoc
-abstract class _$$_CoinGeckoRateCopyWith<$Res>
+abstract class _$$CoinGeckoRateImplCopyWith<$Res>
     implements $CoinGeckoRateCopyWith<$Res> {
-  factory _$$_CoinGeckoRateCopyWith(
-          _$_CoinGeckoRate value, $Res Function(_$_CoinGeckoRate) then) =
-      __$$_CoinGeckoRateCopyWithImpl<$Res>;
+  factory _$$CoinGeckoRateImplCopyWith(
+          _$CoinGeckoRateImpl value, $Res Function(_$CoinGeckoRateImpl) then) =
+      __$$CoinGeckoRateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String unit, double value, String type});
 }
 
 /// @nodoc
-class __$$_CoinGeckoRateCopyWithImpl<$Res>
-    extends _$CoinGeckoRateCopyWithImpl<$Res, _$_CoinGeckoRate>
-    implements _$$_CoinGeckoRateCopyWith<$Res> {
-  __$$_CoinGeckoRateCopyWithImpl(
-      _$_CoinGeckoRate _value, $Res Function(_$_CoinGeckoRate) _then)
+class __$$CoinGeckoRateImplCopyWithImpl<$Res>
+    extends _$CoinGeckoRateCopyWithImpl<$Res, _$CoinGeckoRateImpl>
+    implements _$$CoinGeckoRateImplCopyWith<$Res> {
+  __$$CoinGeckoRateImplCopyWithImpl(
+      _$CoinGeckoRateImpl _value, $Res Function(_$CoinGeckoRateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -106,7 +106,7 @@ class __$$_CoinGeckoRateCopyWithImpl<$Res>
     Object? value = null,
     Object? type = null,
   }) {
-    return _then(_$_CoinGeckoRate(
+    return _then(_$CoinGeckoRateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -129,15 +129,15 @@ class __$$_CoinGeckoRateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CoinGeckoRate implements _CoinGeckoRate {
-  const _$_CoinGeckoRate(
+class _$CoinGeckoRateImpl implements _CoinGeckoRate {
+  const _$CoinGeckoRateImpl(
       {required this.name,
       required this.unit,
       required this.value,
       required this.type});
 
-  factory _$_CoinGeckoRate.fromJson(Map<String, dynamic> json) =>
-      _$$_CoinGeckoRateFromJson(json);
+  factory _$CoinGeckoRateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinGeckoRateImplFromJson(json);
 
   @override
   final String name;
@@ -154,10 +154,10 @@ class _$_CoinGeckoRate implements _CoinGeckoRate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CoinGeckoRate &&
+            other is _$CoinGeckoRateImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.unit, unit) || other.unit == unit) &&
             (identical(other.value, value) || other.value == value) &&
@@ -171,12 +171,12 @@ class _$_CoinGeckoRate implements _CoinGeckoRate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CoinGeckoRateCopyWith<_$_CoinGeckoRate> get copyWith =>
-      __$$_CoinGeckoRateCopyWithImpl<_$_CoinGeckoRate>(this, _$identity);
+  _$$CoinGeckoRateImplCopyWith<_$CoinGeckoRateImpl> get copyWith =>
+      __$$CoinGeckoRateImplCopyWithImpl<_$CoinGeckoRateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CoinGeckoRateToJson(
+    return _$$CoinGeckoRateImplToJson(
       this,
     );
   }
@@ -187,10 +187,10 @@ abstract class _CoinGeckoRate implements CoinGeckoRate {
       {required final String name,
       required final String unit,
       required final double value,
-      required final String type}) = _$_CoinGeckoRate;
+      required final String type}) = _$CoinGeckoRateImpl;
 
   factory _CoinGeckoRate.fromJson(Map<String, dynamic> json) =
-      _$_CoinGeckoRate.fromJson;
+      _$CoinGeckoRateImpl.fromJson;
 
   @override
   String get name;
@@ -202,7 +202,7 @@ abstract class _CoinGeckoRate implements CoinGeckoRate {
   String get type;
   @override
   @JsonKey(ignore: true)
-  _$$_CoinGeckoRateCopyWith<_$_CoinGeckoRate> get copyWith =>
+  _$$CoinGeckoRateImplCopyWith<_$CoinGeckoRateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -254,22 +254,22 @@ class _$CoinGeckoRatesCopyWithImpl<$Res, $Val extends CoinGeckoRates>
 }
 
 /// @nodoc
-abstract class _$$_CoinGeckoRatesCopyWith<$Res>
+abstract class _$$CoinGeckoRatesImplCopyWith<$Res>
     implements $CoinGeckoRatesCopyWith<$Res> {
-  factory _$$_CoinGeckoRatesCopyWith(
-          _$_CoinGeckoRates value, $Res Function(_$_CoinGeckoRates) then) =
-      __$$_CoinGeckoRatesCopyWithImpl<$Res>;
+  factory _$$CoinGeckoRatesImplCopyWith(_$CoinGeckoRatesImpl value,
+          $Res Function(_$CoinGeckoRatesImpl) then) =
+      __$$CoinGeckoRatesImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Map<String, CoinGeckoRate> rates});
 }
 
 /// @nodoc
-class __$$_CoinGeckoRatesCopyWithImpl<$Res>
-    extends _$CoinGeckoRatesCopyWithImpl<$Res, _$_CoinGeckoRates>
-    implements _$$_CoinGeckoRatesCopyWith<$Res> {
-  __$$_CoinGeckoRatesCopyWithImpl(
-      _$_CoinGeckoRates _value, $Res Function(_$_CoinGeckoRates) _then)
+class __$$CoinGeckoRatesImplCopyWithImpl<$Res>
+    extends _$CoinGeckoRatesCopyWithImpl<$Res, _$CoinGeckoRatesImpl>
+    implements _$$CoinGeckoRatesImplCopyWith<$Res> {
+  __$$CoinGeckoRatesImplCopyWithImpl(
+      _$CoinGeckoRatesImpl _value, $Res Function(_$CoinGeckoRatesImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -277,7 +277,7 @@ class __$$_CoinGeckoRatesCopyWithImpl<$Res>
   $Res call({
     Object? rates = null,
   }) {
-    return _then(_$_CoinGeckoRates(
+    return _then(_$CoinGeckoRatesImpl(
       rates: null == rates
           ? _value._rates
           : rates // ignore: cast_nullable_to_non_nullable
@@ -288,13 +288,14 @@ class __$$_CoinGeckoRatesCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CoinGeckoRates extends _CoinGeckoRates {
-  const _$_CoinGeckoRates({final Map<String, CoinGeckoRate> rates = const {}})
+class _$CoinGeckoRatesImpl extends _CoinGeckoRates {
+  const _$CoinGeckoRatesImpl(
+      {final Map<String, CoinGeckoRate> rates = const {}})
       : _rates = rates,
         super._();
 
-  factory _$_CoinGeckoRates.fromJson(Map<String, dynamic> json) =>
-      _$$_CoinGeckoRatesFromJson(json);
+  factory _$CoinGeckoRatesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CoinGeckoRatesImplFromJson(json);
 
   final Map<String, CoinGeckoRate> _rates;
   @override
@@ -311,10 +312,10 @@ class _$_CoinGeckoRates extends _CoinGeckoRates {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CoinGeckoRates &&
+            other is _$CoinGeckoRatesImpl &&
             const DeepCollectionEquality().equals(other._rates, _rates));
   }
 
@@ -326,12 +327,13 @@ class _$_CoinGeckoRates extends _CoinGeckoRates {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CoinGeckoRatesCopyWith<_$_CoinGeckoRates> get copyWith =>
-      __$$_CoinGeckoRatesCopyWithImpl<_$_CoinGeckoRates>(this, _$identity);
+  _$$CoinGeckoRatesImplCopyWith<_$CoinGeckoRatesImpl> get copyWith =>
+      __$$CoinGeckoRatesImplCopyWithImpl<_$CoinGeckoRatesImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CoinGeckoRatesToJson(
+    return _$$CoinGeckoRatesImplToJson(
       this,
     );
   }
@@ -339,16 +341,16 @@ class _$_CoinGeckoRates extends _CoinGeckoRates {
 
 abstract class _CoinGeckoRates extends CoinGeckoRates {
   const factory _CoinGeckoRates({final Map<String, CoinGeckoRate> rates}) =
-      _$_CoinGeckoRates;
+      _$CoinGeckoRatesImpl;
   const _CoinGeckoRates._() : super._();
 
   factory _CoinGeckoRates.fromJson(Map<String, dynamic> json) =
-      _$_CoinGeckoRates.fromJson;
+      _$CoinGeckoRatesImpl.fromJson;
 
   @override
   Map<String, CoinGeckoRate> get rates;
   @override
   @JsonKey(ignore: true)
-  _$$_CoinGeckoRatesCopyWith<_$_CoinGeckoRates> get copyWith =>
+  _$$CoinGeckoRatesImplCopyWith<_$CoinGeckoRatesImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

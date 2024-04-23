@@ -12,7 +12,7 @@ part of 'pow_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PowConfigSettings _$PowConfigSettingsFromJson(Map<String, dynamic> json) {
   return _PowConfigSettings.fromJson(json);
@@ -78,11 +78,11 @@ class _$PowConfigSettingsCopyWithImpl<$Res, $Val extends PowConfigSettings>
 }
 
 /// @nodoc
-abstract class _$$_PowConfigSettingsCopyWith<$Res>
+abstract class _$$PowConfigSettingsImplCopyWith<$Res>
     implements $PowConfigSettingsCopyWith<$Res> {
-  factory _$$_PowConfigSettingsCopyWith(_$_PowConfigSettings value,
-          $Res Function(_$_PowConfigSettings) then) =
-      __$$_PowConfigSettingsCopyWithImpl<$Res>;
+  factory _$$PowConfigSettingsImplCopyWith(_$PowConfigSettingsImpl value,
+          $Res Function(_$PowConfigSettingsImpl) then) =
+      __$$PowConfigSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IList<PowConfig> options, PowConfig selected});
@@ -92,11 +92,11 @@ abstract class _$$_PowConfigSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PowConfigSettingsCopyWithImpl<$Res>
-    extends _$PowConfigSettingsCopyWithImpl<$Res, _$_PowConfigSettings>
-    implements _$$_PowConfigSettingsCopyWith<$Res> {
-  __$$_PowConfigSettingsCopyWithImpl(
-      _$_PowConfigSettings _value, $Res Function(_$_PowConfigSettings) _then)
+class __$$PowConfigSettingsImplCopyWithImpl<$Res>
+    extends _$PowConfigSettingsCopyWithImpl<$Res, _$PowConfigSettingsImpl>
+    implements _$$PowConfigSettingsImplCopyWith<$Res> {
+  __$$PowConfigSettingsImplCopyWithImpl(_$PowConfigSettingsImpl _value,
+      $Res Function(_$PowConfigSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +105,7 @@ class __$$_PowConfigSettingsCopyWithImpl<$Res>
     Object? options = null,
     Object? selected = null,
   }) {
-    return _then(_$_PowConfigSettings(
+    return _then(_$PowConfigSettingsImpl(
       options: null == options
           ? _value.options
           : options // ignore: cast_nullable_to_non_nullable
@@ -120,13 +120,13 @@ class __$$_PowConfigSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PowConfigSettings implements _PowConfigSettings {
-  const _$_PowConfigSettings(
+class _$PowConfigSettingsImpl implements _PowConfigSettings {
+  const _$PowConfigSettingsImpl(
       {this.options = const IListConst([PowConfig.defaultNode()]),
       this.selected = const PowConfig.defaultNode()});
 
-  factory _$_PowConfigSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_PowConfigSettingsFromJson(json);
+  factory _$PowConfigSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PowConfigSettingsImplFromJson(json);
 
   @override
   @JsonKey()
@@ -141,10 +141,10 @@ class _$_PowConfigSettings implements _PowConfigSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PowConfigSettings &&
+            other is _$PowConfigSettingsImpl &&
             const DeepCollectionEquality().equals(other.options, options) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
@@ -158,13 +158,13 @@ class _$_PowConfigSettings implements _PowConfigSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PowConfigSettingsCopyWith<_$_PowConfigSettings> get copyWith =>
-      __$$_PowConfigSettingsCopyWithImpl<_$_PowConfigSettings>(
+  _$$PowConfigSettingsImplCopyWith<_$PowConfigSettingsImpl> get copyWith =>
+      __$$PowConfigSettingsImplCopyWithImpl<_$PowConfigSettingsImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PowConfigSettingsToJson(
+    return _$$PowConfigSettingsImplToJson(
       this,
     );
   }
@@ -173,10 +173,10 @@ class _$_PowConfigSettings implements _PowConfigSettings {
 abstract class _PowConfigSettings implements PowConfigSettings {
   const factory _PowConfigSettings(
       {final IList<PowConfig> options,
-      final PowConfig selected}) = _$_PowConfigSettings;
+      final PowConfig selected}) = _$PowConfigSettingsImpl;
 
   factory _PowConfigSettings.fromJson(Map<String, dynamic> json) =
-      _$_PowConfigSettings.fromJson;
+      _$PowConfigSettingsImpl.fromJson;
 
   @override
   IList<PowConfig> get options;
@@ -184,7 +184,7 @@ abstract class _PowConfigSettings implements PowConfigSettings {
   PowConfig get selected;
   @override
   @JsonKey(ignore: true)
-  _$$_PowConfigSettingsCopyWith<_$_PowConfigSettings> get copyWith =>
+  _$$PowConfigSettingsImplCopyWith<_$PowConfigSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -281,22 +281,22 @@ class _$PowConfigCopyWithImpl<$Res, $Val extends PowConfig>
 }
 
 /// @nodoc
-abstract class _$$_PowConfigDefaultCopyWith<$Res>
+abstract class _$$PowConfigDefaultImplCopyWith<$Res>
     implements $PowConfigCopyWith<$Res> {
-  factory _$$_PowConfigDefaultCopyWith(
-          _$_PowConfigDefault value, $Res Function(_$_PowConfigDefault) then) =
-      __$$_PowConfigDefaultCopyWithImpl<$Res>;
+  factory _$$PowConfigDefaultImplCopyWith(_$PowConfigDefaultImpl value,
+          $Res Function(_$PowConfigDefaultImpl) then) =
+      __$$PowConfigDefaultImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name});
 }
 
 /// @nodoc
-class __$$_PowConfigDefaultCopyWithImpl<$Res>
-    extends _$PowConfigCopyWithImpl<$Res, _$_PowConfigDefault>
-    implements _$$_PowConfigDefaultCopyWith<$Res> {
-  __$$_PowConfigDefaultCopyWithImpl(
-      _$_PowConfigDefault _value, $Res Function(_$_PowConfigDefault) _then)
+class __$$PowConfigDefaultImplCopyWithImpl<$Res>
+    extends _$PowConfigCopyWithImpl<$Res, _$PowConfigDefaultImpl>
+    implements _$$PowConfigDefaultImplCopyWith<$Res> {
+  __$$PowConfigDefaultImplCopyWithImpl(_$PowConfigDefaultImpl _value,
+      $Res Function(_$PowConfigDefaultImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -304,7 +304,7 @@ class __$$_PowConfigDefaultCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
   }) {
-    return _then(_$_PowConfigDefault(
+    return _then(_$PowConfigDefaultImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -315,12 +315,12 @@ class __$$_PowConfigDefaultCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PowConfigDefault implements _PowConfigDefault {
-  const _$_PowConfigDefault({this.name = '', final String? $type})
+class _$PowConfigDefaultImpl implements _PowConfigDefault {
+  const _$PowConfigDefaultImpl({this.name = '', final String? $type})
       : $type = $type ?? 'defaultNode';
 
-  factory _$_PowConfigDefault.fromJson(Map<String, dynamic> json) =>
-      _$$_PowConfigDefaultFromJson(json);
+  factory _$PowConfigDefaultImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PowConfigDefaultImplFromJson(json);
 
   @override
   @JsonKey()
@@ -335,10 +335,10 @@ class _$_PowConfigDefault implements _PowConfigDefault {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PowConfigDefault &&
+            other is _$PowConfigDefaultImpl &&
             (identical(other.name, name) || other.name == name));
   }
 
@@ -349,8 +349,9 @@ class _$_PowConfigDefault implements _PowConfigDefault {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PowConfigDefaultCopyWith<_$_PowConfigDefault> get copyWith =>
-      __$$_PowConfigDefaultCopyWithImpl<_$_PowConfigDefault>(this, _$identity);
+  _$$PowConfigDefaultImplCopyWith<_$PowConfigDefaultImpl> get copyWith =>
+      __$$PowConfigDefaultImplCopyWithImpl<_$PowConfigDefaultImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -416,43 +417,43 @@ class _$_PowConfigDefault implements _PowConfigDefault {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PowConfigDefaultToJson(
+    return _$$PowConfigDefaultImplToJson(
       this,
     );
   }
 }
 
 abstract class _PowConfigDefault implements PowConfig {
-  const factory _PowConfigDefault({final String name}) = _$_PowConfigDefault;
+  const factory _PowConfigDefault({final String name}) = _$PowConfigDefaultImpl;
 
   factory _PowConfigDefault.fromJson(Map<String, dynamic> json) =
-      _$_PowConfigDefault.fromJson;
+      _$PowConfigDefaultImpl.fromJson;
 
   @override
   String get name;
   @override
   @JsonKey(ignore: true)
-  _$$_PowConfigDefaultCopyWith<_$_PowConfigDefault> get copyWith =>
+  _$$PowConfigDefaultImplCopyWith<_$PowConfigDefaultImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_PowConfigCustomCopyWith<$Res>
+abstract class _$$PowConfigCustomImplCopyWith<$Res>
     implements $PowConfigCopyWith<$Res> {
-  factory _$$_PowConfigCustomCopyWith(
-          _$_PowConfigCustom value, $Res Function(_$_PowConfigCustom) then) =
-      __$$_PowConfigCustomCopyWithImpl<$Res>;
+  factory _$$PowConfigCustomImplCopyWith(_$PowConfigCustomImpl value,
+          $Res Function(_$PowConfigCustomImpl) then) =
+      __$$PowConfigCustomImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String url});
 }
 
 /// @nodoc
-class __$$_PowConfigCustomCopyWithImpl<$Res>
-    extends _$PowConfigCopyWithImpl<$Res, _$_PowConfigCustom>
-    implements _$$_PowConfigCustomCopyWith<$Res> {
-  __$$_PowConfigCustomCopyWithImpl(
-      _$_PowConfigCustom _value, $Res Function(_$_PowConfigCustom) _then)
+class __$$PowConfigCustomImplCopyWithImpl<$Res>
+    extends _$PowConfigCopyWithImpl<$Res, _$PowConfigCustomImpl>
+    implements _$$PowConfigCustomImplCopyWith<$Res> {
+  __$$PowConfigCustomImplCopyWithImpl(
+      _$PowConfigCustomImpl _value, $Res Function(_$PowConfigCustomImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -461,7 +462,7 @@ class __$$_PowConfigCustomCopyWithImpl<$Res>
     Object? name = null,
     Object? url = null,
   }) {
-    return _then(_$_PowConfigCustom(
+    return _then(_$PowConfigCustomImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -476,13 +477,13 @@ class __$$_PowConfigCustomCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PowConfigCustom implements _PowConfigCustom {
-  const _$_PowConfigCustom(
+class _$PowConfigCustomImpl implements _PowConfigCustom {
+  const _$PowConfigCustomImpl(
       {required this.name, required this.url, final String? $type})
       : $type = $type ?? 'custom';
 
-  factory _$_PowConfigCustom.fromJson(Map<String, dynamic> json) =>
-      _$$_PowConfigCustomFromJson(json);
+  factory _$PowConfigCustomImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PowConfigCustomImplFromJson(json);
 
   @override
   final String name;
@@ -498,10 +499,10 @@ class _$_PowConfigCustom implements _PowConfigCustom {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PowConfigCustom &&
+            other is _$PowConfigCustomImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.url, url) || other.url == url));
   }
@@ -513,8 +514,9 @@ class _$_PowConfigCustom implements _PowConfigCustom {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PowConfigCustomCopyWith<_$_PowConfigCustom> get copyWith =>
-      __$$_PowConfigCustomCopyWithImpl<_$_PowConfigCustom>(this, _$identity);
+  _$$PowConfigCustomImplCopyWith<_$PowConfigCustomImpl> get copyWith =>
+      __$$PowConfigCustomImplCopyWithImpl<_$PowConfigCustomImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -580,7 +582,7 @@ class _$_PowConfigCustom implements _PowConfigCustom {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PowConfigCustomToJson(
+    return _$$PowConfigCustomImplToJson(
       this,
     );
   }
@@ -589,17 +591,17 @@ class _$_PowConfigCustom implements _PowConfigCustom {
 abstract class _PowConfigCustom implements PowConfig {
   const factory _PowConfigCustom(
       {required final String name,
-      required final String url}) = _$_PowConfigCustom;
+      required final String url}) = _$PowConfigCustomImpl;
 
   factory _PowConfigCustom.fromJson(Map<String, dynamic> json) =
-      _$_PowConfigCustom.fromJson;
+      _$PowConfigCustomImpl.fromJson;
 
   @override
   String get name;
   String get url;
   @override
   @JsonKey(ignore: true)
-  _$$_PowConfigCustomCopyWith<_$_PowConfigCustom> get copyWith =>
+  _$$PowConfigCustomImplCopyWith<_$PowConfigCustomImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -668,11 +670,11 @@ class _$PowAddSheetStateCopyWithImpl<$Res, $Val extends PowAddSheetState>
 }
 
 /// @nodoc
-abstract class _$$_PowAddSheetStateCopyWith<$Res>
+abstract class _$$PowAddSheetStateImplCopyWith<$Res>
     implements $PowAddSheetStateCopyWith<$Res> {
-  factory _$$_PowAddSheetStateCopyWith(
-          _$_PowAddSheetState value, $Res Function(_$_PowAddSheetState) then) =
-      __$$_PowAddSheetStateCopyWithImpl<$Res>;
+  factory _$$PowAddSheetStateImplCopyWith(_$PowAddSheetStateImpl value,
+          $Res Function(_$PowAddSheetStateImpl) then) =
+      __$$PowAddSheetStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -683,11 +685,11 @@ abstract class _$$_PowAddSheetStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PowAddSheetStateCopyWithImpl<$Res>
-    extends _$PowAddSheetStateCopyWithImpl<$Res, _$_PowAddSheetState>
-    implements _$$_PowAddSheetStateCopyWith<$Res> {
-  __$$_PowAddSheetStateCopyWithImpl(
-      _$_PowAddSheetState _value, $Res Function(_$_PowAddSheetState) _then)
+class __$$PowAddSheetStateImplCopyWithImpl<$Res>
+    extends _$PowAddSheetStateCopyWithImpl<$Res, _$PowAddSheetStateImpl>
+    implements _$$PowAddSheetStateImplCopyWith<$Res> {
+  __$$PowAddSheetStateImplCopyWithImpl(_$PowAddSheetStateImpl _value,
+      $Res Function(_$PowAddSheetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -698,7 +700,7 @@ class __$$_PowAddSheetStateCopyWithImpl<$Res>
     Object? nameValidationText = null,
     Object? urlValidationText = null,
   }) {
-    return _then(_$_PowAddSheetState(
+    return _then(_$PowAddSheetStateImpl(
       showNameHint: null == showNameHint
           ? _value.showNameHint
           : showNameHint // ignore: cast_nullable_to_non_nullable
@@ -721,8 +723,8 @@ class __$$_PowAddSheetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PowAddSheetState implements _PowAddSheetState {
-  const _$_PowAddSheetState(
+class _$PowAddSheetStateImpl implements _PowAddSheetState {
+  const _$PowAddSheetStateImpl(
       {this.showNameHint = true,
       this.showUrlHint = true,
       this.nameValidationText = '',
@@ -747,10 +749,10 @@ class _$_PowAddSheetState implements _PowAddSheetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PowAddSheetState &&
+            other is _$PowAddSheetStateImpl &&
             (identical(other.showNameHint, showNameHint) ||
                 other.showNameHint == showNameHint) &&
             (identical(other.showUrlHint, showUrlHint) ||
@@ -768,8 +770,9 @@ class _$_PowAddSheetState implements _PowAddSheetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PowAddSheetStateCopyWith<_$_PowAddSheetState> get copyWith =>
-      __$$_PowAddSheetStateCopyWithImpl<_$_PowAddSheetState>(this, _$identity);
+  _$$PowAddSheetStateImplCopyWith<_$PowAddSheetStateImpl> get copyWith =>
+      __$$PowAddSheetStateImplCopyWithImpl<_$PowAddSheetStateImpl>(
+          this, _$identity);
 }
 
 abstract class _PowAddSheetState implements PowAddSheetState {
@@ -777,7 +780,7 @@ abstract class _PowAddSheetState implements PowAddSheetState {
       {final bool showNameHint,
       final bool showUrlHint,
       final String nameValidationText,
-      final String urlValidationText}) = _$_PowAddSheetState;
+      final String urlValidationText}) = _$PowAddSheetStateImpl;
 
   @override
   bool get showNameHint;
@@ -789,6 +792,6 @@ abstract class _PowAddSheetState implements PowAddSheetState {
   String get urlValidationText;
   @override
   @JsonKey(ignore: true)
-  _$$_PowAddSheetStateCopyWith<_$_PowAddSheetState> get copyWith =>
+  _$$PowAddSheetStateImplCopyWith<_$PowAddSheetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -12,7 +12,7 @@ part of 'transaction_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$TxState {
@@ -86,25 +86,25 @@ class _$TxStateCopyWithImpl<$Res, $Val extends TxState>
 }
 
 /// @nodoc
-abstract class _$$_TxStateUnknownCopyWith<$Res> {
-  factory _$$_TxStateUnknownCopyWith(
-          _$_TxStateUnknown value, $Res Function(_$_TxStateUnknown) then) =
-      __$$_TxStateUnknownCopyWithImpl<$Res>;
+abstract class _$$TxStateUnknownImplCopyWith<$Res> {
+  factory _$$TxStateUnknownImplCopyWith(_$TxStateUnknownImpl value,
+          $Res Function(_$TxStateUnknownImpl) then) =
+      __$$TxStateUnknownImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_TxStateUnknownCopyWithImpl<$Res>
-    extends _$TxStateCopyWithImpl<$Res, _$_TxStateUnknown>
-    implements _$$_TxStateUnknownCopyWith<$Res> {
-  __$$_TxStateUnknownCopyWithImpl(
-      _$_TxStateUnknown _value, $Res Function(_$_TxStateUnknown) _then)
+class __$$TxStateUnknownImplCopyWithImpl<$Res>
+    extends _$TxStateCopyWithImpl<$Res, _$TxStateUnknownImpl>
+    implements _$$TxStateUnknownImplCopyWith<$Res> {
+  __$$TxStateUnknownImplCopyWithImpl(
+      _$TxStateUnknownImpl _value, $Res Function(_$TxStateUnknownImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_TxStateUnknown implements _TxStateUnknown {
-  const _$_TxStateUnknown();
+class _$TxStateUnknownImpl implements _TxStateUnknown {
+  const _$TxStateUnknownImpl();
 
   @override
   String toString() {
@@ -112,9 +112,9 @@ class _$_TxStateUnknown implements _TxStateUnknown {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_TxStateUnknown);
+        (other.runtimeType == runtimeType && other is _$TxStateUnknownImpl);
   }
 
   @override
@@ -196,29 +196,29 @@ class _$_TxStateUnknown implements _TxStateUnknown {
 }
 
 abstract class _TxStateUnknown implements TxState {
-  const factory _TxStateUnknown() = _$_TxStateUnknown;
+  const factory _TxStateUnknown() = _$TxStateUnknownImpl;
 }
 
 /// @nodoc
-abstract class _$$_TxStateUnconfirmedCopyWith<$Res> {
-  factory _$$_TxStateUnconfirmedCopyWith(_$_TxStateUnconfirmed value,
-          $Res Function(_$_TxStateUnconfirmed) then) =
-      __$$_TxStateUnconfirmedCopyWithImpl<$Res>;
+abstract class _$$TxStateUnconfirmedImplCopyWith<$Res> {
+  factory _$$TxStateUnconfirmedImplCopyWith(_$TxStateUnconfirmedImpl value,
+          $Res Function(_$TxStateUnconfirmedImpl) then) =
+      __$$TxStateUnconfirmedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_TxStateUnconfirmedCopyWithImpl<$Res>
-    extends _$TxStateCopyWithImpl<$Res, _$_TxStateUnconfirmed>
-    implements _$$_TxStateUnconfirmedCopyWith<$Res> {
-  __$$_TxStateUnconfirmedCopyWithImpl(
-      _$_TxStateUnconfirmed _value, $Res Function(_$_TxStateUnconfirmed) _then)
+class __$$TxStateUnconfirmedImplCopyWithImpl<$Res>
+    extends _$TxStateCopyWithImpl<$Res, _$TxStateUnconfirmedImpl>
+    implements _$$TxStateUnconfirmedImplCopyWith<$Res> {
+  __$$TxStateUnconfirmedImplCopyWithImpl(_$TxStateUnconfirmedImpl _value,
+      $Res Function(_$TxStateUnconfirmedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_TxStateUnconfirmed implements _TxStateUnconfirmed {
-  const _$_TxStateUnconfirmed();
+class _$TxStateUnconfirmedImpl implements _TxStateUnconfirmed {
+  const _$TxStateUnconfirmedImpl();
 
   @override
   String toString() {
@@ -226,9 +226,9 @@ class _$_TxStateUnconfirmed implements _TxStateUnconfirmed {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_TxStateUnconfirmed);
+        (other.runtimeType == runtimeType && other is _$TxStateUnconfirmedImpl);
   }
 
   @override
@@ -310,24 +310,24 @@ class _$_TxStateUnconfirmed implements _TxStateUnconfirmed {
 }
 
 abstract class _TxStateUnconfirmed implements TxState {
-  const factory _TxStateUnconfirmed() = _$_TxStateUnconfirmed;
+  const factory _TxStateUnconfirmed() = _$TxStateUnconfirmedImpl;
 }
 
 /// @nodoc
-abstract class _$$_TxStateConfirmingCopyWith<$Res> {
-  factory _$$_TxStateConfirmingCopyWith(_$_TxStateConfirming value,
-          $Res Function(_$_TxStateConfirming) then) =
-      __$$_TxStateConfirmingCopyWithImpl<$Res>;
+abstract class _$$TxStateConfirmingImplCopyWith<$Res> {
+  factory _$$TxStateConfirmingImplCopyWith(_$TxStateConfirmingImpl value,
+          $Res Function(_$TxStateConfirmingImpl) then) =
+      __$$TxStateConfirmingImplCopyWithImpl<$Res>;
   @useResult
   $Res call({BigInt confirmations});
 }
 
 /// @nodoc
-class __$$_TxStateConfirmingCopyWithImpl<$Res>
-    extends _$TxStateCopyWithImpl<$Res, _$_TxStateConfirming>
-    implements _$$_TxStateConfirmingCopyWith<$Res> {
-  __$$_TxStateConfirmingCopyWithImpl(
-      _$_TxStateConfirming _value, $Res Function(_$_TxStateConfirming) _then)
+class __$$TxStateConfirmingImplCopyWithImpl<$Res>
+    extends _$TxStateCopyWithImpl<$Res, _$TxStateConfirmingImpl>
+    implements _$$TxStateConfirmingImplCopyWith<$Res> {
+  __$$TxStateConfirmingImplCopyWithImpl(_$TxStateConfirmingImpl _value,
+      $Res Function(_$TxStateConfirmingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -335,7 +335,7 @@ class __$$_TxStateConfirmingCopyWithImpl<$Res>
   $Res call({
     Object? confirmations = null,
   }) {
-    return _then(_$_TxStateConfirming(
+    return _then(_$TxStateConfirmingImpl(
       null == confirmations
           ? _value.confirmations
           : confirmations // ignore: cast_nullable_to_non_nullable
@@ -346,8 +346,8 @@ class __$$_TxStateConfirmingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TxStateConfirming implements _TxStateConfirming {
-  const _$_TxStateConfirming(this.confirmations);
+class _$TxStateConfirmingImpl implements _TxStateConfirming {
+  const _$TxStateConfirmingImpl(this.confirmations);
 
   @override
   final BigInt confirmations;
@@ -358,10 +358,10 @@ class _$_TxStateConfirming implements _TxStateConfirming {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TxStateConfirming &&
+            other is _$TxStateConfirmingImpl &&
             (identical(other.confirmations, confirmations) ||
                 other.confirmations == confirmations));
   }
@@ -372,8 +372,8 @@ class _$_TxStateConfirming implements _TxStateConfirming {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TxStateConfirmingCopyWith<_$_TxStateConfirming> get copyWith =>
-      __$$_TxStateConfirmingCopyWithImpl<_$_TxStateConfirming>(
+  _$$TxStateConfirmingImplCopyWith<_$TxStateConfirmingImpl> get copyWith =>
+      __$$TxStateConfirmingImplCopyWithImpl<_$TxStateConfirmingImpl>(
           this, _$identity);
 
   @override
@@ -453,34 +453,34 @@ class _$_TxStateConfirming implements _TxStateConfirming {
 
 abstract class _TxStateConfirming implements TxState {
   const factory _TxStateConfirming(final BigInt confirmations) =
-      _$_TxStateConfirming;
+      _$TxStateConfirmingImpl;
 
   BigInt get confirmations;
   @JsonKey(ignore: true)
-  _$$_TxStateConfirmingCopyWith<_$_TxStateConfirming> get copyWith =>
+  _$$TxStateConfirmingImplCopyWith<_$TxStateConfirmingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TxStateConfirmedCopyWith<$Res> {
-  factory _$$_TxStateConfirmedCopyWith(
-          _$_TxStateConfirmed value, $Res Function(_$_TxStateConfirmed) then) =
-      __$$_TxStateConfirmedCopyWithImpl<$Res>;
+abstract class _$$TxStateConfirmedImplCopyWith<$Res> {
+  factory _$$TxStateConfirmedImplCopyWith(_$TxStateConfirmedImpl value,
+          $Res Function(_$TxStateConfirmedImpl) then) =
+      __$$TxStateConfirmedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_TxStateConfirmedCopyWithImpl<$Res>
-    extends _$TxStateCopyWithImpl<$Res, _$_TxStateConfirmed>
-    implements _$$_TxStateConfirmedCopyWith<$Res> {
-  __$$_TxStateConfirmedCopyWithImpl(
-      _$_TxStateConfirmed _value, $Res Function(_$_TxStateConfirmed) _then)
+class __$$TxStateConfirmedImplCopyWithImpl<$Res>
+    extends _$TxStateCopyWithImpl<$Res, _$TxStateConfirmedImpl>
+    implements _$$TxStateConfirmedImplCopyWith<$Res> {
+  __$$TxStateConfirmedImplCopyWithImpl(_$TxStateConfirmedImpl _value,
+      $Res Function(_$TxStateConfirmedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_TxStateConfirmed implements _TxStateConfirmed {
-  const _$_TxStateConfirmed();
+class _$TxStateConfirmedImpl implements _TxStateConfirmed {
+  const _$TxStateConfirmedImpl();
 
   @override
   String toString() {
@@ -488,9 +488,9 @@ class _$_TxStateConfirmed implements _TxStateConfirmed {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_TxStateConfirmed);
+        (other.runtimeType == runtimeType && other is _$TxStateConfirmedImpl);
   }
 
   @override
@@ -572,7 +572,7 @@ class _$_TxStateConfirmed implements _TxStateConfirmed {
 }
 
 abstract class _TxStateConfirmed implements TxState {
-  const factory _TxStateConfirmed() = _$_TxStateConfirmed;
+  const factory _TxStateConfirmed() = _$TxStateConfirmedImpl;
 }
 
 Transaction _$TransactionFromJson(Map<String, dynamic> json) {
@@ -736,11 +736,11 @@ class _$TransactionCopyWithImpl<$Res, $Val extends Transaction>
 }
 
 /// @nodoc
-abstract class _$$_TransactionCopyWith<$Res>
+abstract class _$$TransactionImplCopyWith<$Res>
     implements $TransactionCopyWith<$Res> {
-  factory _$$_TransactionCopyWith(
-          _$_Transaction value, $Res Function(_$_Transaction) then) =
-      __$$_TransactionCopyWithImpl<$Res>;
+  factory _$$TransactionImplCopyWith(
+          _$TransactionImpl value, $Res Function(_$TransactionImpl) then) =
+      __$$TransactionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -769,11 +769,11 @@ abstract class _$$_TransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TransactionCopyWithImpl<$Res>
-    extends _$TransactionCopyWithImpl<$Res, _$_Transaction>
-    implements _$$_TransactionCopyWith<$Res> {
-  __$$_TransactionCopyWithImpl(
-      _$_Transaction _value, $Res Function(_$_Transaction) _then)
+class __$$TransactionImplCopyWithImpl<$Res>
+    extends _$TransactionCopyWithImpl<$Res, _$TransactionImpl>
+    implements _$$TransactionImplCopyWith<$Res> {
+  __$$TransactionImplCopyWithImpl(
+      _$TransactionImpl _value, $Res Function(_$TransactionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -789,7 +789,7 @@ class __$$_TransactionCopyWithImpl<$Res>
     Object? tokenId = null,
     Object? tokenInfo = null,
   }) {
-    return _then(_$_Transaction(
+    return _then(_$TransactionImpl(
       blockType: null == blockType
           ? _value.blockType
           : blockType // ignore: cast_nullable_to_non_nullable
@@ -832,8 +832,8 @@ class __$$_TransactionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Transaction implements _Transaction {
-  const _$_Transaction(
+class _$TransactionImpl implements _Transaction {
+  const _$TransactionImpl(
       {@BlockTypeConverter() required this.blockType,
       required this.address,
       required this.fromAddress,
@@ -844,8 +844,8 @@ class _$_Transaction implements _Transaction {
       required this.tokenId,
       required this.tokenInfo});
 
-  factory _$_Transaction.fromJson(Map<String, dynamic> json) =>
-      _$$_TransactionFromJson(json);
+  factory _$TransactionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TransactionImplFromJson(json);
 
   @override
   @BlockTypeConverter()
@@ -873,10 +873,10 @@ class _$_Transaction implements _Transaction {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Transaction &&
+            other is _$TransactionImpl &&
             (identical(other.blockType, blockType) ||
                 other.blockType == blockType) &&
             (identical(other.address, address) || other.address == address) &&
@@ -900,12 +900,12 @@ class _$_Transaction implements _Transaction {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
-      __$$_TransactionCopyWithImpl<_$_Transaction>(this, _$identity);
+  _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith =>
+      __$$TransactionImplCopyWithImpl<_$TransactionImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TransactionToJson(
+    return _$$TransactionImplToJson(
       this,
     );
   }
@@ -921,10 +921,10 @@ abstract class _Transaction implements Transaction {
       required final BigInt height,
       required final BigInt amount,
       required final Token tokenId,
-      required final TokenInfo tokenInfo}) = _$_Transaction;
+      required final TokenInfo tokenInfo}) = _$TransactionImpl;
 
   factory _Transaction.fromJson(Map<String, dynamic> json) =
-      _$_Transaction.fromJson;
+      _$TransactionImpl.fromJson;
 
   @override
   @BlockTypeConverter()
@@ -947,7 +947,7 @@ abstract class _Transaction implements Transaction {
   TokenInfo get tokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_TransactionCopyWith<_$_Transaction> get copyWith =>
+  _$$TransactionImplCopyWith<_$TransactionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -999,22 +999,22 @@ class _$AccountHistoryCopyWithImpl<$Res, $Val extends AccountHistory>
 }
 
 /// @nodoc
-abstract class _$$_AccountHistoryCopyWith<$Res>
+abstract class _$$AccountHistoryImplCopyWith<$Res>
     implements $AccountHistoryCopyWith<$Res> {
-  factory _$$_AccountHistoryCopyWith(
-          _$_AccountHistory value, $Res Function(_$_AccountHistory) then) =
-      __$$_AccountHistoryCopyWithImpl<$Res>;
+  factory _$$AccountHistoryImplCopyWith(_$AccountHistoryImpl value,
+          $Res Function(_$AccountHistoryImpl) then) =
+      __$$AccountHistoryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IMap<int, Transaction> history});
 }
 
 /// @nodoc
-class __$$_AccountHistoryCopyWithImpl<$Res>
-    extends _$AccountHistoryCopyWithImpl<$Res, _$_AccountHistory>
-    implements _$$_AccountHistoryCopyWith<$Res> {
-  __$$_AccountHistoryCopyWithImpl(
-      _$_AccountHistory _value, $Res Function(_$_AccountHistory) _then)
+class __$$AccountHistoryImplCopyWithImpl<$Res>
+    extends _$AccountHistoryCopyWithImpl<$Res, _$AccountHistoryImpl>
+    implements _$$AccountHistoryImplCopyWith<$Res> {
+  __$$AccountHistoryImplCopyWithImpl(
+      _$AccountHistoryImpl _value, $Res Function(_$AccountHistoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1022,7 +1022,7 @@ class __$$_AccountHistoryCopyWithImpl<$Res>
   $Res call({
     Object? history = null,
   }) {
-    return _then(_$_AccountHistory(
+    return _then(_$AccountHistoryImpl(
       history: null == history
           ? _value.history
           : history // ignore: cast_nullable_to_non_nullable
@@ -1033,11 +1033,11 @@ class __$$_AccountHistoryCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AccountHistory implements _AccountHistory {
-  const _$_AccountHistory({required this.history});
+class _$AccountHistoryImpl implements _AccountHistory {
+  const _$AccountHistoryImpl({required this.history});
 
-  factory _$_AccountHistory.fromJson(Map<String, dynamic> json) =>
-      _$$_AccountHistoryFromJson(json);
+  factory _$AccountHistoryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AccountHistoryImplFromJson(json);
 
   @override
   final IMap<int, Transaction> history;
@@ -1048,10 +1048,10 @@ class _$_AccountHistory implements _AccountHistory {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountHistory &&
+            other is _$AccountHistoryImpl &&
             (identical(other.history, history) || other.history == history));
   }
 
@@ -1062,12 +1062,13 @@ class _$_AccountHistory implements _AccountHistory {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountHistoryCopyWith<_$_AccountHistory> get copyWith =>
-      __$$_AccountHistoryCopyWithImpl<_$_AccountHistory>(this, _$identity);
+  _$$AccountHistoryImplCopyWith<_$AccountHistoryImpl> get copyWith =>
+      __$$AccountHistoryImplCopyWithImpl<_$AccountHistoryImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AccountHistoryToJson(
+    return _$$AccountHistoryImplToJson(
       this,
     );
   }
@@ -1075,16 +1076,16 @@ class _$_AccountHistory implements _AccountHistory {
 
 abstract class _AccountHistory implements AccountHistory {
   const factory _AccountHistory(
-      {required final IMap<int, Transaction> history}) = _$_AccountHistory;
+      {required final IMap<int, Transaction> history}) = _$AccountHistoryImpl;
 
   factory _AccountHistory.fromJson(Map<String, dynamic> json) =
-      _$_AccountHistory.fromJson;
+      _$AccountHistoryImpl.fromJson;
 
   @override
   IMap<int, Transaction> get history;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountHistoryCopyWith<_$_AccountHistory> get copyWith =>
+  _$$AccountHistoryImplCopyWith<_$AccountHistoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1160,11 +1161,11 @@ class _$AccountTokenPairCopyWithImpl<$Res, $Val extends AccountTokenPair>
 }
 
 /// @nodoc
-abstract class _$$_AccountTokenPairCopyWith<$Res>
+abstract class _$$AccountTokenPairImplCopyWith<$Res>
     implements $AccountTokenPairCopyWith<$Res> {
-  factory _$$_AccountTokenPairCopyWith(
-          _$_AccountTokenPair value, $Res Function(_$_AccountTokenPair) then) =
-      __$$_AccountTokenPairCopyWithImpl<$Res>;
+  factory _$$AccountTokenPairImplCopyWith(_$AccountTokenPairImpl value,
+          $Res Function(_$AccountTokenPairImpl) then) =
+      __$$AccountTokenPairImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Account account, Token? token});
@@ -1176,11 +1177,11 @@ abstract class _$$_AccountTokenPairCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AccountTokenPairCopyWithImpl<$Res>
-    extends _$AccountTokenPairCopyWithImpl<$Res, _$_AccountTokenPair>
-    implements _$$_AccountTokenPairCopyWith<$Res> {
-  __$$_AccountTokenPairCopyWithImpl(
-      _$_AccountTokenPair _value, $Res Function(_$_AccountTokenPair) _then)
+class __$$AccountTokenPairImplCopyWithImpl<$Res>
+    extends _$AccountTokenPairCopyWithImpl<$Res, _$AccountTokenPairImpl>
+    implements _$$AccountTokenPairImplCopyWith<$Res> {
+  __$$AccountTokenPairImplCopyWithImpl(_$AccountTokenPairImpl _value,
+      $Res Function(_$AccountTokenPairImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1189,7 +1190,7 @@ class __$$_AccountTokenPairCopyWithImpl<$Res>
     Object? account = null,
     Object? token = freezed,
   }) {
-    return _then(_$_AccountTokenPair(
+    return _then(_$AccountTokenPairImpl(
       account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -1204,8 +1205,8 @@ class __$$_AccountTokenPairCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AccountTokenPair implements _AccountTokenPair {
-  const _$_AccountTokenPair({required this.account, this.token});
+class _$AccountTokenPairImpl implements _AccountTokenPair {
+  const _$AccountTokenPairImpl({required this.account, this.token});
 
   @override
   final Account account;
@@ -1218,10 +1219,10 @@ class _$_AccountTokenPair implements _AccountTokenPair {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AccountTokenPair &&
+            other is _$AccountTokenPairImpl &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.token, token) || other.token == token));
   }
@@ -1232,14 +1233,15 @@ class _$_AccountTokenPair implements _AccountTokenPair {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AccountTokenPairCopyWith<_$_AccountTokenPair> get copyWith =>
-      __$$_AccountTokenPairCopyWithImpl<_$_AccountTokenPair>(this, _$identity);
+  _$$AccountTokenPairImplCopyWith<_$AccountTokenPairImpl> get copyWith =>
+      __$$AccountTokenPairImplCopyWithImpl<_$AccountTokenPairImpl>(
+          this, _$identity);
 }
 
 abstract class _AccountTokenPair implements AccountTokenPair {
   const factory _AccountTokenPair(
       {required final Account account,
-      final Token? token}) = _$_AccountTokenPair;
+      final Token? token}) = _$AccountTokenPairImpl;
 
   @override
   Account get account;
@@ -1247,7 +1249,7 @@ abstract class _AccountTokenPair implements AccountTokenPair {
   Token? get token;
   @override
   @JsonKey(ignore: true)
-  _$$_AccountTokenPairCopyWith<_$_AccountTokenPair> get copyWith =>
+  _$$AccountTokenPairImplCopyWith<_$AccountTokenPairImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1318,10 +1320,10 @@ class _$TxListItemCopyWithImpl<$Res, $Val extends TxListItem>
 }
 
 /// @nodoc
-abstract class _$$_TxListItemUnreceivedCopyWith<$Res> {
-  factory _$$_TxListItemUnreceivedCopyWith(_$_TxListItemUnreceived value,
-          $Res Function(_$_TxListItemUnreceived) then) =
-      __$$_TxListItemUnreceivedCopyWithImpl<$Res>;
+abstract class _$$TxListItemUnreceivedImplCopyWith<$Res> {
+  factory _$$TxListItemUnreceivedImplCopyWith(_$TxListItemUnreceivedImpl value,
+          $Res Function(_$TxListItemUnreceivedImpl) then) =
+      __$$TxListItemUnreceivedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AccountInfo unreceived});
 
@@ -1329,11 +1331,11 @@ abstract class _$$_TxListItemUnreceivedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TxListItemUnreceivedCopyWithImpl<$Res>
-    extends _$TxListItemCopyWithImpl<$Res, _$_TxListItemUnreceived>
-    implements _$$_TxListItemUnreceivedCopyWith<$Res> {
-  __$$_TxListItemUnreceivedCopyWithImpl(_$_TxListItemUnreceived _value,
-      $Res Function(_$_TxListItemUnreceived) _then)
+class __$$TxListItemUnreceivedImplCopyWithImpl<$Res>
+    extends _$TxListItemCopyWithImpl<$Res, _$TxListItemUnreceivedImpl>
+    implements _$$TxListItemUnreceivedImplCopyWith<$Res> {
+  __$$TxListItemUnreceivedImplCopyWithImpl(_$TxListItemUnreceivedImpl _value,
+      $Res Function(_$TxListItemUnreceivedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1341,7 +1343,7 @@ class __$$_TxListItemUnreceivedCopyWithImpl<$Res>
   $Res call({
     Object? unreceived = null,
   }) {
-    return _then(_$_TxListItemUnreceived(
+    return _then(_$TxListItemUnreceivedImpl(
       null == unreceived
           ? _value.unreceived
           : unreceived // ignore: cast_nullable_to_non_nullable
@@ -1360,8 +1362,8 @@ class __$$_TxListItemUnreceivedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TxListItemUnreceived extends _TxListItemUnreceived {
-  _$_TxListItemUnreceived(this.unreceived) : super._();
+class _$TxListItemUnreceivedImpl extends _TxListItemUnreceived {
+  _$TxListItemUnreceivedImpl(this.unreceived) : super._();
 
   @override
   final AccountInfo unreceived;
@@ -1372,10 +1374,10 @@ class _$_TxListItemUnreceived extends _TxListItemUnreceived {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TxListItemUnreceived &&
+            other is _$TxListItemUnreceivedImpl &&
             (identical(other.unreceived, unreceived) ||
                 other.unreceived == unreceived));
   }
@@ -1386,9 +1388,10 @@ class _$_TxListItemUnreceived extends _TxListItemUnreceived {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TxListItemUnreceivedCopyWith<_$_TxListItemUnreceived> get copyWith =>
-      __$$_TxListItemUnreceivedCopyWithImpl<_$_TxListItemUnreceived>(
-          this, _$identity);
+  _$$TxListItemUnreceivedImplCopyWith<_$TxListItemUnreceivedImpl>
+      get copyWith =>
+          __$$TxListItemUnreceivedImplCopyWithImpl<_$TxListItemUnreceivedImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1461,20 +1464,21 @@ class _$_TxListItemUnreceived extends _TxListItemUnreceived {
 
 abstract class _TxListItemUnreceived extends TxListItem {
   factory _TxListItemUnreceived(final AccountInfo unreceived) =
-      _$_TxListItemUnreceived;
+      _$TxListItemUnreceivedImpl;
   _TxListItemUnreceived._() : super._();
 
   AccountInfo get unreceived;
   @JsonKey(ignore: true)
-  _$$_TxListItemUnreceivedCopyWith<_$_TxListItemUnreceived> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TxListItemUnreceivedImplCopyWith<_$TxListItemUnreceivedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TxListItemTransactionCopyWith<$Res> {
-  factory _$$_TxListItemTransactionCopyWith(_$_TxListItemTransaction value,
-          $Res Function(_$_TxListItemTransaction) then) =
-      __$$_TxListItemTransactionCopyWithImpl<$Res>;
+abstract class _$$TxListItemTransactionImplCopyWith<$Res> {
+  factory _$$TxListItemTransactionImplCopyWith(
+          _$TxListItemTransactionImpl value,
+          $Res Function(_$TxListItemTransactionImpl) then) =
+      __$$TxListItemTransactionImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AccountBlock accountBlock});
 
@@ -1482,11 +1486,11 @@ abstract class _$$_TxListItemTransactionCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_TxListItemTransactionCopyWithImpl<$Res>
-    extends _$TxListItemCopyWithImpl<$Res, _$_TxListItemTransaction>
-    implements _$$_TxListItemTransactionCopyWith<$Res> {
-  __$$_TxListItemTransactionCopyWithImpl(_$_TxListItemTransaction _value,
-      $Res Function(_$_TxListItemTransaction) _then)
+class __$$TxListItemTransactionImplCopyWithImpl<$Res>
+    extends _$TxListItemCopyWithImpl<$Res, _$TxListItemTransactionImpl>
+    implements _$$TxListItemTransactionImplCopyWith<$Res> {
+  __$$TxListItemTransactionImplCopyWithImpl(_$TxListItemTransactionImpl _value,
+      $Res Function(_$TxListItemTransactionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1494,7 +1498,7 @@ class __$$_TxListItemTransactionCopyWithImpl<$Res>
   $Res call({
     Object? accountBlock = null,
   }) {
-    return _then(_$_TxListItemTransaction(
+    return _then(_$TxListItemTransactionImpl(
       null == accountBlock
           ? _value.accountBlock
           : accountBlock // ignore: cast_nullable_to_non_nullable
@@ -1513,8 +1517,8 @@ class __$$_TxListItemTransactionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TxListItemTransaction extends _TxListItemTransaction {
-  _$_TxListItemTransaction(this.accountBlock) : super._();
+class _$TxListItemTransactionImpl extends _TxListItemTransaction {
+  _$TxListItemTransactionImpl(this.accountBlock) : super._();
 
   @override
   final AccountBlock accountBlock;
@@ -1525,10 +1529,10 @@ class _$_TxListItemTransaction extends _TxListItemTransaction {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TxListItemTransaction &&
+            other is _$TxListItemTransactionImpl &&
             (identical(other.accountBlock, accountBlock) ||
                 other.accountBlock == accountBlock));
   }
@@ -1539,9 +1543,9 @@ class _$_TxListItemTransaction extends _TxListItemTransaction {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TxListItemTransactionCopyWith<_$_TxListItemTransaction> get copyWith =>
-      __$$_TxListItemTransactionCopyWithImpl<_$_TxListItemTransaction>(
-          this, _$identity);
+  _$$TxListItemTransactionImplCopyWith<_$TxListItemTransactionImpl>
+      get copyWith => __$$TxListItemTransactionImplCopyWithImpl<
+          _$TxListItemTransactionImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1614,30 +1618,30 @@ class _$_TxListItemTransaction extends _TxListItemTransaction {
 
 abstract class _TxListItemTransaction extends TxListItem {
   factory _TxListItemTransaction(final AccountBlock accountBlock) =
-      _$_TxListItemTransaction;
+      _$TxListItemTransactionImpl;
   _TxListItemTransaction._() : super._();
 
   AccountBlock get accountBlock;
   @JsonKey(ignore: true)
-  _$$_TxListItemTransactionCopyWith<_$_TxListItemTransaction> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TxListItemTransactionImplCopyWith<_$TxListItemTransactionImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TxListItemLoaderCopyWith<$Res> {
-  factory _$$_TxListItemLoaderCopyWith(
-          _$_TxListItemLoader value, $Res Function(_$_TxListItemLoader) then) =
-      __$$_TxListItemLoaderCopyWithImpl<$Res>;
+abstract class _$$TxListItemLoaderImplCopyWith<$Res> {
+  factory _$$TxListItemLoaderImplCopyWith(_$TxListItemLoaderImpl value,
+          $Res Function(_$TxListItemLoaderImpl) then) =
+      __$$TxListItemLoaderImplCopyWithImpl<$Res>;
   @useResult
   $Res call({bool hasMore});
 }
 
 /// @nodoc
-class __$$_TxListItemLoaderCopyWithImpl<$Res>
-    extends _$TxListItemCopyWithImpl<$Res, _$_TxListItemLoader>
-    implements _$$_TxListItemLoaderCopyWith<$Res> {
-  __$$_TxListItemLoaderCopyWithImpl(
-      _$_TxListItemLoader _value, $Res Function(_$_TxListItemLoader) _then)
+class __$$TxListItemLoaderImplCopyWithImpl<$Res>
+    extends _$TxListItemCopyWithImpl<$Res, _$TxListItemLoaderImpl>
+    implements _$$TxListItemLoaderImplCopyWith<$Res> {
+  __$$TxListItemLoaderImplCopyWithImpl(_$TxListItemLoaderImpl _value,
+      $Res Function(_$TxListItemLoaderImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1645,7 +1649,7 @@ class __$$_TxListItemLoaderCopyWithImpl<$Res>
   $Res call({
     Object? hasMore = null,
   }) {
-    return _then(_$_TxListItemLoader(
+    return _then(_$TxListItemLoaderImpl(
       null == hasMore
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
@@ -1656,8 +1660,8 @@ class __$$_TxListItemLoaderCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TxListItemLoader extends _TxListItemLoader {
-  _$_TxListItemLoader(this.hasMore) : super._();
+class _$TxListItemLoaderImpl extends _TxListItemLoader {
+  _$TxListItemLoaderImpl(this.hasMore) : super._();
 
   @override
   final bool hasMore;
@@ -1668,10 +1672,10 @@ class _$_TxListItemLoader extends _TxListItemLoader {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TxListItemLoader &&
+            other is _$TxListItemLoaderImpl &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
   }
 
@@ -1681,8 +1685,9 @@ class _$_TxListItemLoader extends _TxListItemLoader {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TxListItemLoaderCopyWith<_$_TxListItemLoader> get copyWith =>
-      __$$_TxListItemLoaderCopyWithImpl<_$_TxListItemLoader>(this, _$identity);
+  _$$TxListItemLoaderImplCopyWith<_$TxListItemLoaderImpl> get copyWith =>
+      __$$TxListItemLoaderImplCopyWithImpl<_$TxListItemLoaderImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1754,11 +1759,11 @@ class _$_TxListItemLoader extends _TxListItemLoader {
 }
 
 abstract class _TxListItemLoader extends TxListItem {
-  factory _TxListItemLoader(final bool hasMore) = _$_TxListItemLoader;
+  factory _TxListItemLoader(final bool hasMore) = _$TxListItemLoaderImpl;
   _TxListItemLoader._() : super._();
 
   bool get hasMore;
   @JsonKey(ignore: true)
-  _$$_TxListItemLoaderCopyWith<_$_TxListItemLoader> get copyWith =>
+  _$$TxListItemLoaderImplCopyWith<_$TxListItemLoaderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

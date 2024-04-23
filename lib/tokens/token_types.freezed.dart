@@ -12,7 +12,7 @@ part of 'token_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 CachedTokenIcon _$CachedTokenIconFromJson(Map<String, dynamic> json) {
   return _CachedTokenIcon.fromJson(json);
@@ -78,11 +78,11 @@ class _$CachedTokenIconCopyWithImpl<$Res, $Val extends CachedTokenIcon>
 }
 
 /// @nodoc
-abstract class _$$_CachedTokenIconCopyWith<$Res>
+abstract class _$$CachedTokenIconImplCopyWith<$Res>
     implements $CachedTokenIconCopyWith<$Res> {
-  factory _$$_CachedTokenIconCopyWith(
-          _$_CachedTokenIcon value, $Res Function(_$_CachedTokenIcon) then) =
-      __$$_CachedTokenIconCopyWithImpl<$Res>;
+  factory _$$CachedTokenIconImplCopyWith(_$CachedTokenIconImpl value,
+          $Res Function(_$CachedTokenIconImpl) then) =
+      __$$CachedTokenIconImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({TokenIcon icon, DateTime cacheDate});
@@ -92,11 +92,11 @@ abstract class _$$_CachedTokenIconCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CachedTokenIconCopyWithImpl<$Res>
-    extends _$CachedTokenIconCopyWithImpl<$Res, _$_CachedTokenIcon>
-    implements _$$_CachedTokenIconCopyWith<$Res> {
-  __$$_CachedTokenIconCopyWithImpl(
-      _$_CachedTokenIcon _value, $Res Function(_$_CachedTokenIcon) _then)
+class __$$CachedTokenIconImplCopyWithImpl<$Res>
+    extends _$CachedTokenIconCopyWithImpl<$Res, _$CachedTokenIconImpl>
+    implements _$$CachedTokenIconImplCopyWith<$Res> {
+  __$$CachedTokenIconImplCopyWithImpl(
+      _$CachedTokenIconImpl _value, $Res Function(_$CachedTokenIconImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +105,7 @@ class __$$_CachedTokenIconCopyWithImpl<$Res>
     Object? icon = null,
     Object? cacheDate = null,
   }) {
-    return _then(_$_CachedTokenIcon(
+    return _then(_$CachedTokenIconImpl(
       icon: null == icon
           ? _value.icon
           : icon // ignore: cast_nullable_to_non_nullable
@@ -120,11 +120,11 @@ class __$$_CachedTokenIconCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CachedTokenIcon implements _CachedTokenIcon {
-  const _$_CachedTokenIcon({required this.icon, required this.cacheDate});
+class _$CachedTokenIconImpl implements _CachedTokenIcon {
+  const _$CachedTokenIconImpl({required this.icon, required this.cacheDate});
 
-  factory _$_CachedTokenIcon.fromJson(Map<String, dynamic> json) =>
-      _$$_CachedTokenIconFromJson(json);
+  factory _$CachedTokenIconImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CachedTokenIconImplFromJson(json);
 
   @override
   final TokenIcon icon;
@@ -137,10 +137,10 @@ class _$_CachedTokenIcon implements _CachedTokenIcon {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CachedTokenIcon &&
+            other is _$CachedTokenIconImpl &&
             (identical(other.icon, icon) || other.icon == icon) &&
             (identical(other.cacheDate, cacheDate) ||
                 other.cacheDate == cacheDate));
@@ -153,12 +153,13 @@ class _$_CachedTokenIcon implements _CachedTokenIcon {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CachedTokenIconCopyWith<_$_CachedTokenIcon> get copyWith =>
-      __$$_CachedTokenIconCopyWithImpl<_$_CachedTokenIcon>(this, _$identity);
+  _$$CachedTokenIconImplCopyWith<_$CachedTokenIconImpl> get copyWith =>
+      __$$CachedTokenIconImplCopyWithImpl<_$CachedTokenIconImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CachedTokenIconToJson(
+    return _$$CachedTokenIconImplToJson(
       this,
     );
   }
@@ -167,10 +168,10 @@ class _$_CachedTokenIcon implements _CachedTokenIcon {
 abstract class _CachedTokenIcon implements CachedTokenIcon {
   const factory _CachedTokenIcon(
       {required final TokenIcon icon,
-      required final DateTime cacheDate}) = _$_CachedTokenIcon;
+      required final DateTime cacheDate}) = _$CachedTokenIconImpl;
 
   factory _CachedTokenIcon.fromJson(Map<String, dynamic> json) =
-      _$_CachedTokenIcon.fromJson;
+      _$CachedTokenIconImpl.fromJson;
 
   @override
   TokenIcon get icon;
@@ -178,7 +179,7 @@ abstract class _CachedTokenIcon implements CachedTokenIcon {
   DateTime get cacheDate;
   @override
   @JsonKey(ignore: true)
-  _$$_CachedTokenIconCopyWith<_$_CachedTokenIcon> get copyWith =>
+  _$$CachedTokenIconImplCopyWith<_$CachedTokenIconImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -256,20 +257,20 @@ class _$TokenIconCopyWithImpl<$Res, $Val extends TokenIcon>
 }
 
 /// @nodoc
-abstract class _$$_TokenIconAssetCopyWith<$Res> {
-  factory _$$_TokenIconAssetCopyWith(
-          _$_TokenIconAsset value, $Res Function(_$_TokenIconAsset) then) =
-      __$$_TokenIconAssetCopyWithImpl<$Res>;
+abstract class _$$TokenIconAssetImplCopyWith<$Res> {
+  factory _$$TokenIconAssetImplCopyWith(_$TokenIconAssetImpl value,
+          $Res Function(_$TokenIconAssetImpl) then) =
+      __$$TokenIconAssetImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String path});
 }
 
 /// @nodoc
-class __$$_TokenIconAssetCopyWithImpl<$Res>
-    extends _$TokenIconCopyWithImpl<$Res, _$_TokenIconAsset>
-    implements _$$_TokenIconAssetCopyWith<$Res> {
-  __$$_TokenIconAssetCopyWithImpl(
-      _$_TokenIconAsset _value, $Res Function(_$_TokenIconAsset) _then)
+class __$$TokenIconAssetImplCopyWithImpl<$Res>
+    extends _$TokenIconCopyWithImpl<$Res, _$TokenIconAssetImpl>
+    implements _$$TokenIconAssetImplCopyWith<$Res> {
+  __$$TokenIconAssetImplCopyWithImpl(
+      _$TokenIconAssetImpl _value, $Res Function(_$TokenIconAssetImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -277,7 +278,7 @@ class __$$_TokenIconAssetCopyWithImpl<$Res>
   $Res call({
     Object? path = null,
   }) {
-    return _then(_$_TokenIconAsset(
+    return _then(_$TokenIconAssetImpl(
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
@@ -288,12 +289,12 @@ class __$$_TokenIconAssetCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TokenIconAsset implements _TokenIconAsset {
-  const _$_TokenIconAsset({required this.path, final String? $type})
+class _$TokenIconAssetImpl implements _TokenIconAsset {
+  const _$TokenIconAssetImpl({required this.path, final String? $type})
       : $type = $type ?? 'asset';
 
-  factory _$_TokenIconAsset.fromJson(Map<String, dynamic> json) =>
-      _$$_TokenIconAssetFromJson(json);
+  factory _$TokenIconAssetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TokenIconAssetImplFromJson(json);
 
   @override
   final String path;
@@ -307,10 +308,10 @@ class _$_TokenIconAsset implements _TokenIconAsset {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenIconAsset &&
+            other is _$TokenIconAssetImpl &&
             (identical(other.path, path) || other.path == path));
   }
 
@@ -321,8 +322,9 @@ class _$_TokenIconAsset implements _TokenIconAsset {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenIconAssetCopyWith<_$_TokenIconAsset> get copyWith =>
-      __$$_TokenIconAssetCopyWithImpl<_$_TokenIconAsset>(this, _$identity);
+  _$$TokenIconAssetImplCopyWith<_$TokenIconAssetImpl> get copyWith =>
+      __$$TokenIconAssetImplCopyWithImpl<_$TokenIconAssetImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -388,7 +390,7 @@ class _$_TokenIconAsset implements _TokenIconAsset {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenIconAssetToJson(
+    return _$$TokenIconAssetImplToJson(
       this,
     );
   }
@@ -396,32 +398,32 @@ class _$_TokenIconAsset implements _TokenIconAsset {
 
 abstract class _TokenIconAsset implements TokenIcon {
   const factory _TokenIconAsset({required final String path}) =
-      _$_TokenIconAsset;
+      _$TokenIconAssetImpl;
 
   factory _TokenIconAsset.fromJson(Map<String, dynamic> json) =
-      _$_TokenIconAsset.fromJson;
+      _$TokenIconAssetImpl.fromJson;
 
   String get path;
   @JsonKey(ignore: true)
-  _$$_TokenIconAssetCopyWith<_$_TokenIconAsset> get copyWith =>
+  _$$TokenIconAssetImplCopyWith<_$TokenIconAssetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TokenIconUrlCopyWith<$Res> {
-  factory _$$_TokenIconUrlCopyWith(
-          _$_TokenIconUrl value, $Res Function(_$_TokenIconUrl) then) =
-      __$$_TokenIconUrlCopyWithImpl<$Res>;
+abstract class _$$TokenIconUrlImplCopyWith<$Res> {
+  factory _$$TokenIconUrlImplCopyWith(
+          _$TokenIconUrlImpl value, $Res Function(_$TokenIconUrlImpl) then) =
+      __$$TokenIconUrlImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String url});
 }
 
 /// @nodoc
-class __$$_TokenIconUrlCopyWithImpl<$Res>
-    extends _$TokenIconCopyWithImpl<$Res, _$_TokenIconUrl>
-    implements _$$_TokenIconUrlCopyWith<$Res> {
-  __$$_TokenIconUrlCopyWithImpl(
-      _$_TokenIconUrl _value, $Res Function(_$_TokenIconUrl) _then)
+class __$$TokenIconUrlImplCopyWithImpl<$Res>
+    extends _$TokenIconCopyWithImpl<$Res, _$TokenIconUrlImpl>
+    implements _$$TokenIconUrlImplCopyWith<$Res> {
+  __$$TokenIconUrlImplCopyWithImpl(
+      _$TokenIconUrlImpl _value, $Res Function(_$TokenIconUrlImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -429,7 +431,7 @@ class __$$_TokenIconUrlCopyWithImpl<$Res>
   $Res call({
     Object? url = null,
   }) {
-    return _then(_$_TokenIconUrl(
+    return _then(_$TokenIconUrlImpl(
       url: null == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
@@ -440,12 +442,12 @@ class __$$_TokenIconUrlCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TokenIconUrl implements _TokenIconUrl {
-  const _$_TokenIconUrl({required this.url, final String? $type})
+class _$TokenIconUrlImpl implements _TokenIconUrl {
+  const _$TokenIconUrlImpl({required this.url, final String? $type})
       : $type = $type ?? 'url';
 
-  factory _$_TokenIconUrl.fromJson(Map<String, dynamic> json) =>
-      _$$_TokenIconUrlFromJson(json);
+  factory _$TokenIconUrlImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TokenIconUrlImplFromJson(json);
 
   @override
   final String url;
@@ -459,10 +461,10 @@ class _$_TokenIconUrl implements _TokenIconUrl {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenIconUrl &&
+            other is _$TokenIconUrlImpl &&
             (identical(other.url, url) || other.url == url));
   }
 
@@ -473,8 +475,8 @@ class _$_TokenIconUrl implements _TokenIconUrl {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenIconUrlCopyWith<_$_TokenIconUrl> get copyWith =>
-      __$$_TokenIconUrlCopyWithImpl<_$_TokenIconUrl>(this, _$identity);
+  _$$TokenIconUrlImplCopyWith<_$TokenIconUrlImpl> get copyWith =>
+      __$$TokenIconUrlImplCopyWithImpl<_$TokenIconUrlImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -540,21 +542,21 @@ class _$_TokenIconUrl implements _TokenIconUrl {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenIconUrlToJson(
+    return _$$TokenIconUrlImplToJson(
       this,
     );
   }
 }
 
 abstract class _TokenIconUrl implements TokenIcon {
-  const factory _TokenIconUrl({required final String url}) = _$_TokenIconUrl;
+  const factory _TokenIconUrl({required final String url}) = _$TokenIconUrlImpl;
 
   factory _TokenIconUrl.fromJson(Map<String, dynamic> json) =
-      _$_TokenIconUrl.fromJson;
+      _$TokenIconUrlImpl.fromJson;
 
   String get url;
   @JsonKey(ignore: true)
-  _$$_TokenIconUrlCopyWith<_$_TokenIconUrl> get copyWith =>
+  _$$TokenIconUrlImplCopyWith<_$TokenIconUrlImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -626,11 +628,11 @@ class _$TokenStateCopyWithImpl<$Res, $Val extends TokenState>
 }
 
 /// @nodoc
-abstract class _$$_TokenStateCopyWith<$Res>
+abstract class _$$TokenStateImplCopyWith<$Res>
     implements $TokenStateCopyWith<$Res> {
-  factory _$$_TokenStateCopyWith(
-          _$_TokenState value, $Res Function(_$_TokenState) then) =
-      __$$_TokenStateCopyWithImpl<$Res>;
+  factory _$$TokenStateImplCopyWith(
+          _$TokenStateImpl value, $Res Function(_$TokenStateImpl) then) =
+      __$$TokenStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool enabled, TokenInfo? tokenInfo});
@@ -640,11 +642,11 @@ abstract class _$$_TokenStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TokenStateCopyWithImpl<$Res>
-    extends _$TokenStateCopyWithImpl<$Res, _$_TokenState>
-    implements _$$_TokenStateCopyWith<$Res> {
-  __$$_TokenStateCopyWithImpl(
-      _$_TokenState _value, $Res Function(_$_TokenState) _then)
+class __$$TokenStateImplCopyWithImpl<$Res>
+    extends _$TokenStateCopyWithImpl<$Res, _$TokenStateImpl>
+    implements _$$TokenStateImplCopyWith<$Res> {
+  __$$TokenStateImplCopyWithImpl(
+      _$TokenStateImpl _value, $Res Function(_$TokenStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -653,7 +655,7 @@ class __$$_TokenStateCopyWithImpl<$Res>
     Object? enabled = null,
     Object? tokenInfo = freezed,
   }) {
-    return _then(_$_TokenState(
+    return _then(_$TokenStateImpl(
       enabled: null == enabled
           ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
@@ -668,11 +670,11 @@ class __$$_TokenStateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TokenState implements _TokenState {
-  const _$_TokenState({this.enabled = false, required this.tokenInfo});
+class _$TokenStateImpl implements _TokenState {
+  const _$TokenStateImpl({this.enabled = false, required this.tokenInfo});
 
-  factory _$_TokenState.fromJson(Map<String, dynamic> json) =>
-      _$$_TokenStateFromJson(json);
+  factory _$TokenStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TokenStateImplFromJson(json);
 
   @override
   @JsonKey()
@@ -686,10 +688,10 @@ class _$_TokenState implements _TokenState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenState &&
+            other is _$TokenStateImpl &&
             (identical(other.enabled, enabled) || other.enabled == enabled) &&
             (identical(other.tokenInfo, tokenInfo) ||
                 other.tokenInfo == tokenInfo));
@@ -702,12 +704,12 @@ class _$_TokenState implements _TokenState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenStateCopyWith<_$_TokenState> get copyWith =>
-      __$$_TokenStateCopyWithImpl<_$_TokenState>(this, _$identity);
+  _$$TokenStateImplCopyWith<_$TokenStateImpl> get copyWith =>
+      __$$TokenStateImplCopyWithImpl<_$TokenStateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenStateToJson(
+    return _$$TokenStateImplToJson(
       this,
     );
   }
@@ -716,10 +718,10 @@ class _$_TokenState implements _TokenState {
 abstract class _TokenState implements TokenState {
   const factory _TokenState(
       {final bool enabled,
-      required final TokenInfo? tokenInfo}) = _$_TokenState;
+      required final TokenInfo? tokenInfo}) = _$TokenStateImpl;
 
   factory _TokenState.fromJson(Map<String, dynamic> json) =
-      _$_TokenState.fromJson;
+      _$TokenStateImpl.fromJson;
 
   @override
   bool get enabled;
@@ -727,7 +729,7 @@ abstract class _TokenState implements TokenState {
   TokenInfo? get tokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenStateCopyWith<_$_TokenState> get copyWith =>
+  _$$TokenStateImplCopyWith<_$TokenStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -779,22 +781,22 @@ class _$TokenStateMappingCopyWithImpl<$Res, $Val extends TokenStateMapping>
 }
 
 /// @nodoc
-abstract class _$$_TokenStateMappingCopyWith<$Res>
+abstract class _$$TokenStateMappingImplCopyWith<$Res>
     implements $TokenStateMappingCopyWith<$Res> {
-  factory _$$_TokenStateMappingCopyWith(_$_TokenStateMapping value,
-          $Res Function(_$_TokenStateMapping) then) =
-      __$$_TokenStateMappingCopyWithImpl<$Res>;
+  factory _$$TokenStateMappingImplCopyWith(_$TokenStateMappingImpl value,
+          $Res Function(_$TokenStateMappingImpl) then) =
+      __$$TokenStateMappingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IMap<String, TokenState> states});
 }
 
 /// @nodoc
-class __$$_TokenStateMappingCopyWithImpl<$Res>
-    extends _$TokenStateMappingCopyWithImpl<$Res, _$_TokenStateMapping>
-    implements _$$_TokenStateMappingCopyWith<$Res> {
-  __$$_TokenStateMappingCopyWithImpl(
-      _$_TokenStateMapping _value, $Res Function(_$_TokenStateMapping) _then)
+class __$$TokenStateMappingImplCopyWithImpl<$Res>
+    extends _$TokenStateMappingCopyWithImpl<$Res, _$TokenStateMappingImpl>
+    implements _$$TokenStateMappingImplCopyWith<$Res> {
+  __$$TokenStateMappingImplCopyWithImpl(_$TokenStateMappingImpl _value,
+      $Res Function(_$TokenStateMappingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -802,7 +804,7 @@ class __$$_TokenStateMappingCopyWithImpl<$Res>
   $Res call({
     Object? states = null,
   }) {
-    return _then(_$_TokenStateMapping(
+    return _then(_$TokenStateMappingImpl(
       states: null == states
           ? _value.states
           : states // ignore: cast_nullable_to_non_nullable
@@ -813,11 +815,11 @@ class __$$_TokenStateMappingCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TokenStateMapping implements _TokenStateMapping {
-  const _$_TokenStateMapping({this.states = const IMapConst({})});
+class _$TokenStateMappingImpl implements _TokenStateMapping {
+  const _$TokenStateMappingImpl({this.states = const IMapConst({})});
 
-  factory _$_TokenStateMapping.fromJson(Map<String, dynamic> json) =>
-      _$$_TokenStateMappingFromJson(json);
+  factory _$TokenStateMappingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TokenStateMappingImplFromJson(json);
 
   @override
   @JsonKey()
@@ -829,10 +831,10 @@ class _$_TokenStateMapping implements _TokenStateMapping {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenStateMapping &&
+            other is _$TokenStateMappingImpl &&
             (identical(other.states, states) || other.states == states));
   }
 
@@ -843,13 +845,13 @@ class _$_TokenStateMapping implements _TokenStateMapping {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenStateMappingCopyWith<_$_TokenStateMapping> get copyWith =>
-      __$$_TokenStateMappingCopyWithImpl<_$_TokenStateMapping>(
+  _$$TokenStateMappingImplCopyWith<_$TokenStateMappingImpl> get copyWith =>
+      __$$TokenStateMappingImplCopyWithImpl<_$TokenStateMappingImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenStateMappingToJson(
+    return _$$TokenStateMappingImplToJson(
       this,
     );
   }
@@ -857,16 +859,16 @@ class _$_TokenStateMapping implements _TokenStateMapping {
 
 abstract class _TokenStateMapping implements TokenStateMapping {
   const factory _TokenStateMapping({final IMap<String, TokenState> states}) =
-      _$_TokenStateMapping;
+      _$TokenStateMappingImpl;
 
   factory _TokenStateMapping.fromJson(Map<String, dynamic> json) =
-      _$_TokenStateMapping.fromJson;
+      _$TokenStateMappingImpl.fromJson;
 
   @override
   IMap<String, TokenState> get states;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenStateMappingCopyWith<_$_TokenStateMapping> get copyWith =>
+  _$$TokenStateMappingImplCopyWith<_$TokenStateMappingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -938,11 +940,11 @@ class _$TokenInfoStateCopyWithImpl<$Res, $Val extends TokenInfoState>
 }
 
 /// @nodoc
-abstract class _$$_TokenInfoStateCopyWith<$Res>
+abstract class _$$TokenInfoStateImplCopyWith<$Res>
     implements $TokenInfoStateCopyWith<$Res> {
-  factory _$$_TokenInfoStateCopyWith(
-          _$_TokenInfoState value, $Res Function(_$_TokenInfoState) then) =
-      __$$_TokenInfoStateCopyWithImpl<$Res>;
+  factory _$$TokenInfoStateImplCopyWith(_$TokenInfoStateImpl value,
+          $Res Function(_$TokenInfoStateImpl) then) =
+      __$$TokenInfoStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({TokenInfo info, TokenState state});
@@ -954,11 +956,11 @@ abstract class _$$_TokenInfoStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TokenInfoStateCopyWithImpl<$Res>
-    extends _$TokenInfoStateCopyWithImpl<$Res, _$_TokenInfoState>
-    implements _$$_TokenInfoStateCopyWith<$Res> {
-  __$$_TokenInfoStateCopyWithImpl(
-      _$_TokenInfoState _value, $Res Function(_$_TokenInfoState) _then)
+class __$$TokenInfoStateImplCopyWithImpl<$Res>
+    extends _$TokenInfoStateCopyWithImpl<$Res, _$TokenInfoStateImpl>
+    implements _$$TokenInfoStateImplCopyWith<$Res> {
+  __$$TokenInfoStateImplCopyWithImpl(
+      _$TokenInfoStateImpl _value, $Res Function(_$TokenInfoStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -967,7 +969,7 @@ class __$$_TokenInfoStateCopyWithImpl<$Res>
     Object? info = null,
     Object? state = null,
   }) {
-    return _then(_$_TokenInfoState(
+    return _then(_$TokenInfoStateImpl(
       info: null == info
           ? _value.info
           : info // ignore: cast_nullable_to_non_nullable
@@ -982,8 +984,8 @@ class __$$_TokenInfoStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TokenInfoState implements _TokenInfoState {
-  const _$_TokenInfoState({required this.info, required this.state});
+class _$TokenInfoStateImpl implements _TokenInfoState {
+  const _$TokenInfoStateImpl({required this.info, required this.state});
 
   @override
   final TokenInfo info;
@@ -996,10 +998,10 @@ class _$_TokenInfoState implements _TokenInfoState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenInfoState &&
+            other is _$TokenInfoStateImpl &&
             (identical(other.info, info) || other.info == info) &&
             (identical(other.state, state) || other.state == state));
   }
@@ -1010,14 +1012,15 @@ class _$_TokenInfoState implements _TokenInfoState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenInfoStateCopyWith<_$_TokenInfoState> get copyWith =>
-      __$$_TokenInfoStateCopyWithImpl<_$_TokenInfoState>(this, _$identity);
+  _$$TokenInfoStateImplCopyWith<_$TokenInfoStateImpl> get copyWith =>
+      __$$TokenInfoStateImplCopyWithImpl<_$TokenInfoStateImpl>(
+          this, _$identity);
 }
 
 abstract class _TokenInfoState implements TokenInfoState {
   const factory _TokenInfoState(
       {required final TokenInfo info,
-      required final TokenState state}) = _$_TokenInfoState;
+      required final TokenState state}) = _$TokenInfoStateImpl;
 
   @override
   TokenInfo get info;
@@ -1025,6 +1028,6 @@ abstract class _TokenInfoState implements TokenInfoState {
   TokenState get state;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenInfoStateCopyWith<_$_TokenInfoState> get copyWith =>
+  _$$TokenInfoStateImplCopyWith<_$TokenInfoStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

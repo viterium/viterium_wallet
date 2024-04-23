@@ -12,7 +12,7 @@ part of 'vitc_stake_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$VitcPoolInfo {
@@ -161,11 +161,11 @@ class _$VitcPoolInfoCopyWithImpl<$Res, $Val extends VitcPoolInfo>
 }
 
 /// @nodoc
-abstract class _$$_VitcPoolInfoCopyWith<$Res>
+abstract class _$$VitcPoolInfoImplCopyWith<$Res>
     implements $VitcPoolInfoCopyWith<$Res> {
-  factory _$$_VitcPoolInfoCopyWith(
-          _$_VitcPoolInfo value, $Res Function(_$_VitcPoolInfo) then) =
-      __$$_VitcPoolInfoCopyWithImpl<$Res>;
+  factory _$$VitcPoolInfoImplCopyWith(
+          _$VitcPoolInfoImpl value, $Res Function(_$VitcPoolInfoImpl) then) =
+      __$$VitcPoolInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -190,11 +190,11 @@ abstract class _$$_VitcPoolInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcPoolInfoCopyWithImpl<$Res>
-    extends _$VitcPoolInfoCopyWithImpl<$Res, _$_VitcPoolInfo>
-    implements _$$_VitcPoolInfoCopyWith<$Res> {
-  __$$_VitcPoolInfoCopyWithImpl(
-      _$_VitcPoolInfo _value, $Res Function(_$_VitcPoolInfo) _then)
+class __$$VitcPoolInfoImplCopyWithImpl<$Res>
+    extends _$VitcPoolInfoCopyWithImpl<$Res, _$VitcPoolInfoImpl>
+    implements _$$VitcPoolInfoImplCopyWith<$Res> {
+  __$$VitcPoolInfoImplCopyWithImpl(
+      _$VitcPoolInfoImpl _value, $Res Function(_$VitcPoolInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -214,7 +214,7 @@ class __$$_VitcPoolInfoCopyWithImpl<$Res>
     Object? timelock = null,
     Object? poolId = null,
   }) {
-    return _then(_$_VitcPoolInfo(
+    return _then(_$VitcPoolInfoImpl(
       stakingToken: null == stakingToken
           ? _value.stakingToken
           : stakingToken // ignore: cast_nullable_to_non_nullable
@@ -273,8 +273,8 @@ class __$$_VitcPoolInfoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcPoolInfo extends _VitcPoolInfo {
-  const _$_VitcPoolInfo(
+class _$VitcPoolInfoImpl extends _VitcPoolInfo {
+  const _$VitcPoolInfoImpl(
       {required this.stakingToken,
       required this.rewardToken,
       required this.totalStakingBalance,
@@ -323,10 +323,10 @@ class _$_VitcPoolInfo extends _VitcPoolInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcPoolInfo &&
+            other is _$VitcPoolInfoImpl &&
             (identical(other.stakingToken, stakingToken) ||
                 other.stakingToken == stakingToken) &&
             (identical(other.rewardToken, rewardToken) ||
@@ -373,8 +373,8 @@ class _$_VitcPoolInfo extends _VitcPoolInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcPoolInfoCopyWith<_$_VitcPoolInfo> get copyWith =>
-      __$$_VitcPoolInfoCopyWithImpl<_$_VitcPoolInfo>(this, _$identity);
+  _$$VitcPoolInfoImplCopyWith<_$VitcPoolInfoImpl> get copyWith =>
+      __$$VitcPoolInfoImplCopyWithImpl<_$VitcPoolInfoImpl>(this, _$identity);
 }
 
 abstract class _VitcPoolInfo extends VitcPoolInfo {
@@ -391,7 +391,7 @@ abstract class _VitcPoolInfo extends VitcPoolInfo {
       required final BigInt paidOut,
       required final BigInt removedDecimals,
       required final BigInt timelock,
-      required final BigInt poolId}) = _$_VitcPoolInfo;
+      required final BigInt poolId}) = _$VitcPoolInfoImpl;
   const _VitcPoolInfo._() : super._();
 
   @override
@@ -422,7 +422,7 @@ abstract class _VitcPoolInfo extends VitcPoolInfo {
   BigInt get poolId;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcPoolInfoCopyWith<_$_VitcPoolInfo> get copyWith =>
+  _$$VitcPoolInfoImplCopyWith<_$VitcPoolInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -512,11 +512,11 @@ class _$VitcPoolInfoAllCopyWithImpl<$Res, $Val extends VitcPoolInfoAll>
 }
 
 /// @nodoc
-abstract class _$$_VitcPoolInfoAllCopyWith<$Res>
+abstract class _$$VitcPoolInfoAllImplCopyWith<$Res>
     implements $VitcPoolInfoAllCopyWith<$Res> {
-  factory _$$_VitcPoolInfoAllCopyWith(
-          _$_VitcPoolInfoAll value, $Res Function(_$_VitcPoolInfoAll) then) =
-      __$$_VitcPoolInfoAllCopyWithImpl<$Res>;
+  factory _$$VitcPoolInfoAllImplCopyWith(_$VitcPoolInfoAllImpl value,
+          $Res Function(_$VitcPoolInfoAllImpl) then) =
+      __$$VitcPoolInfoAllImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -533,11 +533,11 @@ abstract class _$$_VitcPoolInfoAllCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcPoolInfoAllCopyWithImpl<$Res>
-    extends _$VitcPoolInfoAllCopyWithImpl<$Res, _$_VitcPoolInfoAll>
-    implements _$$_VitcPoolInfoAllCopyWith<$Res> {
-  __$$_VitcPoolInfoAllCopyWithImpl(
-      _$_VitcPoolInfoAll _value, $Res Function(_$_VitcPoolInfoAll) _then)
+class __$$VitcPoolInfoAllImplCopyWithImpl<$Res>
+    extends _$VitcPoolInfoAllCopyWithImpl<$Res, _$VitcPoolInfoAllImpl>
+    implements _$$VitcPoolInfoAllImplCopyWith<$Res> {
+  __$$VitcPoolInfoAllImplCopyWithImpl(
+      _$VitcPoolInfoAllImpl _value, $Res Function(_$VitcPoolInfoAllImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -547,7 +547,7 @@ class __$$_VitcPoolInfoAllCopyWithImpl<$Res>
     Object? stakingTokenInfo = null,
     Object? rewardTokenInfo = null,
   }) {
-    return _then(_$_VitcPoolInfoAll(
+    return _then(_$VitcPoolInfoAllImpl(
       poolInfo: null == poolInfo
           ? _value.poolInfo
           : poolInfo // ignore: cast_nullable_to_non_nullable
@@ -566,8 +566,8 @@ class __$$_VitcPoolInfoAllCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcPoolInfoAll extends _VitcPoolInfoAll {
-  const _$_VitcPoolInfoAll(
+class _$VitcPoolInfoAllImpl extends _VitcPoolInfoAll {
+  const _$VitcPoolInfoAllImpl(
       {required this.poolInfo,
       required this.stakingTokenInfo,
       required this.rewardTokenInfo})
@@ -586,10 +586,10 @@ class _$_VitcPoolInfoAll extends _VitcPoolInfoAll {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcPoolInfoAll &&
+            other is _$VitcPoolInfoAllImpl &&
             (identical(other.poolInfo, poolInfo) ||
                 other.poolInfo == poolInfo) &&
             (identical(other.stakingTokenInfo, stakingTokenInfo) ||
@@ -605,15 +605,16 @@ class _$_VitcPoolInfoAll extends _VitcPoolInfoAll {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcPoolInfoAllCopyWith<_$_VitcPoolInfoAll> get copyWith =>
-      __$$_VitcPoolInfoAllCopyWithImpl<_$_VitcPoolInfoAll>(this, _$identity);
+  _$$VitcPoolInfoAllImplCopyWith<_$VitcPoolInfoAllImpl> get copyWith =>
+      __$$VitcPoolInfoAllImplCopyWithImpl<_$VitcPoolInfoAllImpl>(
+          this, _$identity);
 }
 
 abstract class _VitcPoolInfoAll extends VitcPoolInfoAll {
   const factory _VitcPoolInfoAll(
       {required final VitcPoolInfo poolInfo,
       required final TokenInfo stakingTokenInfo,
-      required final TokenInfo rewardTokenInfo}) = _$_VitcPoolInfoAll;
+      required final TokenInfo rewardTokenInfo}) = _$VitcPoolInfoAllImpl;
   const _VitcPoolInfoAll._() : super._();
 
   @override
@@ -624,7 +625,7 @@ abstract class _VitcPoolInfoAll extends VitcPoolInfoAll {
   TokenInfo get rewardTokenInfo;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcPoolInfoAllCopyWith<_$_VitcPoolInfoAll> get copyWith =>
+  _$$VitcPoolInfoAllImplCopyWith<_$VitcPoolInfoAllImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -683,22 +684,22 @@ class _$VitcStakeUserInfoCopyWithImpl<$Res, $Val extends VitcStakeUserInfo>
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeUserInfoCopyWith<$Res>
+abstract class _$$VitcStakeUserInfoImplCopyWith<$Res>
     implements $VitcStakeUserInfoCopyWith<$Res> {
-  factory _$$_VitcStakeUserInfoCopyWith(_$_VitcStakeUserInfo value,
-          $Res Function(_$_VitcStakeUserInfo) then) =
-      __$$_VitcStakeUserInfoCopyWithImpl<$Res>;
+  factory _$$VitcStakeUserInfoImplCopyWith(_$VitcStakeUserInfoImpl value,
+          $Res Function(_$VitcStakeUserInfoImpl) then) =
+      __$$VitcStakeUserInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BigInt stakingBalance, BigInt rewardDebt, BigInt depositBlock});
 }
 
 /// @nodoc
-class __$$_VitcStakeUserInfoCopyWithImpl<$Res>
-    extends _$VitcStakeUserInfoCopyWithImpl<$Res, _$_VitcStakeUserInfo>
-    implements _$$_VitcStakeUserInfoCopyWith<$Res> {
-  __$$_VitcStakeUserInfoCopyWithImpl(
-      _$_VitcStakeUserInfo _value, $Res Function(_$_VitcStakeUserInfo) _then)
+class __$$VitcStakeUserInfoImplCopyWithImpl<$Res>
+    extends _$VitcStakeUserInfoCopyWithImpl<$Res, _$VitcStakeUserInfoImpl>
+    implements _$$VitcStakeUserInfoImplCopyWith<$Res> {
+  __$$VitcStakeUserInfoImplCopyWithImpl(_$VitcStakeUserInfoImpl _value,
+      $Res Function(_$VitcStakeUserInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -708,7 +709,7 @@ class __$$_VitcStakeUserInfoCopyWithImpl<$Res>
     Object? rewardDebt = null,
     Object? depositBlock = null,
   }) {
-    return _then(_$_VitcStakeUserInfo(
+    return _then(_$VitcStakeUserInfoImpl(
       stakingBalance: null == stakingBalance
           ? _value.stakingBalance
           : stakingBalance // ignore: cast_nullable_to_non_nullable
@@ -727,8 +728,8 @@ class __$$_VitcStakeUserInfoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcStakeUserInfo implements _VitcStakeUserInfo {
-  const _$_VitcStakeUserInfo(
+class _$VitcStakeUserInfoImpl implements _VitcStakeUserInfo {
+  const _$VitcStakeUserInfoImpl(
       {required this.stakingBalance,
       required this.rewardDebt,
       required this.depositBlock});
@@ -746,10 +747,10 @@ class _$_VitcStakeUserInfo implements _VitcStakeUserInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcStakeUserInfo &&
+            other is _$VitcStakeUserInfoImpl &&
             (identical(other.stakingBalance, stakingBalance) ||
                 other.stakingBalance == stakingBalance) &&
             (identical(other.rewardDebt, rewardDebt) ||
@@ -765,8 +766,8 @@ class _$_VitcStakeUserInfo implements _VitcStakeUserInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcStakeUserInfoCopyWith<_$_VitcStakeUserInfo> get copyWith =>
-      __$$_VitcStakeUserInfoCopyWithImpl<_$_VitcStakeUserInfo>(
+  _$$VitcStakeUserInfoImplCopyWith<_$VitcStakeUserInfoImpl> get copyWith =>
+      __$$VitcStakeUserInfoImplCopyWithImpl<_$VitcStakeUserInfoImpl>(
           this, _$identity);
 }
 
@@ -774,7 +775,7 @@ abstract class _VitcStakeUserInfo implements VitcStakeUserInfo {
   const factory _VitcStakeUserInfo(
       {required final BigInt stakingBalance,
       required final BigInt rewardDebt,
-      required final BigInt depositBlock}) = _$_VitcStakeUserInfo;
+      required final BigInt depositBlock}) = _$VitcStakeUserInfoImpl;
 
   @override
   BigInt get stakingBalance;
@@ -784,7 +785,7 @@ abstract class _VitcStakeUserInfo implements VitcStakeUserInfo {
   BigInt get depositBlock;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcStakeUserInfoCopyWith<_$_VitcStakeUserInfo> get copyWith =>
+  _$$VitcStakeUserInfoImplCopyWith<_$VitcStakeUserInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -884,24 +885,24 @@ class _$VitcStakeEventCopyWithImpl<$Res, $Val extends VitcStakeEvent>
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventPoolCreatedCopyWith<$Res>
+abstract class _$$VitcStakeEventPoolCreatedImplCopyWith<$Res>
     implements $VitcStakeEventCopyWith<$Res> {
-  factory _$$_VitcStakeEventPoolCreatedCopyWith(
-          _$_VitcStakeEventPoolCreated value,
-          $Res Function(_$_VitcStakeEventPoolCreated) then) =
-      __$$_VitcStakeEventPoolCreatedCopyWithImpl<$Res>;
+  factory _$$VitcStakeEventPoolCreatedImplCopyWith(
+          _$VitcStakeEventPoolCreatedImpl value,
+          $Res Function(_$VitcStakeEventPoolCreatedImpl) then) =
+      __$$VitcStakeEventPoolCreatedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({BigInt poolId});
 }
 
 /// @nodoc
-class __$$_VitcStakeEventPoolCreatedCopyWithImpl<$Res>
-    extends _$VitcStakeEventCopyWithImpl<$Res, _$_VitcStakeEventPoolCreated>
-    implements _$$_VitcStakeEventPoolCreatedCopyWith<$Res> {
-  __$$_VitcStakeEventPoolCreatedCopyWithImpl(
-      _$_VitcStakeEventPoolCreated _value,
-      $Res Function(_$_VitcStakeEventPoolCreated) _then)
+class __$$VitcStakeEventPoolCreatedImplCopyWithImpl<$Res>
+    extends _$VitcStakeEventCopyWithImpl<$Res, _$VitcStakeEventPoolCreatedImpl>
+    implements _$$VitcStakeEventPoolCreatedImplCopyWith<$Res> {
+  __$$VitcStakeEventPoolCreatedImplCopyWithImpl(
+      _$VitcStakeEventPoolCreatedImpl _value,
+      $Res Function(_$VitcStakeEventPoolCreatedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -909,7 +910,7 @@ class __$$_VitcStakeEventPoolCreatedCopyWithImpl<$Res>
   $Res call({
     Object? poolId = null,
   }) {
-    return _then(_$_VitcStakeEventPoolCreated(
+    return _then(_$VitcStakeEventPoolCreatedImpl(
       poolId: null == poolId
           ? _value.poolId
           : poolId // ignore: cast_nullable_to_non_nullable
@@ -920,8 +921,8 @@ class __$$_VitcStakeEventPoolCreatedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
-  const _$_VitcStakeEventPoolCreated({required this.poolId});
+class _$VitcStakeEventPoolCreatedImpl implements _VitcStakeEventPoolCreated {
+  const _$VitcStakeEventPoolCreatedImpl({required this.poolId});
 
   @override
   final BigInt poolId;
@@ -932,10 +933,10 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcStakeEventPoolCreated &&
+            other is _$VitcStakeEventPoolCreatedImpl &&
             (identical(other.poolId, poolId) || other.poolId == poolId));
   }
 
@@ -945,9 +946,9 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcStakeEventPoolCreatedCopyWith<_$_VitcStakeEventPoolCreated>
-      get copyWith => __$$_VitcStakeEventPoolCreatedCopyWithImpl<
-          _$_VitcStakeEventPoolCreated>(this, _$identity);
+  _$$VitcStakeEventPoolCreatedImplCopyWith<_$VitcStakeEventPoolCreatedImpl>
+      get copyWith => __$$VitcStakeEventPoolCreatedImplCopyWithImpl<
+          _$VitcStakeEventPoolCreatedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1029,22 +1030,23 @@ class _$_VitcStakeEventPoolCreated implements _VitcStakeEventPoolCreated {
 
 abstract class _VitcStakeEventPoolCreated implements VitcStakeEvent {
   const factory _VitcStakeEventPoolCreated({required final BigInt poolId}) =
-      _$_VitcStakeEventPoolCreated;
+      _$VitcStakeEventPoolCreatedImpl;
 
   @override
   BigInt get poolId;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcStakeEventPoolCreatedCopyWith<_$_VitcStakeEventPoolCreated>
+  _$$VitcStakeEventPoolCreatedImplCopyWith<_$VitcStakeEventPoolCreatedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventDepositCopyWith<$Res>
+abstract class _$$VitcStakeEventDepositImplCopyWith<$Res>
     implements $VitcStakeEventCopyWith<$Res> {
-  factory _$$_VitcStakeEventDepositCopyWith(_$_VitcStakeEventDeposit value,
-          $Res Function(_$_VitcStakeEventDeposit) then) =
-      __$$_VitcStakeEventDepositCopyWithImpl<$Res>;
+  factory _$$VitcStakeEventDepositImplCopyWith(
+          _$VitcStakeEventDepositImpl value,
+          $Res Function(_$VitcStakeEventDepositImpl) then) =
+      __$$VitcStakeEventDepositImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
@@ -1053,11 +1055,11 @@ abstract class _$$_VitcStakeEventDepositCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcStakeEventDepositCopyWithImpl<$Res>
-    extends _$VitcStakeEventCopyWithImpl<$Res, _$_VitcStakeEventDeposit>
-    implements _$$_VitcStakeEventDepositCopyWith<$Res> {
-  __$$_VitcStakeEventDepositCopyWithImpl(_$_VitcStakeEventDeposit _value,
-      $Res Function(_$_VitcStakeEventDeposit) _then)
+class __$$VitcStakeEventDepositImplCopyWithImpl<$Res>
+    extends _$VitcStakeEventCopyWithImpl<$Res, _$VitcStakeEventDepositImpl>
+    implements _$$VitcStakeEventDepositImplCopyWith<$Res> {
+  __$$VitcStakeEventDepositImplCopyWithImpl(_$VitcStakeEventDepositImpl _value,
+      $Res Function(_$VitcStakeEventDepositImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1067,7 +1069,7 @@ class __$$_VitcStakeEventDepositCopyWithImpl<$Res>
     Object? poolId = null,
     Object? amount = null,
   }) {
-    return _then(_$_VitcStakeEventDeposit(
+    return _then(_$VitcStakeEventDepositImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1094,8 +1096,8 @@ class __$$_VitcStakeEventDepositCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
-  const _$_VitcStakeEventDeposit(
+class _$VitcStakeEventDepositImpl implements _VitcStakeEventDeposit {
+  const _$VitcStakeEventDepositImpl(
       {required this.address, required this.poolId, required this.amount});
 
   @override
@@ -1111,10 +1113,10 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcStakeEventDeposit &&
+            other is _$VitcStakeEventDepositImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.poolId, poolId) || other.poolId == poolId) &&
             (identical(other.amount, amount) || other.amount == amount));
@@ -1126,9 +1128,9 @@ class _$_VitcStakeEventDeposit implements _VitcStakeEventDeposit {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcStakeEventDepositCopyWith<_$_VitcStakeEventDeposit> get copyWith =>
-      __$$_VitcStakeEventDepositCopyWithImpl<_$_VitcStakeEventDeposit>(
-          this, _$identity);
+  _$$VitcStakeEventDepositImplCopyWith<_$VitcStakeEventDepositImpl>
+      get copyWith => __$$VitcStakeEventDepositImplCopyWithImpl<
+          _$VitcStakeEventDepositImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1212,7 +1214,7 @@ abstract class _VitcStakeEventDeposit implements VitcStakeEvent {
   const factory _VitcStakeEventDeposit(
       {required final Address address,
       required final BigInt poolId,
-      required final BigInt amount}) = _$_VitcStakeEventDeposit;
+      required final BigInt amount}) = _$VitcStakeEventDepositImpl;
 
   Address get address;
   @override
@@ -1220,16 +1222,17 @@ abstract class _VitcStakeEventDeposit implements VitcStakeEvent {
   BigInt get amount;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcStakeEventDepositCopyWith<_$_VitcStakeEventDeposit> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VitcStakeEventDepositImplCopyWith<_$VitcStakeEventDepositImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventWithdrawCopyWith<$Res>
+abstract class _$$VitcStakeEventWithdrawImplCopyWith<$Res>
     implements $VitcStakeEventCopyWith<$Res> {
-  factory _$$_VitcStakeEventWithdrawCopyWith(_$_VitcStakeEventWithdraw value,
-          $Res Function(_$_VitcStakeEventWithdraw) then) =
-      __$$_VitcStakeEventWithdrawCopyWithImpl<$Res>;
+  factory _$$VitcStakeEventWithdrawImplCopyWith(
+          _$VitcStakeEventWithdrawImpl value,
+          $Res Function(_$VitcStakeEventWithdrawImpl) then) =
+      __$$VitcStakeEventWithdrawImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
@@ -1238,11 +1241,12 @@ abstract class _$$_VitcStakeEventWithdrawCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcStakeEventWithdrawCopyWithImpl<$Res>
-    extends _$VitcStakeEventCopyWithImpl<$Res, _$_VitcStakeEventWithdraw>
-    implements _$$_VitcStakeEventWithdrawCopyWith<$Res> {
-  __$$_VitcStakeEventWithdrawCopyWithImpl(_$_VitcStakeEventWithdraw _value,
-      $Res Function(_$_VitcStakeEventWithdraw) _then)
+class __$$VitcStakeEventWithdrawImplCopyWithImpl<$Res>
+    extends _$VitcStakeEventCopyWithImpl<$Res, _$VitcStakeEventWithdrawImpl>
+    implements _$$VitcStakeEventWithdrawImplCopyWith<$Res> {
+  __$$VitcStakeEventWithdrawImplCopyWithImpl(
+      _$VitcStakeEventWithdrawImpl _value,
+      $Res Function(_$VitcStakeEventWithdrawImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1252,7 +1256,7 @@ class __$$_VitcStakeEventWithdrawCopyWithImpl<$Res>
     Object? poolId = null,
     Object? amount = null,
   }) {
-    return _then(_$_VitcStakeEventWithdraw(
+    return _then(_$VitcStakeEventWithdrawImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1279,8 +1283,8 @@ class __$$_VitcStakeEventWithdrawCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
-  const _$_VitcStakeEventWithdraw(
+class _$VitcStakeEventWithdrawImpl implements _VitcStakeEventWithdraw {
+  const _$VitcStakeEventWithdrawImpl(
       {required this.address, required this.poolId, required this.amount});
 
   @override
@@ -1296,10 +1300,10 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcStakeEventWithdraw &&
+            other is _$VitcStakeEventWithdrawImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.poolId, poolId) || other.poolId == poolId) &&
             (identical(other.amount, amount) || other.amount == amount));
@@ -1311,9 +1315,9 @@ class _$_VitcStakeEventWithdraw implements _VitcStakeEventWithdraw {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcStakeEventWithdrawCopyWith<_$_VitcStakeEventWithdraw> get copyWith =>
-      __$$_VitcStakeEventWithdrawCopyWithImpl<_$_VitcStakeEventWithdraw>(
-          this, _$identity);
+  _$$VitcStakeEventWithdrawImplCopyWith<_$VitcStakeEventWithdrawImpl>
+      get copyWith => __$$VitcStakeEventWithdrawImplCopyWithImpl<
+          _$VitcStakeEventWithdrawImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1397,7 +1401,7 @@ abstract class _VitcStakeEventWithdraw implements VitcStakeEvent {
   const factory _VitcStakeEventWithdraw(
       {required final Address address,
       required final BigInt poolId,
-      required final BigInt amount}) = _$_VitcStakeEventWithdraw;
+      required final BigInt amount}) = _$VitcStakeEventWithdrawImpl;
 
   Address get address;
   @override
@@ -1405,16 +1409,16 @@ abstract class _VitcStakeEventWithdraw implements VitcStakeEvent {
   BigInt get amount;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcStakeEventWithdrawCopyWith<_$_VitcStakeEventWithdraw> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VitcStakeEventWithdrawImplCopyWith<_$VitcStakeEventWithdrawImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcStakeEventClaimCopyWith<$Res>
+abstract class _$$VitcStakeEventClaimImplCopyWith<$Res>
     implements $VitcStakeEventCopyWith<$Res> {
-  factory _$$_VitcStakeEventClaimCopyWith(_$_VitcStakeEventClaim value,
-          $Res Function(_$_VitcStakeEventClaim) then) =
-      __$$_VitcStakeEventClaimCopyWithImpl<$Res>;
+  factory _$$VitcStakeEventClaimImplCopyWith(_$VitcStakeEventClaimImpl value,
+          $Res Function(_$VitcStakeEventClaimImpl) then) =
+      __$$VitcStakeEventClaimImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Address address, BigInt poolId, BigInt amount});
@@ -1423,11 +1427,11 @@ abstract class _$$_VitcStakeEventClaimCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcStakeEventClaimCopyWithImpl<$Res>
-    extends _$VitcStakeEventCopyWithImpl<$Res, _$_VitcStakeEventClaim>
-    implements _$$_VitcStakeEventClaimCopyWith<$Res> {
-  __$$_VitcStakeEventClaimCopyWithImpl(_$_VitcStakeEventClaim _value,
-      $Res Function(_$_VitcStakeEventClaim) _then)
+class __$$VitcStakeEventClaimImplCopyWithImpl<$Res>
+    extends _$VitcStakeEventCopyWithImpl<$Res, _$VitcStakeEventClaimImpl>
+    implements _$$VitcStakeEventClaimImplCopyWith<$Res> {
+  __$$VitcStakeEventClaimImplCopyWithImpl(_$VitcStakeEventClaimImpl _value,
+      $Res Function(_$VitcStakeEventClaimImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1437,7 +1441,7 @@ class __$$_VitcStakeEventClaimCopyWithImpl<$Res>
     Object? poolId = null,
     Object? amount = null,
   }) {
-    return _then(_$_VitcStakeEventClaim(
+    return _then(_$VitcStakeEventClaimImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1464,8 +1468,8 @@ class __$$_VitcStakeEventClaimCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
-  const _$_VitcStakeEventClaim(
+class _$VitcStakeEventClaimImpl implements _VitcStakeEventClaim {
+  const _$VitcStakeEventClaimImpl(
       {required this.address, required this.poolId, required this.amount});
 
   @override
@@ -1481,10 +1485,10 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcStakeEventClaim &&
+            other is _$VitcStakeEventClaimImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.poolId, poolId) || other.poolId == poolId) &&
             (identical(other.amount, amount) || other.amount == amount));
@@ -1496,8 +1500,8 @@ class _$_VitcStakeEventClaim implements _VitcStakeEventClaim {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcStakeEventClaimCopyWith<_$_VitcStakeEventClaim> get copyWith =>
-      __$$_VitcStakeEventClaimCopyWithImpl<_$_VitcStakeEventClaim>(
+  _$$VitcStakeEventClaimImplCopyWith<_$VitcStakeEventClaimImpl> get copyWith =>
+      __$$VitcStakeEventClaimImplCopyWithImpl<_$VitcStakeEventClaimImpl>(
           this, _$identity);
 
   @override
@@ -1582,7 +1586,7 @@ abstract class _VitcStakeEventClaim implements VitcStakeEvent {
   const factory _VitcStakeEventClaim(
       {required final Address address,
       required final BigInt poolId,
-      required final BigInt amount}) = _$_VitcStakeEventClaim;
+      required final BigInt amount}) = _$VitcStakeEventClaimImpl;
 
   Address get address;
   @override
@@ -1590,6 +1594,6 @@ abstract class _VitcStakeEventClaim implements VitcStakeEvent {
   BigInt get amount;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcStakeEventClaimCopyWith<_$_VitcStakeEventClaim> get copyWith =>
+  _$$VitcStakeEventClaimImplCopyWith<_$VitcStakeEventClaimImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

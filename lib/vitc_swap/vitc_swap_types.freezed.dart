@@ -12,7 +12,7 @@ part of 'vitc_swap_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 VitcSwapTokenCache _$VitcSwapTokenCacheFromJson(Map<String, dynamic> json) {
   return _VitcSwapTokenCache.fromJson(json);
@@ -68,22 +68,22 @@ class _$VitcSwapTokenCacheCopyWithImpl<$Res, $Val extends VitcSwapTokenCache>
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapTokenCacheCopyWith<$Res>
+abstract class _$$VitcSwapTokenCacheImplCopyWith<$Res>
     implements $VitcSwapTokenCacheCopyWith<$Res> {
-  factory _$$_VitcSwapTokenCacheCopyWith(_$_VitcSwapTokenCache value,
-          $Res Function(_$_VitcSwapTokenCache) then) =
-      __$$_VitcSwapTokenCacheCopyWithImpl<$Res>;
+  factory _$$VitcSwapTokenCacheImplCopyWith(_$VitcSwapTokenCacheImpl value,
+          $Res Function(_$VitcSwapTokenCacheImpl) then) =
+      __$$VitcSwapTokenCacheImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IList<String> tradingTokens, int lastHeight});
 }
 
 /// @nodoc
-class __$$_VitcSwapTokenCacheCopyWithImpl<$Res>
-    extends _$VitcSwapTokenCacheCopyWithImpl<$Res, _$_VitcSwapTokenCache>
-    implements _$$_VitcSwapTokenCacheCopyWith<$Res> {
-  __$$_VitcSwapTokenCacheCopyWithImpl(
-      _$_VitcSwapTokenCache _value, $Res Function(_$_VitcSwapTokenCache) _then)
+class __$$VitcSwapTokenCacheImplCopyWithImpl<$Res>
+    extends _$VitcSwapTokenCacheCopyWithImpl<$Res, _$VitcSwapTokenCacheImpl>
+    implements _$$VitcSwapTokenCacheImplCopyWith<$Res> {
+  __$$VitcSwapTokenCacheImplCopyWithImpl(_$VitcSwapTokenCacheImpl _value,
+      $Res Function(_$VitcSwapTokenCacheImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -92,7 +92,7 @@ class __$$_VitcSwapTokenCacheCopyWithImpl<$Res>
     Object? tradingTokens = null,
     Object? lastHeight = null,
   }) {
-    return _then(_$_VitcSwapTokenCache(
+    return _then(_$VitcSwapTokenCacheImpl(
       tradingTokens: null == tradingTokens
           ? _value.tradingTokens
           : tradingTokens // ignore: cast_nullable_to_non_nullable
@@ -107,13 +107,13 @@ class __$$_VitcSwapTokenCacheCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VitcSwapTokenCache implements _VitcSwapTokenCache {
-  const _$_VitcSwapTokenCache(
+class _$VitcSwapTokenCacheImpl implements _VitcSwapTokenCache {
+  const _$VitcSwapTokenCacheImpl(
       {this.tradingTokens = const IListConst(kVitcSwapTokenIdList),
       this.lastHeight = kVitcSwapLastHeight});
 
-  factory _$_VitcSwapTokenCache.fromJson(Map<String, dynamic> json) =>
-      _$$_VitcSwapTokenCacheFromJson(json);
+  factory _$VitcSwapTokenCacheImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VitcSwapTokenCacheImplFromJson(json);
 
   @override
   @JsonKey()
@@ -128,10 +128,10 @@ class _$_VitcSwapTokenCache implements _VitcSwapTokenCache {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapTokenCache &&
+            other is _$VitcSwapTokenCacheImpl &&
             const DeepCollectionEquality()
                 .equals(other.tradingTokens, tradingTokens) &&
             (identical(other.lastHeight, lastHeight) ||
@@ -146,13 +146,13 @@ class _$_VitcSwapTokenCache implements _VitcSwapTokenCache {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapTokenCacheCopyWith<_$_VitcSwapTokenCache> get copyWith =>
-      __$$_VitcSwapTokenCacheCopyWithImpl<_$_VitcSwapTokenCache>(
+  _$$VitcSwapTokenCacheImplCopyWith<_$VitcSwapTokenCacheImpl> get copyWith =>
+      __$$VitcSwapTokenCacheImplCopyWithImpl<_$VitcSwapTokenCacheImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VitcSwapTokenCacheToJson(
+    return _$$VitcSwapTokenCacheImplToJson(
       this,
     );
   }
@@ -161,10 +161,10 @@ class _$_VitcSwapTokenCache implements _VitcSwapTokenCache {
 abstract class _VitcSwapTokenCache implements VitcSwapTokenCache {
   const factory _VitcSwapTokenCache(
       {final IList<String> tradingTokens,
-      final int lastHeight}) = _$_VitcSwapTokenCache;
+      final int lastHeight}) = _$VitcSwapTokenCacheImpl;
 
   factory _VitcSwapTokenCache.fromJson(Map<String, dynamic> json) =
-      _$_VitcSwapTokenCache.fromJson;
+      _$VitcSwapTokenCacheImpl.fromJson;
 
   @override
   IList<String> get tradingTokens;
@@ -172,7 +172,7 @@ abstract class _VitcSwapTokenCache implements VitcSwapTokenCache {
   int get lastHeight;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcSwapTokenCacheCopyWith<_$_VitcSwapTokenCache> get copyWith =>
+  _$$VitcSwapTokenCacheImplCopyWith<_$VitcSwapTokenCacheImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -274,11 +274,11 @@ class _$VitcSwapSettingsCopyWithImpl<$Res, $Val extends VitcSwapSettings>
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapSettingsCopyWith<$Res>
+abstract class _$$VitcSwapSettingsImplCopyWith<$Res>
     implements $VitcSwapSettingsCopyWith<$Res> {
-  factory _$$_VitcSwapSettingsCopyWith(
-          _$_VitcSwapSettings value, $Res Function(_$_VitcSwapSettings) then) =
-      __$$_VitcSwapSettingsCopyWithImpl<$Res>;
+  factory _$$VitcSwapSettingsImplCopyWith(_$VitcSwapSettingsImpl value,
+          $Res Function(_$VitcSwapSettingsImpl) then) =
+      __$$VitcSwapSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -296,11 +296,11 @@ abstract class _$$_VitcSwapSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcSwapSettingsCopyWithImpl<$Res>
-    extends _$VitcSwapSettingsCopyWithImpl<$Res, _$_VitcSwapSettings>
-    implements _$$_VitcSwapSettingsCopyWith<$Res> {
-  __$$_VitcSwapSettingsCopyWithImpl(
-      _$_VitcSwapSettings _value, $Res Function(_$_VitcSwapSettings) _then)
+class __$$VitcSwapSettingsImplCopyWithImpl<$Res>
+    extends _$VitcSwapSettingsCopyWithImpl<$Res, _$VitcSwapSettingsImpl>
+    implements _$$VitcSwapSettingsImplCopyWith<$Res> {
+  __$$VitcSwapSettingsImplCopyWithImpl(_$VitcSwapSettingsImpl _value,
+      $Res Function(_$VitcSwapSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -311,7 +311,7 @@ class __$$_VitcSwapSettingsCopyWithImpl<$Res>
     Object? toToken = null,
     Object? slippage = null,
   }) {
-    return _then(_$_VitcSwapSettings(
+    return _then(_$VitcSwapSettingsImpl(
       tokenCache: null == tokenCache
           ? _value.tokenCache
           : tokenCache // ignore: cast_nullable_to_non_nullable
@@ -334,15 +334,15 @@ class __$$_VitcSwapSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VitcSwapSettings implements _VitcSwapSettings {
-  const _$_VitcSwapSettings(
+class _$VitcSwapSettingsImpl implements _VitcSwapSettings {
+  const _$VitcSwapSettingsImpl(
       {this.tokenCache = const VitcSwapTokenCache(),
       required this.fromToken,
       required this.toToken,
       this.slippage = 0.005});
 
-  factory _$_VitcSwapSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_VitcSwapSettingsFromJson(json);
+  factory _$VitcSwapSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VitcSwapSettingsImplFromJson(json);
 
   @override
   @JsonKey()
@@ -361,10 +361,10 @@ class _$_VitcSwapSettings implements _VitcSwapSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapSettings &&
+            other is _$VitcSwapSettingsImpl &&
             (identical(other.tokenCache, tokenCache) ||
                 other.tokenCache == tokenCache) &&
             (identical(other.fromToken, fromToken) ||
@@ -382,12 +382,13 @@ class _$_VitcSwapSettings implements _VitcSwapSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapSettingsCopyWith<_$_VitcSwapSettings> get copyWith =>
-      __$$_VitcSwapSettingsCopyWithImpl<_$_VitcSwapSettings>(this, _$identity);
+  _$$VitcSwapSettingsImplCopyWith<_$VitcSwapSettingsImpl> get copyWith =>
+      __$$VitcSwapSettingsImplCopyWithImpl<_$VitcSwapSettingsImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VitcSwapSettingsToJson(
+    return _$$VitcSwapSettingsImplToJson(
       this,
     );
   }
@@ -398,10 +399,10 @@ abstract class _VitcSwapSettings implements VitcSwapSettings {
       {final VitcSwapTokenCache tokenCache,
       required final TokenInfo fromToken,
       required final TokenInfo toToken,
-      final double slippage}) = _$_VitcSwapSettings;
+      final double slippage}) = _$VitcSwapSettingsImpl;
 
   factory _VitcSwapSettings.fromJson(Map<String, dynamic> json) =
-      _$_VitcSwapSettings.fromJson;
+      _$VitcSwapSettingsImpl.fromJson;
 
   @override
   VitcSwapTokenCache get tokenCache;
@@ -413,7 +414,7 @@ abstract class _VitcSwapSettings implements VitcSwapSettings {
   double get slippage;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcSwapSettingsCopyWith<_$_VitcSwapSettings> get copyWith =>
+  _$$VitcSwapSettingsImplCopyWith<_$VitcSwapSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -508,11 +509,11 @@ class _$VitcSwapStateCopyWithImpl<$Res, $Val extends VitcSwapState>
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapStateCopyWith<$Res>
+abstract class _$$VitcSwapStateImplCopyWith<$Res>
     implements $VitcSwapStateCopyWith<$Res> {
-  factory _$$_VitcSwapStateCopyWith(
-          _$_VitcSwapState value, $Res Function(_$_VitcSwapState) then) =
-      __$$_VitcSwapStateCopyWithImpl<$Res>;
+  factory _$$VitcSwapStateImplCopyWith(
+          _$VitcSwapStateImpl value, $Res Function(_$VitcSwapStateImpl) then) =
+      __$$VitcSwapStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -529,11 +530,11 @@ abstract class _$$_VitcSwapStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitcSwapStateCopyWithImpl<$Res>
-    extends _$VitcSwapStateCopyWithImpl<$Res, _$_VitcSwapState>
-    implements _$$_VitcSwapStateCopyWith<$Res> {
-  __$$_VitcSwapStateCopyWithImpl(
-      _$_VitcSwapState _value, $Res Function(_$_VitcSwapState) _then)
+class __$$VitcSwapStateImplCopyWithImpl<$Res>
+    extends _$VitcSwapStateCopyWithImpl<$Res, _$VitcSwapStateImpl>
+    implements _$$VitcSwapStateImplCopyWith<$Res> {
+  __$$VitcSwapStateImplCopyWithImpl(
+      _$VitcSwapStateImpl _value, $Res Function(_$VitcSwapStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -545,7 +546,7 @@ class __$$_VitcSwapStateCopyWithImpl<$Res>
     Object? requestId = null,
     Object? callId = null,
   }) {
-    return _then(_$_VitcSwapState(
+    return _then(_$VitcSwapStateImpl(
       fromAmount: null == fromAmount
           ? _value.fromAmount
           : fromAmount // ignore: cast_nullable_to_non_nullable
@@ -572,8 +573,8 @@ class __$$_VitcSwapStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcSwapState extends _VitcSwapState {
-  const _$_VitcSwapState(
+class _$VitcSwapStateImpl extends _VitcSwapState {
+  const _$VitcSwapStateImpl(
       {required this.fromAmount,
       required this.toAmount,
       required this.slippage,
@@ -598,10 +599,10 @@ class _$_VitcSwapState extends _VitcSwapState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapState &&
+            other is _$VitcSwapStateImpl &&
             (identical(other.fromAmount, fromAmount) ||
                 other.fromAmount == fromAmount) &&
             (identical(other.toAmount, toAmount) ||
@@ -620,8 +621,8 @@ class _$_VitcSwapState extends _VitcSwapState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapStateCopyWith<_$_VitcSwapState> get copyWith =>
-      __$$_VitcSwapStateCopyWithImpl<_$_VitcSwapState>(this, _$identity);
+  _$$VitcSwapStateImplCopyWith<_$VitcSwapStateImpl> get copyWith =>
+      __$$VitcSwapStateImplCopyWithImpl<_$VitcSwapStateImpl>(this, _$identity);
 }
 
 abstract class _VitcSwapState extends VitcSwapState {
@@ -630,7 +631,7 @@ abstract class _VitcSwapState extends VitcSwapState {
       required final Amount toAmount,
       required final double slippage,
       required final int requestId,
-      required final int callId}) = _$_VitcSwapState;
+      required final int callId}) = _$VitcSwapStateImpl;
   const _VitcSwapState._() : super._();
 
   @override
@@ -645,7 +646,7 @@ abstract class _VitcSwapState extends VitcSwapState {
   int get callId;
   @override
   @JsonKey(ignore: true)
-  _$$_VitcSwapStateCopyWith<_$_VitcSwapState> get copyWith =>
+  _$$VitcSwapStateImplCopyWith<_$VitcSwapStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -731,11 +732,11 @@ class _$TokenLiquidityCopyWithImpl<$Res, $Val extends TokenLiquidity>
 }
 
 /// @nodoc
-abstract class _$$_TokenLiquidityCopyWith<$Res>
+abstract class _$$TokenLiquidityImplCopyWith<$Res>
     implements $TokenLiquidityCopyWith<$Res> {
-  factory _$$_TokenLiquidityCopyWith(
-          _$_TokenLiquidity value, $Res Function(_$_TokenLiquidity) then) =
-      __$$_TokenLiquidityCopyWithImpl<$Res>;
+  factory _$$TokenLiquidityImplCopyWith(_$TokenLiquidityImpl value,
+          $Res Function(_$TokenLiquidityImpl) then) =
+      __$$TokenLiquidityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -750,11 +751,11 @@ abstract class _$$_TokenLiquidityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TokenLiquidityCopyWithImpl<$Res>
-    extends _$TokenLiquidityCopyWithImpl<$Res, _$_TokenLiquidity>
-    implements _$$_TokenLiquidityCopyWith<$Res> {
-  __$$_TokenLiquidityCopyWithImpl(
-      _$_TokenLiquidity _value, $Res Function(_$_TokenLiquidity) _then)
+class __$$TokenLiquidityImplCopyWithImpl<$Res>
+    extends _$TokenLiquidityCopyWithImpl<$Res, _$TokenLiquidityImpl>
+    implements _$$TokenLiquidityImplCopyWith<$Res> {
+  __$$TokenLiquidityImplCopyWithImpl(
+      _$TokenLiquidityImpl _value, $Res Function(_$TokenLiquidityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -766,7 +767,7 @@ class __$$_TokenLiquidityCopyWithImpl<$Res>
     Object? tokenSupply = null,
     Object? lpToken = null,
   }) {
-    return _then(_$_TokenLiquidity(
+    return _then(_$TokenLiquidityImpl(
       total: null == total
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
@@ -793,8 +794,8 @@ class __$$_TokenLiquidityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TokenLiquidity implements _TokenLiquidity {
-  const _$_TokenLiquidity(
+class _$TokenLiquidityImpl implements _TokenLiquidity {
+  const _$TokenLiquidityImpl(
       {required this.total,
       required this.totalVite,
       required this.k,
@@ -818,10 +819,10 @@ class _$_TokenLiquidity implements _TokenLiquidity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenLiquidity &&
+            other is _$TokenLiquidityImpl &&
             (identical(other.total, total) || other.total == total) &&
             (identical(other.totalVite, totalVite) ||
                 other.totalVite == totalVite) &&
@@ -838,8 +839,9 @@ class _$_TokenLiquidity implements _TokenLiquidity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenLiquidityCopyWith<_$_TokenLiquidity> get copyWith =>
-      __$$_TokenLiquidityCopyWithImpl<_$_TokenLiquidity>(this, _$identity);
+  _$$TokenLiquidityImplCopyWith<_$TokenLiquidityImpl> get copyWith =>
+      __$$TokenLiquidityImplCopyWithImpl<_$TokenLiquidityImpl>(
+          this, _$identity);
 }
 
 abstract class _TokenLiquidity implements TokenLiquidity {
@@ -848,7 +850,7 @@ abstract class _TokenLiquidity implements TokenLiquidity {
       required final BigInt totalVite,
       required final BigInt k,
       required final BigInt tokenSupply,
-      required final Token lpToken}) = _$_TokenLiquidity;
+      required final Token lpToken}) = _$TokenLiquidityImpl;
 
   @override
   BigInt get total;
@@ -862,7 +864,7 @@ abstract class _TokenLiquidity implements TokenLiquidity {
   Token get lpToken;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenLiquidityCopyWith<_$_TokenLiquidity> get copyWith =>
+  _$$TokenLiquidityImplCopyWith<_$TokenLiquidityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -970,10 +972,10 @@ class _$VitcSwapEventCopyWithImpl<$Res, $Val extends VitcSwapEvent>
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapEventSwapCopyWith<$Res> {
-  factory _$$_VitcSwapEventSwapCopyWith(_$_VitcSwapEventSwap value,
-          $Res Function(_$_VitcSwapEventSwap) then) =
-      __$$_VitcSwapEventSwapCopyWithImpl<$Res>;
+abstract class _$$VitcSwapEventSwapImplCopyWith<$Res> {
+  factory _$$VitcSwapEventSwapImplCopyWith(_$VitcSwapEventSwapImpl value,
+          $Res Function(_$VitcSwapEventSwapImpl) then) =
+      __$$VitcSwapEventSwapImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {Address address,
@@ -988,11 +990,11 @@ abstract class _$$_VitcSwapEventSwapCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VitcSwapEventSwapCopyWithImpl<$Res>
-    extends _$VitcSwapEventCopyWithImpl<$Res, _$_VitcSwapEventSwap>
-    implements _$$_VitcSwapEventSwapCopyWith<$Res> {
-  __$$_VitcSwapEventSwapCopyWithImpl(
-      _$_VitcSwapEventSwap _value, $Res Function(_$_VitcSwapEventSwap) _then)
+class __$$VitcSwapEventSwapImplCopyWithImpl<$Res>
+    extends _$VitcSwapEventCopyWithImpl<$Res, _$VitcSwapEventSwapImpl>
+    implements _$$VitcSwapEventSwapImplCopyWith<$Res> {
+  __$$VitcSwapEventSwapImplCopyWithImpl(_$VitcSwapEventSwapImpl _value,
+      $Res Function(_$VitcSwapEventSwapImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1004,7 +1006,7 @@ class __$$_VitcSwapEventSwapCopyWithImpl<$Res>
     Object? fromAmount = null,
     Object? toAmount = null,
   }) {
-    return _then(_$_VitcSwapEventSwap(
+    return _then(_$VitcSwapEventSwapImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1055,8 +1057,8 @@ class __$$_VitcSwapEventSwapCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcSwapEventSwap implements _VitcSwapEventSwap {
-  const _$_VitcSwapEventSwap(
+class _$VitcSwapEventSwapImpl implements _VitcSwapEventSwap {
+  const _$VitcSwapEventSwapImpl(
       {required this.address,
       required this.fromToken,
       required this.toToken,
@@ -1080,10 +1082,10 @@ class _$_VitcSwapEventSwap implements _VitcSwapEventSwap {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapEventSwap &&
+            other is _$VitcSwapEventSwapImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.fromToken, fromToken) ||
                 other.fromToken == fromToken) &&
@@ -1101,8 +1103,8 @@ class _$_VitcSwapEventSwap implements _VitcSwapEventSwap {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapEventSwapCopyWith<_$_VitcSwapEventSwap> get copyWith =>
-      __$$_VitcSwapEventSwapCopyWithImpl<_$_VitcSwapEventSwap>(
+  _$$VitcSwapEventSwapImplCopyWith<_$VitcSwapEventSwapImpl> get copyWith =>
+      __$$VitcSwapEventSwapImplCopyWithImpl<_$VitcSwapEventSwapImpl>(
           this, _$identity);
 
   @override
@@ -1217,7 +1219,7 @@ abstract class _VitcSwapEventSwap implements VitcSwapEvent {
       required final Token fromToken,
       required final Token toToken,
       required final BigInt fromAmount,
-      required final BigInt toAmount}) = _$_VitcSwapEventSwap;
+      required final BigInt toAmount}) = _$VitcSwapEventSwapImpl;
 
   Address get address;
   Token get fromToken;
@@ -1225,16 +1227,16 @@ abstract class _VitcSwapEventSwap implements VitcSwapEvent {
   BigInt get fromAmount;
   BigInt get toAmount;
   @JsonKey(ignore: true)
-  _$$_VitcSwapEventSwapCopyWith<_$_VitcSwapEventSwap> get copyWith =>
+  _$$VitcSwapEventSwapImplCopyWith<_$VitcSwapEventSwapImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapEventSwapInternalCopyWith<$Res> {
-  factory _$$_VitcSwapEventSwapInternalCopyWith(
-          _$_VitcSwapEventSwapInternal value,
-          $Res Function(_$_VitcSwapEventSwapInternal) then) =
-      __$$_VitcSwapEventSwapInternalCopyWithImpl<$Res>;
+abstract class _$$VitcSwapEventSwapInternalImplCopyWith<$Res> {
+  factory _$$VitcSwapEventSwapInternalImplCopyWith(
+          _$VitcSwapEventSwapInternalImpl value,
+          $Res Function(_$VitcSwapEventSwapInternalImpl) then) =
+      __$$VitcSwapEventSwapInternalImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {Address address,
@@ -1251,12 +1253,12 @@ abstract class _$$_VitcSwapEventSwapInternalCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VitcSwapEventSwapInternalCopyWithImpl<$Res>
-    extends _$VitcSwapEventCopyWithImpl<$Res, _$_VitcSwapEventSwapInternal>
-    implements _$$_VitcSwapEventSwapInternalCopyWith<$Res> {
-  __$$_VitcSwapEventSwapInternalCopyWithImpl(
-      _$_VitcSwapEventSwapInternal _value,
-      $Res Function(_$_VitcSwapEventSwapInternal) _then)
+class __$$VitcSwapEventSwapInternalImplCopyWithImpl<$Res>
+    extends _$VitcSwapEventCopyWithImpl<$Res, _$VitcSwapEventSwapInternalImpl>
+    implements _$$VitcSwapEventSwapInternalImplCopyWith<$Res> {
+  __$$VitcSwapEventSwapInternalImplCopyWithImpl(
+      _$VitcSwapEventSwapInternalImpl _value,
+      $Res Function(_$VitcSwapEventSwapInternalImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1270,7 +1272,7 @@ class __$$_VitcSwapEventSwapInternalCopyWithImpl<$Res>
     Object? total = null,
     Object? totalVite = null,
   }) {
-    return _then(_$_VitcSwapEventSwapInternal(
+    return _then(_$VitcSwapEventSwapInternalImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1329,8 +1331,8 @@ class __$$_VitcSwapEventSwapInternalCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcSwapEventSwapInternal implements _VitcSwapEventSwapInternal {
-  const _$_VitcSwapEventSwapInternal(
+class _$VitcSwapEventSwapInternalImpl implements _VitcSwapEventSwapInternal {
+  const _$VitcSwapEventSwapInternalImpl(
       {required this.address,
       required this.fromToken,
       required this.toToken,
@@ -1360,10 +1362,10 @@ class _$_VitcSwapEventSwapInternal implements _VitcSwapEventSwapInternal {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapEventSwapInternal &&
+            other is _$VitcSwapEventSwapInternalImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.fromToken, fromToken) ||
                 other.fromToken == fromToken) &&
@@ -1384,9 +1386,9 @@ class _$_VitcSwapEventSwapInternal implements _VitcSwapEventSwapInternal {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapEventSwapInternalCopyWith<_$_VitcSwapEventSwapInternal>
-      get copyWith => __$$_VitcSwapEventSwapInternalCopyWithImpl<
-          _$_VitcSwapEventSwapInternal>(this, _$identity);
+  _$$VitcSwapEventSwapInternalImplCopyWith<_$VitcSwapEventSwapInternalImpl>
+      get copyWith => __$$VitcSwapEventSwapInternalImplCopyWithImpl<
+          _$VitcSwapEventSwapInternalImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1505,7 +1507,7 @@ abstract class _VitcSwapEventSwapInternal implements VitcSwapEvent {
       required final BigInt fromAmount,
       required final BigInt toAmount,
       required final BigInt total,
-      required final BigInt totalVite}) = _$_VitcSwapEventSwapInternal;
+      required final BigInt totalVite}) = _$VitcSwapEventSwapInternalImpl;
 
   Address get address;
   Token get fromToken;
@@ -1515,16 +1517,16 @@ abstract class _VitcSwapEventSwapInternal implements VitcSwapEvent {
   BigInt get total;
   BigInt get totalVite;
   @JsonKey(ignore: true)
-  _$$_VitcSwapEventSwapInternalCopyWith<_$_VitcSwapEventSwapInternal>
+  _$$VitcSwapEventSwapInternalImplCopyWith<_$VitcSwapEventSwapInternalImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapEventAddLiquidityCopyWith<$Res> {
-  factory _$$_VitcSwapEventAddLiquidityCopyWith(
-          _$_VitcSwapEventAddLiquidity value,
-          $Res Function(_$_VitcSwapEventAddLiquidity) then) =
-      __$$_VitcSwapEventAddLiquidityCopyWithImpl<$Res>;
+abstract class _$$VitcSwapEventAddLiquidityImplCopyWith<$Res> {
+  factory _$$VitcSwapEventAddLiquidityImplCopyWith(
+          _$VitcSwapEventAddLiquidityImpl value,
+          $Res Function(_$VitcSwapEventAddLiquidityImpl) then) =
+      __$$VitcSwapEventAddLiquidityImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {Address address,
@@ -1539,12 +1541,12 @@ abstract class _$$_VitcSwapEventAddLiquidityCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VitcSwapEventAddLiquidityCopyWithImpl<$Res>
-    extends _$VitcSwapEventCopyWithImpl<$Res, _$_VitcSwapEventAddLiquidity>
-    implements _$$_VitcSwapEventAddLiquidityCopyWith<$Res> {
-  __$$_VitcSwapEventAddLiquidityCopyWithImpl(
-      _$_VitcSwapEventAddLiquidity _value,
-      $Res Function(_$_VitcSwapEventAddLiquidity) _then)
+class __$$VitcSwapEventAddLiquidityImplCopyWithImpl<$Res>
+    extends _$VitcSwapEventCopyWithImpl<$Res, _$VitcSwapEventAddLiquidityImpl>
+    implements _$$VitcSwapEventAddLiquidityImplCopyWith<$Res> {
+  __$$VitcSwapEventAddLiquidityImplCopyWithImpl(
+      _$VitcSwapEventAddLiquidityImpl _value,
+      $Res Function(_$VitcSwapEventAddLiquidityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1557,7 +1559,7 @@ class __$$_VitcSwapEventAddLiquidityCopyWithImpl<$Res>
     Object? tokenTotal = null,
     Object? viteTotal = null,
   }) {
-    return _then(_$_VitcSwapEventAddLiquidity(
+    return _then(_$VitcSwapEventAddLiquidityImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1604,8 +1606,8 @@ class __$$_VitcSwapEventAddLiquidityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcSwapEventAddLiquidity implements _VitcSwapEventAddLiquidity {
-  const _$_VitcSwapEventAddLiquidity(
+class _$VitcSwapEventAddLiquidityImpl implements _VitcSwapEventAddLiquidity {
+  const _$VitcSwapEventAddLiquidityImpl(
       {required this.address,
       required this.token,
       required this.tokenAmount,
@@ -1632,10 +1634,10 @@ class _$_VitcSwapEventAddLiquidity implements _VitcSwapEventAddLiquidity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapEventAddLiquidity &&
+            other is _$VitcSwapEventAddLiquidityImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.tokenAmount, tokenAmount) ||
@@ -1655,9 +1657,9 @@ class _$_VitcSwapEventAddLiquidity implements _VitcSwapEventAddLiquidity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapEventAddLiquidityCopyWith<_$_VitcSwapEventAddLiquidity>
-      get copyWith => __$$_VitcSwapEventAddLiquidityCopyWithImpl<
-          _$_VitcSwapEventAddLiquidity>(this, _$identity);
+  _$$VitcSwapEventAddLiquidityImplCopyWith<_$VitcSwapEventAddLiquidityImpl>
+      get copyWith => __$$VitcSwapEventAddLiquidityImplCopyWithImpl<
+          _$VitcSwapEventAddLiquidityImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1775,7 +1777,7 @@ abstract class _VitcSwapEventAddLiquidity implements VitcSwapEvent {
       required final BigInt tokenAmount,
       required final BigInt viteAmount,
       required final BigInt tokenTotal,
-      required final BigInt viteTotal}) = _$_VitcSwapEventAddLiquidity;
+      required final BigInt viteTotal}) = _$VitcSwapEventAddLiquidityImpl;
 
   Address get address;
   Token get token;
@@ -1784,16 +1786,16 @@ abstract class _VitcSwapEventAddLiquidity implements VitcSwapEvent {
   BigInt get tokenTotal;
   BigInt get viteTotal;
   @JsonKey(ignore: true)
-  _$$_VitcSwapEventAddLiquidityCopyWith<_$_VitcSwapEventAddLiquidity>
+  _$$VitcSwapEventAddLiquidityImplCopyWith<_$VitcSwapEventAddLiquidityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapEventRemoveLiquidityCopyWith<$Res> {
-  factory _$$_VitcSwapEventRemoveLiquidityCopyWith(
-          _$_VitcSwapEventRemoveLiquidity value,
-          $Res Function(_$_VitcSwapEventRemoveLiquidity) then) =
-      __$$_VitcSwapEventRemoveLiquidityCopyWithImpl<$Res>;
+abstract class _$$VitcSwapEventRemoveLiquidityImplCopyWith<$Res> {
+  factory _$$VitcSwapEventRemoveLiquidityImplCopyWith(
+          _$VitcSwapEventRemoveLiquidityImpl value,
+          $Res Function(_$VitcSwapEventRemoveLiquidityImpl) then) =
+      __$$VitcSwapEventRemoveLiquidityImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {Address address,
@@ -1808,12 +1810,13 @@ abstract class _$$_VitcSwapEventRemoveLiquidityCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VitcSwapEventRemoveLiquidityCopyWithImpl<$Res>
-    extends _$VitcSwapEventCopyWithImpl<$Res, _$_VitcSwapEventRemoveLiquidity>
-    implements _$$_VitcSwapEventRemoveLiquidityCopyWith<$Res> {
-  __$$_VitcSwapEventRemoveLiquidityCopyWithImpl(
-      _$_VitcSwapEventRemoveLiquidity _value,
-      $Res Function(_$_VitcSwapEventRemoveLiquidity) _then)
+class __$$VitcSwapEventRemoveLiquidityImplCopyWithImpl<$Res>
+    extends _$VitcSwapEventCopyWithImpl<$Res,
+        _$VitcSwapEventRemoveLiquidityImpl>
+    implements _$$VitcSwapEventRemoveLiquidityImplCopyWith<$Res> {
+  __$$VitcSwapEventRemoveLiquidityImplCopyWithImpl(
+      _$VitcSwapEventRemoveLiquidityImpl _value,
+      $Res Function(_$VitcSwapEventRemoveLiquidityImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1826,7 +1829,7 @@ class __$$_VitcSwapEventRemoveLiquidityCopyWithImpl<$Res>
     Object? tokenTotal = null,
     Object? viteTotal = null,
   }) {
-    return _then(_$_VitcSwapEventRemoveLiquidity(
+    return _then(_$VitcSwapEventRemoveLiquidityImpl(
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -1873,8 +1876,9 @@ class __$$_VitcSwapEventRemoveLiquidityCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcSwapEventRemoveLiquidity implements _VitcSwapEventRemoveLiquidity {
-  const _$_VitcSwapEventRemoveLiquidity(
+class _$VitcSwapEventRemoveLiquidityImpl
+    implements _VitcSwapEventRemoveLiquidity {
+  const _$VitcSwapEventRemoveLiquidityImpl(
       {required this.address,
       required this.token,
       required this.tokenAmount,
@@ -1901,10 +1905,10 @@ class _$_VitcSwapEventRemoveLiquidity implements _VitcSwapEventRemoveLiquidity {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapEventRemoveLiquidity &&
+            other is _$VitcSwapEventRemoveLiquidityImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.tokenAmount, tokenAmount) ||
@@ -1924,9 +1928,10 @@ class _$_VitcSwapEventRemoveLiquidity implements _VitcSwapEventRemoveLiquidity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapEventRemoveLiquidityCopyWith<_$_VitcSwapEventRemoveLiquidity>
-      get copyWith => __$$_VitcSwapEventRemoveLiquidityCopyWithImpl<
-          _$_VitcSwapEventRemoveLiquidity>(this, _$identity);
+  _$$VitcSwapEventRemoveLiquidityImplCopyWith<
+          _$VitcSwapEventRemoveLiquidityImpl>
+      get copyWith => __$$VitcSwapEventRemoveLiquidityImplCopyWithImpl<
+          _$VitcSwapEventRemoveLiquidityImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2044,7 +2049,7 @@ abstract class _VitcSwapEventRemoveLiquidity implements VitcSwapEvent {
       required final BigInt tokenAmount,
       required final BigInt viteAmount,
       required final BigInt tokenTotal,
-      required final BigInt viteTotal}) = _$_VitcSwapEventRemoveLiquidity;
+      required final BigInt viteTotal}) = _$VitcSwapEventRemoveLiquidityImpl;
 
   Address get address;
   Token get token;
@@ -2053,15 +2058,16 @@ abstract class _VitcSwapEventRemoveLiquidity implements VitcSwapEvent {
   BigInt get tokenTotal;
   BigInt get viteTotal;
   @JsonKey(ignore: true)
-  _$$_VitcSwapEventRemoveLiquidityCopyWith<_$_VitcSwapEventRemoveLiquidity>
+  _$$VitcSwapEventRemoveLiquidityImplCopyWith<
+          _$VitcSwapEventRemoveLiquidityImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VitcSwapEventUnknownCopyWith<$Res> {
-  factory _$$_VitcSwapEventUnknownCopyWith(_$_VitcSwapEventUnknown value,
-          $Res Function(_$_VitcSwapEventUnknown) then) =
-      __$$_VitcSwapEventUnknownCopyWithImpl<$Res>;
+abstract class _$$VitcSwapEventUnknownImplCopyWith<$Res> {
+  factory _$$VitcSwapEventUnknownImplCopyWith(_$VitcSwapEventUnknownImpl value,
+          $Res Function(_$VitcSwapEventUnknownImpl) then) =
+      __$$VitcSwapEventUnknownImplCopyWithImpl<$Res>;
   @useResult
   $Res call({VmLog vmLog});
 
@@ -2069,11 +2075,11 @@ abstract class _$$_VitcSwapEventUnknownCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_VitcSwapEventUnknownCopyWithImpl<$Res>
-    extends _$VitcSwapEventCopyWithImpl<$Res, _$_VitcSwapEventUnknown>
-    implements _$$_VitcSwapEventUnknownCopyWith<$Res> {
-  __$$_VitcSwapEventUnknownCopyWithImpl(_$_VitcSwapEventUnknown _value,
-      $Res Function(_$_VitcSwapEventUnknown) _then)
+class __$$VitcSwapEventUnknownImplCopyWithImpl<$Res>
+    extends _$VitcSwapEventCopyWithImpl<$Res, _$VitcSwapEventUnknownImpl>
+    implements _$$VitcSwapEventUnknownImplCopyWith<$Res> {
+  __$$VitcSwapEventUnknownImplCopyWithImpl(_$VitcSwapEventUnknownImpl _value,
+      $Res Function(_$VitcSwapEventUnknownImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2081,7 +2087,7 @@ class __$$_VitcSwapEventUnknownCopyWithImpl<$Res>
   $Res call({
     Object? vmLog = null,
   }) {
-    return _then(_$_VitcSwapEventUnknown(
+    return _then(_$VitcSwapEventUnknownImpl(
       vmLog: null == vmLog
           ? _value.vmLog
           : vmLog // ignore: cast_nullable_to_non_nullable
@@ -2100,8 +2106,8 @@ class __$$_VitcSwapEventUnknownCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_VitcSwapEventUnknown implements _VitcSwapEventUnknown {
-  const _$_VitcSwapEventUnknown({required this.vmLog});
+class _$VitcSwapEventUnknownImpl implements _VitcSwapEventUnknown {
+  const _$VitcSwapEventUnknownImpl({required this.vmLog});
 
   @override
   final VmLog vmLog;
@@ -2112,10 +2118,10 @@ class _$_VitcSwapEventUnknown implements _VitcSwapEventUnknown {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitcSwapEventUnknown &&
+            other is _$VitcSwapEventUnknownImpl &&
             (identical(other.vmLog, vmLog) || other.vmLog == vmLog));
   }
 
@@ -2125,9 +2131,10 @@ class _$_VitcSwapEventUnknown implements _VitcSwapEventUnknown {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitcSwapEventUnknownCopyWith<_$_VitcSwapEventUnknown> get copyWith =>
-      __$$_VitcSwapEventUnknownCopyWithImpl<_$_VitcSwapEventUnknown>(
-          this, _$identity);
+  _$$VitcSwapEventUnknownImplCopyWith<_$VitcSwapEventUnknownImpl>
+      get copyWith =>
+          __$$VitcSwapEventUnknownImplCopyWithImpl<_$VitcSwapEventUnknownImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2237,10 +2244,10 @@ class _$_VitcSwapEventUnknown implements _VitcSwapEventUnknown {
 
 abstract class _VitcSwapEventUnknown implements VitcSwapEvent {
   const factory _VitcSwapEventUnknown({required final VmLog vmLog}) =
-      _$_VitcSwapEventUnknown;
+      _$VitcSwapEventUnknownImpl;
 
   VmLog get vmLog;
   @JsonKey(ignore: true)
-  _$$_VitcSwapEventUnknownCopyWith<_$_VitcSwapEventUnknown> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VitcSwapEventUnknownImplCopyWith<_$VitcSwapEventUnknownImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

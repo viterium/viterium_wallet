@@ -12,7 +12,7 @@ part of 'push_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PushTokenPayload _$PushTokenPayloadFromJson(Map<String, dynamic> json) {
   return _PushTokenPayload.fromJson(json);
@@ -78,11 +78,11 @@ class _$PushTokenPayloadCopyWithImpl<$Res, $Val extends PushTokenPayload>
 }
 
 /// @nodoc
-abstract class _$$_PushTokenPayloadCopyWith<$Res>
+abstract class _$$PushTokenPayloadImplCopyWith<$Res>
     implements $PushTokenPayloadCopyWith<$Res> {
-  factory _$$_PushTokenPayloadCopyWith(
-          _$_PushTokenPayload value, $Res Function(_$_PushTokenPayload) then) =
-      __$$_PushTokenPayloadCopyWithImpl<$Res>;
+  factory _$$PushTokenPayloadImplCopyWith(_$PushTokenPayloadImpl value,
+          $Res Function(_$PushTokenPayloadImpl) then) =
+      __$$PushTokenPayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Hash clientId, String token});
@@ -92,11 +92,11 @@ abstract class _$$_PushTokenPayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PushTokenPayloadCopyWithImpl<$Res>
-    extends _$PushTokenPayloadCopyWithImpl<$Res, _$_PushTokenPayload>
-    implements _$$_PushTokenPayloadCopyWith<$Res> {
-  __$$_PushTokenPayloadCopyWithImpl(
-      _$_PushTokenPayload _value, $Res Function(_$_PushTokenPayload) _then)
+class __$$PushTokenPayloadImplCopyWithImpl<$Res>
+    extends _$PushTokenPayloadCopyWithImpl<$Res, _$PushTokenPayloadImpl>
+    implements _$$PushTokenPayloadImplCopyWith<$Res> {
+  __$$PushTokenPayloadImplCopyWithImpl(_$PushTokenPayloadImpl _value,
+      $Res Function(_$PushTokenPayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +105,7 @@ class __$$_PushTokenPayloadCopyWithImpl<$Res>
     Object? clientId = null,
     Object? token = null,
   }) {
-    return _then(_$_PushTokenPayload(
+    return _then(_$PushTokenPayloadImpl(
       clientId: null == clientId
           ? _value.clientId
           : clientId // ignore: cast_nullable_to_non_nullable
@@ -120,11 +120,11 @@ class __$$_PushTokenPayloadCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PushTokenPayload implements _PushTokenPayload {
-  const _$_PushTokenPayload({required this.clientId, required this.token});
+class _$PushTokenPayloadImpl implements _PushTokenPayload {
+  const _$PushTokenPayloadImpl({required this.clientId, required this.token});
 
-  factory _$_PushTokenPayload.fromJson(Map<String, dynamic> json) =>
-      _$$_PushTokenPayloadFromJson(json);
+  factory _$PushTokenPayloadImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PushTokenPayloadImplFromJson(json);
 
   @override
   final Hash clientId;
@@ -137,10 +137,10 @@ class _$_PushTokenPayload implements _PushTokenPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushTokenPayload &&
+            other is _$PushTokenPayloadImpl &&
             (identical(other.clientId, clientId) ||
                 other.clientId == clientId) &&
             (identical(other.token, token) || other.token == token));
@@ -153,12 +153,13 @@ class _$_PushTokenPayload implements _PushTokenPayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushTokenPayloadCopyWith<_$_PushTokenPayload> get copyWith =>
-      __$$_PushTokenPayloadCopyWithImpl<_$_PushTokenPayload>(this, _$identity);
+  _$$PushTokenPayloadImplCopyWith<_$PushTokenPayloadImpl> get copyWith =>
+      __$$PushTokenPayloadImplCopyWithImpl<_$PushTokenPayloadImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PushTokenPayloadToJson(
+    return _$$PushTokenPayloadImplToJson(
       this,
     );
   }
@@ -167,10 +168,10 @@ class _$_PushTokenPayload implements _PushTokenPayload {
 abstract class _PushTokenPayload implements PushTokenPayload {
   const factory _PushTokenPayload(
       {required final Hash clientId,
-      required final String token}) = _$_PushTokenPayload;
+      required final String token}) = _$PushTokenPayloadImpl;
 
   factory _PushTokenPayload.fromJson(Map<String, dynamic> json) =
-      _$_PushTokenPayload.fromJson;
+      _$PushTokenPayloadImpl.fromJson;
 
   @override
   Hash get clientId;
@@ -178,7 +179,7 @@ abstract class _PushTokenPayload implements PushTokenPayload {
   String get token;
   @override
   @JsonKey(ignore: true)
-  _$$_PushTokenPayloadCopyWith<_$_PushTokenPayload> get copyWith =>
+  _$$PushTokenPayloadImplCopyWith<_$PushTokenPayloadImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -246,11 +247,11 @@ class _$PushTokenSettingsCopyWithImpl<$Res, $Val extends PushTokenSettings>
 }
 
 /// @nodoc
-abstract class _$$_PushTokenSettingsCopyWith<$Res>
+abstract class _$$PushTokenSettingsImplCopyWith<$Res>
     implements $PushTokenSettingsCopyWith<$Res> {
-  factory _$$_PushTokenSettingsCopyWith(_$_PushTokenSettings value,
-          $Res Function(_$_PushTokenSettings) then) =
-      __$$_PushTokenSettingsCopyWithImpl<$Res>;
+  factory _$$PushTokenSettingsImplCopyWith(_$PushTokenSettingsImpl value,
+          $Res Function(_$PushTokenSettingsImpl) then) =
+      __$$PushTokenSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({PushTokenPayload payload, bool published});
@@ -260,11 +261,11 @@ abstract class _$$_PushTokenSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PushTokenSettingsCopyWithImpl<$Res>
-    extends _$PushTokenSettingsCopyWithImpl<$Res, _$_PushTokenSettings>
-    implements _$$_PushTokenSettingsCopyWith<$Res> {
-  __$$_PushTokenSettingsCopyWithImpl(
-      _$_PushTokenSettings _value, $Res Function(_$_PushTokenSettings) _then)
+class __$$PushTokenSettingsImplCopyWithImpl<$Res>
+    extends _$PushTokenSettingsCopyWithImpl<$Res, _$PushTokenSettingsImpl>
+    implements _$$PushTokenSettingsImplCopyWith<$Res> {
+  __$$PushTokenSettingsImplCopyWithImpl(_$PushTokenSettingsImpl _value,
+      $Res Function(_$PushTokenSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -273,7 +274,7 @@ class __$$_PushTokenSettingsCopyWithImpl<$Res>
     Object? payload = null,
     Object? published = null,
   }) {
-    return _then(_$_PushTokenSettings(
+    return _then(_$PushTokenSettingsImpl(
       payload: null == payload
           ? _value.payload
           : payload // ignore: cast_nullable_to_non_nullable
@@ -288,11 +289,12 @@ class __$$_PushTokenSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PushTokenSettings implements _PushTokenSettings {
-  const _$_PushTokenSettings({required this.payload, this.published = false});
+class _$PushTokenSettingsImpl implements _PushTokenSettings {
+  const _$PushTokenSettingsImpl(
+      {required this.payload, this.published = false});
 
-  factory _$_PushTokenSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_PushTokenSettingsFromJson(json);
+  factory _$PushTokenSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PushTokenSettingsImplFromJson(json);
 
   @override
   final PushTokenPayload payload;
@@ -306,10 +308,10 @@ class _$_PushTokenSettings implements _PushTokenSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushTokenSettings &&
+            other is _$PushTokenSettingsImpl &&
             (identical(other.payload, payload) || other.payload == payload) &&
             (identical(other.published, published) ||
                 other.published == published));
@@ -322,13 +324,13 @@ class _$_PushTokenSettings implements _PushTokenSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushTokenSettingsCopyWith<_$_PushTokenSettings> get copyWith =>
-      __$$_PushTokenSettingsCopyWithImpl<_$_PushTokenSettings>(
+  _$$PushTokenSettingsImplCopyWith<_$PushTokenSettingsImpl> get copyWith =>
+      __$$PushTokenSettingsImplCopyWithImpl<_$PushTokenSettingsImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PushTokenSettingsToJson(
+    return _$$PushTokenSettingsImplToJson(
       this,
     );
   }
@@ -337,10 +339,10 @@ class _$_PushTokenSettings implements _PushTokenSettings {
 abstract class _PushTokenSettings implements PushTokenSettings {
   const factory _PushTokenSettings(
       {required final PushTokenPayload payload,
-      final bool published}) = _$_PushTokenSettings;
+      final bool published}) = _$PushTokenSettingsImpl;
 
   factory _PushTokenSettings.fromJson(Map<String, dynamic> json) =
-      _$_PushTokenSettings.fromJson;
+      _$PushTokenSettingsImpl.fromJson;
 
   @override
   PushTokenPayload get payload;
@@ -348,7 +350,7 @@ abstract class _PushTokenSettings implements PushTokenSettings {
   bool get published;
   @override
   @JsonKey(ignore: true)
-  _$$_PushTokenSettingsCopyWith<_$_PushTokenSettings> get copyWith =>
+  _$$PushTokenSettingsImplCopyWith<_$PushTokenSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -420,11 +422,11 @@ class _$PushIdLinkPayloadCopyWithImpl<$Res, $Val extends PushIdLinkPayload>
 }
 
 /// @nodoc
-abstract class _$$_PushIdLinkPayloadCopyWith<$Res>
+abstract class _$$PushIdLinkPayloadImplCopyWith<$Res>
     implements $PushIdLinkPayloadCopyWith<$Res> {
-  factory _$$_PushIdLinkPayloadCopyWith(_$_PushIdLinkPayload value,
-          $Res Function(_$_PushIdLinkPayload) then) =
-      __$$_PushIdLinkPayloadCopyWithImpl<$Res>;
+  factory _$$PushIdLinkPayloadImplCopyWith(_$PushIdLinkPayloadImpl value,
+          $Res Function(_$PushIdLinkPayloadImpl) then) =
+      __$$PushIdLinkPayloadImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Hash clientId, Hash id});
@@ -436,11 +438,11 @@ abstract class _$$_PushIdLinkPayloadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PushIdLinkPayloadCopyWithImpl<$Res>
-    extends _$PushIdLinkPayloadCopyWithImpl<$Res, _$_PushIdLinkPayload>
-    implements _$$_PushIdLinkPayloadCopyWith<$Res> {
-  __$$_PushIdLinkPayloadCopyWithImpl(
-      _$_PushIdLinkPayload _value, $Res Function(_$_PushIdLinkPayload) _then)
+class __$$PushIdLinkPayloadImplCopyWithImpl<$Res>
+    extends _$PushIdLinkPayloadCopyWithImpl<$Res, _$PushIdLinkPayloadImpl>
+    implements _$$PushIdLinkPayloadImplCopyWith<$Res> {
+  __$$PushIdLinkPayloadImplCopyWithImpl(_$PushIdLinkPayloadImpl _value,
+      $Res Function(_$PushIdLinkPayloadImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -449,7 +451,7 @@ class __$$_PushIdLinkPayloadCopyWithImpl<$Res>
     Object? clientId = null,
     Object? id = null,
   }) {
-    return _then(_$_PushIdLinkPayload(
+    return _then(_$PushIdLinkPayloadImpl(
       clientId: null == clientId
           ? _value.clientId
           : clientId // ignore: cast_nullable_to_non_nullable
@@ -464,8 +466,8 @@ class __$$_PushIdLinkPayloadCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PushIdLinkPayload extends _PushIdLinkPayload {
-  const _$_PushIdLinkPayload({required this.clientId, required this.id})
+class _$PushIdLinkPayloadImpl extends _PushIdLinkPayload {
+  const _$PushIdLinkPayloadImpl({required this.clientId, required this.id})
       : super._();
 
   @override
@@ -479,10 +481,10 @@ class _$_PushIdLinkPayload extends _PushIdLinkPayload {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushIdLinkPayload &&
+            other is _$PushIdLinkPayloadImpl &&
             (identical(other.clientId, clientId) ||
                 other.clientId == clientId) &&
             (identical(other.id, id) || other.id == id));
@@ -494,15 +496,15 @@ class _$_PushIdLinkPayload extends _PushIdLinkPayload {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushIdLinkPayloadCopyWith<_$_PushIdLinkPayload> get copyWith =>
-      __$$_PushIdLinkPayloadCopyWithImpl<_$_PushIdLinkPayload>(
+  _$$PushIdLinkPayloadImplCopyWith<_$PushIdLinkPayloadImpl> get copyWith =>
+      __$$PushIdLinkPayloadImplCopyWithImpl<_$PushIdLinkPayloadImpl>(
           this, _$identity);
 }
 
 abstract class _PushIdLinkPayload extends PushIdLinkPayload {
   const factory _PushIdLinkPayload(
       {required final Hash clientId,
-      required final Hash id}) = _$_PushIdLinkPayload;
+      required final Hash id}) = _$PushIdLinkPayloadImpl;
   const _PushIdLinkPayload._() : super._();
 
   @override
@@ -511,7 +513,7 @@ abstract class _PushIdLinkPayload extends PushIdLinkPayload {
   Hash get id;
   @override
   @JsonKey(ignore: true)
-  _$$_PushIdLinkPayloadCopyWith<_$_PushIdLinkPayload> get copyWith =>
+  _$$PushIdLinkPayloadImplCopyWith<_$PushIdLinkPayloadImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -591,10 +593,11 @@ class _$PushInfoCopyWithImpl<$Res, $Val extends PushInfo>
 }
 
 /// @nodoc
-abstract class _$$_PushInfoCopyWith<$Res> implements $PushInfoCopyWith<$Res> {
-  factory _$$_PushInfoCopyWith(
-          _$_PushInfo value, $Res Function(_$_PushInfo) then) =
-      __$$_PushInfoCopyWithImpl<$Res>;
+abstract class _$$PushInfoImplCopyWith<$Res>
+    implements $PushInfoCopyWith<$Res> {
+  factory _$$PushInfoImplCopyWith(
+          _$PushInfoImpl value, $Res Function(_$PushInfoImpl) then) =
+      __$$PushInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -606,11 +609,11 @@ abstract class _$$_PushInfoCopyWith<$Res> implements $PushInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PushInfoCopyWithImpl<$Res>
-    extends _$PushInfoCopyWithImpl<$Res, _$_PushInfo>
-    implements _$$_PushInfoCopyWith<$Res> {
-  __$$_PushInfoCopyWithImpl(
-      _$_PushInfo _value, $Res Function(_$_PushInfo) _then)
+class __$$PushInfoImplCopyWithImpl<$Res>
+    extends _$PushInfoCopyWithImpl<$Res, _$PushInfoImpl>
+    implements _$$PushInfoImplCopyWith<$Res> {
+  __$$PushInfoImplCopyWithImpl(
+      _$PushInfoImpl _value, $Res Function(_$PushInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -622,7 +625,7 @@ class __$$_PushInfoCopyWithImpl<$Res>
     Object? idLinked = null,
     Object? network = null,
   }) {
-    return _then(_$_PushInfo(
+    return _then(_$PushInfoImpl(
       walletId: null == walletId
           ? _value.walletId
           : walletId // ignore: cast_nullable_to_non_nullable
@@ -649,8 +652,8 @@ class __$$_PushInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PushInfo extends _PushInfo {
-  _$_PushInfo(
+class _$PushInfoImpl extends _PushInfo {
+  _$PushInfoImpl(
       {required this.walletId,
       required this.index,
       required this.settings,
@@ -658,8 +661,8 @@ class _$_PushInfo extends _PushInfo {
       this.network = ViteNetwork.mainnet})
       : super._();
 
-  factory _$_PushInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_PushInfoFromJson(json);
+  factory _$PushInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PushInfoImplFromJson(json);
 
   @override
   final String walletId;
@@ -680,10 +683,10 @@ class _$_PushInfo extends _PushInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushInfo &&
+            other is _$PushInfoImpl &&
             (identical(other.walletId, walletId) ||
                 other.walletId == walletId) &&
             (identical(other.index, index) || other.index == index) &&
@@ -702,12 +705,12 @@ class _$_PushInfo extends _PushInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushInfoCopyWith<_$_PushInfo> get copyWith =>
-      __$$_PushInfoCopyWithImpl<_$_PushInfo>(this, _$identity);
+  _$$PushInfoImplCopyWith<_$PushInfoImpl> get copyWith =>
+      __$$PushInfoImplCopyWithImpl<_$PushInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PushInfoToJson(
+    return _$$PushInfoImplToJson(
       this,
     );
   }
@@ -719,10 +722,11 @@ abstract class _PushInfo extends PushInfo {
       required final int index,
       required final BigInt settings,
       final bool idLinked,
-      final ViteNetwork network}) = _$_PushInfo;
+      final ViteNetwork network}) = _$PushInfoImpl;
   _PushInfo._() : super._();
 
-  factory _PushInfo.fromJson(Map<String, dynamic> json) = _$_PushInfo.fromJson;
+  factory _PushInfo.fromJson(Map<String, dynamic> json) =
+      _$PushInfoImpl.fromJson;
 
   @override
   String get walletId;
@@ -736,7 +740,7 @@ abstract class _PushInfo extends PushInfo {
   ViteNetwork get network;
   @override
   @JsonKey(ignore: true)
-  _$$_PushInfoCopyWith<_$_PushInfo> get copyWith =>
+  _$$PushInfoImplCopyWith<_$PushInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -783,22 +787,22 @@ class _$PushSettingsCopyWithImpl<$Res, $Val extends PushSettings>
 }
 
 /// @nodoc
-abstract class _$$_PushSettingsCopyWith<$Res>
+abstract class _$$PushSettingsImplCopyWith<$Res>
     implements $PushSettingsCopyWith<$Res> {
-  factory _$$_PushSettingsCopyWith(
-          _$_PushSettings value, $Res Function(_$_PushSettings) then) =
-      __$$_PushSettingsCopyWithImpl<$Res>;
+  factory _$$PushSettingsImplCopyWith(
+          _$PushSettingsImpl value, $Res Function(_$PushSettingsImpl) then) =
+      __$$PushSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool enabled});
 }
 
 /// @nodoc
-class __$$_PushSettingsCopyWithImpl<$Res>
-    extends _$PushSettingsCopyWithImpl<$Res, _$_PushSettings>
-    implements _$$_PushSettingsCopyWith<$Res> {
-  __$$_PushSettingsCopyWithImpl(
-      _$_PushSettings _value, $Res Function(_$_PushSettings) _then)
+class __$$PushSettingsImplCopyWithImpl<$Res>
+    extends _$PushSettingsCopyWithImpl<$Res, _$PushSettingsImpl>
+    implements _$$PushSettingsImplCopyWith<$Res> {
+  __$$PushSettingsImplCopyWithImpl(
+      _$PushSettingsImpl _value, $Res Function(_$PushSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -806,7 +810,7 @@ class __$$_PushSettingsCopyWithImpl<$Res>
   $Res call({
     Object? enabled = null,
   }) {
-    return _then(_$_PushSettings(
+    return _then(_$PushSettingsImpl(
       enabled: null == enabled
           ? _value.enabled
           : enabled // ignore: cast_nullable_to_non_nullable
@@ -817,8 +821,8 @@ class __$$_PushSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PushSettings extends _PushSettings {
-  const _$_PushSettings({this.enabled = false}) : super._();
+class _$PushSettingsImpl extends _PushSettings {
+  const _$PushSettingsImpl({this.enabled = false}) : super._();
 
   @override
   @JsonKey()
@@ -830,10 +834,10 @@ class _$_PushSettings extends _PushSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PushSettings &&
+            other is _$PushSettingsImpl &&
             (identical(other.enabled, enabled) || other.enabled == enabled));
   }
 
@@ -843,18 +847,18 @@ class _$_PushSettings extends _PushSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PushSettingsCopyWith<_$_PushSettings> get copyWith =>
-      __$$_PushSettingsCopyWithImpl<_$_PushSettings>(this, _$identity);
+  _$$PushSettingsImplCopyWith<_$PushSettingsImpl> get copyWith =>
+      __$$PushSettingsImplCopyWithImpl<_$PushSettingsImpl>(this, _$identity);
 }
 
 abstract class _PushSettings extends PushSettings {
-  const factory _PushSettings({final bool enabled}) = _$_PushSettings;
+  const factory _PushSettings({final bool enabled}) = _$PushSettingsImpl;
   const _PushSettings._() : super._();
 
   @override
   bool get enabled;
   @override
   @JsonKey(ignore: true)
-  _$$_PushSettingsCopyWith<_$_PushSettings> get copyWith =>
+  _$$PushSettingsImplCopyWith<_$PushSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

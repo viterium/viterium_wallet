@@ -6,13 +6,13 @@ part of 'tokens_settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TokenOrderSettings _$$_TokenOrderSettingsFromJson(Map json) =>
-    _$_TokenOrderSettings(
+_$TokenOrderSettingsImpl _$$TokenOrderSettingsImplFromJson(Map json) =>
+    _$TokenOrderSettingsImpl(
       sortOption: $enumDecode(_$TokenSortOptionEnumMap, json['sortOption']),
     );
 
-Map<String, dynamic> _$$_TokenOrderSettingsToJson(
-        _$_TokenOrderSettings instance) =>
+Map<String, dynamic> _$$TokenOrderSettingsImplToJson(
+        _$TokenOrderSettingsImpl instance) =>
     <String, dynamic>{
       'sortOption': _$TokenSortOptionEnumMap[instance.sortOption]!,
     };

@@ -6,7 +6,8 @@ part of 'block_explorers.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BlockExplorer _$$_BlockExplorerFromJson(Map json) => _$_BlockExplorer(
+_$BlockExplorerImpl _$$BlockExplorerImplFromJson(Map json) =>
+    _$BlockExplorerImpl(
       network: $enumDecode(_$ViteNetworkEnumMap, json['network']),
       name: json['name'] as String,
       url: json['url'] as String,
@@ -15,7 +16,7 @@ _$_BlockExplorer _$$_BlockExplorerFromJson(Map json) => _$_BlockExplorer(
       txUrl: json['txUrl'] as String,
     );
 
-Map<String, dynamic> _$$_BlockExplorerToJson(_$_BlockExplorer instance) =>
+Map<String, dynamic> _$$BlockExplorerImplToJson(_$BlockExplorerImpl instance) =>
     <String, dynamic>{
       'network': _$ViteNetworkEnumMap[instance.network]!,
       'name': instance.name,

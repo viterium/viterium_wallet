@@ -6,40 +6,44 @@ part of 'token_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CachedTokenIcon _$$_CachedTokenIconFromJson(Map json) => _$_CachedTokenIcon(
+_$CachedTokenIconImpl _$$CachedTokenIconImplFromJson(Map json) =>
+    _$CachedTokenIconImpl(
       icon: TokenIcon.fromJson(Map<String, dynamic>.from(json['icon'] as Map)),
       cacheDate: DateTime.parse(json['cacheDate'] as String),
     );
 
-Map<String, dynamic> _$$_CachedTokenIconToJson(_$_CachedTokenIcon instance) =>
+Map<String, dynamic> _$$CachedTokenIconImplToJson(
+        _$CachedTokenIconImpl instance) =>
     <String, dynamic>{
       'icon': instance.icon.toJson(),
       'cacheDate': instance.cacheDate.toIso8601String(),
     };
 
-_$_TokenIconAsset _$$_TokenIconAssetFromJson(Map json) => _$_TokenIconAsset(
+_$TokenIconAssetImpl _$$TokenIconAssetImplFromJson(Map json) =>
+    _$TokenIconAssetImpl(
       path: json['path'] as String,
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_TokenIconAssetToJson(_$_TokenIconAsset instance) =>
+Map<String, dynamic> _$$TokenIconAssetImplToJson(
+        _$TokenIconAssetImpl instance) =>
     <String, dynamic>{
       'path': instance.path,
       'runtimeType': instance.$type,
     };
 
-_$_TokenIconUrl _$$_TokenIconUrlFromJson(Map json) => _$_TokenIconUrl(
+_$TokenIconUrlImpl _$$TokenIconUrlImplFromJson(Map json) => _$TokenIconUrlImpl(
       url: json['url'] as String,
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$_TokenIconUrlToJson(_$_TokenIconUrl instance) =>
+Map<String, dynamic> _$$TokenIconUrlImplToJson(_$TokenIconUrlImpl instance) =>
     <String, dynamic>{
       'url': instance.url,
       'runtimeType': instance.$type,
     };
 
-_$_TokenState _$$_TokenStateFromJson(Map json) => _$_TokenState(
+_$TokenStateImpl _$$TokenStateImplFromJson(Map json) => _$TokenStateImpl(
       enabled: json['enabled'] as bool? ?? false,
       tokenInfo: json['tokenInfo'] == null
           ? null
@@ -47,7 +51,7 @@ _$_TokenState _$$_TokenStateFromJson(Map json) => _$_TokenState(
               Map<String, dynamic>.from(json['tokenInfo'] as Map)),
     );
 
-Map<String, dynamic> _$$_TokenStateToJson(_$_TokenState instance) {
+Map<String, dynamic> _$$TokenStateImplToJson(_$TokenStateImpl instance) {
   final val = <String, dynamic>{
     'enabled': instance.enabled,
   };
@@ -62,8 +66,8 @@ Map<String, dynamic> _$$_TokenStateToJson(_$_TokenState instance) {
   return val;
 }
 
-_$_TokenStateMapping _$$_TokenStateMappingFromJson(Map json) =>
-    _$_TokenStateMapping(
+_$TokenStateMappingImpl _$$TokenStateMappingImplFromJson(Map json) =>
+    _$TokenStateMappingImpl(
       states: json['states'] == null
           ? const IMapConst({})
           : IMap<String, TokenState>.fromJson(
@@ -73,8 +77,8 @@ _$_TokenStateMapping _$$_TokenStateMappingFromJson(Map json) =>
                   TokenState.fromJson(Map<String, dynamic>.from(value as Map))),
     );
 
-Map<String, dynamic> _$$_TokenStateMappingToJson(
-        _$_TokenStateMapping instance) =>
+Map<String, dynamic> _$$TokenStateMappingImplToJson(
+        _$TokenStateMappingImpl instance) =>
     <String, dynamic>{
       'states': instance.states.toJson(
         (value) => value,

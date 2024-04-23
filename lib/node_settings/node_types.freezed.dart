@@ -12,7 +12,7 @@ part of 'node_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ViteNodeConfigSettings _$ViteNodeConfigSettingsFromJson(
     Map<String, dynamic> json) {
@@ -80,11 +80,12 @@ class _$ViteNodeConfigSettingsCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_ViteNodeConfigSettingsCopyWith<$Res>
+abstract class _$$ViteNodeConfigSettingsImplCopyWith<$Res>
     implements $ViteNodeConfigSettingsCopyWith<$Res> {
-  factory _$$_ViteNodeConfigSettingsCopyWith(_$_ViteNodeConfigSettings value,
-          $Res Function(_$_ViteNodeConfigSettings) then) =
-      __$$_ViteNodeConfigSettingsCopyWithImpl<$Res>;
+  factory _$$ViteNodeConfigSettingsImplCopyWith(
+          _$ViteNodeConfigSettingsImpl value,
+          $Res Function(_$ViteNodeConfigSettingsImpl) then) =
+      __$$ViteNodeConfigSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({IList<ViteNodeConfig> options, ViteNodeConfig selected});
@@ -94,12 +95,13 @@ abstract class _$$_ViteNodeConfigSettingsCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ViteNodeConfigSettingsCopyWithImpl<$Res>
+class __$$ViteNodeConfigSettingsImplCopyWithImpl<$Res>
     extends _$ViteNodeConfigSettingsCopyWithImpl<$Res,
-        _$_ViteNodeConfigSettings>
-    implements _$$_ViteNodeConfigSettingsCopyWith<$Res> {
-  __$$_ViteNodeConfigSettingsCopyWithImpl(_$_ViteNodeConfigSettings _value,
-      $Res Function(_$_ViteNodeConfigSettings) _then)
+        _$ViteNodeConfigSettingsImpl>
+    implements _$$ViteNodeConfigSettingsImplCopyWith<$Res> {
+  __$$ViteNodeConfigSettingsImplCopyWithImpl(
+      _$ViteNodeConfigSettingsImpl _value,
+      $Res Function(_$ViteNodeConfigSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -108,7 +110,7 @@ class __$$_ViteNodeConfigSettingsCopyWithImpl<$Res>
     Object? options = null,
     Object? selected = null,
   }) {
-    return _then(_$_ViteNodeConfigSettings(
+    return _then(_$ViteNodeConfigSettingsImpl(
       options: null == options
           ? _value.options
           : options // ignore: cast_nullable_to_non_nullable
@@ -123,14 +125,14 @@ class __$$_ViteNodeConfigSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ViteNodeConfigSettings implements _ViteNodeConfigSettings {
-  const _$_ViteNodeConfigSettings(
+class _$ViteNodeConfigSettingsImpl implements _ViteNodeConfigSettings {
+  const _$ViteNodeConfigSettingsImpl(
       {this.options =
           const IListConst([mainnetViteNodeConfig, testnetViteNodeConfig]),
       this.selected = mainnetViteNodeConfig});
 
-  factory _$_ViteNodeConfigSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_ViteNodeConfigSettingsFromJson(json);
+  factory _$ViteNodeConfigSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ViteNodeConfigSettingsImplFromJson(json);
 
   @override
   @JsonKey()
@@ -145,10 +147,10 @@ class _$_ViteNodeConfigSettings implements _ViteNodeConfigSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ViteNodeConfigSettings &&
+            other is _$ViteNodeConfigSettingsImpl &&
             const DeepCollectionEquality().equals(other.options, options) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
@@ -162,13 +164,13 @@ class _$_ViteNodeConfigSettings implements _ViteNodeConfigSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ViteNodeConfigSettingsCopyWith<_$_ViteNodeConfigSettings> get copyWith =>
-      __$$_ViteNodeConfigSettingsCopyWithImpl<_$_ViteNodeConfigSettings>(
-          this, _$identity);
+  _$$ViteNodeConfigSettingsImplCopyWith<_$ViteNodeConfigSettingsImpl>
+      get copyWith => __$$ViteNodeConfigSettingsImplCopyWithImpl<
+          _$ViteNodeConfigSettingsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ViteNodeConfigSettingsToJson(
+    return _$$ViteNodeConfigSettingsImplToJson(
       this,
     );
   }
@@ -177,10 +179,10 @@ class _$_ViteNodeConfigSettings implements _ViteNodeConfigSettings {
 abstract class _ViteNodeConfigSettings implements ViteNodeConfigSettings {
   const factory _ViteNodeConfigSettings(
       {final IList<ViteNodeConfig> options,
-      final ViteNodeConfig selected}) = _$_ViteNodeConfigSettings;
+      final ViteNodeConfig selected}) = _$ViteNodeConfigSettingsImpl;
 
   factory _ViteNodeConfigSettings.fromJson(Map<String, dynamic> json) =
-      _$_ViteNodeConfigSettings.fromJson;
+      _$ViteNodeConfigSettingsImpl.fromJson;
 
   @override
   IList<ViteNodeConfig> get options;
@@ -188,8 +190,8 @@ abstract class _ViteNodeConfigSettings implements ViteNodeConfigSettings {
   ViteNodeConfig get selected;
   @override
   @JsonKey(ignore: true)
-  _$$_ViteNodeConfigSettingsCopyWith<_$_ViteNodeConfigSettings> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ViteNodeConfigSettingsImplCopyWith<_$ViteNodeConfigSettingsImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 ViteNodeConfig _$ViteNodeConfigFromJson(Map<String, dynamic> json) {
@@ -265,11 +267,11 @@ class _$ViteNodeConfigCopyWithImpl<$Res, $Val extends ViteNodeConfig>
 }
 
 /// @nodoc
-abstract class _$$_ViteNodeConfigCopyWith<$Res>
+abstract class _$$ViteNodeConfigImplCopyWith<$Res>
     implements $ViteNodeConfigCopyWith<$Res> {
-  factory _$$_ViteNodeConfigCopyWith(
-          _$_ViteNodeConfig value, $Res Function(_$_ViteNodeConfig) then) =
-      __$$_ViteNodeConfigCopyWithImpl<$Res>;
+  factory _$$ViteNodeConfigImplCopyWith(_$ViteNodeConfigImpl value,
+          $Res Function(_$ViteNodeConfigImpl) then) =
+      __$$ViteNodeConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -277,11 +279,11 @@ abstract class _$$_ViteNodeConfigCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ViteNodeConfigCopyWithImpl<$Res>
-    extends _$ViteNodeConfigCopyWithImpl<$Res, _$_ViteNodeConfig>
-    implements _$$_ViteNodeConfigCopyWith<$Res> {
-  __$$_ViteNodeConfigCopyWithImpl(
-      _$_ViteNodeConfig _value, $Res Function(_$_ViteNodeConfig) _then)
+class __$$ViteNodeConfigImplCopyWithImpl<$Res>
+    extends _$ViteNodeConfigCopyWithImpl<$Res, _$ViteNodeConfigImpl>
+    implements _$$ViteNodeConfigImplCopyWith<$Res> {
+  __$$ViteNodeConfigImplCopyWithImpl(
+      _$ViteNodeConfigImpl _value, $Res Function(_$ViteNodeConfigImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -293,7 +295,7 @@ class __$$_ViteNodeConfigCopyWithImpl<$Res>
     Object? ws = null,
     Object? network = null,
   }) {
-    return _then(_$_ViteNodeConfig(
+    return _then(_$ViteNodeConfigImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -320,16 +322,16 @@ class __$$_ViteNodeConfigCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ViteNodeConfig implements _ViteNodeConfig {
-  const _$_ViteNodeConfig(
+class _$ViteNodeConfigImpl implements _ViteNodeConfig {
+  const _$ViteNodeConfigImpl(
       {required this.id,
       required this.name,
       required this.http,
       required this.ws,
       required this.network});
 
-  factory _$_ViteNodeConfig.fromJson(Map<String, dynamic> json) =>
-      _$$_ViteNodeConfigFromJson(json);
+  factory _$ViteNodeConfigImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ViteNodeConfigImplFromJson(json);
 
   @override
   final String id;
@@ -348,10 +350,10 @@ class _$_ViteNodeConfig implements _ViteNodeConfig {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ViteNodeConfig &&
+            other is _$ViteNodeConfigImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.http, http) || other.http == http) &&
@@ -366,12 +368,13 @@ class _$_ViteNodeConfig implements _ViteNodeConfig {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ViteNodeConfigCopyWith<_$_ViteNodeConfig> get copyWith =>
-      __$$_ViteNodeConfigCopyWithImpl<_$_ViteNodeConfig>(this, _$identity);
+  _$$ViteNodeConfigImplCopyWith<_$ViteNodeConfigImpl> get copyWith =>
+      __$$ViteNodeConfigImplCopyWithImpl<_$ViteNodeConfigImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ViteNodeConfigToJson(
+    return _$$ViteNodeConfigImplToJson(
       this,
     );
   }
@@ -383,10 +386,10 @@ abstract class _ViteNodeConfig implements ViteNodeConfig {
       required final String name,
       required final String http,
       required final String ws,
-      required final ViteNetwork network}) = _$_ViteNodeConfig;
+      required final ViteNetwork network}) = _$ViteNodeConfigImpl;
 
   factory _ViteNodeConfig.fromJson(Map<String, dynamic> json) =
-      _$_ViteNodeConfig.fromJson;
+      _$ViteNodeConfigImpl.fromJson;
 
   @override
   String get id;
@@ -400,7 +403,7 @@ abstract class _ViteNodeConfig implements ViteNodeConfig {
   ViteNetwork get network;
   @override
   @JsonKey(ignore: true)
-  _$$_ViteNodeConfigCopyWith<_$_ViteNodeConfig> get copyWith =>
+  _$$ViteNodeConfigImplCopyWith<_$ViteNodeConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -483,11 +486,11 @@ class _$AddNodeSheetStateCopyWithImpl<$Res, $Val extends AddNodeSheetState>
 }
 
 /// @nodoc
-abstract class _$$_AddNodeSheetStateCopyWith<$Res>
+abstract class _$$AddNodeSheetStateImplCopyWith<$Res>
     implements $AddNodeSheetStateCopyWith<$Res> {
-  factory _$$_AddNodeSheetStateCopyWith(_$_AddNodeSheetState value,
-          $Res Function(_$_AddNodeSheetState) then) =
-      __$$_AddNodeSheetStateCopyWithImpl<$Res>;
+  factory _$$AddNodeSheetStateImplCopyWith(_$AddNodeSheetStateImpl value,
+          $Res Function(_$AddNodeSheetStateImpl) then) =
+      __$$AddNodeSheetStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -500,11 +503,11 @@ abstract class _$$_AddNodeSheetStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AddNodeSheetStateCopyWithImpl<$Res>
-    extends _$AddNodeSheetStateCopyWithImpl<$Res, _$_AddNodeSheetState>
-    implements _$$_AddNodeSheetStateCopyWith<$Res> {
-  __$$_AddNodeSheetStateCopyWithImpl(
-      _$_AddNodeSheetState _value, $Res Function(_$_AddNodeSheetState) _then)
+class __$$AddNodeSheetStateImplCopyWithImpl<$Res>
+    extends _$AddNodeSheetStateCopyWithImpl<$Res, _$AddNodeSheetStateImpl>
+    implements _$$AddNodeSheetStateImplCopyWith<$Res> {
+  __$$AddNodeSheetStateImplCopyWithImpl(_$AddNodeSheetStateImpl _value,
+      $Res Function(_$AddNodeSheetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -517,7 +520,7 @@ class __$$_AddNodeSheetStateCopyWithImpl<$Res>
     Object? httpValidationText = null,
     Object? wsValidationText = null,
   }) {
-    return _then(_$_AddNodeSheetState(
+    return _then(_$AddNodeSheetStateImpl(
       showNameHint: null == showNameHint
           ? _value.showNameHint
           : showNameHint // ignore: cast_nullable_to_non_nullable
@@ -548,8 +551,8 @@ class __$$_AddNodeSheetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddNodeSheetState implements _AddNodeSheetState {
-  const _$_AddNodeSheetState(
+class _$AddNodeSheetStateImpl implements _AddNodeSheetState {
+  const _$AddNodeSheetStateImpl(
       {this.showNameHint = true,
       this.showHttpHint = true,
       this.showWsHint = true,
@@ -582,10 +585,10 @@ class _$_AddNodeSheetState implements _AddNodeSheetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddNodeSheetState &&
+            other is _$AddNodeSheetStateImpl &&
             (identical(other.showNameHint, showNameHint) ||
                 other.showNameHint == showNameHint) &&
             (identical(other.showHttpHint, showHttpHint) ||
@@ -607,8 +610,8 @@ class _$_AddNodeSheetState implements _AddNodeSheetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddNodeSheetStateCopyWith<_$_AddNodeSheetState> get copyWith =>
-      __$$_AddNodeSheetStateCopyWithImpl<_$_AddNodeSheetState>(
+  _$$AddNodeSheetStateImplCopyWith<_$AddNodeSheetStateImpl> get copyWith =>
+      __$$AddNodeSheetStateImplCopyWithImpl<_$AddNodeSheetStateImpl>(
           this, _$identity);
 }
 
@@ -619,7 +622,7 @@ abstract class _AddNodeSheetState implements AddNodeSheetState {
       final bool showWsHint,
       final String nameValidationText,
       final String httpValidationText,
-      final String wsValidationText}) = _$_AddNodeSheetState;
+      final String wsValidationText}) = _$AddNodeSheetStateImpl;
 
   @override
   bool get showNameHint;
@@ -635,6 +638,6 @@ abstract class _AddNodeSheetState implements AddNodeSheetState {
   String get wsValidationText;
   @override
   @JsonKey(ignore: true)
-  _$$_AddNodeSheetStateCopyWith<_$_AddNodeSheetState> get copyWith =>
+  _$$AddNodeSheetStateImplCopyWith<_$AddNodeSheetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

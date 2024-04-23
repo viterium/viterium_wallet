@@ -6,33 +6,34 @@ part of 'push_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PushTokenPayload _$$_PushTokenPayloadFromJson(Map json) =>
-    _$_PushTokenPayload(
+_$PushTokenPayloadImpl _$$PushTokenPayloadImplFromJson(Map json) =>
+    _$PushTokenPayloadImpl(
       clientId: Hash.fromJson(json['clientId'] as String),
       token: json['token'] as String,
     );
 
-Map<String, dynamic> _$$_PushTokenPayloadToJson(_$_PushTokenPayload instance) =>
+Map<String, dynamic> _$$PushTokenPayloadImplToJson(
+        _$PushTokenPayloadImpl instance) =>
     <String, dynamic>{
       'clientId': instance.clientId.toJson(),
       'token': instance.token,
     };
 
-_$_PushTokenSettings _$$_PushTokenSettingsFromJson(Map json) =>
-    _$_PushTokenSettings(
+_$PushTokenSettingsImpl _$$PushTokenSettingsImplFromJson(Map json) =>
+    _$PushTokenSettingsImpl(
       payload: PushTokenPayload.fromJson(
           Map<String, dynamic>.from(json['payload'] as Map)),
       published: json['published'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$_PushTokenSettingsToJson(
-        _$_PushTokenSettings instance) =>
+Map<String, dynamic> _$$PushTokenSettingsImplToJson(
+        _$PushTokenSettingsImpl instance) =>
     <String, dynamic>{
       'payload': instance.payload.toJson(),
       'published': instance.published,
     };
 
-_$_PushInfo _$$_PushInfoFromJson(Map json) => _$_PushInfo(
+_$PushInfoImpl _$$PushInfoImplFromJson(Map json) => _$PushInfoImpl(
       walletId: json['walletId'] as String,
       index: json['index'] as int,
       settings: BigInt.parse(json['settings'] as String),
@@ -41,7 +42,7 @@ _$_PushInfo _$$_PushInfoFromJson(Map json) => _$_PushInfo(
           ViteNetwork.mainnet,
     );
 
-Map<String, dynamic> _$$_PushInfoToJson(_$_PushInfo instance) =>
+Map<String, dynamic> _$$PushInfoImplToJson(_$PushInfoImpl instance) =>
     <String, dynamic>{
       'walletId': instance.walletId,
       'index': instance.index,

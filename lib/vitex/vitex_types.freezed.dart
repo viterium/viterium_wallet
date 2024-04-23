@@ -12,7 +12,7 @@ part of 'vitex_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ExchangeRate _$ExchangeRateFromJson(Map<String, dynamic> json) {
   return _ExchangeRateVitex.fromJson(json);
@@ -103,11 +103,11 @@ class _$ExchangeRateCopyWithImpl<$Res, $Val extends ExchangeRate>
 }
 
 /// @nodoc
-abstract class _$$_ExchangeRateVitexCopyWith<$Res>
+abstract class _$$ExchangeRateVitexImplCopyWith<$Res>
     implements $ExchangeRateCopyWith<$Res> {
-  factory _$$_ExchangeRateVitexCopyWith(_$_ExchangeRateVitex value,
-          $Res Function(_$_ExchangeRateVitex) then) =
-      __$$_ExchangeRateVitexCopyWithImpl<$Res>;
+  factory _$$ExchangeRateVitexImplCopyWith(_$ExchangeRateVitexImpl value,
+          $Res Function(_$ExchangeRateVitexImpl) then) =
+      __$$ExchangeRateVitexImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({VitexExchangeRate exchangeRate});
@@ -117,11 +117,11 @@ abstract class _$$_ExchangeRateVitexCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ExchangeRateVitexCopyWithImpl<$Res>
-    extends _$ExchangeRateCopyWithImpl<$Res, _$_ExchangeRateVitex>
-    implements _$$_ExchangeRateVitexCopyWith<$Res> {
-  __$$_ExchangeRateVitexCopyWithImpl(
-      _$_ExchangeRateVitex _value, $Res Function(_$_ExchangeRateVitex) _then)
+class __$$ExchangeRateVitexImplCopyWithImpl<$Res>
+    extends _$ExchangeRateCopyWithImpl<$Res, _$ExchangeRateVitexImpl>
+    implements _$$ExchangeRateVitexImplCopyWith<$Res> {
+  __$$ExchangeRateVitexImplCopyWithImpl(_$ExchangeRateVitexImpl _value,
+      $Res Function(_$ExchangeRateVitexImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -129,7 +129,7 @@ class __$$_ExchangeRateVitexCopyWithImpl<$Res>
   $Res call({
     Object? exchangeRate = null,
   }) {
-    return _then(_$_ExchangeRateVitex(
+    return _then(_$ExchangeRateVitexImpl(
       null == exchangeRate
           ? _value.exchangeRate
           : exchangeRate // ignore: cast_nullable_to_non_nullable
@@ -140,11 +140,11 @@ class __$$_ExchangeRateVitexCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ExchangeRateVitex implements _ExchangeRateVitex {
-  const _$_ExchangeRateVitex(this.exchangeRate);
+class _$ExchangeRateVitexImpl implements _ExchangeRateVitex {
+  const _$ExchangeRateVitexImpl(this.exchangeRate);
 
-  factory _$_ExchangeRateVitex.fromJson(Map<String, dynamic> json) =>
-      _$$_ExchangeRateVitexFromJson(json);
+  factory _$ExchangeRateVitexImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ExchangeRateVitexImplFromJson(json);
 
   @override
   final VitexExchangeRate exchangeRate;
@@ -155,10 +155,10 @@ class _$_ExchangeRateVitex implements _ExchangeRateVitex {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ExchangeRateVitex &&
+            other is _$ExchangeRateVitexImpl &&
             (identical(other.exchangeRate, exchangeRate) ||
                 other.exchangeRate == exchangeRate));
   }
@@ -170,8 +170,8 @@ class _$_ExchangeRateVitex implements _ExchangeRateVitex {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ExchangeRateVitexCopyWith<_$_ExchangeRateVitex> get copyWith =>
-      __$$_ExchangeRateVitexCopyWithImpl<_$_ExchangeRateVitex>(
+  _$$ExchangeRateVitexImplCopyWith<_$ExchangeRateVitexImpl> get copyWith =>
+      __$$ExchangeRateVitexImplCopyWithImpl<_$ExchangeRateVitexImpl>(
           this, _$identity);
 
   @override
@@ -232,7 +232,7 @@ class _$_ExchangeRateVitex implements _ExchangeRateVitex {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ExchangeRateVitexToJson(
+    return _$$ExchangeRateVitexImplToJson(
       this,
     );
   }
@@ -240,16 +240,16 @@ class _$_ExchangeRateVitex implements _ExchangeRateVitex {
 
 abstract class _ExchangeRateVitex implements ExchangeRate {
   const factory _ExchangeRateVitex(final VitexExchangeRate exchangeRate) =
-      _$_ExchangeRateVitex;
+      _$ExchangeRateVitexImpl;
 
   factory _ExchangeRateVitex.fromJson(Map<String, dynamic> json) =
-      _$_ExchangeRateVitex.fromJson;
+      _$ExchangeRateVitexImpl.fromJson;
 
   @override
   VitexExchangeRate get exchangeRate;
   @override
   @JsonKey(ignore: true)
-  _$$_ExchangeRateVitexCopyWith<_$_ExchangeRateVitex> get copyWith =>
+  _$$ExchangeRateVitexImplCopyWith<_$ExchangeRateVitexImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -386,11 +386,11 @@ class _$VitexExchangeRateCopyWithImpl<$Res, $Val extends VitexExchangeRate>
 }
 
 /// @nodoc
-abstract class _$$_VitexExchangeRateCopyWith<$Res>
+abstract class _$$VitexExchangeRateImplCopyWith<$Res>
     implements $VitexExchangeRateCopyWith<$Res> {
-  factory _$$_VitexExchangeRateCopyWith(_$_VitexExchangeRate value,
-          $Res Function(_$_VitexExchangeRate) then) =
-      __$$_VitexExchangeRateCopyWithImpl<$Res>;
+  factory _$$VitexExchangeRateImplCopyWith(_$VitexExchangeRateImpl value,
+          $Res Function(_$VitexExchangeRateImpl) then) =
+      __$$VitexExchangeRateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -410,11 +410,11 @@ abstract class _$$_VitexExchangeRateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_VitexExchangeRateCopyWithImpl<$Res>
-    extends _$VitexExchangeRateCopyWithImpl<$Res, _$_VitexExchangeRate>
-    implements _$$_VitexExchangeRateCopyWith<$Res> {
-  __$$_VitexExchangeRateCopyWithImpl(
-      _$_VitexExchangeRate _value, $Res Function(_$_VitexExchangeRate) _then)
+class __$$VitexExchangeRateImplCopyWithImpl<$Res>
+    extends _$VitexExchangeRateCopyWithImpl<$Res, _$VitexExchangeRateImpl>
+    implements _$$VitexExchangeRateImplCopyWith<$Res> {
+  __$$VitexExchangeRateImplCopyWithImpl(_$VitexExchangeRateImpl _value,
+      $Res Function(_$VitexExchangeRateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -434,7 +434,7 @@ class __$$_VitexExchangeRateCopyWithImpl<$Res>
     Object? uahRate = freezed,
     Object? btcRate = null,
   }) {
-    return _then(_$_VitexExchangeRate(
+    return _then(_$VitexExchangeRateImpl(
       tokenId: null == tokenId
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
@@ -493,8 +493,8 @@ class __$$_VitexExchangeRateCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_VitexExchangeRate extends _VitexExchangeRate {
-  const _$_VitexExchangeRate(
+class _$VitexExchangeRateImpl extends _VitexExchangeRate {
+  const _$VitexExchangeRateImpl(
       {required this.tokenId,
       this.tokenSymbol,
       required this.usdRate,
@@ -510,8 +510,8 @@ class _$_VitexExchangeRate extends _VitexExchangeRate {
       required this.btcRate})
       : super._();
 
-  factory _$_VitexExchangeRate.fromJson(Map<String, dynamic> json) =>
-      _$$_VitexExchangeRateFromJson(json);
+  factory _$VitexExchangeRateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VitexExchangeRateImplFromJson(json);
 
   @override
   final String tokenId;
@@ -546,10 +546,10 @@ class _$_VitexExchangeRate extends _VitexExchangeRate {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VitexExchangeRate &&
+            other is _$VitexExchangeRateImpl &&
             (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
             (identical(other.tokenSymbol, tokenSymbol) ||
                 other.tokenSymbol == tokenSymbol) &&
@@ -587,13 +587,13 @@ class _$_VitexExchangeRate extends _VitexExchangeRate {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VitexExchangeRateCopyWith<_$_VitexExchangeRate> get copyWith =>
-      __$$_VitexExchangeRateCopyWithImpl<_$_VitexExchangeRate>(
+  _$$VitexExchangeRateImplCopyWith<_$VitexExchangeRateImpl> get copyWith =>
+      __$$VitexExchangeRateImplCopyWithImpl<_$VitexExchangeRateImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VitexExchangeRateToJson(
+    return _$$VitexExchangeRateImplToJson(
       this,
     );
   }
@@ -613,11 +613,11 @@ abstract class _VitexExchangeRate extends VitexExchangeRate {
       final Decimal? gbpRate,
       final Decimal? inrRate,
       final Decimal? uahRate,
-      required final double btcRate}) = _$_VitexExchangeRate;
+      required final double btcRate}) = _$VitexExchangeRateImpl;
   const _VitexExchangeRate._() : super._();
 
   factory _VitexExchangeRate.fromJson(Map<String, dynamic> json) =
-      _$_VitexExchangeRate.fromJson;
+      _$VitexExchangeRateImpl.fromJson;
 
   @override
   String get tokenId;
@@ -647,6 +647,6 @@ abstract class _VitexExchangeRate extends VitexExchangeRate {
   double get btcRate;
   @override
   @JsonKey(ignore: true)
-  _$$_VitexExchangeRateCopyWith<_$_VitexExchangeRate> get copyWith =>
+  _$$VitexExchangeRateImplCopyWith<_$VitexExchangeRateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

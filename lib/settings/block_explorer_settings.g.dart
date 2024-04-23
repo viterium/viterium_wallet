@@ -6,8 +6,8 @@ part of 'block_explorer_settings.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_BlockExplorerSettings _$$_BlockExplorerSettingsFromJson(Map json) =>
-    _$_BlockExplorerSettings(
+_$BlockExplorerSettingsImpl _$$BlockExplorerSettingsImplFromJson(Map json) =>
+    _$BlockExplorerSettingsImpl(
       selection: (json['selection'] as Map?)?.map(
             (k, e) => MapEntry($enumDecode(_$ViteNetworkEnumMap, k),
                 BlockExplorer.fromJson(Map<String, dynamic>.from(e as Map))),
@@ -19,8 +19,8 @@ _$_BlockExplorerSettings _$$_BlockExplorerSettingsFromJson(Map json) =>
           },
     );
 
-Map<String, dynamic> _$$_BlockExplorerSettingsToJson(
-        _$_BlockExplorerSettings instance) =>
+Map<String, dynamic> _$$BlockExplorerSettingsImplToJson(
+        _$BlockExplorerSettingsImpl instance) =>
     <String, dynamic>{
       'selection': instance.selection
           .map((k, e) => MapEntry(_$ViteNetworkEnumMap[k]!, e.toJson())),

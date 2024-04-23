@@ -6,8 +6,8 @@ part of 'vitc_swap_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_VitcSwapTokenCache _$$_VitcSwapTokenCacheFromJson(Map json) =>
-    _$_VitcSwapTokenCache(
+_$VitcSwapTokenCacheImpl _$$VitcSwapTokenCacheImplFromJson(Map json) =>
+    _$VitcSwapTokenCacheImpl(
       tradingTokens: json['tradingTokens'] == null
           ? const IListConst(kVitcSwapTokenIdList)
           : IList<String>.fromJson(
@@ -15,8 +15,8 @@ _$_VitcSwapTokenCache _$$_VitcSwapTokenCacheFromJson(Map json) =>
       lastHeight: json['lastHeight'] as int? ?? kVitcSwapLastHeight,
     );
 
-Map<String, dynamic> _$$_VitcSwapTokenCacheToJson(
-        _$_VitcSwapTokenCache instance) =>
+Map<String, dynamic> _$$VitcSwapTokenCacheImplToJson(
+        _$VitcSwapTokenCacheImpl instance) =>
     <String, dynamic>{
       'tradingTokens': instance.tradingTokens.toJson(
         (value) => value,
@@ -24,8 +24,8 @@ Map<String, dynamic> _$$_VitcSwapTokenCacheToJson(
       'lastHeight': instance.lastHeight,
     };
 
-_$_VitcSwapSettings _$$_VitcSwapSettingsFromJson(Map json) =>
-    _$_VitcSwapSettings(
+_$VitcSwapSettingsImpl _$$VitcSwapSettingsImplFromJson(Map json) =>
+    _$VitcSwapSettingsImpl(
       tokenCache: json['tokenCache'] == null
           ? const VitcSwapTokenCache()
           : VitcSwapTokenCache.fromJson(
@@ -37,7 +37,8 @@ _$_VitcSwapSettings _$$_VitcSwapSettingsFromJson(Map json) =>
       slippage: (json['slippage'] as num?)?.toDouble() ?? 0.005,
     );
 
-Map<String, dynamic> _$$_VitcSwapSettingsToJson(_$_VitcSwapSettings instance) =>
+Map<String, dynamic> _$$VitcSwapSettingsImplToJson(
+        _$VitcSwapSettingsImpl instance) =>
     <String, dynamic>{
       'tokenCache': instance.tokenCache.toJson(),
       'fromToken': instance.fromToken.toJson(),

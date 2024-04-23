@@ -6,25 +6,25 @@ part of 'viteconnect_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SignedData _$$_SignedDataFromJson(Map json) => _$_SignedData(
+_$SignedDataImpl _$$SignedDataImplFromJson(Map json) => _$SignedDataImpl(
       publicKey: const Uint8ListBase64Converter()
           .fromJson(json['publicKey'] as String),
       signature: const Uint8ListBase64Converter()
           .fromJson(json['signature'] as String),
     );
 
-Map<String, dynamic> _$$_SignedDataToJson(_$_SignedData instance) =>
+Map<String, dynamic> _$$SignedDataImplToJson(_$SignedDataImpl instance) =>
     <String, dynamic>{
       'publicKey': const Uint8ListBase64Converter().toJson(instance.publicKey),
       'signature': const Uint8ListBase64Converter().toJson(instance.signature),
     };
 
-_$_VCError _$$_VCErrorFromJson(Map json) => _$_VCError(
+_$VCErrorImpl _$$VCErrorImplFromJson(Map json) => _$VCErrorImpl(
       code: json['code'] as int,
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$$_VCErrorToJson(_$_VCError instance) {
+Map<String, dynamic> _$$VCErrorImplToJson(_$VCErrorImpl instance) {
   final val = <String, dynamic>{
     'code': instance.code,
   };

@@ -12,7 +12,7 @@ part of 'send_sheet_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SendSheetState {
@@ -129,11 +129,11 @@ class _$SendSheetStateCopyWithImpl<$Res, $Val extends SendSheetState>
 }
 
 /// @nodoc
-abstract class _$$_SendSheetStateCopyWith<$Res>
+abstract class _$$SendSheetStateImplCopyWith<$Res>
     implements $SendSheetStateCopyWith<$Res> {
-  factory _$$_SendSheetStateCopyWith(
-          _$_SendSheetState value, $Res Function(_$_SendSheetState) then) =
-      __$$_SendSheetStateCopyWithImpl<$Res>;
+  factory _$$SendSheetStateImplCopyWith(_$SendSheetStateImpl value,
+          $Res Function(_$SendSheetStateImpl) then) =
+      __$$SendSheetStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -153,11 +153,11 @@ abstract class _$$_SendSheetStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SendSheetStateCopyWithImpl<$Res>
-    extends _$SendSheetStateCopyWithImpl<$Res, _$_SendSheetState>
-    implements _$$_SendSheetStateCopyWith<$Res> {
-  __$$_SendSheetStateCopyWithImpl(
-      _$_SendSheetState _value, $Res Function(_$_SendSheetState) _then)
+class __$$SendSheetStateImplCopyWithImpl<$Res>
+    extends _$SendSheetStateCopyWithImpl<$Res, _$SendSheetStateImpl>
+    implements _$$SendSheetStateImplCopyWith<$Res> {
+  __$$SendSheetStateImplCopyWithImpl(
+      _$SendSheetStateImpl _value, $Res Function(_$SendSheetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -170,7 +170,7 @@ class __$$_SendSheetStateCopyWithImpl<$Res>
     Object? memo = null,
     Object? data = freezed,
   }) {
-    return _then(_$_SendSheetState(
+    return _then(_$SendSheetStateImpl(
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -201,8 +201,8 @@ class __$$_SendSheetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SendSheetState implements _SendSheetState {
-  const _$_SendSheetState(
+class _$SendSheetStateImpl implements _SendSheetState {
+  const _$SendSheetStateImpl(
       {this.address,
       this.contact,
       this.amount,
@@ -230,10 +230,10 @@ class _$_SendSheetState implements _SendSheetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SendSheetState &&
+            other is _$SendSheetStateImpl &&
             (identical(other.address, address) || other.address == address) &&
             (identical(other.contact, contact) || other.contact == contact) &&
             (identical(other.amount, amount) || other.amount == amount) &&
@@ -250,8 +250,9 @@ class _$_SendSheetState implements _SendSheetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SendSheetStateCopyWith<_$_SendSheetState> get copyWith =>
-      __$$_SendSheetStateCopyWithImpl<_$_SendSheetState>(this, _$identity);
+  _$$SendSheetStateImplCopyWith<_$SendSheetStateImpl> get copyWith =>
+      __$$SendSheetStateImplCopyWithImpl<_$SendSheetStateImpl>(
+          this, _$identity);
 }
 
 abstract class _SendSheetState implements SendSheetState {
@@ -261,7 +262,7 @@ abstract class _SendSheetState implements SendSheetState {
       final BigInt? amount,
       required final TokenInfo tokenInfo,
       final String memo,
-      final String? data}) = _$_SendSheetState;
+      final String? data}) = _$SendSheetStateImpl;
 
   @override
   Address? get address;
@@ -277,7 +278,7 @@ abstract class _SendSheetState implements SendSheetState {
   String? get data;
   @override
   @JsonKey(ignore: true)
-  _$$_SendSheetStateCopyWith<_$_SendSheetState> get copyWith =>
+  _$$SendSheetStateImplCopyWith<_$SendSheetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -353,11 +354,11 @@ class _$AmountStateCopyWithImpl<$Res, $Val extends AmountState>
 }
 
 /// @nodoc
-abstract class _$$_AmountStateCopyWith<$Res>
+abstract class _$$AmountStateImplCopyWith<$Res>
     implements $AmountStateCopyWith<$Res> {
-  factory _$$_AmountStateCopyWith(
-          _$_AmountState value, $Res Function(_$_AmountState) then) =
-      __$$_AmountStateCopyWithImpl<$Res>;
+  factory _$$AmountStateImplCopyWith(
+          _$AmountStateImpl value, $Res Function(_$AmountStateImpl) then) =
+      __$$AmountStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -369,11 +370,11 @@ abstract class _$$_AmountStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AmountStateCopyWithImpl<$Res>
-    extends _$AmountStateCopyWithImpl<$Res, _$_AmountState>
-    implements _$$_AmountStateCopyWith<$Res> {
-  __$$_AmountStateCopyWithImpl(
-      _$_AmountState _value, $Res Function(_$_AmountState) _then)
+class __$$AmountStateImplCopyWithImpl<$Res>
+    extends _$AmountStateCopyWithImpl<$Res, _$AmountStateImpl>
+    implements _$$AmountStateImplCopyWith<$Res> {
+  __$$AmountStateImplCopyWithImpl(
+      _$AmountStateImpl _value, $Res Function(_$AmountStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -385,7 +386,7 @@ class __$$_AmountStateCopyWithImpl<$Res>
     Object? tokenButtonVisible = null,
     Object? maxButtonVisible = null,
   }) {
-    return _then(_$_AmountState(
+    return _then(_$AmountStateImpl(
       hint: freezed == hint
           ? _value.hint
           : hint // ignore: cast_nullable_to_non_nullable
@@ -412,8 +413,8 @@ class __$$_AmountStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AmountState implements _AmountState {
-  const _$_AmountState(
+class _$AmountStateImpl implements _AmountState {
+  const _$AmountStateImpl(
       {this.hint = '',
       this.validationText = '',
       this.validAndUnfocused = false,
@@ -442,10 +443,10 @@ class _$_AmountState implements _AmountState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AmountState &&
+            other is _$AmountStateImpl &&
             (identical(other.hint, hint) || other.hint == hint) &&
             (identical(other.validationText, validationText) ||
                 other.validationText == validationText) &&
@@ -464,8 +465,8 @@ class _$_AmountState implements _AmountState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AmountStateCopyWith<_$_AmountState> get copyWith =>
-      __$$_AmountStateCopyWithImpl<_$_AmountState>(this, _$identity);
+  _$$AmountStateImplCopyWith<_$AmountStateImpl> get copyWith =>
+      __$$AmountStateImplCopyWithImpl<_$AmountStateImpl>(this, _$identity);
 }
 
 abstract class _AmountState implements AmountState {
@@ -474,7 +475,7 @@ abstract class _AmountState implements AmountState {
       final String validationText,
       final bool validAndUnfocused,
       final bool tokenButtonVisible,
-      final bool maxButtonVisible}) = _$_AmountState;
+      final bool maxButtonVisible}) = _$AmountStateImpl;
 
   @override
   String? get hint;
@@ -488,7 +489,7 @@ abstract class _AmountState implements AmountState {
   bool get maxButtonVisible;
   @override
   @JsonKey(ignore: true)
-  _$$_AmountStateCopyWith<_$_AmountState> get copyWith =>
+  _$$AmountStateImplCopyWith<_$AmountStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -571,11 +572,11 @@ class _$AddressStateCopyWithImpl<$Res, $Val extends AddressState>
 }
 
 /// @nodoc
-abstract class _$$_AddressStateCopyWith<$Res>
+abstract class _$$AddressStateImplCopyWith<$Res>
     implements $AddressStateCopyWith<$Res> {
-  factory _$$_AddressStateCopyWith(
-          _$_AddressState value, $Res Function(_$_AddressState) then) =
-      __$$_AddressStateCopyWithImpl<$Res>;
+  factory _$$AddressStateImplCopyWith(
+          _$AddressStateImpl value, $Res Function(_$AddressStateImpl) then) =
+      __$$AddressStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -588,11 +589,11 @@ abstract class _$$_AddressStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AddressStateCopyWithImpl<$Res>
-    extends _$AddressStateCopyWithImpl<$Res, _$_AddressState>
-    implements _$$_AddressStateCopyWith<$Res> {
-  __$$_AddressStateCopyWithImpl(
-      _$_AddressState _value, $Res Function(_$_AddressState) _then)
+class __$$AddressStateImplCopyWithImpl<$Res>
+    extends _$AddressStateCopyWithImpl<$Res, _$AddressStateImpl>
+    implements _$$AddressStateImplCopyWith<$Res> {
+  __$$AddressStateImplCopyWithImpl(
+      _$AddressStateImpl _value, $Res Function(_$AddressStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -605,7 +606,7 @@ class __$$_AddressStateCopyWithImpl<$Res>
     Object? pasteButtonVisible = null,
     Object? contacts = null,
   }) {
-    return _then(_$_AddressState(
+    return _then(_$AddressStateImpl(
       hint: freezed == hint
           ? _value.hint
           : hint // ignore: cast_nullable_to_non_nullable
@@ -636,8 +637,8 @@ class __$$_AddressStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddressState implements _AddressState {
-  _$_AddressState(
+class _$AddressStateImpl implements _AddressState {
+  _$AddressStateImpl(
       {this.hint = '',
       this.validationText = '',
       this.validAndUnfocused = false,
@@ -676,10 +677,10 @@ class _$_AddressState implements _AddressState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddressState &&
+            other is _$AddressStateImpl &&
             (identical(other.hint, hint) || other.hint == hint) &&
             (identical(other.validationText, validationText) ||
                 other.validationText == validationText) &&
@@ -705,8 +706,8 @@ class _$_AddressState implements _AddressState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddressStateCopyWith<_$_AddressState> get copyWith =>
-      __$$_AddressStateCopyWithImpl<_$_AddressState>(this, _$identity);
+  _$$AddressStateImplCopyWith<_$AddressStateImpl> get copyWith =>
+      __$$AddressStateImplCopyWithImpl<_$AddressStateImpl>(this, _$identity);
 }
 
 abstract class _AddressState implements AddressState {
@@ -716,7 +717,7 @@ abstract class _AddressState implements AddressState {
       final bool validAndUnfocused,
       final bool contactButtonVisible,
       final bool pasteButtonVisible,
-      final List<Contact> contacts}) = _$_AddressState;
+      final List<Contact> contacts}) = _$AddressStateImpl;
 
   @override
   String? get hint;
@@ -732,7 +733,7 @@ abstract class _AddressState implements AddressState {
   List<Contact> get contacts;
   @override
   @JsonKey(ignore: true)
-  _$$_AddressStateCopyWith<_$_AddressState> get copyWith =>
+  _$$AddressStateImplCopyWith<_$AddressStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -807,10 +808,11 @@ class _$MemoStateCopyWithImpl<$Res, $Val extends MemoState>
 }
 
 /// @nodoc
-abstract class _$$_MemoStateCopyWith<$Res> implements $MemoStateCopyWith<$Res> {
-  factory _$$_MemoStateCopyWith(
-          _$_MemoState value, $Res Function(_$_MemoState) then) =
-      __$$_MemoStateCopyWithImpl<$Res>;
+abstract class _$$MemoStateImplCopyWith<$Res>
+    implements $MemoStateCopyWith<$Res> {
+  factory _$$MemoStateImplCopyWith(
+          _$MemoStateImpl value, $Res Function(_$MemoStateImpl) then) =
+      __$$MemoStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -822,11 +824,11 @@ abstract class _$$_MemoStateCopyWith<$Res> implements $MemoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MemoStateCopyWithImpl<$Res>
-    extends _$MemoStateCopyWithImpl<$Res, _$_MemoState>
-    implements _$$_MemoStateCopyWith<$Res> {
-  __$$_MemoStateCopyWithImpl(
-      _$_MemoState _value, $Res Function(_$_MemoState) _then)
+class __$$MemoStateImplCopyWithImpl<$Res>
+    extends _$MemoStateCopyWithImpl<$Res, _$MemoStateImpl>
+    implements _$$MemoStateImplCopyWith<$Res> {
+  __$$MemoStateImplCopyWithImpl(
+      _$MemoStateImpl _value, $Res Function(_$MemoStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -838,7 +840,7 @@ class __$$_MemoStateCopyWithImpl<$Res>
     Object? qrButtonVisible = null,
     Object? pasteButtonVisible = null,
   }) {
-    return _then(_$_MemoState(
+    return _then(_$MemoStateImpl(
       hint: freezed == hint
           ? _value.hint
           : hint // ignore: cast_nullable_to_non_nullable
@@ -865,8 +867,8 @@ class __$$_MemoStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_MemoState implements _MemoState {
-  _$_MemoState(
+class _$MemoStateImpl implements _MemoState {
+  _$MemoStateImpl(
       {this.hint = '',
       this.validationText = '',
       this.validAndUnfocused = false,
@@ -895,10 +897,10 @@ class _$_MemoState implements _MemoState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MemoState &&
+            other is _$MemoStateImpl &&
             (identical(other.hint, hint) || other.hint == hint) &&
             (identical(other.validationText, validationText) ||
                 other.validationText == validationText) &&
@@ -917,8 +919,8 @@ class _$_MemoState implements _MemoState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MemoStateCopyWith<_$_MemoState> get copyWith =>
-      __$$_MemoStateCopyWithImpl<_$_MemoState>(this, _$identity);
+  _$$MemoStateImplCopyWith<_$MemoStateImpl> get copyWith =>
+      __$$MemoStateImplCopyWithImpl<_$MemoStateImpl>(this, _$identity);
 }
 
 abstract class _MemoState implements MemoState {
@@ -927,7 +929,7 @@ abstract class _MemoState implements MemoState {
       final String validationText,
       final bool validAndUnfocused,
       final bool qrButtonVisible,
-      final bool pasteButtonVisible}) = _$_MemoState;
+      final bool pasteButtonVisible}) = _$MemoStateImpl;
 
   @override
   String? get hint;
@@ -941,6 +943,6 @@ abstract class _MemoState implements MemoState {
   bool get pasteButtonVisible;
   @override
   @JsonKey(ignore: true)
-  _$$_MemoStateCopyWith<_$_MemoState> get copyWith =>
+  _$$MemoStateImplCopyWith<_$MemoStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

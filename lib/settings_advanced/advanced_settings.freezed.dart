@@ -12,7 +12,7 @@ part of 'advanced_settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AdvancedSettings _$AdvancedSettingsFromJson(Map<String, dynamic> json) {
   return _AdvancedSettings.fromJson(json);
@@ -74,22 +74,22 @@ class _$AdvancedSettingsCopyWithImpl<$Res, $Val extends AdvancedSettings>
 }
 
 /// @nodoc
-abstract class _$$_AdvancedSettingsCopyWith<$Res>
+abstract class _$$AdvancedSettingsImplCopyWith<$Res>
     implements $AdvancedSettingsCopyWith<$Res> {
-  factory _$$_AdvancedSettingsCopyWith(
-          _$_AdvancedSettings value, $Res Function(_$_AdvancedSettings) then) =
-      __$$_AdvancedSettingsCopyWithImpl<$Res>;
+  factory _$$AdvancedSettingsImplCopyWith(_$AdvancedSettingsImpl value,
+          $Res Function(_$AdvancedSettingsImpl) then) =
+      __$$AdvancedSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool defiEnabled, bool autoReceiveEnabled, bool showFiatValue});
 }
 
 /// @nodoc
-class __$$_AdvancedSettingsCopyWithImpl<$Res>
-    extends _$AdvancedSettingsCopyWithImpl<$Res, _$_AdvancedSettings>
-    implements _$$_AdvancedSettingsCopyWith<$Res> {
-  __$$_AdvancedSettingsCopyWithImpl(
-      _$_AdvancedSettings _value, $Res Function(_$_AdvancedSettings) _then)
+class __$$AdvancedSettingsImplCopyWithImpl<$Res>
+    extends _$AdvancedSettingsCopyWithImpl<$Res, _$AdvancedSettingsImpl>
+    implements _$$AdvancedSettingsImplCopyWith<$Res> {
+  __$$AdvancedSettingsImplCopyWithImpl(_$AdvancedSettingsImpl _value,
+      $Res Function(_$AdvancedSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_AdvancedSettingsCopyWithImpl<$Res>
     Object? autoReceiveEnabled = null,
     Object? showFiatValue = null,
   }) {
-    return _then(_$_AdvancedSettings(
+    return _then(_$AdvancedSettingsImpl(
       defiEnabled: null == defiEnabled
           ? _value.defiEnabled
           : defiEnabled // ignore: cast_nullable_to_non_nullable
@@ -118,14 +118,14 @@ class __$$_AdvancedSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AdvancedSettings implements _AdvancedSettings {
-  const _$_AdvancedSettings(
+class _$AdvancedSettingsImpl implements _AdvancedSettings {
+  const _$AdvancedSettingsImpl(
       {this.defiEnabled = true,
       this.autoReceiveEnabled = true,
       this.showFiatValue = true});
 
-  factory _$_AdvancedSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_AdvancedSettingsFromJson(json);
+  factory _$AdvancedSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AdvancedSettingsImplFromJson(json);
 
   @override
   @JsonKey()
@@ -143,10 +143,10 @@ class _$_AdvancedSettings implements _AdvancedSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AdvancedSettings &&
+            other is _$AdvancedSettingsImpl &&
             (identical(other.defiEnabled, defiEnabled) ||
                 other.defiEnabled == defiEnabled) &&
             (identical(other.autoReceiveEnabled, autoReceiveEnabled) ||
@@ -163,12 +163,13 @@ class _$_AdvancedSettings implements _AdvancedSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AdvancedSettingsCopyWith<_$_AdvancedSettings> get copyWith =>
-      __$$_AdvancedSettingsCopyWithImpl<_$_AdvancedSettings>(this, _$identity);
+  _$$AdvancedSettingsImplCopyWith<_$AdvancedSettingsImpl> get copyWith =>
+      __$$AdvancedSettingsImplCopyWithImpl<_$AdvancedSettingsImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AdvancedSettingsToJson(
+    return _$$AdvancedSettingsImplToJson(
       this,
     );
   }
@@ -178,10 +179,10 @@ abstract class _AdvancedSettings implements AdvancedSettings {
   const factory _AdvancedSettings(
       {final bool defiEnabled,
       final bool autoReceiveEnabled,
-      final bool showFiatValue}) = _$_AdvancedSettings;
+      final bool showFiatValue}) = _$AdvancedSettingsImpl;
 
   factory _AdvancedSettings.fromJson(Map<String, dynamic> json) =
-      _$_AdvancedSettings.fromJson;
+      _$AdvancedSettingsImpl.fromJson;
 
   @override
   bool get defiEnabled;
@@ -191,6 +192,6 @@ abstract class _AdvancedSettings implements AdvancedSettings {
   bool get showFiatValue;
   @override
   @JsonKey(ignore: true)
-  _$$_AdvancedSettingsCopyWith<_$_AdvancedSettings> get copyWith =>
+  _$$AdvancedSettingsImplCopyWith<_$AdvancedSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

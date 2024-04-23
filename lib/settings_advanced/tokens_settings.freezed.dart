@@ -12,7 +12,7 @@ part of 'tokens_settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TokensSettings _$TokensSettingsFromJson(Map<String, dynamic> json) {
   return _TokenOrderSettings.fromJson(json);
@@ -62,22 +62,22 @@ class _$TokensSettingsCopyWithImpl<$Res, $Val extends TokensSettings>
 }
 
 /// @nodoc
-abstract class _$$_TokenOrderSettingsCopyWith<$Res>
+abstract class _$$TokenOrderSettingsImplCopyWith<$Res>
     implements $TokensSettingsCopyWith<$Res> {
-  factory _$$_TokenOrderSettingsCopyWith(_$_TokenOrderSettings value,
-          $Res Function(_$_TokenOrderSettings) then) =
-      __$$_TokenOrderSettingsCopyWithImpl<$Res>;
+  factory _$$TokenOrderSettingsImplCopyWith(_$TokenOrderSettingsImpl value,
+          $Res Function(_$TokenOrderSettingsImpl) then) =
+      __$$TokenOrderSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({TokenSortOption sortOption});
 }
 
 /// @nodoc
-class __$$_TokenOrderSettingsCopyWithImpl<$Res>
-    extends _$TokensSettingsCopyWithImpl<$Res, _$_TokenOrderSettings>
-    implements _$$_TokenOrderSettingsCopyWith<$Res> {
-  __$$_TokenOrderSettingsCopyWithImpl(
-      _$_TokenOrderSettings _value, $Res Function(_$_TokenOrderSettings) _then)
+class __$$TokenOrderSettingsImplCopyWithImpl<$Res>
+    extends _$TokensSettingsCopyWithImpl<$Res, _$TokenOrderSettingsImpl>
+    implements _$$TokenOrderSettingsImplCopyWith<$Res> {
+  __$$TokenOrderSettingsImplCopyWithImpl(_$TokenOrderSettingsImpl _value,
+      $Res Function(_$TokenOrderSettingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -85,7 +85,7 @@ class __$$_TokenOrderSettingsCopyWithImpl<$Res>
   $Res call({
     Object? sortOption = null,
   }) {
-    return _then(_$_TokenOrderSettings(
+    return _then(_$TokenOrderSettingsImpl(
       sortOption: null == sortOption
           ? _value.sortOption
           : sortOption // ignore: cast_nullable_to_non_nullable
@@ -96,11 +96,11 @@ class __$$_TokenOrderSettingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TokenOrderSettings implements _TokenOrderSettings {
-  const _$_TokenOrderSettings({required this.sortOption});
+class _$TokenOrderSettingsImpl implements _TokenOrderSettings {
+  const _$TokenOrderSettingsImpl({required this.sortOption});
 
-  factory _$_TokenOrderSettings.fromJson(Map<String, dynamic> json) =>
-      _$$_TokenOrderSettingsFromJson(json);
+  factory _$TokenOrderSettingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TokenOrderSettingsImplFromJson(json);
 
   @override
   final TokenSortOption sortOption;
@@ -111,10 +111,10 @@ class _$_TokenOrderSettings implements _TokenOrderSettings {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TokenOrderSettings &&
+            other is _$TokenOrderSettingsImpl &&
             (identical(other.sortOption, sortOption) ||
                 other.sortOption == sortOption));
   }
@@ -126,13 +126,13 @@ class _$_TokenOrderSettings implements _TokenOrderSettings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TokenOrderSettingsCopyWith<_$_TokenOrderSettings> get copyWith =>
-      __$$_TokenOrderSettingsCopyWithImpl<_$_TokenOrderSettings>(
+  _$$TokenOrderSettingsImplCopyWith<_$TokenOrderSettingsImpl> get copyWith =>
+      __$$TokenOrderSettingsImplCopyWithImpl<_$TokenOrderSettingsImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TokenOrderSettingsToJson(
+    return _$$TokenOrderSettingsImplToJson(
       this,
     );
   }
@@ -140,15 +140,15 @@ class _$_TokenOrderSettings implements _TokenOrderSettings {
 
 abstract class _TokenOrderSettings implements TokensSettings {
   const factory _TokenOrderSettings(
-      {required final TokenSortOption sortOption}) = _$_TokenOrderSettings;
+      {required final TokenSortOption sortOption}) = _$TokenOrderSettingsImpl;
 
   factory _TokenOrderSettings.fromJson(Map<String, dynamic> json) =
-      _$_TokenOrderSettings.fromJson;
+      _$TokenOrderSettingsImpl.fromJson;
 
   @override
   TokenSortOption get sortOption;
   @override
   @JsonKey(ignore: true)
-  _$$_TokenOrderSettingsCopyWith<_$_TokenOrderSettings> get copyWith =>
+  _$$TokenOrderSettingsImplCopyWith<_$TokenOrderSettingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

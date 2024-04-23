@@ -12,7 +12,7 @@ part of 'vite_dart_types.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$VmLogEvent<T> {
@@ -106,11 +106,11 @@ class _$VmLogEventCopyWithImpl<T, $Res, $Val extends VmLogEvent<T>>
 }
 
 /// @nodoc
-abstract class _$$_VmLogEventDecodedCopyWith<T, $Res>
+abstract class _$$VmLogEventDecodedImplCopyWith<T, $Res>
     implements $VmLogEventCopyWith<T, $Res> {
-  factory _$$_VmLogEventDecodedCopyWith(_$_VmLogEventDecoded<T> value,
-          $Res Function(_$_VmLogEventDecoded<T>) then) =
-      __$$_VmLogEventDecodedCopyWithImpl<T, $Res>;
+  factory _$$VmLogEventDecodedImplCopyWith(_$VmLogEventDecodedImpl<T> value,
+          $Res Function(_$VmLogEventDecodedImpl<T>) then) =
+      __$$VmLogEventDecodedImplCopyWithImpl<T, $Res>;
   @override
   @useResult
   $Res call({VmLog vmLog, T event});
@@ -120,11 +120,11 @@ abstract class _$$_VmLogEventDecodedCopyWith<T, $Res>
 }
 
 /// @nodoc
-class __$$_VmLogEventDecodedCopyWithImpl<T, $Res>
-    extends _$VmLogEventCopyWithImpl<T, $Res, _$_VmLogEventDecoded<T>>
-    implements _$$_VmLogEventDecodedCopyWith<T, $Res> {
-  __$$_VmLogEventDecodedCopyWithImpl(_$_VmLogEventDecoded<T> _value,
-      $Res Function(_$_VmLogEventDecoded<T>) _then)
+class __$$VmLogEventDecodedImplCopyWithImpl<T, $Res>
+    extends _$VmLogEventCopyWithImpl<T, $Res, _$VmLogEventDecodedImpl<T>>
+    implements _$$VmLogEventDecodedImplCopyWith<T, $Res> {
+  __$$VmLogEventDecodedImplCopyWithImpl(_$VmLogEventDecodedImpl<T> _value,
+      $Res Function(_$VmLogEventDecodedImpl<T>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -133,7 +133,7 @@ class __$$_VmLogEventDecodedCopyWithImpl<T, $Res>
     Object? vmLog = null,
     Object? event = freezed,
   }) {
-    return _then(_$_VmLogEventDecoded<T>(
+    return _then(_$VmLogEventDecodedImpl<T>(
       vmLog: null == vmLog
           ? _value.vmLog
           : vmLog // ignore: cast_nullable_to_non_nullable
@@ -148,8 +148,8 @@ class __$$_VmLogEventDecodedCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$_VmLogEventDecoded<T> implements _VmLogEventDecoded<T> {
-  const _$_VmLogEventDecoded({required this.vmLog, required this.event});
+class _$VmLogEventDecodedImpl<T> implements _VmLogEventDecoded<T> {
+  const _$VmLogEventDecodedImpl({required this.vmLog, required this.event});
 
   @override
   final VmLog vmLog;
@@ -162,10 +162,10 @@ class _$_VmLogEventDecoded<T> implements _VmLogEventDecoded<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VmLogEventDecoded<T> &&
+            other is _$VmLogEventDecodedImpl<T> &&
             (identical(other.vmLog, vmLog) || other.vmLog == vmLog) &&
             const DeepCollectionEquality().equals(other.event, event));
   }
@@ -177,9 +177,10 @@ class _$_VmLogEventDecoded<T> implements _VmLogEventDecoded<T> {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VmLogEventDecodedCopyWith<T, _$_VmLogEventDecoded<T>> get copyWith =>
-      __$$_VmLogEventDecodedCopyWithImpl<T, _$_VmLogEventDecoded<T>>(
-          this, _$identity);
+  _$$VmLogEventDecodedImplCopyWith<T, _$VmLogEventDecodedImpl<T>>
+      get copyWith =>
+          __$$VmLogEventDecodedImplCopyWithImpl<T, _$VmLogEventDecodedImpl<T>>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -247,7 +248,7 @@ class _$_VmLogEventDecoded<T> implements _VmLogEventDecoded<T> {
 abstract class _VmLogEventDecoded<T> implements VmLogEvent<T> {
   const factory _VmLogEventDecoded(
       {required final VmLog vmLog,
-      required final T event}) = _$_VmLogEventDecoded<T>;
+      required final T event}) = _$VmLogEventDecodedImpl<T>;
 
   @override
   VmLog get vmLog;
@@ -255,16 +256,16 @@ abstract class _VmLogEventDecoded<T> implements VmLogEvent<T> {
   T get event;
   @override
   @JsonKey(ignore: true)
-  _$$_VmLogEventDecodedCopyWith<T, _$_VmLogEventDecoded<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VmLogEventDecodedImplCopyWith<T, _$VmLogEventDecodedImpl<T>>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VmLogEventUnknownCopyWith<T, $Res>
+abstract class _$$VmLogEventUnknownImplCopyWith<T, $Res>
     implements $VmLogEventCopyWith<T, $Res> {
-  factory _$$_VmLogEventUnknownCopyWith(_$_VmLogEventUnknown<T> value,
-          $Res Function(_$_VmLogEventUnknown<T>) then) =
-      __$$_VmLogEventUnknownCopyWithImpl<T, $Res>;
+  factory _$$VmLogEventUnknownImplCopyWith(_$VmLogEventUnknownImpl<T> value,
+          $Res Function(_$VmLogEventUnknownImpl<T>) then) =
+      __$$VmLogEventUnknownImplCopyWithImpl<T, $Res>;
   @override
   @useResult
   $Res call({VmLog vmLog, EventEntry? event});
@@ -274,11 +275,11 @@ abstract class _$$_VmLogEventUnknownCopyWith<T, $Res>
 }
 
 /// @nodoc
-class __$$_VmLogEventUnknownCopyWithImpl<T, $Res>
-    extends _$VmLogEventCopyWithImpl<T, $Res, _$_VmLogEventUnknown<T>>
-    implements _$$_VmLogEventUnknownCopyWith<T, $Res> {
-  __$$_VmLogEventUnknownCopyWithImpl(_$_VmLogEventUnknown<T> _value,
-      $Res Function(_$_VmLogEventUnknown<T>) _then)
+class __$$VmLogEventUnknownImplCopyWithImpl<T, $Res>
+    extends _$VmLogEventCopyWithImpl<T, $Res, _$VmLogEventUnknownImpl<T>>
+    implements _$$VmLogEventUnknownImplCopyWith<T, $Res> {
+  __$$VmLogEventUnknownImplCopyWithImpl(_$VmLogEventUnknownImpl<T> _value,
+      $Res Function(_$VmLogEventUnknownImpl<T>) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -287,7 +288,7 @@ class __$$_VmLogEventUnknownCopyWithImpl<T, $Res>
     Object? vmLog = null,
     Object? event = freezed,
   }) {
-    return _then(_$_VmLogEventUnknown<T>(
+    return _then(_$VmLogEventUnknownImpl<T>(
       vmLog: null == vmLog
           ? _value.vmLog
           : vmLog // ignore: cast_nullable_to_non_nullable
@@ -302,8 +303,8 @@ class __$$_VmLogEventUnknownCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$_VmLogEventUnknown<T> implements _VmLogEventUnknown<T> {
-  const _$_VmLogEventUnknown({required this.vmLog, this.event});
+class _$VmLogEventUnknownImpl<T> implements _VmLogEventUnknown<T> {
+  const _$VmLogEventUnknownImpl({required this.vmLog, this.event});
 
   @override
   final VmLog vmLog;
@@ -316,10 +317,10 @@ class _$_VmLogEventUnknown<T> implements _VmLogEventUnknown<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VmLogEventUnknown<T> &&
+            other is _$VmLogEventUnknownImpl<T> &&
             (identical(other.vmLog, vmLog) || other.vmLog == vmLog) &&
             (identical(other.event, event) || other.event == event));
   }
@@ -330,9 +331,10 @@ class _$_VmLogEventUnknown<T> implements _VmLogEventUnknown<T> {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VmLogEventUnknownCopyWith<T, _$_VmLogEventUnknown<T>> get copyWith =>
-      __$$_VmLogEventUnknownCopyWithImpl<T, _$_VmLogEventUnknown<T>>(
-          this, _$identity);
+  _$$VmLogEventUnknownImplCopyWith<T, _$VmLogEventUnknownImpl<T>>
+      get copyWith =>
+          __$$VmLogEventUnknownImplCopyWithImpl<T, _$VmLogEventUnknownImpl<T>>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -400,7 +402,7 @@ class _$_VmLogEventUnknown<T> implements _VmLogEventUnknown<T> {
 abstract class _VmLogEventUnknown<T> implements VmLogEvent<T> {
   const factory _VmLogEventUnknown(
       {required final VmLog vmLog,
-      final EventEntry? event}) = _$_VmLogEventUnknown<T>;
+      final EventEntry? event}) = _$VmLogEventUnknownImpl<T>;
 
   @override
   VmLog get vmLog;
@@ -408,6 +410,6 @@ abstract class _VmLogEventUnknown<T> implements VmLogEvent<T> {
   EventEntry? get event;
   @override
   @JsonKey(ignore: true)
-  _$$_VmLogEventUnknownCopyWith<T, _$_VmLogEventUnknown<T>> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$VmLogEventUnknownImplCopyWith<T, _$VmLogEventUnknownImpl<T>>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,14 +6,15 @@ part of 'coingecko_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CoinGeckoRate _$$_CoinGeckoRateFromJson(Map json) => _$_CoinGeckoRate(
+_$CoinGeckoRateImpl _$$CoinGeckoRateImplFromJson(Map json) =>
+    _$CoinGeckoRateImpl(
       name: json['name'] as String,
       unit: json['unit'] as String,
       value: (json['value'] as num).toDouble(),
       type: json['type'] as String,
     );
 
-Map<String, dynamic> _$$_CoinGeckoRateToJson(_$_CoinGeckoRate instance) =>
+Map<String, dynamic> _$$CoinGeckoRateImplToJson(_$CoinGeckoRateImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'unit': instance.unit,
@@ -21,7 +22,8 @@ Map<String, dynamic> _$$_CoinGeckoRateToJson(_$_CoinGeckoRate instance) =>
       'type': instance.type,
     };
 
-_$_CoinGeckoRates _$$_CoinGeckoRatesFromJson(Map json) => _$_CoinGeckoRates(
+_$CoinGeckoRatesImpl _$$CoinGeckoRatesImplFromJson(Map json) =>
+    _$CoinGeckoRatesImpl(
       rates: (json['rates'] as Map?)?.map(
             (k, e) => MapEntry(k as String,
                 CoinGeckoRate.fromJson(Map<String, dynamic>.from(e as Map))),
@@ -29,7 +31,8 @@ _$_CoinGeckoRates _$$_CoinGeckoRatesFromJson(Map json) => _$_CoinGeckoRates(
           const {},
     );
 
-Map<String, dynamic> _$$_CoinGeckoRatesToJson(_$_CoinGeckoRates instance) =>
+Map<String, dynamic> _$$CoinGeckoRatesImplToJson(
+        _$CoinGeckoRatesImpl instance) =>
     <String, dynamic>{
       'rates': instance.rates.map((k, e) => MapEntry(k, e.toJson())),
     };

@@ -6,7 +6,7 @@ part of 'wallet_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_WalletInfo _$$_WalletInfoFromJson(Map json) => _$_WalletInfo(
+_$WalletInfoImpl _$$WalletInfoImplFromJson(Map json) => _$WalletInfoImpl(
       name: json['name'] as String,
       wid: json['wid'] as String,
       accountsBoxKey: json['accountsBoxKey'] as String,
@@ -17,7 +17,7 @@ _$_WalletInfo _$$_WalletInfoFromJson(Map json) => _$_WalletInfo(
       publicKey: json['publicKey'] as String,
     );
 
-Map<String, dynamic> _$$_WalletInfoToJson(_$_WalletInfo instance) =>
+Map<String, dynamic> _$$WalletInfoImplToJson(_$WalletInfoImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
       'wid': instance.wid,
@@ -29,7 +29,7 @@ Map<String, dynamic> _$$_WalletInfoToJson(_$_WalletInfo instance) =>
       'publicKey': instance.publicKey,
     };
 
-_$_WalletBundle _$$_WalletBundleFromJson(Map json) => _$_WalletBundle(
+_$WalletBundleImpl _$$WalletBundleImplFromJson(Map json) => _$WalletBundleImpl(
       wallets: json['wallets'] == null
           ? null
           : IList<WalletInfo>.fromJson(
@@ -42,7 +42,7 @@ _$_WalletBundle _$$_WalletBundleFromJson(Map json) => _$_WalletBundle(
               Map<String, dynamic>.from(json['selected'] as Map)),
     );
 
-Map<String, dynamic> _$$_WalletBundleToJson(_$_WalletBundle instance) {
+Map<String, dynamic> _$$WalletBundleImplToJson(_$WalletBundleImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

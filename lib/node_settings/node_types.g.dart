@@ -6,8 +6,8 @@ part of 'node_types.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ViteNodeConfigSettings _$$_ViteNodeConfigSettingsFromJson(Map json) =>
-    _$_ViteNodeConfigSettings(
+_$ViteNodeConfigSettingsImpl _$$ViteNodeConfigSettingsImplFromJson(Map json) =>
+    _$ViteNodeConfigSettingsImpl(
       options: json['options'] == null
           ? const IListConst([mainnetViteNodeConfig, testnetViteNodeConfig])
           : IList<ViteNodeConfig>.fromJson(
@@ -20,8 +20,8 @@ _$_ViteNodeConfigSettings _$$_ViteNodeConfigSettingsFromJson(Map json) =>
               Map<String, dynamic>.from(json['selected'] as Map)),
     );
 
-Map<String, dynamic> _$$_ViteNodeConfigSettingsToJson(
-        _$_ViteNodeConfigSettings instance) =>
+Map<String, dynamic> _$$ViteNodeConfigSettingsImplToJson(
+        _$ViteNodeConfigSettingsImpl instance) =>
     <String, dynamic>{
       'options': instance.options.toJson(
         (value) => value.toJson(),
@@ -29,7 +29,8 @@ Map<String, dynamic> _$$_ViteNodeConfigSettingsToJson(
       'selected': instance.selected.toJson(),
     };
 
-_$_ViteNodeConfig _$$_ViteNodeConfigFromJson(Map json) => _$_ViteNodeConfig(
+_$ViteNodeConfigImpl _$$ViteNodeConfigImplFromJson(Map json) =>
+    _$ViteNodeConfigImpl(
       id: json['id'] as String,
       name: json['name'] as String,
       http: json['http'] as String,
@@ -37,7 +38,8 @@ _$_ViteNodeConfig _$$_ViteNodeConfigFromJson(Map json) => _$_ViteNodeConfig(
       network: $enumDecode(_$ViteNetworkEnumMap, json['network']),
     );
 
-Map<String, dynamic> _$$_ViteNodeConfigToJson(_$_ViteNodeConfig instance) =>
+Map<String, dynamic> _$$ViteNodeConfigImplToJson(
+        _$ViteNodeConfigImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
