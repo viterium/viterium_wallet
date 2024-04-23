@@ -87,17 +87,22 @@ class VivaPoolInfoWidget extends ConsumerWidget {
       userInfo.stakingBalance,
       tokenInfo: stakingTokenInfo,
     );
-    final rewardFactor = BigInt.from(10).pow(36);
 
-    if (userInfo.stakingBalance > BigInt.zero && blockDelta > BigInt.zero) {
-      final rewardPerToken = newInfo.rewardPerToken +
-          (newInfo.rewardPerPeriod *
+    if (userInfo.stakingBalance > BigInt.zero && started) {
+      final rewardFactor = BigInt.from(10).pow(36);
+      final rewardDelta = blockDelta > BigInt.zero
+          ? (newInfo.rewardPerPeriod *
               blockDelta *
               rewardFactor ~/
-              newInfo.totalStakingBalance);
+              newInfo.totalStakingBalance)
+          : BigInt.zero;
+
+      final rewardPerToken = newInfo.rewardPerToken + rewardDelta;
+
       final pendingAmount =
           userInfo.stakingBalance * rewardPerToken ~/ rewardFactor -
               userInfo.rewardDebt;
+
       rewards = Amount.raw(
         pendingAmount,
         tokenInfo: rewardTokenInfo,
