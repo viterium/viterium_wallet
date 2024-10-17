@@ -66,7 +66,7 @@ class ViteUri {
         }
         token = Token.tryParse(uri.queryParameters['tti'] ?? '');
         amount = Decimal.tryParse(uri.queryParameters['amount'] ?? '');
-        if (amount != null) {
+        if (amount != null && token == null) {
           token = Token.vite;
         }
         fee = Decimal.tryParse(uri.queryParameters['fee'] ?? '');
