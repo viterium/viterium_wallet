@@ -110,6 +110,7 @@ class Database {
   late final BoxKey pushInfoBox;
   late final BoxKey settingsBox;
   late final BoxKey exchangeRateBox;
+  late final BoxKey cacheBox;
 
   static Future<HiveCipher> _getBoxCipher(BoxKey boxKey, Vault vault) async {
     var secureKey = await vault.get(boxKey);
@@ -129,6 +130,7 @@ class Database {
     const kSettingsBoxId = '_settingsBox';
     const kPushInfoBoxId = '_pushInfoBox';
     const kExchangeRateBoxId = '_exchangeRateBox';
+    const kCacheBoxId = '_cacheBox';
 
     final vault = Vault();
     final dbKey = await vault.getDbKey();
@@ -144,9 +146,20 @@ class Database {
     pushInfoBox = digest(data: stringToBytesUtf8('$kPushInfoBoxId#$dbKey')).hex;
     exchangeRateBox =
         digest(data: stringToBytesUtf8('$kExchangeRateBoxId#$dbKey')).hex;
+    cacheBox = digest(data: stringToBytesUtf8('$kCacheBoxId#$dbKey')).hex;
 
     Future<Box> _openBox<T>(String box, {bool encrypted = false}) async {
       return Hive.openBox<T>(
+        box,
+        encryptionCipher: encrypted ? await _getBoxCipher(box, vault) : null,
+      );
+    }
+
+    Future<LazyBox> _openLazyBox<T>(
+      String box, {
+      bool encrypted = false,
+    }) async {
+      return Hive.openLazyBox<T>(
         box,
         encryptionCipher: encrypted ? await _getBoxCipher(box, vault) : null,
       );
@@ -163,6 +176,8 @@ class Database {
       _openBox<ExchangeRate>(exchangeRateBox),
       // generic boxes
       _openBox(settingsBox, encrypted: true),
+      // lazy generic boxes
+      _openLazyBox(cacheBox, encrypted: true),
     ]);
   }
 
@@ -212,5 +227,11 @@ class Database {
     assert(Hive.isBoxOpen(boxKey));
     final box = Hive.box(boxKey);
     return GenericBox(box);
+  }
+
+  LazyGenericBox getLazyGenericBox(BoxKey boxKey) {
+    assert(Hive.isBoxOpen(boxKey));
+    final box = Hive.lazyBox(boxKey);
+    return LazyGenericBox(box);
   }
 }
