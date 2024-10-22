@@ -1,5 +1,6 @@
 export 'accounts/accounts_providers.dart';
 export 'autoreceive/autoreceive_providers.dart';
+export 'cache/cache_providers.dart';
 export 'contacts/contacts_providers.dart';
 export 'contracts/contracts_providers.dart';
 export 'core/core_providers.dart';
