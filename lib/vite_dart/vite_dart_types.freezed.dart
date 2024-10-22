@@ -16,24 +16,24 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$VmLogEvent<T> {
-  VmLog get vmLog => throw _privateConstructorUsedError;
+  VmLogMessage get message => throw _privateConstructorUsedError;
   Object? get event => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(VmLog vmLog, T event) decoded,
-    required TResult Function(VmLog vmLog, EventEntry? event) unknown,
+    required TResult Function(VmLogMessage message, T event) decoded,
+    required TResult Function(VmLogMessage message, EventEntry? event) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(VmLog vmLog, T event)? decoded,
-    TResult? Function(VmLog vmLog, EventEntry? event)? unknown,
+    TResult? Function(VmLogMessage message, T event)? decoded,
+    TResult? Function(VmLogMessage message, EventEntry? event)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(VmLog vmLog, T event)? decoded,
-    TResult Function(VmLog vmLog, EventEntry? event)? unknown,
+    TResult Function(VmLogMessage message, T event)? decoded,
+    TResult Function(VmLogMessage message, EventEntry? event)? unknown,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -68,9 +68,9 @@ abstract class $VmLogEventCopyWith<T, $Res> {
           VmLogEvent<T> value, $Res Function(VmLogEvent<T>) then) =
       _$VmLogEventCopyWithImpl<T, $Res, VmLogEvent<T>>;
   @useResult
-  $Res call({VmLog vmLog});
+  $Res call({VmLogMessage message});
 
-  $VmLogCopyWith<$Res> get vmLog;
+  $VmLogMessageCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -86,21 +86,21 @@ class _$VmLogEventCopyWithImpl<T, $Res, $Val extends VmLogEvent<T>>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vmLog = null,
+    Object? message = null,
   }) {
     return _then(_value.copyWith(
-      vmLog: null == vmLog
-          ? _value.vmLog
-          : vmLog // ignore: cast_nullable_to_non_nullable
-              as VmLog,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as VmLogMessage,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $VmLogCopyWith<$Res> get vmLog {
-    return $VmLogCopyWith<$Res>(_value.vmLog, (value) {
-      return _then(_value.copyWith(vmLog: value) as $Val);
+  $VmLogMessageCopyWith<$Res> get message {
+    return $VmLogMessageCopyWith<$Res>(_value.message, (value) {
+      return _then(_value.copyWith(message: value) as $Val);
     });
   }
 }
@@ -113,10 +113,10 @@ abstract class _$$VmLogEventDecodedImplCopyWith<T, $Res>
       __$$VmLogEventDecodedImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({VmLog vmLog, T event});
+  $Res call({VmLogMessage message, T event});
 
   @override
-  $VmLogCopyWith<$Res> get vmLog;
+  $VmLogMessageCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -130,14 +130,14 @@ class __$$VmLogEventDecodedImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vmLog = null,
+    Object? message = null,
     Object? event = freezed,
   }) {
     return _then(_$VmLogEventDecodedImpl<T>(
-      vmLog: null == vmLog
-          ? _value.vmLog
-          : vmLog // ignore: cast_nullable_to_non_nullable
-              as VmLog,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as VmLogMessage,
       event: freezed == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
@@ -148,17 +148,18 @@ class __$$VmLogEventDecodedImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$VmLogEventDecodedImpl<T> implements _VmLogEventDecoded<T> {
-  const _$VmLogEventDecodedImpl({required this.vmLog, required this.event});
+class _$VmLogEventDecodedImpl<T> extends _VmLogEventDecoded<T> {
+  const _$VmLogEventDecodedImpl({required this.message, required this.event})
+      : super._();
 
   @override
-  final VmLog vmLog;
+  final VmLogMessage message;
   @override
   final T event;
 
   @override
   String toString() {
-    return 'VmLogEvent<$T>.decoded(vmLog: $vmLog, event: $event)';
+    return 'VmLogEvent<$T>.decoded(message: $message, event: $event)';
   }
 
   @override
@@ -166,13 +167,13 @@ class _$VmLogEventDecodedImpl<T> implements _VmLogEventDecoded<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VmLogEventDecodedImpl<T> &&
-            (identical(other.vmLog, vmLog) || other.vmLog == vmLog) &&
+            (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other.event, event));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, vmLog, const DeepCollectionEquality().hash(event));
+      runtimeType, message, const DeepCollectionEquality().hash(event));
 
   @JsonKey(ignore: true)
   @override
@@ -185,30 +186,30 @@ class _$VmLogEventDecodedImpl<T> implements _VmLogEventDecoded<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(VmLog vmLog, T event) decoded,
-    required TResult Function(VmLog vmLog, EventEntry? event) unknown,
+    required TResult Function(VmLogMessage message, T event) decoded,
+    required TResult Function(VmLogMessage message, EventEntry? event) unknown,
   }) {
-    return decoded(vmLog, event);
+    return decoded(message, event);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(VmLog vmLog, T event)? decoded,
-    TResult? Function(VmLog vmLog, EventEntry? event)? unknown,
+    TResult? Function(VmLogMessage message, T event)? decoded,
+    TResult? Function(VmLogMessage message, EventEntry? event)? unknown,
   }) {
-    return decoded?.call(vmLog, event);
+    return decoded?.call(message, event);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(VmLog vmLog, T event)? decoded,
-    TResult Function(VmLog vmLog, EventEntry? event)? unknown,
+    TResult Function(VmLogMessage message, T event)? decoded,
+    TResult Function(VmLogMessage message, EventEntry? event)? unknown,
     required TResult orElse(),
   }) {
     if (decoded != null) {
-      return decoded(vmLog, event);
+      return decoded(message, event);
     }
     return orElse();
   }
@@ -245,13 +246,14 @@ class _$VmLogEventDecodedImpl<T> implements _VmLogEventDecoded<T> {
   }
 }
 
-abstract class _VmLogEventDecoded<T> implements VmLogEvent<T> {
+abstract class _VmLogEventDecoded<T> extends VmLogEvent<T> {
   const factory _VmLogEventDecoded(
-      {required final VmLog vmLog,
+      {required final VmLogMessage message,
       required final T event}) = _$VmLogEventDecodedImpl<T>;
+  const _VmLogEventDecoded._() : super._();
 
   @override
-  VmLog get vmLog;
+  VmLogMessage get message;
   @override
   T get event;
   @override
@@ -268,10 +270,10 @@ abstract class _$$VmLogEventUnknownImplCopyWith<T, $Res>
       __$$VmLogEventUnknownImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({VmLog vmLog, EventEntry? event});
+  $Res call({VmLogMessage message, EventEntry? event});
 
   @override
-  $VmLogCopyWith<$Res> get vmLog;
+  $VmLogMessageCopyWith<$Res> get message;
 }
 
 /// @nodoc
@@ -285,14 +287,14 @@ class __$$VmLogEventUnknownImplCopyWithImpl<T, $Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? vmLog = null,
+    Object? message = null,
     Object? event = freezed,
   }) {
     return _then(_$VmLogEventUnknownImpl<T>(
-      vmLog: null == vmLog
-          ? _value.vmLog
-          : vmLog // ignore: cast_nullable_to_non_nullable
-              as VmLog,
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as VmLogMessage,
       event: freezed == event
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
@@ -303,17 +305,18 @@ class __$$VmLogEventUnknownImplCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$VmLogEventUnknownImpl<T> implements _VmLogEventUnknown<T> {
-  const _$VmLogEventUnknownImpl({required this.vmLog, this.event});
+class _$VmLogEventUnknownImpl<T> extends _VmLogEventUnknown<T> {
+  const _$VmLogEventUnknownImpl({required this.message, this.event})
+      : super._();
 
   @override
-  final VmLog vmLog;
+  final VmLogMessage message;
   @override
   final EventEntry? event;
 
   @override
   String toString() {
-    return 'VmLogEvent<$T>.unknown(vmLog: $vmLog, event: $event)';
+    return 'VmLogEvent<$T>.unknown(message: $message, event: $event)';
   }
 
   @override
@@ -321,12 +324,12 @@ class _$VmLogEventUnknownImpl<T> implements _VmLogEventUnknown<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VmLogEventUnknownImpl<T> &&
-            (identical(other.vmLog, vmLog) || other.vmLog == vmLog) &&
+            (identical(other.message, message) || other.message == message) &&
             (identical(other.event, event) || other.event == event));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, vmLog, event);
+  int get hashCode => Object.hash(runtimeType, message, event);
 
   @JsonKey(ignore: true)
   @override
@@ -339,30 +342,30 @@ class _$VmLogEventUnknownImpl<T> implements _VmLogEventUnknown<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(VmLog vmLog, T event) decoded,
-    required TResult Function(VmLog vmLog, EventEntry? event) unknown,
+    required TResult Function(VmLogMessage message, T event) decoded,
+    required TResult Function(VmLogMessage message, EventEntry? event) unknown,
   }) {
-    return unknown(vmLog, event);
+    return unknown(message, event);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(VmLog vmLog, T event)? decoded,
-    TResult? Function(VmLog vmLog, EventEntry? event)? unknown,
+    TResult? Function(VmLogMessage message, T event)? decoded,
+    TResult? Function(VmLogMessage message, EventEntry? event)? unknown,
   }) {
-    return unknown?.call(vmLog, event);
+    return unknown?.call(message, event);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(VmLog vmLog, T event)? decoded,
-    TResult Function(VmLog vmLog, EventEntry? event)? unknown,
+    TResult Function(VmLogMessage message, T event)? decoded,
+    TResult Function(VmLogMessage message, EventEntry? event)? unknown,
     required TResult orElse(),
   }) {
     if (unknown != null) {
-      return unknown(vmLog, event);
+      return unknown(message, event);
     }
     return orElse();
   }
@@ -399,13 +402,14 @@ class _$VmLogEventUnknownImpl<T> implements _VmLogEventUnknown<T> {
   }
 }
 
-abstract class _VmLogEventUnknown<T> implements VmLogEvent<T> {
+abstract class _VmLogEventUnknown<T> extends VmLogEvent<T> {
   const factory _VmLogEventUnknown(
-      {required final VmLog vmLog,
+      {required final VmLogMessage message,
       final EventEntry? event}) = _$VmLogEventUnknownImpl<T>;
+  const _VmLogEventUnknown._() : super._();
 
   @override
-  VmLog get vmLog;
+  VmLogMessage get message;
   @override
   EventEntry? get event;
   @override

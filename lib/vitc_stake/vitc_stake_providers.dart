@@ -182,7 +182,7 @@ final vitcStakeLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vitcStakeEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vitcStakeServiceV2Provider);
-      final vmLogEvent = service.decodeVmLog(data.value.vmLog);
+      final vmLogEvent = service.decodeVmLogMessage(data.value);
 
       vmLogEvent.whenOrNull(
         decoded: (_, event) => notifier.updateState(event),

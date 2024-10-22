@@ -184,7 +184,7 @@ final vivaLastEventProvider = StateNotifierProvider.autoDispose<
   ref.listen<AsyncValue<VmLogMessage>>(vivaEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
       final service = ref.read(vivaStakingServiceV4Provider);
-      final event = service.decodeVmLog(data.value.vmLog);
+      final event = service.decodeVmLogMessage(data.value);
 
       // ignore unknown events
       event.whenOrNull(
