@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+VivaPoolInfo _$VivaPoolInfoFromJson(Map<String, dynamic> json) {
+  return _VivaPoolInfo.fromJson(json);
+}
+
 /// @nodoc
 mixin _$VivaPoolInfo {
   Token get stakingToken => throw _privateConstructorUsedError;
@@ -28,6 +32,7 @@ mixin _$VivaPoolInfo {
   BigInt get paidOut => throw _privateConstructorUsedError;
   BigInt get poolId => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $VivaPoolInfoCopyWith<VivaPoolInfo> get copyWith =>
       throw _privateConstructorUsedError;
@@ -246,7 +251,7 @@ class __$$VivaPoolInfoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$VivaPoolInfoImpl extends _VivaPoolInfo {
   const _$VivaPoolInfoImpl(
       {required this.stakingToken,
@@ -261,6 +266,9 @@ class _$VivaPoolInfoImpl extends _VivaPoolInfo {
       required this.paidOut,
       required this.poolId})
       : super._();
+
+  factory _$VivaPoolInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VivaPoolInfoImplFromJson(json);
 
   @override
   final Token stakingToken;
@@ -317,6 +325,7 @@ class _$VivaPoolInfoImpl extends _VivaPoolInfo {
             (identical(other.poolId, poolId) || other.poolId == poolId));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -337,6 +346,13 @@ class _$VivaPoolInfoImpl extends _VivaPoolInfo {
   @pragma('vm:prefer-inline')
   _$$VivaPoolInfoImplCopyWith<_$VivaPoolInfoImpl> get copyWith =>
       __$$VivaPoolInfoImplCopyWithImpl<_$VivaPoolInfoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VivaPoolInfoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _VivaPoolInfo extends VivaPoolInfo {
@@ -353,6 +369,9 @@ abstract class _VivaPoolInfo extends VivaPoolInfo {
       required final BigInt paidOut,
       required final BigInt poolId}) = _$VivaPoolInfoImpl;
   const _VivaPoolInfo._() : super._();
+
+  factory _VivaPoolInfo.fromJson(Map<String, dynamic> json) =
+      _$VivaPoolInfoImpl.fromJson;
 
   @override
   Token get stakingToken;
@@ -382,12 +401,17 @@ abstract class _VivaPoolInfo extends VivaPoolInfo {
       throw _privateConstructorUsedError;
 }
 
+VivaExtraPoolInfo _$VivaExtraPoolInfoFromJson(Map<String, dynamic> json) {
+  return _VivaExtraPoolInfo.fromJson(json);
+}
+
 /// @nodoc
 mixin _$VivaExtraPoolInfo {
   BigInt get minimumDeposit => throw _privateConstructorUsedError;
   BigInt get maximumTotalStakingBalance => throw _privateConstructorUsedError;
   BigInt get lockTime => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $VivaExtraPoolInfoCopyWith<VivaExtraPoolInfo> get copyWith =>
       throw _privateConstructorUsedError;
@@ -486,12 +510,15 @@ class __$$VivaExtraPoolInfoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$VivaExtraPoolInfoImpl implements _VivaExtraPoolInfo {
   const _$VivaExtraPoolInfoImpl(
       {required this.minimumDeposit,
       required this.maximumTotalStakingBalance,
       required this.lockTime});
+
+  factory _$VivaExtraPoolInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VivaExtraPoolInfoImplFromJson(json);
 
   @override
   final BigInt minimumDeposit;
@@ -520,6 +547,7 @@ class _$VivaExtraPoolInfoImpl implements _VivaExtraPoolInfo {
                 other.lockTime == lockTime));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, minimumDeposit, maximumTotalStakingBalance, lockTime);
@@ -530,6 +558,13 @@ class _$VivaExtraPoolInfoImpl implements _VivaExtraPoolInfo {
   _$$VivaExtraPoolInfoImplCopyWith<_$VivaExtraPoolInfoImpl> get copyWith =>
       __$$VivaExtraPoolInfoImplCopyWithImpl<_$VivaExtraPoolInfoImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VivaExtraPoolInfoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
@@ -537,6 +572,9 @@ abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
       {required final BigInt minimumDeposit,
       required final BigInt maximumTotalStakingBalance,
       required final BigInt lockTime}) = _$VivaExtraPoolInfoImpl;
+
+  factory _VivaExtraPoolInfo.fromJson(Map<String, dynamic> json) =
+      _$VivaExtraPoolInfoImpl.fromJson;
 
   @override
   BigInt get minimumDeposit;
@@ -550,6 +588,10 @@ abstract class _VivaExtraPoolInfo implements VivaExtraPoolInfo {
       throw _privateConstructorUsedError;
 }
 
+VivaPoolInfoAll _$VivaPoolInfoAllFromJson(Map<String, dynamic> json) {
+  return _VivaPoolInfoAll.fromJson(json);
+}
+
 /// @nodoc
 mixin _$VivaPoolInfoAll {
   VivaPoolInfo get poolInfo => throw _privateConstructorUsedError;
@@ -557,6 +599,7 @@ mixin _$VivaPoolInfoAll {
   TokenInfo get stakingTokenInfo => throw _privateConstructorUsedError;
   TokenInfo get rewardTokenInfo => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $VivaPoolInfoAllCopyWith<VivaPoolInfoAll> get copyWith =>
       throw _privateConstructorUsedError;
@@ -713,7 +756,7 @@ class __$$VivaPoolInfoAllImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$VivaPoolInfoAllImpl extends _VivaPoolInfoAll {
   const _$VivaPoolInfoAllImpl(
       {required this.poolInfo,
@@ -721,6 +764,9 @@ class _$VivaPoolInfoAllImpl extends _VivaPoolInfoAll {
       required this.stakingTokenInfo,
       required this.rewardTokenInfo})
       : super._();
+
+  factory _$VivaPoolInfoAllImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VivaPoolInfoAllImplFromJson(json);
 
   @override
   final VivaPoolInfo poolInfo;
@@ -750,6 +796,7 @@ class _$VivaPoolInfoAllImpl extends _VivaPoolInfoAll {
                 other.rewardTokenInfo == rewardTokenInfo));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType, poolInfo, extra, stakingTokenInfo, rewardTokenInfo);
@@ -760,6 +807,13 @@ class _$VivaPoolInfoAllImpl extends _VivaPoolInfoAll {
   _$$VivaPoolInfoAllImplCopyWith<_$VivaPoolInfoAllImpl> get copyWith =>
       __$$VivaPoolInfoAllImplCopyWithImpl<_$VivaPoolInfoAllImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VivaPoolInfoAllImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _VivaPoolInfoAll extends VivaPoolInfoAll {
@@ -769,6 +823,9 @@ abstract class _VivaPoolInfoAll extends VivaPoolInfoAll {
       required final TokenInfo stakingTokenInfo,
       required final TokenInfo rewardTokenInfo}) = _$VivaPoolInfoAllImpl;
   const _VivaPoolInfoAll._() : super._();
+
+  factory _VivaPoolInfoAll.fromJson(Map<String, dynamic> json) =
+      _$VivaPoolInfoAllImpl.fromJson;
 
   @override
   VivaPoolInfo get poolInfo;
@@ -2182,5 +2239,295 @@ abstract class _PoolFilter implements PoolFilter {
   @override
   @JsonKey(ignore: true)
   _$$PoolFilterImplCopyWith<_$PoolFilterImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+VivaStakingCache _$VivaStakingCacheFromJson(Map<String, dynamic> json) {
+  return _VivaPoolsCache.fromJson(json);
+}
+
+/// @nodoc
+mixin _$VivaStakingCache {
+  @JsonKey(fromJson: _poolsFromJson)
+  IMap<BigInt, VivaPoolInfoAll> get pools => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $VivaStakingCacheCopyWith<VivaStakingCache> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VivaStakingCacheCopyWith<$Res> {
+  factory $VivaStakingCacheCopyWith(
+          VivaStakingCache value, $Res Function(VivaStakingCache) then) =
+      _$VivaStakingCacheCopyWithImpl<$Res, VivaStakingCache>;
+  @useResult
+  $Res call(
+      {@JsonKey(fromJson: _poolsFromJson) IMap<BigInt, VivaPoolInfoAll> pools});
+}
+
+/// @nodoc
+class _$VivaStakingCacheCopyWithImpl<$Res, $Val extends VivaStakingCache>
+    implements $VivaStakingCacheCopyWith<$Res> {
+  _$VivaStakingCacheCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pools = null,
+  }) {
+    return _then(_value.copyWith(
+      pools: null == pools
+          ? _value.pools
+          : pools // ignore: cast_nullable_to_non_nullable
+              as IMap<BigInt, VivaPoolInfoAll>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$VivaPoolsCacheImplCopyWith<$Res>
+    implements $VivaStakingCacheCopyWith<$Res> {
+  factory _$$VivaPoolsCacheImplCopyWith(_$VivaPoolsCacheImpl value,
+          $Res Function(_$VivaPoolsCacheImpl) then) =
+      __$$VivaPoolsCacheImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(fromJson: _poolsFromJson) IMap<BigInt, VivaPoolInfoAll> pools});
+}
+
+/// @nodoc
+class __$$VivaPoolsCacheImplCopyWithImpl<$Res>
+    extends _$VivaStakingCacheCopyWithImpl<$Res, _$VivaPoolsCacheImpl>
+    implements _$$VivaPoolsCacheImplCopyWith<$Res> {
+  __$$VivaPoolsCacheImplCopyWithImpl(
+      _$VivaPoolsCacheImpl _value, $Res Function(_$VivaPoolsCacheImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pools = null,
+  }) {
+    return _then(_$VivaPoolsCacheImpl(
+      pools: null == pools
+          ? _value.pools
+          : pools // ignore: cast_nullable_to_non_nullable
+              as IMap<BigInt, VivaPoolInfoAll>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$VivaPoolsCacheImpl implements _VivaPoolsCache {
+  const _$VivaPoolsCacheImpl(
+      {@JsonKey(fromJson: _poolsFromJson) this.pools = const IMapConst({})});
+
+  factory _$VivaPoolsCacheImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VivaPoolsCacheImplFromJson(json);
+
+  @override
+  @JsonKey(fromJson: _poolsFromJson)
+  final IMap<BigInt, VivaPoolInfoAll> pools;
+
+  @override
+  String toString() {
+    return 'VivaStakingCache(pools: $pools)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VivaPoolsCacheImpl &&
+            (identical(other.pools, pools) || other.pools == pools));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, pools);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VivaPoolsCacheImplCopyWith<_$VivaPoolsCacheImpl> get copyWith =>
+      __$$VivaPoolsCacheImplCopyWithImpl<_$VivaPoolsCacheImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VivaPoolsCacheImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _VivaPoolsCache implements VivaStakingCache {
+  const factory _VivaPoolsCache(
+      {@JsonKey(fromJson: _poolsFromJson)
+      final IMap<BigInt, VivaPoolInfoAll> pools}) = _$VivaPoolsCacheImpl;
+
+  factory _VivaPoolsCache.fromJson(Map<String, dynamic> json) =
+      _$VivaPoolsCacheImpl.fromJson;
+
+  @override
+  @JsonKey(fromJson: _poolsFromJson)
+  IMap<BigInt, VivaPoolInfoAll> get pools;
+  @override
+  @JsonKey(ignore: true)
+  _$$VivaPoolsCacheImplCopyWith<_$VivaPoolsCacheImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$VivaUserInfoState {
+  IMap<BigInt, VivaUserInfo> get userInfo => throw _privateConstructorUsedError;
+  ISet<BigInt> get pendingPoolIds => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $VivaUserInfoStateCopyWith<VivaUserInfoState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VivaUserInfoStateCopyWith<$Res> {
+  factory $VivaUserInfoStateCopyWith(
+          VivaUserInfoState value, $Res Function(VivaUserInfoState) then) =
+      _$VivaUserInfoStateCopyWithImpl<$Res, VivaUserInfoState>;
+  @useResult
+  $Res call({IMap<BigInt, VivaUserInfo> userInfo, ISet<BigInt> pendingPoolIds});
+}
+
+/// @nodoc
+class _$VivaUserInfoStateCopyWithImpl<$Res, $Val extends VivaUserInfoState>
+    implements $VivaUserInfoStateCopyWith<$Res> {
+  _$VivaUserInfoStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userInfo = null,
+    Object? pendingPoolIds = null,
+  }) {
+    return _then(_value.copyWith(
+      userInfo: null == userInfo
+          ? _value.userInfo
+          : userInfo // ignore: cast_nullable_to_non_nullable
+              as IMap<BigInt, VivaUserInfo>,
+      pendingPoolIds: null == pendingPoolIds
+          ? _value.pendingPoolIds
+          : pendingPoolIds // ignore: cast_nullable_to_non_nullable
+              as ISet<BigInt>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$VivaUserInfoStateImplCopyWith<$Res>
+    implements $VivaUserInfoStateCopyWith<$Res> {
+  factory _$$VivaUserInfoStateImplCopyWith(_$VivaUserInfoStateImpl value,
+          $Res Function(_$VivaUserInfoStateImpl) then) =
+      __$$VivaUserInfoStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({IMap<BigInt, VivaUserInfo> userInfo, ISet<BigInt> pendingPoolIds});
+}
+
+/// @nodoc
+class __$$VivaUserInfoStateImplCopyWithImpl<$Res>
+    extends _$VivaUserInfoStateCopyWithImpl<$Res, _$VivaUserInfoStateImpl>
+    implements _$$VivaUserInfoStateImplCopyWith<$Res> {
+  __$$VivaUserInfoStateImplCopyWithImpl(_$VivaUserInfoStateImpl _value,
+      $Res Function(_$VivaUserInfoStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userInfo = null,
+    Object? pendingPoolIds = null,
+  }) {
+    return _then(_$VivaUserInfoStateImpl(
+      userInfo: null == userInfo
+          ? _value.userInfo
+          : userInfo // ignore: cast_nullable_to_non_nullable
+              as IMap<BigInt, VivaUserInfo>,
+      pendingPoolIds: null == pendingPoolIds
+          ? _value.pendingPoolIds
+          : pendingPoolIds // ignore: cast_nullable_to_non_nullable
+              as ISet<BigInt>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$VivaUserInfoStateImpl extends _VivaUserInfoState {
+  const _$VivaUserInfoStateImpl(
+      {this.userInfo = const IMapConst({}),
+      this.pendingPoolIds = const ISetConst({})})
+      : super._();
+
+  @override
+  @JsonKey()
+  final IMap<BigInt, VivaUserInfo> userInfo;
+  @override
+  @JsonKey()
+  final ISet<BigInt> pendingPoolIds;
+
+  @override
+  String toString() {
+    return 'VivaUserInfoState(userInfo: $userInfo, pendingPoolIds: $pendingPoolIds)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VivaUserInfoStateImpl &&
+            (identical(other.userInfo, userInfo) ||
+                other.userInfo == userInfo) &&
+            const DeepCollectionEquality()
+                .equals(other.pendingPoolIds, pendingPoolIds));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, userInfo,
+      const DeepCollectionEquality().hash(pendingPoolIds));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VivaUserInfoStateImplCopyWith<_$VivaUserInfoStateImpl> get copyWith =>
+      __$$VivaUserInfoStateImplCopyWithImpl<_$VivaUserInfoStateImpl>(
+          this, _$identity);
+}
+
+abstract class _VivaUserInfoState extends VivaUserInfoState {
+  const factory _VivaUserInfoState(
+      {final IMap<BigInt, VivaUserInfo> userInfo,
+      final ISet<BigInt> pendingPoolIds}) = _$VivaUserInfoStateImpl;
+  const _VivaUserInfoState._() : super._();
+
+  @override
+  IMap<BigInt, VivaUserInfo> get userInfo;
+  @override
+  ISet<BigInt> get pendingPoolIds;
+  @override
+  @JsonKey(ignore: true)
+  _$$VivaUserInfoStateImplCopyWith<_$VivaUserInfoStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

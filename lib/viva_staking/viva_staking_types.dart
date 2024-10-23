@@ -1,7 +1,9 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:vite/vite.dart';
 
 part 'viva_staking_types.freezed.dart';
+part 'viva_staking_types.g.dart';
 
 @freezed
 class VivaPoolInfo with _$VivaPoolInfo {
@@ -36,6 +38,9 @@ class VivaPoolInfo with _$VivaPoolInfo {
 
   TokenId get stakingTokenId => stakingToken.tokenId;
   TokenId get rewardTokenId => rewardToken.tokenId;
+
+  factory VivaPoolInfo.fromJson(Map<String, dynamic> json) =>
+      _$VivaPoolInfoFromJson(json);
 }
 
 @freezed
@@ -51,6 +56,9 @@ class VivaExtraPoolInfo with _$VivaExtraPoolInfo {
         maximumTotalStakingBalance: list[1] as BigInt,
         lockTime: list[2] as BigInt,
       );
+
+  factory VivaExtraPoolInfo.fromJson(Map<String, dynamic> json) =>
+      _$VivaExtraPoolInfoFromJson(json);
 }
 
 @freezed
@@ -85,6 +93,9 @@ class VivaPoolInfoAll with _$VivaPoolInfoAll {
 
   bool get shouldDepositClaim =>
       lockTime > BigInt.zero && minimumDeposit == BigInt.zero;
+
+  factory VivaPoolInfoAll.fromJson(Map<String, dynamic> json) =>
+      _$VivaPoolInfoAllFromJson(json);
 }
 
 @freezed
@@ -153,4 +164,40 @@ class PoolFilter with _$PoolFilter {
     @Default(PoolSortOrder.byDefault) PoolSortOrder sortOrder,
     @Default('') String searchTerm,
   }) = _PoolFilter;
+}
+
+typedef VivaPoolsState = (IMap<BigInt, VivaPoolInfoAll>, bool);
+
+IMap<BigInt, VivaPoolInfoAll> _poolsFromJson(Map<dynamic, dynamic> json) {
+  return json
+      .map<BigInt, VivaPoolInfoAll>(
+        (key, value) => MapEntry(
+          BigInt.parse(key),
+          VivaPoolInfoAll.fromJson(value.cast<String, dynamic>()),
+        ),
+      )
+      .lockUnsafe;
+}
+
+@freezed
+class VivaStakingCache with _$VivaStakingCache {
+  const factory VivaStakingCache({
+    @JsonKey(fromJson: _poolsFromJson)
+    @Default(IMapConst({}))
+    IMap<BigInt, VivaPoolInfoAll> pools,
+  }) = _VivaPoolsCache;
+
+  factory VivaStakingCache.fromJson(Map<String, dynamic> json) =>
+      _$VivaStakingCacheFromJson(json);
+}
+
+@freezed
+class VivaUserInfoState with _$VivaUserInfoState {
+  const VivaUserInfoState._();
+  const factory VivaUserInfoState({
+    @Default(IMapConst({})) IMap<BigInt, VivaUserInfo> userInfo,
+    @Default(ISetConst({})) ISet<BigInt> pendingPoolIds,
+  }) = _VivaUserInfoState;
+
+  bool get loading => pendingPoolIds.isNotEmpty;
 }

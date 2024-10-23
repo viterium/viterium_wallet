@@ -47,6 +47,10 @@ class VivaPoolCard extends ConsumerWidget {
       child: TextButton(
         style: styles.cardButtonStyle,
         onPressed: () {
+          // Refresh selected pool
+          final notifier = ref.read(vivaPoolsNotifierProvider.notifier);
+          notifier.refreshPoolWithId(poolInfo.poolId);
+
           final scaffold = ref.read(homePageScaffoldKeyProvider);
           Sheets.showAppHeightNineSheet(
             context: scaffold.currentContext ?? context,

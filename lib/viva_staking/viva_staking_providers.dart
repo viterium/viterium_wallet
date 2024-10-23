@@ -15,8 +15,7 @@ import 'viva_staking_types.dart';
 import 'viva_user_info_notifier.dart';
 
 final vivaPoolsNotifierProvider =
-    StateNotifierProvider.autoDispose<VivaPoolsNotifier, AsyncVivaPoolsInfo>(
-        (ref) {
+    StateNotifierProvider.autoDispose<VivaPoolsNotifier, VivaPoolsState>((ref) {
   final notifier = VivaPoolsNotifier(ref: ref);
 
   ref.listen(vivaStakingServiceV4Provider, (_, service) {
@@ -32,71 +31,52 @@ final vivaPoolsNotifierProvider =
   return notifier;
 });
 
-final vivaPoolsInfoProvider =
-    Provider.autoDispose<IList<VivaPoolInfoAll>?>((ref) {
-  final pools = ref.watch(vivaPoolsNotifierProvider);
-
-  if (pools.isLoading) {
-    return null;
-  }
-
-  return IList(pools.valueOrNull?.values);
-});
-
 final vivaPoolsFilterProvider = StateProvider((ref) => PoolFilter());
 
-final filteredVivaPoolsProvider =
-    Provider.autoDispose<AsyncValue<IList<VivaPoolInfoAll>>>((ref) {
-  final vivaPools = ref.watch(vivaPoolsInfoProvider);
-  final userInfo = ref.watch(vivaUserInfoCacheProvider);
+final filteredVivaPoolsProvider = Provider.autoDispose<VivaPoolsState>((ref) {
+  final (vivaPools, loading) = ref.watch(vivaPoolsNotifierProvider);
+  final userInfoState = ref.watch(vivaUserInfoCacheProvider);
+  final userInfo = userInfoState.userInfo;
 
   final filter = ref.watch(vivaPoolsFilterProvider);
   final height = ref.read(lastKnownSnapshotHeightProvider);
 
-  if (vivaPools == null) {
-    return const AsyncValue.loading();
-  }
-
-  IList<VivaPoolInfoAll> pools;
+  IMap<BigInt, VivaPoolInfoAll> pools;
   if (filter.ended) {
-    pools = vivaPools.removeWhere((pool) => pool.endBlock > height);
+    pools = vivaPools.removeWhere((poolId, pool) => pool.endBlock > height);
   } else {
-    pools = vivaPools.removeWhere((pool) => pool.endBlock <= height);
+    pools = vivaPools.removeWhere((poolId, pool) => pool.endBlock <= height);
   }
 
   if (!filter.stakedOnly) {
-    return AsyncValue.data(pools);
+    return (pools, loading);
   }
 
-  final notifier = ref.watch(vivaUserInfoCacheProvider.notifier);
+  final notifier = ref.read(vivaUserInfoCacheProvider.notifier);
   notifier.cache(
-    pools.map((pool) => pool.poolId),
+    pools.values.map((pool) => pool.poolId).toList(),
     includeLastInteractionBlock: !filter.ended,
   );
 
-  pools = pools.removeWhere((pool) {
+  pools = pools.removeWhere((poolId, pool) {
     final info = userInfo[pool.poolId];
     return info == null || info.stakingBalance == BigInt.zero;
   });
 
-  if (pools.isEmpty && notifier.loading) {
-    return const AsyncValue.loading();
-  }
-
-  return AsyncValue.data(pools);
+  return (pools, loading || userInfoState.loading);
 });
 
 final vivaPoolInfoForPoolIdProvider =
     Provider.autoDispose.family<VivaPoolInfoAll?, BigInt>((ref, poolId) {
-  final pools = ref.watch(vivaPoolsInfoProvider);
+  final (pools, _) = ref.watch(vivaPoolsNotifierProvider);
 
-  return pools?[poolId.toInt()];
+  return pools[poolId];
 });
 
 // VivaStakingUserInfo providers
 
 final vivaUserInfoCacheProvider =
-    StateNotifierProvider.autoDispose<VivaUserInfoNotifier, VivaUserInfoCache>(
+    StateNotifierProvider.autoDispose<VivaUserInfoNotifier, VivaUserInfoState>(
         (ref) {
   final address = ref.watch(selectedAddressProvider);
 
@@ -127,12 +107,12 @@ final vivaUserInfoCacheProvider =
 
 final vivaUserInfoProvider =
     Provider.autoDispose.family<VivaUserInfo, BigInt>((ref, poolId) {
-  final cache = ref.watch(vivaUserInfoCacheProvider);
-  final userInfo = cache[poolId];
+  final userInfoState = ref.watch(vivaUserInfoCacheProvider);
+  final userInfo = userInfoState.userInfo[poolId];
 
   if (userInfo == null) {
     final notifier = ref.watch(vivaUserInfoCacheProvider.notifier);
-    notifier.cachePoolId(poolId);
+    notifier.cache([poolId]);
   }
 
   return userInfo ?? VivaUserInfo.empty;

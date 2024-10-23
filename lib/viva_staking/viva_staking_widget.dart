@@ -16,13 +16,9 @@ class VivaStakingWidget extends ConsumerWidget {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final data = ref.watch(filteredVivaPoolsProvider);
+    final (pools, loading) = ref.watch(filteredVivaPoolsProvider);
 
-    final itemCount = data.maybeWhen(
-      data: (pools) => max(pools.length, 1) + 1,
-      orElse: () => 2,
-      skipLoadingOnReload: true,
-    );
+    final itemCount = max(pools.length, 1) + 1;
 
     Future<void> refreshPools() async {
       final notifier = ref.read(vivaPoolsNotifierProvider.notifier);
@@ -42,39 +38,29 @@ class VivaStakingWidget extends ConsumerWidget {
             return const VivaStakingHeader();
           }
           index -= 1;
-          return data.when(
-            data: (pools) {
-              if (pools.length == 0) {
-                return Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    'No pools found',
-                    style: styles.textStyleTransactionType,
-                  ),
-                );
-              }
-              return VivaPoolCard(poolInfo: pools[index]);
-            },
-            loading: () {
-              return Container(
+          return switch ((pools.length, loading)) {
+            (0, true) => Container(
                 padding: const EdgeInsets.only(top: 20),
                 alignment: Alignment.topCenter,
                 child: Text(
                   'Loading...',
                   style: styles.textStyleTransactionType,
                 ),
-              );
-            },
-            error: (e, st) {
-              return Container(
+              ),
+            (0, false) => Container(
                 padding: const EdgeInsets.only(top: 20),
                 alignment: Alignment.topCenter,
-                child: Text('Failed to load pools'),
-              );
-            },
-            skipLoadingOnReload: true,
-          );
+                child: Text(
+                  'No pools found',
+                  style: styles.textStyleTransactionType,
+                ),
+              ),
+            _ => () {
+                final poolId = pools.keys.elementAt(index);
+                final poolInfo = pools[poolId]!;
+                return VivaPoolCard(poolInfo: poolInfo);
+              }(),
+          };
         },
       ),
     );

@@ -5,55 +5,44 @@ import 'package:vite/vite.dart';
 import 'viva_staking_service.dart';
 import 'viva_staking_types.dart';
 
-typedef VivaUserInfoCache = IMap<BigInt, VivaUserInfo>;
-
-class VivaUserInfoNotifier extends StateNotifier<VivaUserInfoCache> {
+class VivaUserInfoNotifier extends StateNotifier<VivaUserInfoState> {
   final Address address;
   late VivaStakingService service;
 
-  bool _loading = false;
-  bool get loading => _loading;
-
-  VivaUserInfoNotifier({required this.address}) : super(IMap());
+  VivaUserInfoNotifier({required this.address}) : super(VivaUserInfoState());
 
   Future<void> cache(
     Iterable<BigInt> poolIds, {
     bool includeLastInteractionBlock = true,
   }) async {
-    if (poolIds.map((poolId) => state[poolId]).anyIs(null) == false) {
+    await Future.delayed(Duration.zero);
+    if (!mounted) {
+      return;
+    }
+    final userInfo = state.userInfo;
+    if (poolIds.map((poolId) => userInfo[poolId]).anyIs(null) == false) {
       return;
     }
 
-    _loading = true;
-    final changed = await Future.wait(
-      poolIds.map(
-        (poolId) => cachePoolId(
-          poolId,
-          includeLastInteractionBlock: includeLastInteractionBlock,
-        ),
+    final pendingPoolIds = IList(poolIds.where((id) => userInfo[id] == null));
+
+    final emptyUserInfo = IMap.fromEntries(
+      pendingPoolIds.map(
+        (poolId) => MapEntry(poolId, VivaUserInfo.empty),
       ),
     );
-    _loading = false;
 
-    if (changed.everyIs(false)) {
-      state = IMap(state.unlock);
-    }
-  }
-
-  Future<bool> cachePoolId(
-    BigInt poolId, {
-    bool includeLastInteractionBlock = true,
-  }) async {
-    await Future.delayed(Duration.zero);
-    if (state[poolId] != null) {
-      return false;
-    }
-    state = state.add(poolId, VivaUserInfo.empty);
-    await updatePoolId(
-      poolId,
-      includeLastInteractionBlock: includeLastInteractionBlock,
+    state = state.copyWith(
+      userInfo: state.userInfo.addAll(emptyUserInfo),
+      pendingPoolIds: state.pendingPoolIds.addAll(pendingPoolIds),
     );
-    return true;
+
+    for (final pendingId in pendingPoolIds) {
+      await updatePoolId(
+        pendingId,
+        includeLastInteractionBlock: includeLastInteractionBlock,
+      );
+    }
   }
 
   Future<void> updatePoolId(
@@ -66,6 +55,9 @@ class VivaUserInfoNotifier extends StateNotifier<VivaUserInfoCache> {
       includeLastInteractionBlock: includeLastInteractionBlock,
     );
 
-    state = state.add(poolId, userInfo);
+    state = state.copyWith(
+      userInfo: state.userInfo.add(poolId, userInfo),
+      pendingPoolIds: state.pendingPoolIds.remove(poolId),
+    );
   }
 }
