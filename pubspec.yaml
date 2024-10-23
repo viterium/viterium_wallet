@@ -60,6 +60,7 @@ dependencies:
   push: 2.1.0
   crypton: 2.2.1
   flutter_portal: 1.1.4
+  collection: 1.18.0
 
 dev_dependencies:
   flutter_test:
