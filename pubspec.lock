@@ -495,10 +495,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_slidable
-      sha256: c7607eb808cdef19c8468246e95a133308aeaeb3971cdd9edfb9d5e31cedfbe9
+      sha256: a857de7ea701f276fd6a6c4c67ae885b60729a3449e42766bb0e655171042801
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "3.1.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter

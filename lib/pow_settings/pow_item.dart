@@ -59,20 +59,19 @@ class PowItem extends ConsumerWidget {
     }
 
     return Slidable(
-      secondaryActions: [
-        if (canDelete)
-          SlideAction(
-            child: Container(
-              margin: EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(color: theme.primary),
-              child: Icon(Icons.delete, color: theme.backgroundDark),
-            ),
-            onTap: confirmDeleteConfig,
-          ),
-      ],
-      actionExtentRatio: 0.16,
-      actionPane: const SlidableStrechActionPane(),
+      enabled: canDelete,
+      endActionPane: ActionPane(
+        extentRatio: 0.16,
+        motion: const StretchMotion(),
+        children: [
+          SlidableAction(
+            icon: Icons.delete,
+            backgroundColor: theme.primary,
+            foregroundColor: theme.backgroundDark,
+            onPressed: (_) => confirmDeleteConfig(),
+          )
+        ],
+      ),
       child: Column(
         children: [
           Divider(height: 2, color: theme.text15),

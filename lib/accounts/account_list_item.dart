@@ -64,29 +64,25 @@ class AccountListItem extends ConsumerWidget {
     }
 
     return Slidable(
-      secondaryActions: [
-        SlideAction(
-          child: Container(
-            margin: EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(color: theme.primary),
-            child: Icon(Icons.edit, color: theme.backgroundDark),
+      endActionPane: ActionPane(
+        extentRatio: 0.4,
+        motion: const StretchMotion(),
+        children: [
+          SlidableAction(
+            icon: Icons.edit,
+            backgroundColor: theme.primary,
+            foregroundColor: theme.backgroundDark,
+            onPressed: (_) => showAccountDetails,
           ),
-          onTap: showAccountDetails,
-        ),
-        if (account.index > 0)
-          SlideAction(
-            child: Container(
-              margin: EdgeInsetsDirectional.only(start: 2, top: 1, bottom: 1),
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(color: theme.primary),
-              child: Icon(Icons.delete, color: theme.backgroundDark),
+          if (account.index > 0)
+            SlidableAction(
+              icon: Icons.delete,
+              backgroundColor: theme.primary,
+              foregroundColor: theme.backgroundDark,
+              onPressed: (_) => confirmDeleteAccount,
             ),
-            onTap: confirmDeleteAccount,
-          ),
-      ],
-      actionExtentRatio: 0.2,
-      actionPane: const SlidableStrechActionPane(),
+        ],
+      ),
       child: Column(
         children: [
           Divider(height: 2, color: theme.text15),

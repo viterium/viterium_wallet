@@ -80,14 +80,18 @@ class WalletCard extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 28, vertical: 6),
       child: Slidable(
-        actionExtentRatio: 0.18,
-        secondaryActions: [
-          SlideAction(
-            child: Center(child: Icon(Icons.delete, color: theme.text)),
-            onTap: checkNotifications,
-          )
-        ],
-        actionPane: const SlidableBehindActionPane(),
+        endActionPane: ActionPane(
+          extentRatio: 0.18,
+          motion: const BehindMotion(),
+          children: [
+            SlidableAction(
+              icon: Icons.delete,
+              backgroundColor: theme.backgroundDark,
+              foregroundColor: theme.text,
+              onPressed: (_) => checkNotifications(),
+            )
+          ],
+        ),
         child: Container(
           child: TextButton(
             style: styles.darkCardButtonStyle,
