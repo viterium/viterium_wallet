@@ -6,8 +6,10 @@ import '../app_providers.dart';
 import '../contracts/vitc_stake_v2_contract.dart';
 import '../contracts/vitc_swap_contract.dart';
 import '../contracts/viva_staking_v4_contract.dart';
+import '../contracts/viva_staking_v5_contract.dart';
 import '../node_settings/node_types.dart';
 import '../vitc_swap/vitc_swap_page.dart';
+import '../viva_staking/viva_staking_providers.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
 import 'defi_card.dart';
@@ -25,6 +27,16 @@ class DefiHomePage extends HookConsumerWidget {
     useAutomaticKeepAlive();
 
     Future<void> vivaStakingV04() async {
+      final version = ref.read(vivaStakingVersionProvider.notifier);
+      version.state = VivaStakingVersion.v4;
+
+      Navigator.of(context).pushNamed('/viva_staking');
+    }
+
+    Future<void> vivaStakingV05() async {
+      final version = ref.read(vivaStakingVersionProvider.notifier);
+      version.state = VivaStakingVersion.v5;
+
       Navigator.of(context).pushNamed('/viva_staking');
     }
 
@@ -55,6 +67,18 @@ class DefiHomePage extends HookConsumerWidget {
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 28),
                     children: [
                       DefiCard(
+                        image: Image.asset('assets/vitcswap.png'),
+                        title: 'VITCSwap',
+                        details: vitcSwapContract.contractAddress,
+                        onPressed: vitcSwap,
+                      ),
+                      DefiCard(
+                        image: Image.asset('assets/vivastaking.png'),
+                        title: 'Viva Staking Pools v0.5',
+                        details: vivaStakingV5Contract.contractAddress,
+                        onPressed: vivaStakingV05,
+                      ),
+                      DefiCard(
                         image: Image.asset('assets/vivastaking.png'),
                         title: 'Viva Staking Pools v0.4',
                         details: vivaStakingV4Contract.contractAddress,
@@ -65,12 +89,6 @@ class DefiHomePage extends HookConsumerWidget {
                         title: 'VITCStake v0.2',
                         details: vitcStakeV2Contract.contractAddress,
                         onPressed: vitcStakingV02,
-                      ),
-                      DefiCard(
-                        image: Image.asset('assets/vitcswap.png'),
-                        title: 'VITCSwap',
-                        details: vitcSwapContract.contractAddress,
-                        onPressed: vitcSwap,
                       ),
                     ],
                   )

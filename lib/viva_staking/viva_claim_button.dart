@@ -26,7 +26,7 @@ class VivaClaimButton extends ConsumerWidget {
     final rewardTokenInfo = poolInfo.rewardTokenInfo;
 
     Future<void> claim() async {
-      final service = ref.read(vivaStakingServiceV4Provider);
+      final service = ref.read(vivaStakingServiceProvider);
       final account = ref.read(selectedAccountProvider);
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));

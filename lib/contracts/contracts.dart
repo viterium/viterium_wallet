@@ -10,6 +10,7 @@ import 'vitc_swap_contract.dart';
 import 'vite_punks_contract.dart';
 import 'vitens_contract.dart';
 import 'viva_staking_v4_contract.dart';
+import 'viva_staking_v5_contract.dart';
 
 final knownContracts = Map.fromEntries(
   const [
@@ -21,6 +22,7 @@ final knownContracts = Map.fromEntries(
     vitcSwapContract,
     vitcStakeV2Contract,
     vivaStakingV4Contract,
+    vivaStakingV5Contract,
     vitePunksContract,
     s1AliensContract,
     pushNotificationsContract,

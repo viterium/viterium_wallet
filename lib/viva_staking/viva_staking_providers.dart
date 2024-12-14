@@ -7,18 +7,44 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../contracts/viva_staking_v4_contract.dart';
+import '../contracts/viva_staking_v5_contract.dart';
 import '../core/generic_state_notifier.dart';
 import '../settings/available_currency.dart';
 import 'viva_pools_notifier.dart';
 import 'viva_staking_service.dart';
 import 'viva_staking_types.dart';
+import 'viva_staking_v5_service.dart';
 import 'viva_user_info_notifier.dart';
+
+enum VivaStakingVersion {
+  v4,
+  v5;
+}
+
+final vivaStakingVersionProvider =
+    StateProvider((ref) => VivaStakingVersion.v4);
+
+final vivaStakingServiceProvider = Provider<VivaStakingService>((ref) {
+  final client = ref.watch(viteClientProvider);
+  final version = ref.watch(vivaStakingVersionProvider);
+
+  return switch (version) {
+    VivaStakingVersion.v4 => VivaStakingService(
+        client: client,
+        contract: vivaStakingV4Contract,
+      ),
+    VivaStakingVersion.v5 => VivaStakingV5Service(
+        client: client,
+        contract: vivaStakingV5Contract,
+      ),
+  };
+});
 
 final vivaPoolsNotifierProvider =
     StateNotifierProvider.autoDispose<VivaPoolsNotifier, VivaPoolsState>((ref) {
   final notifier = VivaPoolsNotifier(ref: ref);
 
-  ref.listen(vivaStakingServiceV4Provider, (_, service) {
+  ref.listen(vivaStakingServiceProvider, (_, service) {
     notifier.service = service;
   }, fireImmediately: true);
 
@@ -82,7 +108,7 @@ final vivaUserInfoCacheProvider =
 
   final notifier = VivaUserInfoNotifier(address: address);
 
-  ref.listen(vivaStakingServiceV4Provider, (_, service) {
+  ref.listen(vivaStakingServiceProvider, (_, service) {
     notifier.service = service;
   }, fireImmediately: true);
 
@@ -123,6 +149,7 @@ final vivaUserInfoProvider =
 final vivaEventProvider =
     StreamProvider.autoDispose<VmLogMessage>((ref) async* {
   final client = ref.watch(wsViteClientProvider);
+  final version = ref.watch(vivaStakingVersionProvider);
   final controller = StreamController<VmLogMessage>();
 
   void callback(CallbackParam response) {
@@ -135,8 +162,12 @@ final vivaEventProvider =
     }
   }
 
+  final contractAddress = switch (version) {
+    VivaStakingVersion.v4 => vivaStakingV4Contract.contractAddress,
+    VivaStakingVersion.v5 => vivaStakingV5Contract.contractAddress
+  };
   final params = VmLogFilter(addressHeightRange: {
-    vivaStakingV4Contract.contractAddress: HeightRange.latest,
+    contractAddress: HeightRange.latest,
   });
   final subscriptionId = await client.onNewVmLog(params, callback);
 
@@ -163,7 +194,7 @@ final vivaLastEventProvider = StateNotifierProvider.autoDispose<
 
   ref.listen<AsyncValue<VmLogMessage>>(vivaEventProvider, (_, event) {
     event.mapOrNull(data: (data) {
-      final service = ref.read(vivaStakingServiceV4Provider);
+      final service = ref.read(vivaStakingServiceProvider);
       final event = service.decodeVmLogMessage(data.value);
 
       // ignore unknown events
@@ -177,21 +208,6 @@ final vivaLastEventProvider = StateNotifierProvider.autoDispose<
   });
 
   return notifier;
-});
-
-final vivaStakingServiceProvider =
-    Provider.family<VivaStakingService, Contract>((ref, contract) {
-  final client = ref.watch(viteClientProvider);
-
-  return VivaStakingService(
-    client: client,
-    contract: contract,
-  );
-});
-
-final vivaStakingServiceV4Provider = Provider((ref) {
-  final service = ref.watch(vivaStakingServiceProvider(vivaStakingV4Contract));
-  return service;
 });
 
 final vivaAprForPoolInfoProvider =

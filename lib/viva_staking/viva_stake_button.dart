@@ -23,7 +23,7 @@ class VivaStakeButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> stake() async {
-      final service = ref.read(vivaStakingServiceV4Provider);
+      final service = ref.read(vivaStakingServiceProvider);
       final account = ref.read(selectedAccountProvider);
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));

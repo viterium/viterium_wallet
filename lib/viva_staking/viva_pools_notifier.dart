@@ -46,12 +46,21 @@ class VivaPoolsNotifier extends StateNotifier<VivaPoolsState> {
 
   Future<void> refreshPoolsInfo() async {
     final noPools = await service.getPoolCount();
-    if (!mounted) {
-      return;
+
+    final stakeVitePoolNo = BigInt.from(20);
+    if (noPools > stakeVitePoolNo) {
+      if (!mounted) {
+        return;
+      }
+      await refreshPoolWithId(stakeVitePoolNo);
     }
+
     for (BigInt poolId = noPools - BigInt.one;
         poolId >= BigInt.zero;
         poolId -= BigInt.one) {
+      if (!mounted) {
+        return;
+      }
       final lastSnapshotHeight = ref.read(lastKnownSnapshotHeightProvider);
       final cachedInfo = state.$1.get(poolId);
       // Skip refreshing ended pools
@@ -60,6 +69,10 @@ class VivaPoolsNotifier extends StateNotifier<VivaPoolsState> {
       }
 
       await refreshPoolWithId(poolId);
+    }
+
+    if (!mounted) {
+      return;
     }
 
     state = (state.$1, false);
