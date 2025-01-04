@@ -5,6 +5,7 @@ import 'dex_fund_contract.dart';
 import 'dex_trade_contract.dart';
 import 's1_aliens_contract.dart';
 import 'vinu_pay_contract.dart';
+import 'vinu_swap_contract.dart';
 import 'vitc_stake_v2_contract.dart';
 import 'vitc_swap_contract.dart';
 import 'vite_punks_contract.dart';
@@ -28,5 +29,6 @@ final knownContracts = Map.fromEntries(
     pushNotificationsContract,
     vinuPayContract,
     vitensContract,
+    vinuSwapContract,
   ].map((e) => MapEntry(e.contractAddress, e)),
 );

@@ -341,6 +341,8 @@ enum TokenCardAction {
   selectToken,
   vitcSwapSelectFromToken,
   vitcSwapSelectToToken,
+  vinuSwapSelectFromToken,
+  vinuSwapSelectToToken,
 }
 
 final tokenCardActionProvider =

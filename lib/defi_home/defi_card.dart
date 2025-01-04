@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../core/core_providers.dart';
 import '../widgets/address_widgets.dart';
+import '../widgets/app_icon_button.dart';
 
 class DefiItemWidget extends ConsumerWidget {
   const DefiItemWidget({
@@ -18,6 +19,7 @@ class DefiCard extends ConsumerWidget {
   final Image image;
   final String title;
   final String details;
+  final String? notice;
   final VoidCallback onPressed;
 
   const DefiCard({
@@ -25,6 +27,7 @@ class DefiCard extends ConsumerWidget {
     required this.image,
     required this.title,
     required this.details,
+    this.notice,
     required this.onPressed,
   }) : super(key: key);
 
@@ -76,6 +79,15 @@ class DefiCard extends ConsumerWidget {
                   ),
                 ),
               ),
+              if (notice != null) ...[
+                Tooltip(
+                  message: notice,
+                  child: AppIconButton(
+                    icon: Icons.error,
+                    onPressed: null,
+                  ),
+                )
+              ]
             ],
           ),
         ),

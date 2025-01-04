@@ -65,6 +65,18 @@ class TokenCard extends ConsumerWidget {
 
               Navigator.of(context).pop();
               break;
+            case TokenCardAction.vinuSwapSelectFromToken:
+              final settings = ref.read(vinuSwapSettingsProvider.notifier);
+              settings.updateFromToken(item.tokenInfo);
+
+              Navigator.of(context).pop();
+              break;
+            case TokenCardAction.vinuSwapSelectToToken:
+              final settings = ref.read(vinuSwapSettingsProvider.notifier);
+              settings.updateToToken(item.tokenInfo);
+
+              Navigator.of(context).pop();
+              break;
           }
         },
         child: Center(

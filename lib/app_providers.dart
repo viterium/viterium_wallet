@@ -11,6 +11,7 @@ export 'settings/settings_providers.dart';
 export 'settings_advanced/advanced_settings_provider.dart';
 export 'transactions/transaction_providers.dart';
 export 'util/util_providers.dart';
+export 'vinu_swap/vinu_swap_providers.dart';
 export 'vitc_swap/vitc_swap_providers.dart';
 export 'vitex/vitex_providers.dart';
 export 'wallet/wallet_providers.dart';
