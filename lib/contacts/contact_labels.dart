@@ -1,26 +1,38 @@
+import 'package:vite/contract.dart';
+
+import '../contracts/dex_fund_contract.dart';
+import '../contracts/dex_trade_contract.dart';
+import '../contracts/s1_aliens_contract.dart';
+import '../contracts/vinu_swap_contract.dart';
+import '../contracts/vitc_stake_v2_contract.dart';
+import '../contracts/vitc_swap_contract.dart';
+import '../contracts/vite_punks_contract.dart';
+import '../contracts/viva_staking_v4_contract.dart';
+import '../contracts/viva_staking_v5_contract.dart';
+import '../push_notifications/push_contract.dart';
 import 'contact.dart';
 
 final labeledAddresses = Map.fromEntries(
-  const [
+  [
     Contact(
       name: '#Quota',
-      address: 'vite_0000000000000000000000000000000000000003f6af7459b9',
+      address: quotaContract.contractAddress,
     ),
     Contact(
       name: '#Consensus',
-      address: 'vite_0000000000000000000000000000000000000004d28108e76b',
+      address: consensusContract.contractAddress,
     ),
     Contact(
       name: '#TokenIssuance',
-      address: 'vite_000000000000000000000000000000000000000595292d996d',
+      address: tokenIssuanceContract.contractAddress,
     ),
     Contact(
       name: '#VitexFund',
-      address: 'vite_0000000000000000000000000000000000000006e82b8ba657',
+      address: dexFundContract.contractAddress,
     ),
     Contact(
       name: '#VitexTrade',
-      address: 'vite_00000000000000000000000000000000000000079710f19dc7',
+      address: dexTradeContract.contractAddress,
     ),
     Contact(
       name: '#VivaStaking v0.1',
@@ -36,7 +48,11 @@ final labeledAddresses = Map.fromEntries(
     ),
     Contact(
       name: '#VivaStaking v0.4',
-      address: 'vite_12e90482e9e13bbbeb1919e7993ffadd375f6b7aa483452cbf',
+      address: vivaStakingV4Contract.contractAddress,
+    ),
+    Contact(
+      name: '#VivaStaking v0.5',
+      address: vivaStakingV5Contract.contractAddress,
     ),
     Contact(
       name: '#VITCStake v0.1',
@@ -44,11 +60,11 @@ final labeledAddresses = Map.fromEntries(
     ),
     Contact(
       name: '#VITCStake v0.2',
-      address: 'vite_c85b335e221fc99631785f3d579edd1b7a2691131b7f3998a3',
+      address: vitcStakeV2Contract.contractAddress,
     ),
     Contact(
       name: '#VITCSwap',
-      address: 'vite_29ae0b9f951323b3bfe9bb8251bba2830eddacf51631630495',
+      address: vitcSwapContract.contractAddress,
     ),
     Contact(
       name: '#VitaBot',
@@ -56,15 +72,19 @@ final labeledAddresses = Map.fromEntries(
     ),
     Contact(
       name: '#VitePunks',
-      address: 'vite_fd06f4ef9a32fcabcdcae1857c1cab18b496ef1eafd1b4edc1',
+      address: vitePunksContract.contractAddress,
     ),
     Contact(
       name: '#51Aliens',
-      address: 'vite_378cb82adabb8608836883bd4d3720df7a5188b4c6bd0e7b75',
+      address: s1AliensContract.contractAddress,
     ),
     Contact(
       name: '#Notifications',
-      address: 'vite_47920b3e8a019d532addca410115690c44b8f2999bea55ef5b',
+      address: pushNotificationsContract.contractAddress,
+    ),
+    Contact(
+      name: '#VinuSwap',
+      address: vinuSwapContract.contractAddress,
     ),
   ].map((e) => MapEntry(e.address, e)),
 );
