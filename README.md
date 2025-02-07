@@ -30,4 +30,6 @@ If you need any help, feel free to file an issue if you do not manage to find a 
 
 ## License
 
-Viterium is released under the MIT License
+Viterium started as a fork of Natrium - https://github.com/appditto/natrium_wallet_flutter
+
+Viterium is released under the MIT License.  For more details see the [LICENSE](LICENSE)
