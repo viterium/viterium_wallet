@@ -140,7 +140,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
     }
   }
 
-  void _onBackButtonPressed(bool didPop) async {
+  void _onBackButtonPressed<T>(bool didPop, T? result) async {
     if (_contactsOpen) {
       setState(() => _contactsOpen = false);
       _contactsController.reverse();
@@ -165,7 +165,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
     // presses and replace the main settings widget with contacts based on a bool
     return PopScope(
       canPop: false,
-      onPopInvoked: _onBackButtonPressed,
+      onPopInvokedWithResult: _onBackButtonPressed,
       child: ClipRect(
         child: Stack(children: [
           Consumer(builder: (context, ref, _) {

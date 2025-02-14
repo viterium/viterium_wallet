@@ -153,30 +153,10 @@ class HomeScreen extends HookConsumerWidget {
                       controller: pageController,
                       physics: NeverScrollableScrollPhysics(),
                       children: [
-                        // WillPopScope(
-                        //   onWillPop: () async {
-                        //     final state = _walletNavigatorKey.value.currentState;
-                        //     if (state == null || !state.canPop()) {
-                        //       return true;
-                        //     }
-                        //     state.pop();
-                        //     return false;
-                        //   },
-                        //   child: Navigator(
-                        //     key: _walletNavigatorKey.value,
-                        //     initialRoute: '/',
-                        //     onGenerateRoute: (settings) {
-                        //       return NoTransitionRoute(
-                        //         builder: (_) => const WalletHomePage(),
-                        //         settings: settings,
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
                         const WalletHomePage(),
                         PopScope(
                           canPop: false,
-                          onPopInvoked: (bool didPop) {
+                          onPopInvokedWithResult: (bool didPop, _) {
                             if (didPop) {
                               return;
                             }
