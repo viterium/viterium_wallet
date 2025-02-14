@@ -6,7 +6,7 @@ import '../widgets/buttons.dart';
 import 'intro_providers.dart';
 
 class IntroActionsWidget extends ConsumerWidget {
-  const IntroActionsWidget({Key? key}) : super(key: key);
+  const IntroActionsWidget({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = ref.watch(l10nProvider);
@@ -23,17 +23,16 @@ class IntroActionsWidget extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 28),
-      child: Column(children: [
-        PrimaryButton(
-          title: l10n.newWallet,
-          onPressed: newWallet,
-        ),
-        const SizedBox(height: 16),
-        PrimaryOutlineButton(
-          title: l10n.importWallet,
-          onPressed: importWallet,
-        ),
-      ]),
+      child: Column(
+        children: [
+          PrimaryButton(title: l10n.newWallet, onPressed: newWallet),
+          const SizedBox(height: 16),
+          PrimaryOutlineButton(
+            title: l10n.importWallet,
+            onPressed: importWallet,
+          ),
+        ],
+      ),
     );
   }
 }

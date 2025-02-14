@@ -13,11 +13,11 @@ class SbpVoteInfoItem extends ConsumerWidget {
   final VoidCallback? onSelection;
 
   const SbpVoteInfoItem({
-    Key? key,
+    super.key,
     required this.sbpVoteInfo,
     required this.index,
     required VoidCallback? this.onSelection,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

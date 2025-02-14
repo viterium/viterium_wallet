@@ -8,7 +8,7 @@ import 'intro_back_button.dart';
 import 'intro_providers.dart';
 
 class IntroBackupSeed extends ConsumerWidget {
-  const IntroBackupSeed({Key? key}) : super(key: key);
+  const IntroBackupSeed({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,8 +95,10 @@ class IntroBackupSeed extends ConsumerWidget {
                           ),
                         ),
                         Container(
-                          margin:
-                              EdgeInsetsDirectional.only(start: 10, end: 10),
+                          margin: EdgeInsetsDirectional.only(
+                            start: 10,
+                            end: 10,
+                          ),
                           child: Icon(
                             //showMnemonic ? Icons.vpn_key : AppIcons.seed,
                             Icons.vpn_key,
@@ -112,34 +114,35 @@ class IntroBackupSeed extends ConsumerWidget {
                   if (mnemonic != null) ...[
                     MnemonicDisplay(wordList: mnemonic),
                     const SizedBox(height: 20),
-                    Builder(builder: (context) {
-                      final is12Word = mnemonic.length == 12;
-                      final strength = is12Word ? 256 : 128;
-                      final text = is12Word ? '24 WORDS' : '12 WORDS';
-                      return TextButton(
-                        style: styles.smallOutlinedPrimaryButtonStyle,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.cached,
-                                size: 20,
-                              ),
-                              const SizedBox(width: 8),
-                              Text(text),
-                            ],
+                    Builder(
+                      builder: (context) {
+                        final is12Word = mnemonic.length == 12;
+                        final strength = is12Word ? 256 : 128;
+                        final text = is12Word ? '24 WORDS' : '12 WORDS';
+                        return TextButton(
+                          style: styles.smallOutlinedPrimaryButtonStyle,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.cached, size: 20),
+                                const SizedBox(width: 8),
+                                Text(text),
+                              ],
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          final notifier = ref.read(introDataProvider.notifier);
-                          Future.delayed(Duration.zero, () {
-                            notifier.generateMnemonic(strength: strength);
-                          });
-                        },
-                      );
-                    }),
+                          onPressed: () {
+                            final notifier = ref.read(
+                              introDataProvider.notifier,
+                            );
+                            Future.delayed(Duration.zero, () {
+                              notifier.generateMnemonic(strength: strength);
+                            });
+                          },
+                        );
+                      },
+                    ),
                   ] else
                     Text(''),
                 ],

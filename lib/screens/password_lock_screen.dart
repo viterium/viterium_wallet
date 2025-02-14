@@ -13,10 +13,7 @@ import '../widgets/tap_outside_unfocus.dart';
 class PasswordLockScreen extends HookConsumerWidget {
   final Future<bool> Function(String)? validator;
 
-  const PasswordLockScreen({
-    Key? key,
-    this.validator,
-  }) : super(key: key);
+  const PasswordLockScreen({super.key, this.validator});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,77 +57,91 @@ class PasswordLockScreen extends HookConsumerWidget {
             minimum: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.height * 0.035,
             ),
-            child: Column(children: [
-              Row(children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 4),
-                  child: validator != null
-                      ? const BackButton()
-                      : const LogoutButton(),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                        20,
+                        16,
+                        12,
+                        4,
+                      ),
+                      child:
+                          validator != null
+                              ? const BackButton()
+                              : const LogoutButton(),
+                    ),
+                  ],
                 ),
-              ]),
-              Expanded(
-                child: Column(children: [
-                  Container(
-                    child: Icon(
-                      AppIcons.lock,
-                      size: 80,
-                      color: theme.primary,
-                    ),
-                    margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.1,
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      CaseChange.toUpperCase(l10n.locked, ref),
-                      style: styles.textStyleHeaderColored,
-                    ),
-                    margin: const EdgeInsets.only(top: 10),
-                  ),
-                  Expanded(
-                    child: Column(children: [
-                      AppTextField(
-                        topMargin: 30,
-                        padding: EdgeInsetsDirectional.only(
-                          start: 16,
-                          end: 16,
+                Expanded(
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Icon(
+                          AppIcons.lock,
+                          size: 80,
+                          color: theme.primary,
                         ),
-                        focusNode: enterFocusNode,
-                        controller: enterController,
-                        textInputAction: TextInputAction.go,
-                        autofocus: true,
-                        onChanged: (String newText) {
-                          passwordError.value = '';
-                        },
-                        onSubmitted: (value) {
-                          FocusScope.of(context).unfocus();
-                          validateAndUnlock();
-                        },
-                        hintText: l10n.enterPasswordHint,
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        textAlign: TextAlign.center,
-                        style: styles.textStyleParagraphPrimary,
+                        margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.1,
+                        ),
                       ),
                       Container(
-                        alignment: AlignmentDirectional(0, 0),
-                        margin: const EdgeInsets.only(top: 3),
                         child: Text(
-                          passwordError.value,
-                          style: styles.textStyleParagraphThinPrimary,
+                          CaseChange.toUpperCase(l10n.locked, ref),
+                          style: styles.textStyleHeaderColored,
+                        ),
+                        margin: const EdgeInsets.only(top: 10),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            AppTextField(
+                              topMargin: 30,
+                              padding: EdgeInsetsDirectional.only(
+                                start: 16,
+                                end: 16,
+                              ),
+                              focusNode: enterFocusNode,
+                              controller: enterController,
+                              textInputAction: TextInputAction.go,
+                              autofocus: true,
+                              onChanged: (String newText) {
+                                passwordError.value = '';
+                              },
+                              onSubmitted: (value) {
+                                FocusScope.of(context).unfocus();
+                                validateAndUnlock();
+                              },
+                              hintText: l10n.enterPasswordHint,
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
+                              textAlign: TextAlign.center,
+                              style: styles.textStyleParagraphPrimary,
+                            ),
+                            Container(
+                              alignment: AlignmentDirectional(0, 0),
+                              margin: const EdgeInsets.only(top: 3),
+                              child: Text(
+                                passwordError.value,
+                                style: styles.textStyleParagraphThinPrimary,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ]),
+                    ],
                   ),
-                ]),
-              ),
-              PrimaryButton(
-                title: l10n.unlock,
-                margin: const EdgeInsets.fromLTRB(28, 8, 28, 0),
-                onPressed: validateAndUnlock,
-              ),
-            ]),
+                ),
+                PrimaryButton(
+                  title: l10n.unlock,
+                  margin: const EdgeInsets.fromLTRB(28, 8, 28, 0),
+                  onPressed: validateAndUnlock,
+                ),
+              ],
+            ),
           ),
         ),
       ),

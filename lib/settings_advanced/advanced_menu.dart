@@ -21,7 +21,7 @@ import 'tokens_settings_provider.dart';
 
 class AdvancedMenu extends ConsumerWidget {
   final VoidCallback onBackAction;
-  const AdvancedMenu({Key? key, required this.onBackAction}) : super(key: key);
+  const AdvancedMenu({super.key, required this.onBackAction});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -10,10 +10,10 @@ class WalletButton extends ConsumerWidget {
   final Size size;
 
   const WalletButton({
-    Key? key,
+    super.key,
     required this.account,
     this.size = const Size(48, 36),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

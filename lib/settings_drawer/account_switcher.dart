@@ -7,7 +7,7 @@ import '../core/core_providers.dart';
 import '../widgets/sheet_util.dart';
 
 class AccountSwitcher extends ConsumerWidget {
-  const AccountSwitcher({Key? key}) : super(key: key);
+  const AccountSwitcher({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,9 +25,7 @@ class AccountSwitcher extends ConsumerWidget {
     return Container(
       height: 36,
       width: 36,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(shape: BoxShape.circle),
       child: TextButton(
         style: styles.roundButtonStyle,
         onPressed: showAccountsSheet,

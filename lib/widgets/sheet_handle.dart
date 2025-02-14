@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app_providers.dart';
 
 class SheetHandle extends ConsumerWidget {
-  const SheetHandle({Key? key}) : super(key: key);
+  const SheetHandle({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);

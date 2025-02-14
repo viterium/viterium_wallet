@@ -16,14 +16,14 @@ class QuotaSelector extends ConsumerWidget {
   final void Function() onInfo;
 
   QuotaSelector({
-    Key? key,
+    super.key,
     this.value = 0,
     this.minValue = 0,
     this.maxValue = 1 << 30,
     this.step = 1,
     required this.onChanged,
     required this.onInfo,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,10 +44,7 @@ class QuotaSelector extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
-          TextFieldButton(
-            icon: AppIcons.info,
-            onPressed: onInfo,
-          ),
+          TextFieldButton(icon: AppIcons.info, onPressed: onInfo),
           Row(
             children: [
               TextFieldButton(

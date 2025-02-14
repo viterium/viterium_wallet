@@ -15,10 +15,7 @@ import '../widgets/tx_data_widget.dart';
 class SendTxCompleteSheet extends HookConsumerWidget {
   final SendTx tx;
 
-  const SendTxCompleteSheet({
-    Key? key,
-    required this.tx,
-  }) : super(key: key);
+  const SendTxCompleteSheet({super.key, required this.tx});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -79,11 +76,7 @@ class SendTxCompleteSheet extends HookConsumerWidget {
                     amount: Amount.raw(fee, tokenInfo: TokenInfo.vite),
                   ),
                 ],
-                if (data != null)
-                  TxDataWidget(
-                    data: data,
-                    contract: contract,
-                  ),
+                if (data != null) TxDataWidget(data: data, contract: contract),
                 const SizedBox(height: 20),
               ],
             ),

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app_providers.dart';
 
 class TopGradientWidget extends ConsumerWidget {
-  const TopGradientWidget({Key? key}) : super(key: key);
+  const TopGradientWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +27,7 @@ class TopGradientWidget extends ConsumerWidget {
 }
 
 class BottomGradientWidget extends ConsumerWidget {
-  const BottomGradientWidget({Key? key}) : super(key: key);
+  const BottomGradientWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -52,7 +52,7 @@ class BottomGradientWidget extends ConsumerWidget {
 // Used in accounts
 
 class ListTopGradient extends ConsumerWidget {
-  const ListTopGradient({Key? key}) : super(key: key);
+  const ListTopGradient({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -74,7 +74,7 @@ class ListTopGradient extends ConsumerWidget {
 }
 
 class ListBottomGradient extends ConsumerWidget {
-  const ListBottomGradient({Key? key}) : super(key: key);
+  const ListBottomGradient({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -98,7 +98,7 @@ class ListBottomGradient extends ConsumerWidget {
 // Used in contacts
 
 class ContactListTopGradient extends ConsumerWidget {
-  const ContactListTopGradient({Key? key}) : super(key: key);
+  const ContactListTopGradient({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -121,7 +121,7 @@ class ContactListTopGradient extends ConsumerWidget {
 }
 
 class ContactListBottomGradient extends ConsumerWidget {
-  const ContactListBottomGradient({Key? key}) : super(key: key);
+  const ContactListBottomGradient({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);

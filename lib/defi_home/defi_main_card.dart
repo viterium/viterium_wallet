@@ -8,7 +8,7 @@ import '../widgets/app_icon_button.dart';
 import 'defi_info.widget.dart';
 
 class DefiMainCard extends ConsumerWidget {
-  const DefiMainCard({Key? key}) : super(key: key);
+  const DefiMainCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,30 +38,26 @@ class DefiMainCard extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Consumer(builder: (context, ref, _) {
-              final error = ref.watch(networkErrorProvider);
-              return AppIconButton(
-                icon: error ? AppIcons.warning : AppIcons.settings,
-                onPressed: () => scaffoldKey.currentState?.openDrawer(),
-              );
-            }),
+            Consumer(
+              builder: (context, ref, _) {
+                final error = ref.watch(networkErrorProvider);
+                return AppIconButton(
+                  icon: error ? AppIcons.warning : AppIcons.settings,
+                  onPressed: () => scaffoldKey.currentState?.openDrawer(),
+                );
+              },
+            ),
             Container(
               height: 90,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const AccountButton(),
-                  Text(
-                    'DeFi Center',
-                    style: styles.textStyleButtonTextOutline,
-                  ),
+                  Text('DeFi Center', style: styles.textStyleButtonTextOutline),
                 ],
               ),
             ),
-            AppIconButton(
-              icon: AppIcons.info,
-              onPressed: showDefiInfo,
-            ),
+            AppIconButton(icon: AppIcons.info, onPressed: showDefiInfo),
           ],
         ),
       ),

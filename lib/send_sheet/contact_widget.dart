@@ -8,10 +8,10 @@ class ContactWidget extends ConsumerWidget {
   final Contact contact;
   final VoidCallback? onPressed;
   const ContactWidget({
-    Key? key,
+    super.key,
     required this.contact,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

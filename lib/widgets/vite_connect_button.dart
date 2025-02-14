@@ -24,7 +24,7 @@ import '../widgets/dialog.dart';
 import '../widgets/sheet_util.dart';
 
 class ViteConnectButton extends HookConsumerWidget {
-  const ViteConnectButton({Key? key}) : super(key: key);
+  const ViteConnectButton({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -73,7 +73,7 @@ class ViteConnectButton extends HookConsumerWidget {
               ),
               child: ProviderScope(
                 overrides: [
-                  viteConnectPeerProvider.overrideWithValue(peerMeta)
+                  viteConnectPeerProvider.overrideWithValue(peerMeta),
                 ],
                 child: const PeerWidget(),
               ),
@@ -206,9 +206,6 @@ class ViteConnectButton extends HookConsumerWidget {
         onPressed: () => Navigator.of(context).pushNamed('/vite_connect'),
       );
     }
-    return AppIconButton(
-      icon: Icons.qr_code_scanner,
-      onPressed: scanQrCode,
-    );
+    return AppIconButton(icon: Icons.qr_code_scanner, onPressed: scanQrCode);
   }
 }

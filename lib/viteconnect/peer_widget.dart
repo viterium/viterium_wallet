@@ -5,7 +5,7 @@ import '../core/core_providers.dart';
 import 'viteconnect_providers.dart';
 
 class PeerWidget extends ConsumerWidget {
-  const PeerWidget({Key? key}) : super(key: key);
+  const PeerWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,10 +15,7 @@ class PeerWidget extends ConsumerWidget {
     final peer = ref.watch(viteConnectPeerProvider);
 
     if (peer == null) {
-      return Text(
-        'Not connected',
-        style: styles.textStyleDialogHeader,
-      );
+      return Text('Not connected', style: styles.textStyleDialogHeader);
     }
 
     // workaround for ViteX
@@ -38,18 +35,15 @@ class PeerWidget extends ConsumerWidget {
             peerIcon,
             width: 48,
             height: 48,
-            errorBuilder: (___, _, __) => Icon(
-              Icons.swap_horiz_outlined,
-              size: 48,
-              color: theme.primary,
-            ),
+            errorBuilder:
+                (_, _, _) => Icon(
+                  Icons.swap_horiz_outlined,
+                  size: 48,
+                  color: theme.primary,
+                ),
           ),
         ] else
-          Icon(
-            Icons.swap_horiz_outlined,
-            size: 48,
-            color: theme.primary,
-          ),
+          Icon(Icons.swap_horiz_outlined, size: 48, color: theme.primary),
         const SizedBox(width: 20),
         Expanded(
           child: Column(
@@ -57,10 +51,7 @@ class PeerWidget extends ConsumerWidget {
             children: [
               FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(
-                  peerName,
-                  style: styles.textStyleDialogHeader,
-                ),
+                child: Text(peerName, style: styles.textStyleDialogHeader),
               ),
               FittedBox(
                 fit: BoxFit.scaleDown,

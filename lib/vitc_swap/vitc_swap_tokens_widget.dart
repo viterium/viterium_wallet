@@ -5,7 +5,7 @@ import '../app_providers.dart';
 import '../tokens/token_card.dart';
 
 class VitcSwapTokensWidget extends HookConsumerWidget {
-  const VitcSwapTokensWidget({Key? key}) : super(key: key);
+  const VitcSwapTokensWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,30 +21,29 @@ class VitcSwapTokensWidget extends HookConsumerWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index];
-            return TokenCard(
-              key: Key(item.tokenInfo.tokenId),
-              item: item,
-            );
+            return TokenCard(key: Key(item.tokenInfo.tokenId), item: item);
           },
         );
       },
-      loading: () => Align(
-        alignment: Alignment.topCenter,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 15),
-          child: const CupertinoActivityIndicator(),
-        ),
-      ),
-      error: (_, __) => Align(
-        alignment: Alignment.topCenter,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Text(
-            'Error loading trading tokens',
-            style: styles.textStyleAccountName,
+      loading:
+          () => Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: const CupertinoActivityIndicator(),
+            ),
           ),
-        ),
-      ),
+      error:
+          (_, __) => Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Text(
+                'Error loading trading tokens',
+                style: styles.textStyleAccountName,
+              ),
+            ),
+          ),
     );
   }
 }

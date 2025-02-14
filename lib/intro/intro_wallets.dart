@@ -6,7 +6,7 @@ import '../wallet/wallet_list_widget.dart';
 import 'intro_actions_widget.dart';
 
 class IntroWallets extends ConsumerWidget {
-  const IntroWallets({Key? key}) : super(key: key);
+  const IntroWallets({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,10 +41,11 @@ class IntroWallets extends ConsumerWidget {
                             padding: const EdgeInsets.only(left: 34, top: 9),
                             child: Text(
                               'iterium'.toUpperCase(),
-                              style: styles.textStyleSettingsHeader
-                                  .copyWith(letterSpacing: 2),
+                              style: styles.textStyleSettingsHeader.copyWith(
+                                letterSpacing: 2,
+                              ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -57,9 +58,7 @@ class IntroWallets extends ConsumerWidget {
                       style: styles.textStyleLogoutButton,
                     ),
                   ),
-                  Flexible(
-                    child: const WalletListWidget(),
-                  ),
+                  Flexible(child: const WalletListWidget()),
                 ],
               ),
             ),

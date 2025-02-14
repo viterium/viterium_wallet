@@ -8,7 +8,7 @@ import '../widgets/settings_button.dart';
 import '../widgets/vite_connect_button.dart';
 
 class MainCard extends ConsumerWidget {
-  const MainCard({Key? key}) : super(key: key);
+  const MainCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,15 +41,12 @@ class MainCard extends ConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 14),
-            child: Text(
-              'Total Value',
-              style: styles.textStyleTotalValue,
-            ),
+            child: Text('Total Value', style: styles.textStyleTotalValue),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 10, left: 14, right: 14),
             child: const BalanceWidget(),
-          )
+          ),
         ],
       ),
     );

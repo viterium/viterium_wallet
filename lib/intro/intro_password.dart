@@ -11,7 +11,7 @@ import 'intro_back_button.dart';
 import 'intro_providers.dart';
 
 class IntroPassword extends HookConsumerWidget {
-  const IntroPassword({Key? key}) : super(key: key);
+  const IntroPassword({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,9 +26,10 @@ class IntroPassword extends HookConsumerWidget {
     final passwordError = useState('');
     final passwordsMatch = useState(false);
 
-    final textFieldStyle = passwordsMatch.value
-        ? styles.textStyleParagraphPrimary
-        : styles.textStyleParagraphText;
+    final textFieldStyle =
+        passwordsMatch.value
+            ? styles.textStyleParagraphPrimary
+            : styles.textStyleParagraphText;
 
     void inputChanged(_) {
       passwordError.value = '';
@@ -68,98 +69,115 @@ class IntroPassword extends HookConsumerWidget {
             bottom: MediaQuery.of(context).size.height * 0.035,
             top: MediaQuery.of(context).size.height * 0.075,
           ),
-          child: Column(children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: const IntroBackButton(),
-                    ),
-                  ]),
-                  Container(
-                    margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
-                    alignment: const AlignmentDirectional(-1, 0),
-                    child: AutoSizeText(
-                      l10n.createAPasswordHeader,
-                      maxLines: 3,
-                      stepGranularity: 0.5,
-                      style: styles.textStyleHeaderColored,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 40, right: 40, top: 16),
-                    alignment: const AlignmentDirectional(-1, 0),
-                    child: AutoSizeText(
-                      l10n.passwordWillBeRequiredToOpenParagraph,
-                      style: styles.textStyleParagraph,
-                      maxLines: 5,
-                      stepGranularity: 0.5,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(children: [
-                      AppTextField(
-                        topMargin: 30,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        focusNode: createFocusNode,
-                        controller: createController,
-                        textInputAction: TextInputAction.next,
-                        maxLines: 1,
-                        autocorrect: false,
-                        onChanged: inputChanged,
-                        hintText: l10n.createPasswordHint,
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        style: textFieldStyle,
-                        onSubmitted: (text) => confirmFocusNode.requestFocus(),
-                      ),
-                      // Confirm Password Text Field
-                      AppTextField(
-                        topMargin: 20,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        focusNode: confirmFocusNode,
-                        controller: confirmController,
-                        textInputAction: TextInputAction.done,
-                        maxLines: 1,
-                        autocorrect: false,
-                        onChanged: inputChanged,
-                        hintText: l10n.confirmPasswordHint,
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        style: textFieldStyle,
-                      ),
-                      // Error Text
-                      Container(
-                        alignment: AlignmentDirectional(0, 0),
-                        margin: EdgeInsets.only(top: 3),
-                        child: Text(
-                          passwordError.value,
-                          style: styles.textStyleParagraphThinPrimary,
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(start: 20),
+                          child: const IntroBackButton(),
                         ),
+                      ],
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 40,
+                        right: 40,
+                        top: 10,
                       ),
-                    ]),
-                  ),
-                ],
+                      alignment: const AlignmentDirectional(-1, 0),
+                      child: AutoSizeText(
+                        l10n.createAPasswordHeader,
+                        maxLines: 3,
+                        stepGranularity: 0.5,
+                        style: styles.textStyleHeaderColored,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(
+                        left: 40,
+                        right: 40,
+                        top: 16,
+                      ),
+                      alignment: const AlignmentDirectional(-1, 0),
+                      child: AutoSizeText(
+                        l10n.passwordWillBeRequiredToOpenParagraph,
+                        style: styles.textStyleParagraph,
+                        maxLines: 5,
+                        stepGranularity: 0.5,
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          AppTextField(
+                            topMargin: 30,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            focusNode: createFocusNode,
+                            controller: createController,
+                            textInputAction: TextInputAction.next,
+                            maxLines: 1,
+                            autocorrect: false,
+                            onChanged: inputChanged,
+                            hintText: l10n.createPasswordHint,
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            style: textFieldStyle,
+                            onSubmitted:
+                                (text) => confirmFocusNode.requestFocus(),
+                          ),
+                          // Confirm Password Text Field
+                          AppTextField(
+                            topMargin: 20,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            focusNode: confirmFocusNode,
+                            controller: confirmController,
+                            textInputAction: TextInputAction.done,
+                            maxLines: 1,
+                            autocorrect: false,
+                            onChanged: inputChanged,
+                            hintText: l10n.confirmPasswordHint,
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            style: textFieldStyle,
+                          ),
+                          // Error Text
+                          Container(
+                            alignment: AlignmentDirectional(0, 0),
+                            margin: EdgeInsets.only(top: 3),
+                            child: Text(
+                              passwordError.value,
+                              style: styles.textStyleParagraphThinPrimary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Column(children: [
-                PrimaryButton(
-                  title: l10n.nextButton,
-                  onPressed: submitAndContinue,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 28),
+                child: Column(
+                  children: [
+                    PrimaryButton(
+                      title: l10n.nextButton,
+                      onPressed: submitAndContinue,
+                    ),
+                    const SizedBox(height: 16),
+                    PrimaryOutlineButton(
+                      title: l10n.goBackButton,
+                      onPressed: goBack,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                PrimaryOutlineButton(
-                  title: l10n.goBackButton,
-                  onPressed: goBack,
-                ),
-              ]),
-            ),
-          ]),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -6,7 +6,7 @@ import '../app_providers.dart';
 class QuotaMessageWidget extends ConsumerWidget {
   final String message;
 
-  const QuotaMessageWidget({Key? key, required this.message}) : super(key: key);
+  const QuotaMessageWidget({super.key, required this.message});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,11 +20,8 @@ class QuotaMessageWidget extends ConsumerWidget {
         Divider(height: 2, color: theme.text15),
         Padding(
           padding: const EdgeInsets.only(left: 16, top: 8),
-          child: Text(
-            message,
-            style: styles.textStyleParagraphSmall,
-          ),
-        )
+          child: Text(message, style: styles.textStyleParagraphSmall),
+        ),
       ],
     );
   }

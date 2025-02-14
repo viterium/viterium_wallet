@@ -5,7 +5,7 @@ import '../app_providers.dart';
 import '../settings/available_language.dart';
 
 class LanguageDialog extends ConsumerWidget {
-  const LanguageDialog({Key? key}) : super(key: key);
+  const LanguageDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

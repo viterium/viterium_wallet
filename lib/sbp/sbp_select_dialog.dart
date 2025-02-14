@@ -8,7 +8,7 @@ import '../widgets/dialog.dart';
 import 'sbp_vote_info_item.dart';
 
 class SbpSelectDialog extends ConsumerWidget {
-  const SbpSelectDialog({Key? key}) : super(key: key);
+  const SbpSelectDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -18,7 +18,7 @@ import 'double_line_item.dart';
 
 class NetworkMenu extends ConsumerWidget {
   final VoidCallback onBackAction;
-  const NetworkMenu({Key? key, required this.onBackAction}) : super(key: key);
+  const NetworkMenu({super.key, required this.onBackAction});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

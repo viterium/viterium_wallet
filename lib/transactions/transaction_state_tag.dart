@@ -7,10 +7,7 @@ import 'transaction_types.dart';
 class TransactionStateTag extends ConsumerWidget {
   final TxState state;
 
-  const TransactionStateTag({
-    Key? key,
-    required this.state,
-  }) : super(key: key);
+  const TransactionStateTag({super.key, required this.state});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,18 +23,11 @@ class TransactionStateTag extends ConsumerWidget {
       ),
       child: state.when(
         unknown: () => const SizedBox(),
-        unconfirmed: () => Text(
-          l10n.unconfirmed,
-          style: styles.tagText,
-        ),
-        confirming: (confirmations) => Text(
-          '$confirmations confirmations',
-          style: styles.tagText,
-        ),
-        confirmed: () => Text(
-          l10n.confirmed,
-          style: styles.tagText,
-        ),
+        unconfirmed: () => Text(l10n.unconfirmed, style: styles.tagText),
+        confirming:
+            (confirmations) =>
+                Text('$confirmations confirmations', style: styles.tagText),
+        confirmed: () => Text(l10n.confirmed, style: styles.tagText),
       ),
     );
   }

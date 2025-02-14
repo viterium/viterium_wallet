@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -10,10 +11,10 @@ import '../app_icons_custom.dart';
 import '../app_providers.dart';
 import '../defi_home/defi_home_page.dart';
 import '../settings_drawer/settings_drawer.dart';
+import '../util/platform.dart';
 import '../util/routes.dart';
 import '../util/ui_util.dart';
 import '../vitc_stake/vitc_stake_page.dart';
-import '../vitc_swap/vitc_swap_page.dart';
 import '../viva_staking/viva_staking_page.dart';
 import '../wallet_home/wallet_home_page.dart';
 import '../widgets/fab/fab_bottom_app_bar.dart';
@@ -23,11 +24,12 @@ import 'privacy_overlay.dart';
 
 final showOverlayProvider = StateProvider((ref) => false);
 
-final lockStreamListenerProvider =
-    StateProvider<StreamSubscription?>((ref) => null);
+final lockStreamListenerProvider = StateProvider<StreamSubscription?>(
+  (ref) => null,
+);
 
 class HomeScreen extends HookConsumerWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,6 +72,9 @@ class HomeScreen extends HookConsumerWidget {
 
       switch (state) {
         case AppLifecycleState.inactive:
+          if (kDebugMode && kPlatformIsMacOS) {
+            break;
+          }
           inactive.value = true;
           break;
         case AppLifecycleState.hidden:
@@ -132,105 +137,107 @@ class HomeScreen extends HookConsumerWidget {
           final notifier = ref.read(showOverlayProvider.notifier);
           notifier.state = false;
         },
-        child: LayoutBuilder(builder: (context, constraints) {
-          return Scaffold(
-            key: scaffoldKey,
-            drawerEdgeDragWidth: 60,
-            resizeToAvoidBottomInset: false,
-            backgroundColor: theme.background,
-            drawerScrimColor: theme.barrierWeaker,
-            drawer: SizedBox(
-              width: UIUtil.drawerWidth(context),
-              child: const Drawer(child: SettingsSheet()),
-            ),
-            body: SafeArea(
-              //minimum: const EdgeInsets.only(bottom: 20),
-              child: ClipRect(
-                child: NetworkBanner(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: PageView(
-                      controller: pageController,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        const WalletHomePage(),
-                        PopScope(
-                          canPop: false,
-                          onPopInvokedWithResult: (bool didPop, _) {
-                            if (didPop) {
-                              return;
-                            }
-                            final state = _defiNavigatorKey.value.currentState;
-                            if (state != null && state.canPop()) {
-                              state.pop();
-                            }
-                          },
-                          child: Navigator(
-                            key: _defiNavigatorKey.value,
-                            initialRoute: '/',
-                            onGenerateRoute: (settings) {
-                              switch (settings.name) {
-                                case '/viva_staking':
-                                  return MaterialPageRoute(
-                                    builder: (_) => const VivaStakingPage(),
-                                    settings: settings,
-                                  );
-                                case '/vitc_stake':
-                                  return MaterialPageRoute(
-                                    builder: (_) => const VitcStakePage(),
-                                    settings: settings,
-                                  );
-                                case '/vitc_swap':
-                                  return MaterialPageRoute(
-                                    builder: (_) => const VitcSwapPage(),
-                                    settings: settings,
-                                  );
-                                default:
-                                  return NoTransitionRoute(
-                                    builder: (_) => DefiHomePage(),
-                                    settings: settings,
-                                  );
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Scaffold(
+              key: scaffoldKey,
+              drawerEdgeDragWidth: 60,
+              resizeToAvoidBottomInset: false,
+              backgroundColor: theme.background,
+              drawerScrimColor: theme.barrierWeaker,
+              drawer: SizedBox(
+                width: UIUtil.drawerWidth(context),
+                child: const Drawer(child: SettingsSheet()),
+              ),
+              body: SafeArea(
+                //minimum: const EdgeInsets.only(bottom: 20),
+                child: ClipRect(
+                  child: NetworkBanner(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: PageView(
+                        controller: pageController,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          const WalletHomePage(),
+                          PopScope(
+                            canPop: false,
+                            onPopInvokedWithResult: (bool didPop, _) {
+                              if (didPop) {
+                                return;
+                              }
+                              final state =
+                                  _defiNavigatorKey.value.currentState;
+                              if (state != null && state.canPop()) {
+                                state.pop();
                               }
                             },
+                            child: Navigator(
+                              key: _defiNavigatorKey.value,
+                              initialRoute: '/',
+                              onGenerateRoute: (settings) {
+                                switch (settings.name) {
+                                  case '/viva_staking':
+                                    return MaterialPageRoute(
+                                      builder: (_) => const VivaStakingPage(),
+                                      settings: settings,
+                                    );
+                                  case '/vitc_stake':
+                                    return MaterialPageRoute(
+                                      builder: (_) => const VitcStakePage(),
+                                      settings: settings,
+                                    );
+                                  default:
+                                    return NoTransitionRoute(
+                                      builder: (_) => DefiHomePage(),
+                                      settings: settings,
+                                    );
+                                }
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            bottomNavigationBar: defiEnabled
-                ? FABBottomAppBar(
-                    height: 62,
-                    color: theme.text60,
-                    backgroundColor: theme.backgroundDark,
-                    selectedColor: theme.primary,
-                    notchedShape: const CircularNotchedRectangle(),
-                    onTabSelected: showTabWithIndex,
-                    items: [
-                      FABBottomAppBarItem(
-                        iconData: CupertinoIcons.creditcard,
-                        text: 'Wallet',
-                      ),
-                      FABBottomAppBarItem(
-                        iconData: AppIconsCustom.defi,
-                        text: 'DeFi',
-                      ),
-                    ],
-                  )
-                : null,
-            floatingActionButtonLocation:
-                defiEnabled ? FloatingActionButtonLocation.centerDocked : null,
-            floatingActionButton: defiEnabled
-                ? FabWidget(
-                    onSelectedIndex: (_) {},
-                    width: constraints.maxWidth,
-                    controller: controller,
-                  )
-                : null,
-          );
-        }),
+              bottomNavigationBar:
+                  defiEnabled
+                      ? FABBottomAppBar(
+                        height: 62,
+                        color: theme.text60,
+                        backgroundColor: theme.backgroundDark,
+                        selectedColor: theme.primary,
+                        notchedShape: const CircularNotchedRectangle(),
+                        onTabSelected: showTabWithIndex,
+                        items: [
+                          FABBottomAppBarItem(
+                            iconData: CupertinoIcons.creditcard,
+                            text: 'Wallet',
+                          ),
+                          FABBottomAppBarItem(
+                            iconData: AppIconsCustom.defi,
+                            text: 'DeFi',
+                          ),
+                        ],
+                      )
+                      : null,
+              floatingActionButtonLocation:
+                  defiEnabled
+                      ? FloatingActionButtonLocation.centerDocked
+                      : null,
+              floatingActionButton:
+                  defiEnabled
+                      ? FabWidget(
+                        onSelectedIndex: (_) {},
+                        width: constraints.maxWidth,
+                        controller: controller,
+                      )
+                      : null,
+            );
+          },
+        ),
       ),
     );
   }

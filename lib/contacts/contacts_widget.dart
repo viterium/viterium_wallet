@@ -16,10 +16,7 @@ import 'contact_list_widget.dart';
 class ContactsWidget extends ConsumerWidget {
   final VoidCallback onBackAction;
 
-  const ContactsWidget({
-    Key? key,
-    required this.onBackAction,
-  }) : super(key: key);
+  const ContactsWidget({super.key, required this.onBackAction});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -64,46 +61,52 @@ class ContactsWidget extends ConsumerWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: AppIconButton(
-                        icon: AppIcons.back,
-                        onPressed: onBackAction,
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: AppIconButton(
+                          icon: AppIcons.back,
+                          onPressed: onBackAction,
+                        ),
                       ),
-                    ),
-                    Text(
-                      l10n.contactsHeader,
-                      style: styles.textStyleSettingsHeader,
-                    ),
-                  ]),
-                  Row(children: [
-                    Tooltip(
-                      message: 'Import',
-                      child: AppIconButton(
-                        icon: AppIcons.import_icon,
-                        onPressed: importContacts,
+                      Text(
+                        l10n.contactsHeader,
+                        style: styles.textStyleSettingsHeader,
                       ),
-                    ),
-                    const SizedBox(width: 4),
-                    Tooltip(
-                      message: 'Export',
-                      child: AppIconButton(
-                        icon: AppIcons.export_icon,
-                        onPressed: exportContacts,
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Tooltip(
+                        message: 'Import',
+                        child: AppIconButton(
+                          icon: AppIcons.import_icon,
+                          onPressed: importContacts,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                  ]),
+                      const SizedBox(width: 4),
+                      Tooltip(
+                        message: 'Export',
+                        child: AppIconButton(
+                          icon: AppIcons.export_icon,
+                          onPressed: exportContacts,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                  ),
                 ],
               ),
             ),
             Expanded(
-              child: Stack(children: [
-                const ContactListWidget(),
-                const ContactListTopGradient(),
-                const ContactListBottomGradient(),
-              ]),
+              child: Stack(
+                children: [
+                  const ContactListWidget(),
+                  const ContactListTopGradient(),
+                  const ContactListBottomGradient(),
+                ],
+              ),
             ),
             Container(
               margin: const EdgeInsets.only(top: 10),

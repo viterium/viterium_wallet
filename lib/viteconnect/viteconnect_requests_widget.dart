@@ -12,10 +12,7 @@ import 'viteconnect_types.dart';
 class ViteConnectRequestsWidget extends HookConsumerWidget {
   final void Function(VCHistoryItem item) onItemSelect;
 
-  const ViteConnectRequestsWidget({
-    Key? key,
-    required this.onItemSelect,
-  }) : super(key: key);
+  const ViteConnectRequestsWidget({super.key, required this.onItemSelect});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,10 +23,7 @@ class ViteConnectRequestsWidget extends HookConsumerWidget {
     if (history.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(16),
-        child: Text(
-          'No requests so far',
-          style: styles.textStyleAppTextField,
-        ),
+        child: Text('No requests so far', style: styles.textStyleAppTextField),
       );
     }
 

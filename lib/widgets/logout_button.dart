@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import 'dialog.dart';
 
 class LogoutButton extends ConsumerWidget {
-  const LogoutButton({Key? key}) : super(key: key);
+  const LogoutButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,14 +32,13 @@ class LogoutButton extends ConsumerWidget {
       style: styles.dialogButtonStyle,
       onPressed: confirmLogout,
       child: Container(
-        child: Row(children: [
-          Icon(AppIcons.logout, size: 16, color: theme.text),
-          const SizedBox(width: 4),
-          Text(
-            l10n.logout,
-            style: styles.textStyleLogoutButton,
-          ),
-        ]),
+        child: Row(
+          children: [
+            Icon(AppIcons.logout, size: 16, color: theme.text),
+            const SizedBox(width: 4),
+            Text(l10n.logout, style: styles.textStyleLogoutButton),
+          ],
+        ),
       ),
     );
   }

@@ -8,7 +8,7 @@ import '../wallet/wallet_types.dart';
 import 'setup_failed_page.dart';
 
 class SetupWalletScreen extends HookConsumerWidget {
-  const SetupWalletScreen({Key? key}) : super(key: key);
+  const SetupWalletScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,10 +65,7 @@ class SetupWalletScreen extends HookConsumerWidget {
     }, const []);
 
     if (setupFailed.value) {
-      return SetupFailedPage(
-        error: setupError.value,
-        onRestart: restartSetup,
-      );
+      return SetupFailedPage(error: setupError.value, onRestart: restartSetup);
     }
 
     return Scaffold(
@@ -100,10 +97,7 @@ class SetupWalletScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              width: double.infinity,
-              height: 16 + 2 * 55,
-            )
+            const SizedBox(width: double.infinity, height: 16 + 2 * 55),
           ],
         ),
       ),

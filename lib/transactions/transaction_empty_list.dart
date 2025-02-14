@@ -7,10 +7,7 @@ import 'transaction_welcome_card.dart';
 
 class TransactionEmptyList extends ConsumerWidget {
   final String tokenSymbol;
-  const TransactionEmptyList({
-    Key? key,
-    required this.tokenSymbol,
-  }) : super(key: key);
+  const TransactionEmptyList({super.key, required this.tokenSymbol});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

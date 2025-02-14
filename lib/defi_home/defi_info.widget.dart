@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app_providers.dart';
 
 class DefiInfoWidget extends ConsumerWidget {
-  const DefiInfoWidget({Key? key}) : super(key: key);
+  const DefiInfoWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

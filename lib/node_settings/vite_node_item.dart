@@ -8,11 +8,12 @@ import '../widgets/dialog.dart';
 import 'node_providers.dart';
 import 'node_types.dart';
 
-final viteNodeConfigItemProvider =
-    Provider<ViteNodeConfig>((ref) => throw UnimplementedError);
+final viteNodeConfigItemProvider = Provider<ViteNodeConfig>(
+  (ref) => throw UnimplementedError,
+);
 
 class ViteNodeItem extends ConsumerWidget {
-  const ViteNodeItem({Key? key}) : super(key: key);
+  const ViteNodeItem({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -95,8 +96,12 @@ class ViteNodeItem extends ConsumerWidget {
                             ),
                             Container(
                               margin: const EdgeInsets.only(top: 4, right: 4),
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(6, 2, 6, 2),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                6,
+                                2,
+                                6,
+                                2,
+                              ),
                               decoration: BoxDecoration(
                                 color: theme.text10,
                                 borderRadius: BorderRadius.circular(4),

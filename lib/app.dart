@@ -27,7 +27,7 @@ import 'util/platform.dart';
 import 'util/routes.dart';
 
 class App extends HookConsumerWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);

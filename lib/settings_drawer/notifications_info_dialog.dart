@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import '../util/ui_util.dart';
 
 class NotificationsInfoDialog extends ConsumerWidget {
-  const NotificationsInfoDialog({Key? key}) : super(key: key);
+  const NotificationsInfoDialog({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -39,10 +39,7 @@ class NotificationsInfoDialog extends ConsumerWidget {
         Row(
           children: [
             Expanded(
-              child: Text(
-                clientId,
-                style: styles.textStyleAddressText60,
-              ),
+              child: Text(clientId, style: styles.textStyleAddressText60),
             ),
             const SizedBox(width: 16),
             Container(
@@ -62,10 +59,7 @@ class NotificationsInfoDialog extends ConsumerWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Text(
-                accountId,
-                style: styles.textStyleAddressText60,
-              ),
+              child: Text(accountId, style: styles.textStyleAddressText60),
             ),
             const SizedBox(width: 16),
             Container(

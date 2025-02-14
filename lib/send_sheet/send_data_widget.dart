@@ -10,11 +10,7 @@ import '../app_providers.dart';
 class SendDataWidget extends HookConsumerWidget {
   final Uint8List data;
   final bool success;
-  const SendDataWidget({
-    Key? key,
-    required this.data,
-    this.success = false,
-  }) : super(key: key);
+  const SendDataWidget({super.key, required this.data, this.success = false});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,9 +27,10 @@ class SendDataWidget extends HookConsumerWidget {
 
     final title = memo != null ? 'MEMO' : 'DATA';
     final details = memo != null ? memo : data.hex;
-    final titleStyle = success
-        ? styles.textStyleDataTypeHeaderSuccess
-        : styles.textStyleDataTypeHeaderHighlight;
+    final titleStyle =
+        success
+            ? styles.textStyleDataTypeHeaderSuccess
+            : styles.textStyleDataTypeHeaderHighlight;
 
     return Container(
       width: double.infinity,
@@ -42,20 +39,14 @@ class SendDataWidget extends HookConsumerWidget {
         right: MediaQuery.of(context).size.width * 0.105,
         top: 5,
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 15,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       decoration: BoxDecoration(
         color: theme.backgroundDarkest,
         borderRadius: BorderRadius.circular(25),
       ),
       child: Column(
         children: [
-          Text(
-            title,
-            style: titleStyle,
-          ),
+          Text(title, style: titleStyle),
           Text(
             details,
             textAlign: TextAlign.center,

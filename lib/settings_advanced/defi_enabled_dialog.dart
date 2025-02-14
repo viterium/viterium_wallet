@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/core_providers.dart';
 
 class DefiEnabledDialog extends ConsumerWidget {
-  const DefiEnabledDialog({Key? key}) : super(key: key);
+  const DefiEnabledDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/core_providers.dart';
 
 class PushSettingsDialog extends ConsumerWidget {
-  const PushSettingsDialog({Key? key}) : super(key: key);
+  const PushSettingsDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

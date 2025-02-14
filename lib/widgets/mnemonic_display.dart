@@ -10,10 +10,10 @@ class MnemonicDisplay extends HookConsumerWidget {
   final bool obscured;
 
   const MnemonicDisplay({
-    Key? key,
+    super.key,
     required this.wordList,
     this.obscured = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,22 +42,25 @@ class MnemonicDisplay extends HookConsumerWidget {
                   fit: BoxFit.scaleDown,
                   child: RichText(
                     textAlign: TextAlign.start,
-                    text: TextSpan(children: [
-                      TextSpan(
-                        text: wordIndex < 9 ? " " : "",
-                        style: styles.textStyleNumbersOfMnemonic(context),
-                      ),
-                      TextSpan(
-                        text: " ${wordIndex + 1}) ",
-                        style: styles.textStyleNumbersOfMnemonic(context),
-                      ),
-                      TextSpan(
-                        text: isObscured.value && obscured
-                            ? '•' * 6
-                            : wordList[wordIndex],
-                        style: styles.textStyleMnemonic(context),
-                      )
-                    ]),
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: wordIndex < 9 ? " " : "",
+                          style: styles.textStyleNumbersOfMnemonic(context),
+                        ),
+                        TextSpan(
+                          text: " ${wordIndex + 1}) ",
+                          style: styles.textStyleNumbersOfMnemonic(context),
+                        ),
+                        TextSpan(
+                          text:
+                              isObscured.value && obscured
+                                  ? '•' * 6
+                                  : wordList[wordIndex],
+                          style: styles.textStyleMnemonic(context),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -81,42 +84,48 @@ class MnemonicDisplay extends HookConsumerWidget {
       return rows;
     }
 
-    return Column(children: [
-      GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          if (obscured) {
-            isObscured.value = !isObscured.value;
-          }
-        },
-        child: Column(children: [
-          Container(
-            margin: EdgeInsets.only(top: 15),
-            child: Column(
-              children: buildMnemonicRows(wordList.length ~/ 3),
-            ),
-          ),
-          // Tap to reveal or hide
-          if (obscured)
-            Consumer(builder: (context, ref, _) {
-              final styles = ref.watch(stylesProvider);
-              final l10n = ref.watch(l10nProvider);
-
-              final text = isObscured.value
-                  ? l10n.tapToReveal : l10n.tapToHide;
-              return Container(
-                margin: EdgeInsetsDirectional.only(top: 8),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    text,
-                    style: styles.textStyleParagraphThinPrimary,
-                  ),
+    return Column(
+      children: [
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            if (obscured) {
+              isObscured.value = !isObscured.value;
+            }
+          },
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 15),
+                child: Column(
+                  children: buildMnemonicRows(wordList.length ~/ 3),
                 ),
-              );
-            }),
-        ]),
-      ),
-    ]);
+              ),
+              // Tap to reveal or hide
+              if (obscured)
+                Consumer(
+                  builder: (context, ref, _) {
+                    final styles = ref.watch(stylesProvider);
+                    final l10n = ref.watch(l10nProvider);
+
+                    final text =
+                        isObscured.value ? l10n.tapToReveal : l10n.tapToHide;
+                    return Container(
+                      margin: EdgeInsetsDirectional.only(top: 8),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          text,
+                          style: styles.textStyleParagraphThinPrimary,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

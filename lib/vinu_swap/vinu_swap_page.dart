@@ -22,7 +22,7 @@ import 'vinu_swap_token_select_sheet.dart';
 import 'vinu_swap_widgets.dart';
 
 class VinuSwapPage extends HookConsumerWidget {
-  const VinuSwapPage({Key? key}) : super(key: key);
+  const VinuSwapPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -142,14 +142,17 @@ class VinuSwapPage extends HookConsumerWidget {
         return;
       }
 
-      notifier.updateFromValue(value, onRemoteAmount: (amount) {
-        if (amount == null) {
-          toAmountController.value = TextEditingValue.empty;
-          return;
-        }
-        final text = NumberUtil.textFieldFormatedAmount(amount);
-        toAmountController.text = text;
-      });
+      notifier.updateFromValue(
+        value,
+        onRemoteAmount: (amount) {
+          if (amount == null) {
+            toAmountController.value = TextEditingValue.empty;
+            return;
+          }
+          final text = NumberUtil.textFieldFormatedAmount(amount);
+          toAmountController.text = text;
+        },
+      );
     }
 
     void onToChanged(String text) {
@@ -165,14 +168,17 @@ class VinuSwapPage extends HookConsumerWidget {
         return;
       }
 
-      notifier.updateToValue(value, onRemoteAmount: (amount) {
-        if (amount == null) {
-          fromAmountController.value = TextEditingValue.empty;
-          return;
-        }
-        final text = NumberUtil.textFieldFormatedAmount(amount);
-        fromAmountController.text = text;
-      });
+      notifier.updateToValue(
+        value,
+        onRemoteAmount: (amount) {
+          if (amount == null) {
+            fromAmountController.value = TextEditingValue.empty;
+            return;
+          }
+          final text = NumberUtil.textFieldFormatedAmount(amount);
+          fromAmountController.text = text;
+        },
+      );
     }
 
     void onChangeToken({
@@ -182,12 +188,8 @@ class VinuSwapPage extends HookConsumerWidget {
       Sheets.showAppHeightEightSheet(
         context: context,
         widget: ProviderScope(
-          overrides: [
-            tokenCardActionProvider.overrideWithValue(action),
-          ],
-          child: VinuSwapTokenSelectSheet(
-            title: title,
-          ),
+          overrides: [tokenCardActionProvider.overrideWithValue(action)],
+          child: VinuSwapTokenSelectSheet(title: title),
         ),
         theme: theme,
         backgroundColor: theme.background,
@@ -210,14 +212,17 @@ class VinuSwapPage extends HookConsumerWidget {
       );
 
       final notifier = ref.read(vinuSwapStateProvider.notifier);
-      notifier.updateFromValue(amount.value, onRemoteAmount: (amount) {
-        if (amount == null) {
-          toAmountController.value = TextEditingValue.empty;
-          return;
-        }
-        final text = NumberUtil.textFieldFormatedAmount(amount);
-        toAmountController.text = text;
-      });
+      notifier.updateFromValue(
+        amount.value,
+        onRemoteAmount: (amount) {
+          if (amount == null) {
+            toAmountController.value = TextEditingValue.empty;
+            return;
+          }
+          final text = NumberUtil.textFieldFormatedAmount(amount);
+          toAmountController.text = text;
+        },
+      );
     }
 
     void onSwitchTokens() {
@@ -317,11 +322,14 @@ class VinuSwapPage extends HookConsumerWidget {
                           prefixButton: TextFieldButton(
                             icon: AppIcons.swapcurrency,
                             widget: TokenIconWidget(
-                                tokenId: state.fromToken.tokenId),
-                            onPressed: () => onChangeToken(
-                              title: 'Swap From',
-                              action: TokenCardAction.vinuSwapSelectFromToken,
+                              tokenId: state.fromToken.tokenId,
                             ),
+                            onPressed:
+                                () => onChangeToken(
+                                  title: 'Swap From',
+                                  action:
+                                      TokenCardAction.vinuSwapSelectFromToken,
+                                ),
                           ),
                           suffixButton: TextFieldButton(
                             icon: AppIcons.max,
@@ -330,7 +338,8 @@ class VinuSwapPage extends HookConsumerWidget {
                           fadeSuffixOnCondition: true,
                           suffixShowFirstCondition: !isMaxSwap,
                           keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true),
+                            decimal: true,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -338,10 +347,7 @@ class VinuSwapPage extends HookConsumerWidget {
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: TextButton(
                           style: styles.appIconButtonStyle,
-                          child: Icon(
-                            Icons.swap_vert,
-                            color: theme.text,
-                          ),
+                          child: Icon(Icons.swap_vert, color: theme.text),
                           onPressed: onSwitchTokens,
                         ),
                       ),
@@ -359,13 +365,15 @@ class VinuSwapPage extends HookConsumerWidget {
                           prefixButton: TextFieldButton(
                             icon: AppIcons.swapcurrency,
                             widget: TokenIconWidget(tokenId: toToken.tokenId),
-                            onPressed: () => onChangeToken(
-                              title: 'Swap To',
-                              action: TokenCardAction.vinuSwapSelectToToken,
-                            ),
+                            onPressed:
+                                () => onChangeToken(
+                                  title: 'Swap To',
+                                  action: TokenCardAction.vinuSwapSelectToToken,
+                                ),
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true),
+                            decimal: true,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -387,10 +395,7 @@ class VinuSwapPage extends HookConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 28),
                 child: Column(
                   children: [
-                    PrimaryButton(
-                      title: 'Swap',
-                      onPressed: confirmSwap,
-                    ),
+                    PrimaryButton(title: 'Swap', onPressed: confirmSwap),
                     const SizedBox(height: 16),
                     PrimaryOutlineButton(
                       title: l10n.close,

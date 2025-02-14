@@ -11,7 +11,7 @@ import '../widgets/logout_button.dart';
 import '../widgets/pin_screen.dart';
 
 class LockScreen extends ConsumerStatefulWidget {
-  const LockScreen({Key? key}) : super(key: key);
+  const LockScreen({super.key});
 
   @override
   _LockScreenState createState() => _LockScreenState();
@@ -135,9 +135,10 @@ class _LockScreenState extends ConsumerState<LockScreen> {
       pinScreenBackgroundColor: theme.backgroundDark,
     );
 
-    final transition = useTransition
-        ? MaterialPageRoute<bool>(builder: (context) => pinScreen)
-        : NoTransitionRoute<bool>(builder: (context) => pinScreen);
+    final transition =
+        useTransition
+            ? MaterialPageRoute<bool>(builder: (context) => pinScreen)
+            : NoTransitionRoute<bool>(builder: (context) => pinScreen);
     final auth = await Navigator.of(context).push(transition);
     await Future.delayed(Duration(milliseconds: 200));
 
@@ -214,57 +215,67 @@ class _LockScreenState extends ConsumerState<LockScreen> {
           ),
           child: Column(
             children: [
-              Row(children: [
-                Padding(
-                  padding: const EdgeInsetsDirectional.fromSTEB(20, 16, 12, 4),
-                  child: const LogoutButton(),
-                ),
-              ]),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                      20,
+                      16,
+                      12,
+                      4,
+                    ),
+                    child: const LogoutButton(),
+                  ),
+                ],
+              ),
               Expanded(
-                child: _showLock
-                    ? Column(children: [
-                        Container(
-                          child: Icon(
-                            AppIcons.lock,
-                            size: 80,
-                            color: theme.primary,
-                          ),
-                          margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).size.height * 0.1,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            CaseChange.toUpperCase(l10n.locked, ref),
-                            style: styles.textStyleHeaderColored,
-                          ),
-                          margin: EdgeInsets.only(top: 10),
-                        ),
-                      ])
-                    : const SizedBox(),
+                child:
+                    _showLock
+                        ? Column(
+                          children: [
+                            Container(
+                              child: Icon(
+                                AppIcons.lock,
+                                size: 80,
+                                color: theme.primary,
+                              ),
+                              margin: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.1,
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                CaseChange.toUpperCase(l10n.locked, ref),
+                                style: styles.textStyleHeaderColored,
+                              ),
+                              margin: EdgeInsets.only(top: 10),
+                            ),
+                          ],
+                        )
+                        : const SizedBox(),
               ),
               _lockedOut
                   ? Container(
-                      width: MediaQuery.of(context).size.width - 100,
-                      margin: EdgeInsets.symmetric(horizontal: 50),
-                      child: Text(
-                        l10n.tooManyFailedAttempts,
-                        style: styles.textStyleErrorMedium,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
+                    width: MediaQuery.of(context).size.width - 100,
+                    margin: EdgeInsets.symmetric(horizontal: 50),
+                    child: Text(
+                      l10n.tooManyFailedAttempts,
+                      style: styles.textStyleErrorMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                   : const SizedBox(),
               _showUnlockButton
                   ? PrimaryButton(
-                      title: _lockedOut ? _countDownTxt : l10n.unlock,
-                      margin: const EdgeInsets.fromLTRB(28, 8, 28, 0),
-                      onPressed: () {
-                        if (!_lockedOut) {
-                          _authenticate(useTransition: true);
-                        }
-                      },
-                      disabled: _lockedOut,
-                    )
+                    title: _lockedOut ? _countDownTxt : l10n.unlock,
+                    margin: const EdgeInsets.fromLTRB(28, 8, 28, 0),
+                    onPressed: () {
+                      if (!_lockedOut) {
+                        _authenticate(useTransition: true);
+                      }
+                    },
+                    disabled: _lockedOut,
+                  )
                   : const SizedBox(),
             ],
           ),

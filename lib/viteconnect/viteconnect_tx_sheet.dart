@@ -20,11 +20,7 @@ class ViteConnectTxSheet extends HookConsumerWidget {
   final VCTxRequest request;
   final VCTxResponse? response;
 
-  const ViteConnectTxSheet({
-    Key? key,
-    required this.request,
-    this.response,
-  }) : super(key: key);
+  const ViteConnectTxSheet({super.key, required this.request, this.response});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,8 +168,8 @@ class ViteConnectTxSheet extends HookConsumerWidget {
                       children: [
                         Icon(
                           response.when(
-                            confirmed: (_) =>
-                                Icons.check_circle_outline_outlined,
+                            confirmed:
+                                (_) => Icons.check_circle_outline_outlined,
                             cancelled: () => Icons.cancel_outlined,
                           ),
                           size: 28,
@@ -229,24 +225,22 @@ class ViteConnectTxSheet extends HookConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: response != null
-            ? PrimaryOutlineButton(
-                title: l10n.close,
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            : Column(
-                children: [
-                  PrimaryButton(
-                    title: l10n.confirm,
-                    onPressed: onConfirm,
-                  ),
-                  const SizedBox(height: 16),
-                  PrimaryOutlineButton(
-                    title: l10n.cancel,
-                    onPressed: onCancel,
-                  ),
-                ],
-              ),
+        child:
+            response != null
+                ? PrimaryOutlineButton(
+                  title: l10n.close,
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+                : Column(
+                  children: [
+                    PrimaryButton(title: l10n.confirm, onPressed: onConfirm),
+                    const SizedBox(height: 16),
+                    PrimaryOutlineButton(
+                      title: l10n.cancel,
+                      onPressed: onCancel,
+                    ),
+                  ],
+                ),
       ),
     );
   }

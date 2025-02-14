@@ -14,7 +14,7 @@ const defaultTokenIconUrl = 'assets/token_icons/default.png';
 class TokenCard extends ConsumerWidget {
   final BalanceInfo item;
 
-  const TokenCard({Key? key, required this.item}) : super(key: key);
+  const TokenCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -81,34 +81,33 @@ class TokenCard extends ConsumerWidget {
         },
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 12,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(children: [
-                  TokenIconWidget(tokenId: tokenId),
-                  const SizedBox(width: 12),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.tokenInfo.tokenName,
-                          textAlign: TextAlign.start,
-                          style: styles.textStyleTransactionType,
-                        ),
-                        Text(
-                          symbolLabel,
-                          textAlign: TextAlign.start,
-                          style: styles.textStyleTransactionUnit,
-                        ),
-                      ],
+                Row(
+                  children: [
+                    TokenIconWidget(tokenId: tokenId),
+                    const SizedBox(width: 12),
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.tokenInfo.tokenName,
+                            textAlign: TextAlign.start,
+                            style: styles.textStyleTransactionType,
+                          ),
+                          Text(
+                            symbolLabel,
+                            textAlign: TextAlign.start,
+                            style: styles.textStyleTransactionUnit,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
                 Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,

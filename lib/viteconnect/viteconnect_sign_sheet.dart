@@ -22,11 +22,7 @@ class ViteConnectSignSheet extends HookConsumerWidget {
   final VCSignRequest request;
   final VCSignResponse? response;
 
-  const ViteConnectSignSheet({
-    Key? key,
-    required this.request,
-    this.response,
-  }) : super(key: key);
+  const ViteConnectSignSheet({super.key, required this.request, this.response});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -144,24 +140,22 @@ class ViteConnectSignSheet extends HookConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: response != null
-            ? PrimaryOutlineButton(
-                title: l10n.close,
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            : Column(
-                children: [
-                  PrimaryButton(
-                    title: l10n.confirm,
-                    onPressed: onConfirm,
-                  ),
-                  const SizedBox(height: 16),
-                  PrimaryOutlineButton(
-                    title: l10n.cancel,
-                    onPressed: onCancel,
-                  ),
-                ],
-              ),
+        child:
+            response != null
+                ? PrimaryOutlineButton(
+                  title: l10n.close,
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+                : Column(
+                  children: [
+                    PrimaryButton(title: l10n.confirm, onPressed: onConfirm),
+                    const SizedBox(height: 16),
+                    PrimaryOutlineButton(
+                      title: l10n.cancel,
+                      onPressed: onCancel,
+                    ),
+                  ],
+                ),
       ),
     );
   }

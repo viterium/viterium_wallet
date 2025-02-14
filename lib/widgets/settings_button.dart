@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import '../widgets/app_icon_button.dart';
 
 class SettingsButton extends ConsumerWidget {
-  const SettingsButton({Key? key}) : super(key: key);
+  const SettingsButton({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = ref.watch(homePageScaffoldKeyProvider);

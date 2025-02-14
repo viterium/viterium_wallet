@@ -12,7 +12,7 @@ import 'screens/splash_screen.dart';
 
 // FIXME - Unused
 class GoRouterWidget extends ConsumerWidget {
-  const GoRouterWidget({Key? key}) : super(key: key);
+  const GoRouterWidget({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final router = GoRouter(

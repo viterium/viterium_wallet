@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/core_providers.dart';
 
 class AutoReceiveDialog extends ConsumerWidget {
-  const AutoReceiveDialog({Key? key}) : super(key: key);
+  const AutoReceiveDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

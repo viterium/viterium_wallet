@@ -11,11 +11,11 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
   final AddressTextType type;
 
   const OneOrThreeLineAddressText({
-    Key? key,
+    super.key,
     required this.address,
     required this.type,
     this.contactName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,10 +37,7 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
                       text: stringPartOne,
                       style: styles.textStyleAddressPrimary60,
                     ),
-                    TextSpan(
-                      text: "...",
-                      style: styles.textStyleAddressText60,
-                    ),
+                    TextSpan(text: "...", style: styles.textStyleAddressText60),
                     TextSpan(
                       text: stringPartFive,
                       style: styles.textStyleAddressPrimary60,
@@ -62,10 +59,7 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
                       text: stringPartOne,
                       style: styles.textStyleAddressPrimary,
                     ),
-                    TextSpan(
-                      text: "...",
-                      style: styles.textStyleAddressText90,
-                    ),
+                    TextSpan(text: "...", style: styles.textStyleAddressText90),
                     TextSpan(
                       text: stringPartFive,
                       style: styles.textStyleAddressPrimary,
@@ -87,10 +81,7 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
                       text: stringPartOne,
                       style: styles.textStyleAddressSuccess,
                     ),
-                    TextSpan(
-                      text: "...",
-                      style: styles.textStyleAddressText90,
-                    ),
+                    TextSpan(text: "...", style: styles.textStyleAddressText90),
                     TextSpan(
                       text: stringPartFive,
                       style: styles.textStyleAddressSuccess,
@@ -150,20 +141,25 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
                     style: styles.textStyleAddressText60,
                   ),
                   TextSpan(
-                      text: stringPartFive,
-                      style: styles.textStyleAddressPrimary60),
+                    text: stringPartFive,
+                    style: styles.textStyleAddressPrimary60,
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         );
       case AddressTextType.PRIMARY:
-        Widget contactWidget = contactName != null
-            ? RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: contactName, style: styles.textStyleAddressPrimary))
-            : SizedBox();
+        Widget contactWidget =
+            contactName != null
+                ? RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: contactName,
+                    style: styles.textStyleAddressPrimary,
+                  ),
+                )
+                : SizedBox();
         return Column(
           children: [
             contactWidget,
@@ -210,16 +206,20 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
       case AddressTextType.SUCCESS:
-        Widget contactWidget = contactName != null
-            ? RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: contactName, style: styles.textStyleAddressSuccess))
-            : SizedBox();
+        Widget contactWidget =
+            contactName != null
+                ? RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: contactName,
+                    style: styles.textStyleAddressSuccess,
+                  ),
+                )
+                : SizedBox();
         return Column(
           children: [
             contactWidget,
@@ -266,7 +266,7 @@ class OneOrThreeLineAddressText extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
     }

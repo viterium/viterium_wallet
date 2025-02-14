@@ -20,11 +20,11 @@ class SendCompleteSheet extends HookConsumerWidget {
   final Uint8List? data;
 
   const SendCompleteSheet({
-    Key? key,
+    super.key,
     required this.amount,
     required this.toAddress,
     this.data,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,14 +74,8 @@ class SendCompleteSheet extends HookConsumerWidget {
                       ),
                       if (data != null)
                         Padding(
-                          padding: const EdgeInsets.only(
-                            top: 30,
-                            bottom: 10,
-                          ),
-                          child: SendDataWidget(
-                            data: data!,
-                            success: true,
-                          ),
+                          padding: const EdgeInsets.only(top: 30, bottom: 10),
+                          child: SendDataWidget(data: data!, success: true),
                         ),
                     ],
                   ),

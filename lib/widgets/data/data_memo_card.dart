@@ -6,10 +6,7 @@ import '../../app_providers.dart';
 class DataMemoCard extends ConsumerWidget {
   final String memo;
 
-  const DataMemoCard({
-    Key? key,
-    required this.memo,
-  }) : super(key: key);
+  const DataMemoCard({super.key, required this.memo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,10 +14,7 @@ class DataMemoCard extends ConsumerWidget {
     final styles = ref.watch(stylesProvider);
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 15,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       margin: EdgeInsets.only(
         left: MediaQuery.of(context).size.width * 0.105,
         right: MediaQuery.of(context).size.width * 0.105,

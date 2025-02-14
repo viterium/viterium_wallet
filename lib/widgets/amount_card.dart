@@ -10,7 +10,7 @@ import '../util/numberutil.dart';
 class AmountCard extends HookConsumerWidget {
   final Amount amount;
 
-  const AmountCard({Key? key, required this.amount}) : super(key: key);
+  const AmountCard({super.key, required this.amount});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,10 +22,7 @@ class AmountCard extends HookConsumerWidget {
     }, [amount]);
 
     final exactAmount = useMemoized(() {
-      return NumberUtil.approx(
-            amount: amount,
-            precision: amount.decimals,
-          ) +
+      return NumberUtil.approx(amount: amount, precision: amount.decimals) +
           ' ${amount.symbolLabel}';
     }, [amount]);
 
@@ -46,10 +43,7 @@ class AmountCard extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: 48,
-              maxWidth: 48,
-            ),
+            constraints: BoxConstraints(maxHeight: 48, maxWidth: 48),
             child: Padding(
               padding: const EdgeInsets.all(4),
               child: TokenIconWidget(tokenId: amount.tokenId),

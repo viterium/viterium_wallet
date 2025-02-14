@@ -9,7 +9,7 @@ import 'address_widgets.dart';
 import 'sheet_util.dart';
 
 class AccountButton extends ConsumerWidget {
-  const AccountButton({Key? key}) : super(key: key);
+  const AccountButton({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -37,17 +37,11 @@ class AccountButton extends ConsumerWidget {
       onLongPress: copyAddress,
       child: Container(
         height: 60,
-        padding: const EdgeInsets.symmetric(
-          vertical: 6,
-          horizontal: 18,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 18),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              account.name,
-              style: styles.textStyleAccountName,
-            ),
+            Text(account.name, style: styles.textStyleAccountName),
             AddressShortText(address: account.viteAddress),
           ],
         ),

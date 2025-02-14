@@ -12,7 +12,7 @@ import 'push_settings_dialog.dart';
 import 'selection_item.dart';
 
 class PushSettingsItem extends ConsumerWidget {
-  const PushSettingsItem({Key? key}) : super(key: key);
+  const PushSettingsItem({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);

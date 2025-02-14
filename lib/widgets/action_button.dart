@@ -10,11 +10,7 @@ class ActionButton extends ConsumerWidget {
   final String title;
   final VoidCallback? onPressed;
 
-  const ActionButton({
-    Key? key,
-    required this.title,
-    required this.onPressed,
-  }) : super(key: key);
+  const ActionButton({super.key, required this.title, required this.onPressed});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,10 +43,7 @@ class ActionButton extends ConsumerWidget {
 class ReceiveActionButton extends ConsumerWidget {
   final VoidCallback? onPressed;
 
-  const ReceiveActionButton({
-    Key? key,
-    this.onPressed,
-  }) : super(key: key);
+  const ReceiveActionButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,10 +66,7 @@ class ReceiveActionButton extends ConsumerWidget {
 
 class SendActionButton extends ConsumerWidget {
   final VoidCallback? onPressed;
-  const SendActionButton({
-    Key? key,
-    this.onPressed,
-  }) : super(key: key);
+  const SendActionButton({super.key, this.onPressed});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);

@@ -7,7 +7,7 @@ import '../widgets/sheet_util.dart';
 import 'quota_sheet.dart';
 
 class QuotaWidget extends ConsumerWidget {
-  const QuotaWidget({Key? key}) : super(key: key);
+  const QuotaWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,19 +36,22 @@ class QuotaWidget extends ConsumerWidget {
               child: Text('Quota', style: styles.textStyleCurrencyAlt),
             ),
             const SizedBox(width: 10),
-            Builder(builder: (context) {
-              final ut = Decimal.fromInt(21000);
-              final current = (Decimal.parse(quota.currentQuota) / ut)
-                  .toDecimal(scaleOnInfinitePrecision: 2);
-              final max = (Decimal.parse(quota.maxQuota) / ut)
-                  .toDecimal(scaleOnInfinitePrecision: 2);
-              final digits = current.isInteger ? 0 : 2;
-              final currentLabel = current.toStringAsFixed(digits);
-              return Text(
-                '$currentLabel / ${max} UT',
-                style: styles.textStyleTransactionAmount,
-              );
-            }),
+            Builder(
+              builder: (context) {
+                final ut = Decimal.fromInt(21000);
+                final current = (Decimal.parse(quota.currentQuota) / ut)
+                    .toDecimal(scaleOnInfinitePrecision: 2);
+                final max = (Decimal.parse(quota.maxQuota) / ut).toDecimal(
+                  scaleOnInfinitePrecision: 2,
+                );
+                final digits = current.isInteger ? 0 : 2;
+                final currentLabel = current.toStringAsFixed(digits);
+                return Text(
+                  '$currentLabel / ${max} UT',
+                  style: styles.textStyleTransactionAmount,
+                );
+              },
+            ),
           ],
         ),
       ),

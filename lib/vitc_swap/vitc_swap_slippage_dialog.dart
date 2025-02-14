@@ -10,8 +10,7 @@ import '../widgets/app_text_field.dart';
 class VitcSwapSlippageDialog extends HookConsumerWidget {
   final double slippage;
 
-  const VitcSwapSlippageDialog({Key? key, required this.slippage})
-    : super(key: key);
+  const VitcSwapSlippageDialog({super.key, required this.slippage});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

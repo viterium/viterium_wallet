@@ -5,7 +5,7 @@ import '../app_providers.dart';
 import '../widgets/one_or_three_address_text.dart';
 
 class AccountAddressWidget extends ConsumerWidget {
-  const AccountAddressWidget({Key? key}) : super(key: key);
+  const AccountAddressWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

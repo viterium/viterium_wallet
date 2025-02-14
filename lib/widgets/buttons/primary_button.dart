@@ -11,13 +11,13 @@ class PrimaryButton extends ConsumerWidget {
   final Function? onPressed;
 
   const PrimaryButton({
-    Key? key,
+    super.key,
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
     this.locked = false,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,9 +35,10 @@ class PrimaryButton extends ConsumerWidget {
             height: 55,
             margin: margin,
             child: TextButton(
-              style: disabled
-                  ? styles.disabledPrimaryButtonStyle
-                  : styles.primaryButtonStyle,
+              style:
+                  disabled
+                      ? styles.disabledPrimaryButtonStyle
+                      : styles.primaryButtonStyle,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Visibility(

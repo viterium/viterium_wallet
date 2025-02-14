@@ -10,7 +10,7 @@ import '../intro/intro_wallet_name.dart';
 import '../widgets/pin_screen.dart';
 
 class IntroScreen extends HookConsumerWidget {
-  const IntroScreen({Key? key}) : super(key: key);
+  const IntroScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,8 +59,9 @@ class IntroScreen extends HookConsumerWidget {
         return;
       }
 
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/wallet_setup', (route) => false);
+      Navigator.of(
+        context,
+      ).pushNamedAndRemoveUntil('/wallet_setup', (route) => false);
     });
 
     Widget widgetForPage(IntroPage page) {
@@ -86,9 +87,7 @@ class IntroScreen extends HookConsumerWidget {
       state.whenOrNull(
         push: (page) {
           final widget = widgetForPage(page);
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => widget),
-          );
+          Navigator.of(context).push(MaterialPageRoute(builder: (_) => widget));
         },
         pop: () => Navigator.of(context).pop(),
       );

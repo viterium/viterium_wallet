@@ -10,11 +10,11 @@ class FabWithIcons extends ConsumerWidget {
   final AnimationController controller;
 
   const FabWithIcons({
-    Key? key,
+    super.key,
     required this.width,
     required this.controller,
     required this.onIconTapped,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,9 +37,7 @@ class FabWithIcons extends ConsumerWidget {
                 parent: controller,
                 curve: Interval(0.0, 1.0, curve: Curves.easeOut),
               ),
-              child: ReceiveActionButton(
-                onPressed: hideOverlay,
-              ),
+              child: ReceiveActionButton(onPressed: hideOverlay),
             ),
           ),
           const SizedBox(width: 60),
@@ -49,9 +47,7 @@ class FabWithIcons extends ConsumerWidget {
                 parent: controller,
                 curve: Interval(0.0, 1.0, curve: Curves.easeOut),
               ),
-              child: SendActionButton(
-                onPressed: hideOverlay,
-              ),
+              child: SendActionButton(onPressed: hideOverlay),
             ),
           ),
         ],

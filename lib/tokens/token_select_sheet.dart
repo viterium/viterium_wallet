@@ -8,7 +8,7 @@ import '../widgets/sheet_widget.dart';
 import 'tokens_widget.dart';
 
 class TokenSelectSheet extends ConsumerWidget {
-  const TokenSelectSheet({Key? key}) : super(key: key);
+  const TokenSelectSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

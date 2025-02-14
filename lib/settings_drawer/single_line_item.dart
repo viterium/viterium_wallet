@@ -12,12 +12,12 @@ class SingleLineItem extends ConsumerWidget {
   final VoidCallback? onPressed;
 
   const SingleLineItem({
-    Key? key,
+    super.key,
     required this.heading,
     required this.settingIcon,
     this.iconSize = 24,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,40 +39,35 @@ class SingleLineItem extends ConsumerWidget {
             Container(
               margin: const EdgeInsetsDirectional.only(end: 13),
               child: Container(
-                child: Icon(
-                  settingIcon,
-                  color: theme.primary,
-                  size: iconSize,
-                ),
+                child: Icon(settingIcon, color: theme.primary, size: iconSize),
                 margin: EdgeInsetsDirectional.only(
                   top: 3,
-                  start: settingIcon == AppIcons.logout
-                      ? 6
-                      : settingIcon == AppIcons.changerepresentative
+                  start:
+                      settingIcon == AppIcons.logout
+                          ? 6
+                          : settingIcon == AppIcons.changerepresentative
                           ? 0
                           : settingIcon == AppIcons.backupseed
-                              ? 1
-                              : settingIcon == AppIcons.transferfunds
-                                  ? 2
-                                  : 3,
+                          ? 1
+                          : settingIcon == AppIcons.transferfunds
+                          ? 2
+                          : 3,
                   bottom: 3,
-                  end: settingIcon == AppIcons.logout
-                      ? 0
-                      : settingIcon == AppIcons.changerepresentative
+                  end:
+                      settingIcon == AppIcons.logout
+                          ? 0
+                          : settingIcon == AppIcons.changerepresentative
                           ? 6
                           : settingIcon == AppIcons.backupseed
-                              ? 5
-                              : settingIcon == AppIcons.transferfunds
-                                  ? 4
-                                  : 3,
+                          ? 5
+                          : settingIcon == AppIcons.transferfunds
+                          ? 4
+                          : 3,
                 ),
               ),
             ),
             Container(
-              child: Text(
-                heading,
-                style: styles.textStyleSettingItemHeader,
-              ),
+              child: Text(heading, style: styles.textStyleSettingItemHeader),
             ),
           ],
         ),

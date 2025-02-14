@@ -19,8 +19,7 @@ import 'viva_staking_types.dart';
 class VivaStakingStakeDialog extends HookConsumerWidget {
   final VivaPoolInfoAll poolInfo;
 
-  const VivaStakingStakeDialog({Key? key, required this.poolInfo})
-    : super(key: key);
+  const VivaStakingStakeDialog({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

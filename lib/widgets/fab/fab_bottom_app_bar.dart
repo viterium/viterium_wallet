@@ -4,10 +4,7 @@ class FABBottomAppBarItem {
   final IconData iconData;
   final String text;
 
-  const FABBottomAppBarItem({
-    required this.iconData,
-    required this.text,
-  });
+  const FABBottomAppBarItem({required this.iconData, required this.text});
 }
 
 class FABBottomAppBar extends StatefulWidget {
@@ -22,7 +19,7 @@ class FABBottomAppBar extends StatefulWidget {
   final ValueChanged<int> onTabSelected;
 
   FABBottomAppBar({
-    Key? key,
+    super.key,
     required this.items,
     this.centerItemText,
     this.height = 60,
@@ -32,7 +29,7 @@ class FABBottomAppBar extends StatefulWidget {
     required this.selectedColor,
     required this.notchedShape,
     required this.onTabSelected,
-  }) : super(key: key) {
+  }) {
     assert(this.items.length == 2 || this.items.length == 4);
   }
 
@@ -114,7 +111,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(item.iconData, color: color, size: widget.iconSize),
-                  Text(item.text, style: TextStyle(color: color))
+                  Text(item.text, style: TextStyle(color: color)),
                 ],
               ),
             ),

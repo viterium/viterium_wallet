@@ -21,7 +21,7 @@ import 'viteconnect_types.dart';
 final autoSignEnabledProvider = StateProvider((ref) => false);
 
 class ViteConnectPage extends HookConsumerWidget {
-  const ViteConnectPage({Key? key}) : super(key: key);
+  const ViteConnectPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,10 +48,7 @@ class ViteConnectPage extends HookConsumerWidget {
               throw Exception('Address mismatch');
             }
 
-            final txRequest = VCTxRequest(
-              id: request.id,
-              tx: tx,
-            );
+            final txRequest = VCTxRequest(id: request.id, tx: tx);
 
             Sheets.showAppHeightNineSheet(
               context: context,
@@ -107,25 +104,27 @@ class ViteConnectPage extends HookConsumerWidget {
     }
 
     void disconnectConfirm() {
-      state.mapOrNull(connected: (state) {
-        AppDialogs.showConfirmDialog(
-          context,
-          'ViteConnect',
-          '',
-          'Disconnect'.toUpperCase(),
-          disconnect,
-          contentWidget: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: theme.backgroundDarkest,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [theme.boxShadow],
+      state.mapOrNull(
+        connected: (state) {
+          AppDialogs.showConfirmDialog(
+            context,
+            'ViteConnect',
+            '',
+            'Disconnect'.toUpperCase(),
+            disconnect,
+            contentWidget: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: theme.backgroundDarkest,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [theme.boxShadow],
+              ),
+              child: const PeerWidget(),
             ),
-            child: const PeerWidget(),
-          ),
-        );
-      });
+          );
+        },
+      );
     }
 
     // Future<void> setAutoSign(bool value) async {
@@ -151,22 +150,24 @@ class ViteConnectPage extends HookConsumerWidget {
                     icon: Icons.arrow_back,
                     onPressed: () => Navigator.of(context).pop(),
                   ),
-                  Column(children: [
-                    Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 4,
-                        vertical: 8,
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'ViteConnect',
-                          style: styles.textStyleHeader(context),
-                          textAlign: TextAlign.center,
+                  Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 4,
+                          vertical: 8,
+                        ),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            'ViteConnect',
+                            style: styles.textStyleHeader(context),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
                   AppIconButton(
                     icon: Icons.power_settings_new_outlined,
                     onPressed: disconnectConfirm,
@@ -218,6 +219,7 @@ class ViteConnectPage extends HookConsumerWidget {
                           ),
                           child: const PeerWidget(),
                         ),
+
                         // const SizedBox(height: 20),
                         // Row(
                         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -241,7 +243,6 @@ class ViteConnectPage extends HookConsumerWidget {
                         //     }),
                         //   ],
                         // ),
-
                         const SizedBox(height: 30),
                         Align(
                           alignment: Alignment.center,
@@ -254,24 +255,26 @@ class ViteConnectPage extends HookConsumerWidget {
                           child: ViteConnectRequestsWidget(
                             onItemSelect: (item) {
                               item.when(
-                                tx: (request, response, _) =>
-                                    Sheets.showAppHeightNineSheet(
-                                  context: context,
-                                  theme: theme,
-                                  widget: ViteConnectTxSheet(
-                                    request: request,
-                                    response: response,
-                                  ),
-                                ),
-                                sign: (request, response, _) =>
-                                    Sheets.showAppHeightEightSheet(
-                                  context: context,
-                                  theme: theme,
-                                  widget: ViteConnectSignSheet(
-                                    request: request,
-                                    response: response,
-                                  ),
-                                ),
+                                tx:
+                                    (request, response, _) =>
+                                        Sheets.showAppHeightNineSheet(
+                                          context: context,
+                                          theme: theme,
+                                          widget: ViteConnectTxSheet(
+                                            request: request,
+                                            response: response,
+                                          ),
+                                        ),
+                                sign:
+                                    (request, response, _) =>
+                                        Sheets.showAppHeightEightSheet(
+                                          context: context,
+                                          theme: theme,
+                                          widget: ViteConnectSignSheet(
+                                            request: request,
+                                            response: response,
+                                          ),
+                                        ),
                                 invalid: (_, __, ___) {},
                                 current: handleRequest,
                               );

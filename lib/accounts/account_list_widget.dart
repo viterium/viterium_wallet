@@ -8,10 +8,7 @@ import 'accounts_providers.dart';
 class AccountListWidget extends ConsumerWidget {
   final ScrollController scrollController;
 
-  const AccountListWidget({
-    Key? key,
-    required this.scrollController,
-  }) : super(key: key);
+  const AccountListWidget({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

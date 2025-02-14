@@ -11,12 +11,11 @@ class AddressThreeLineText extends ConsumerWidget {
   final String? label;
 
   const AddressThreeLineText({
-    Key? key,
+    super.key,
     required this.address,
     this.type = AddressThreeLineTextType.PRIMARY,
     this.label,
-  })  : assert(address.length == 55),
-        super(key: key);
+  }) : assert(address.length == 55);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -67,23 +66,25 @@ class AddressThreeLineText extends ConsumerWidget {
                     style: styles.textStyleAddressText60,
                   ),
                   TextSpan(
-                      text: stringPartFive,
-                      style: styles.textStyleAddressPrimary60),
+                    text: stringPartFive,
+                    style: styles.textStyleAddressPrimary60,
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         );
       case AddressThreeLineTextType.PRIMARY:
-        Widget contactWidget = label != null
-            ? RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  text: label,
-                  style: styles.textStyleAddressPrimary,
-                ),
-              )
-            : const SizedBox();
+        Widget contactWidget =
+            label != null
+                ? RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: label,
+                    style: styles.textStyleAddressPrimary,
+                  ),
+                )
+                : const SizedBox();
         return Column(
           children: [
             contactWidget,
@@ -127,16 +128,20 @@ class AddressThreeLineText extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
       case AddressThreeLineTextType.SUCCESS:
-        Widget contactWidget = label != null
-            ? RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                    text: label, style: styles.textStyleAddressSuccess))
-            : SizedBox();
+        Widget contactWidget =
+            label != null
+                ? RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: label,
+                    style: styles.textStyleAddressSuccess,
+                  ),
+                )
+                : SizedBox();
         return Column(
           children: [
             contactWidget,
@@ -180,7 +185,7 @@ class AddressThreeLineText extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
       case AddressThreeLineTextType.SUCCESS_FULL:
@@ -226,7 +231,7 @@ class AddressThreeLineText extends ConsumerWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         );
     }

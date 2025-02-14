@@ -9,10 +9,10 @@ class TrashcanButton extends ConsumerWidget {
   final VoidCallback? onPressed;
 
   const TrashcanButton({
-    Key? key,
+    super.key,
     this.visible = true,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

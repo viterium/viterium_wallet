@@ -11,10 +11,10 @@ class TokenIconWidget extends ConsumerWidget {
   final Size size;
 
   const TokenIconWidget({
-    Key? key,
+    super.key,
     required this.tokenId,
     this.size = const Size(40, 40),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,30 +27,32 @@ class TokenIconWidget extends ConsumerWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(size.width / 2),
             child: tokenIcon.when(
-              asset: (asset) => Image.asset(
-                asset,
-                width: size.width,
-                height: size.height,
-                isAntiAlias: true,
-              ),
-              url: (url) => ExtendedImage.network(
-                url,
-                fit: BoxFit.cover,
-                width: size.width,
-                height: size.height,
-                cache: true,
-                isAntiAlias: true,
-                loadStateChanged: (state) {
-                  if (state.extendedImageLoadState != LoadState.completed) {
-                    return Image.asset(
-                      defaultTokenIconPath,
-                      width: size.width,
-                      height: size.height,
-                    );
-                  }
-                  return null;
-                },
-              ),
+              asset:
+                  (asset) => Image.asset(
+                    asset,
+                    width: size.width,
+                    height: size.height,
+                    isAntiAlias: true,
+                  ),
+              url:
+                  (url) => ExtendedImage.network(
+                    url,
+                    fit: BoxFit.cover,
+                    width: size.width,
+                    height: size.height,
+                    cache: true,
+                    isAntiAlias: true,
+                    loadStateChanged: (state) {
+                      if (state.extendedImageLoadState != LoadState.completed) {
+                        return Image.asset(
+                          defaultTokenIconPath,
+                          width: size.width,
+                          height: size.height,
+                        );
+                      }
+                      return null;
+                    },
+                  ),
             ),
           ),
         ],

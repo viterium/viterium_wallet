@@ -29,10 +29,7 @@ final _timerProvider = StateProvider.autoDispose<Timer?>((ref) {
 class AccountDetailsSheet extends HookConsumerWidget {
   final Account account;
 
-  const AccountDetailsSheet({
-    Key? key,
-    required this.account,
-  }) : super(key: key);
+  const AccountDetailsSheet({super.key, required this.account});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,13 +46,10 @@ class AccountDetailsSheet extends HookConsumerWidget {
       await Clipboard.setData(ClipboardData(text: account.viteAddress));
       addressCopied.value = true;
       addressCopiedTimer.state?.cancel();
-      addressCopiedTimer.state = Timer(
-        const Duration(milliseconds: 800),
-        () {
-          if (!context.mounted) return;
-          addressCopied.value = false;
-        },
-      );
+      addressCopiedTimer.state = Timer(const Duration(milliseconds: 800), () {
+        if (!context.mounted) return;
+        addressCopied.value = false;
+      });
     }
 
     void deleteAccount() {
@@ -68,17 +62,16 @@ class AccountDetailsSheet extends HookConsumerWidget {
       final pushSettings = ref.read(pushSettingsForAccountProvider(account));
       if (pushSettings.pushEnabled) {
         UIUtil.showSnackbar(
-            'First turn off Notifications for this account', context);
+          'First turn off Notifications for this account',
+          context,
+        );
         return;
       }
 
       AppDialogs.showConfirmDialog(
         context,
         l10n.hideAccountHeader,
-        l10n.hideAccountText.replaceAll(
-          "%1",
-          l10n.addAccount,
-        ),
+        l10n.hideAccountText.replaceAll("%1", l10n.addAccount),
         l10n.YES,
         deleteAccount,
         cancelText: l10n.NO,
@@ -121,32 +114,30 @@ class AccountDetailsSheet extends HookConsumerWidget {
               textInputAction: TextInputAction.done,
               autocorrect: false,
               keyboardType: TextInputType.text,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(25),
-              ],
+              inputFormatters: [LengthLimitingTextInputFormatter(25)],
               style: styles.textStyleAppTextField,
             ),
           ],
         ),
         bottomWidget: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: Column(children: [
-            Visibility(
-              visible: !addressCopied.value,
-              replacement: SuccessButton(
-                title: l10n.addressCopied,
+          child: Column(
+            children: [
+              Visibility(
+                visible: !addressCopied.value,
+                replacement: SuccessButton(title: l10n.addressCopied),
+                child: PrimaryButton(
+                  title: l10n.copyAddress,
+                  onPressed: copyAddress,
+                ),
               ),
-              child: PrimaryButton(
-                title: l10n.copyAddress,
-                onPressed: copyAddress,
+              const SizedBox(height: 16),
+              PrimaryOutlineButton(
+                title: l10n.close,
+                onPressed: () => Navigator.pop(context),
               ),
-            ),
-            const SizedBox(height: 16),
-            PrimaryOutlineButton(
-              title: l10n.close,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );

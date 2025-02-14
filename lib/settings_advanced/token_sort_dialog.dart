@@ -6,7 +6,7 @@ import 'setting_token_sort_option.dart';
 import 'tokens_settings.dart';
 
 class TokenSortDialog extends ConsumerWidget {
-  const TokenSortDialog({Key? key}) : super(key: key);
+  const TokenSortDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

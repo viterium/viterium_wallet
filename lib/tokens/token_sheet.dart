@@ -23,7 +23,7 @@ import 'token_icon_widget.dart';
 
 class TokenSheet extends HookConsumerWidget {
   final TokenInfo tokenInfo;
-  const TokenSheet({Key? key, required this.tokenInfo}) : super(key: key);
+  const TokenSheet({super.key, required this.tokenInfo});
 
   Token get token => tokenInfo.token;
   TokenId get tokenId => tokenInfo.tokenId;

@@ -10,10 +10,10 @@ class TokenPairWidget extends ConsumerWidget {
   final TokenId secondaryTokenId;
 
   const TokenPairWidget({
-    Key? key,
+    super.key,
     required this.mainTokenId,
     required this.secondaryTokenId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,10 +21,7 @@ class TokenPairWidget extends ConsumerWidget {
 
     return Stack(
       children: [
-        TokenIconWidget(
-          tokenId: mainTokenId,
-          size: const Size(50, 50),
-        ),
+        TokenIconWidget(tokenId: mainTokenId, size: const Size(50, 50)),
         Container(
           decoration: BoxDecoration(
             color: theme.backgroundDark,
@@ -35,10 +32,7 @@ class TokenPairWidget extends ConsumerWidget {
           margin: const EdgeInsets.only(top: 18, left: 28),
         ),
         Padding(
-          padding: const EdgeInsets.only(
-            top: 20,
-            left: 30,
-          ),
+          padding: const EdgeInsets.only(top: 20, left: 30),
           child: TokenIconWidget(
             tokenId: secondaryTokenId,
             size: const Size(30, 30),

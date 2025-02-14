@@ -18,7 +18,7 @@ import 'defi_card.dart';
 import 'defi_main_card.dart';
 
 class DefiHomePage extends HookConsumerWidget {
-  const DefiHomePage({Key? key}) : super(key: key);
+  const DefiHomePage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);

@@ -6,10 +6,7 @@ import '../../app_providers.dart';
 class AddressTwoLineShortText extends ConsumerWidget {
   final String address;
 
-  const AddressTwoLineShortText({
-    Key? key,
-    required this.address,
-  }) : super(key: key);
+  const AddressTwoLineShortText({super.key, required this.address});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

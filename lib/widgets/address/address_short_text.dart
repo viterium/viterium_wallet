@@ -5,9 +5,8 @@ import '../../app_providers.dart';
 
 class AddressShortText extends ConsumerWidget {
   final String address;
-  const AddressShortText({Key? key, required this.address})
-      : assert(address.length == 55),
-        super(key: key);
+  const AddressShortText({super.key, required this.address})
+    : assert(address.length == 55);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,12 +16,11 @@ class AddressShortText extends ConsumerWidget {
 
     return RichText(
       textAlign: TextAlign.center,
-      text: TextSpan(children: [
-        TextSpan(
-          text: stringPartOne,
-          style: styles.textStyleAddressPrimary,
-        ),
-      ]),
+      text: TextSpan(
+        children: [
+          TextSpan(text: stringPartOne, style: styles.textStyleAddressPrimary),
+        ],
+      ),
     );
   }
 }

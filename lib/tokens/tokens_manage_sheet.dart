@@ -21,39 +21,39 @@ final _searchTermProvider = StateProvider((ref) => '');
 
 final _searchProvider = StreamProvider.autoDispose
     .family<IList<TokenInfo>, String>((ref, search) async* {
-  final tokenInfoList = await ref.watch(tokenInfoListProvider.future);
-  if (search.isEmpty) {
-    yield tokenInfoList;
-    return;
-  }
-
-  search = search.toLowerCase().trim();
-  final isTti = search.startsWith('tti_');
-
-  bool disposed = false;
-  ref.onDispose(() {
-    disposed = true;
-  });
-
-  var result = IList<TokenInfo>();
-  var count = 0;
-  for (final info in tokenInfoList) {
-    if (disposed) {
-      return;
-    }
-    ++count;
-    if (info.tokenSymbol.toLowerCase().startsWith(search) ||
-        info.tokenName.toLowerCase().startsWith(search) ||
-        (isTti && info.tokenId.startsWith(search)) ||
-        (search.length > 3 && info.tokenId.contains(search))) {
-      result = result.add(info);
-      if (count % 20 == 0) {
-        yield result;
+      final tokenInfoList = await ref.watch(tokenInfoListProvider.future);
+      if (search.isEmpty) {
+        yield tokenInfoList;
+        return;
       }
-    }
-  }
-  yield result;
-});
+
+      search = search.toLowerCase().trim();
+      final isTti = search.startsWith('tti_');
+
+      bool disposed = false;
+      ref.onDispose(() {
+        disposed = true;
+      });
+
+      var result = IList<TokenInfo>();
+      var count = 0;
+      for (final info in tokenInfoList) {
+        if (disposed) {
+          return;
+        }
+        ++count;
+        if (info.tokenSymbol.toLowerCase().startsWith(search) ||
+            info.tokenName.toLowerCase().startsWith(search) ||
+            (isTti && info.tokenId.startsWith(search)) ||
+            (search.length > 3 && info.tokenId.contains(search))) {
+          result = result.add(info);
+          if (count % 20 == 0) {
+            yield result;
+          }
+        }
+      }
+      yield result;
+    });
 
 final _tokenInfoListSearchProvider = Provider.autoDispose((ref) {
   final searchTerm = ref.watch(_searchTermProvider);
@@ -62,10 +62,12 @@ final _tokenInfoListSearchProvider = Provider.autoDispose((ref) {
 });
 
 final _tokenInfoListProvider = StateNotifierProvider.autoDispose<
-    GenericStateNotifier<AsyncValue<IList<TokenInfo>>>,
-    AsyncValue<IList<TokenInfo>>>((ref) {
-  final notifier =
-      GenericStateNotifier<AsyncValue<IList<TokenInfo>>>(AsyncValue.loading());
+  GenericStateNotifier<AsyncValue<IList<TokenInfo>>>,
+  AsyncValue<IList<TokenInfo>>
+>((ref) {
+  final notifier = GenericStateNotifier<AsyncValue<IList<TokenInfo>>>(
+    AsyncValue.loading(),
+  );
 
   ref.listen<AsyncValue<IList<TokenInfo>>>(
     _tokenInfoListSearchProvider,
@@ -76,7 +78,7 @@ final _tokenInfoListProvider = StateNotifierProvider.autoDispose<
 });
 
 class TokensManageSheet extends HookConsumerWidget {
-  const TokensManageSheet({Key? key}) : super(key: key);
+  const TokensManageSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -136,19 +138,20 @@ class TokensManageSheet extends HookConsumerWidget {
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   labelText: 'Enter Token Name, Symbol or ID',
                   constraints: BoxConstraints(maxHeight: 48),
-                  suffixIcon: searchController.text.isEmpty
-                      ? IconButton(
-                          visualDensity: VisualDensity.compact,
-                          icon: Icon(AppIcons.paste, size: 20),
-                          color: theme.primary,
-                          onPressed: pasteAction,
-                        )
-                      : IconButton(
-                          visualDensity: VisualDensity.compact,
-                          icon: Icon(Icons.clear, size: 20),
-                          color: theme.primary,
-                          onPressed: () => updateSearchTerm(''),
-                        ),
+                  suffixIcon:
+                      searchController.text.isEmpty
+                          ? IconButton(
+                            visualDensity: VisualDensity.compact,
+                            icon: Icon(AppIcons.paste, size: 20),
+                            color: theme.primary,
+                            onPressed: pasteAction,
+                          )
+                          : IconButton(
+                            visualDensity: VisualDensity.compact,
+                            icon: Icon(Icons.clear, size: 20),
+                            color: theme.primary,
+                            onPressed: () => updateSearchTerm(''),
+                          ),
                 ),
               ),
             ),
@@ -157,40 +160,47 @@ class TokensManageSheet extends HookConsumerWidget {
               child: Stack(
                 children: [
                   tokenInfoList.when(
-                    data: (data) => ListView.builder(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        final info = data[index];
-                        final tokenId = info.tokenId;
-                        final balance = accountInfo.balances[tokenId];
-                        final enabled = balance != null;
-                        final state = mapping.states[tokenId] ??
-                            TokenState(
-                              enabled: enabled,
-                              tokenInfo: enabled ? info : null,
+                    data:
+                        (data) => ListView.builder(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
+                          itemCount: data.length,
+                          itemBuilder: (context, index) {
+                            final info = data[index];
+                            final tokenId = info.tokenId;
+                            final balance = accountInfo.balances[tokenId];
+                            final enabled = balance != null;
+                            final state =
+                                mapping.states[tokenId] ??
+                                TokenState(
+                                  enabled: enabled,
+                                  tokenInfo: enabled ? info : null,
+                                );
+                            final item = TokenInfoState(
+                              info: info,
+                              state: state,
                             );
-                        final item = TokenInfoState(info: info, state: state);
-                        return TokenStateCard(
-                          item: item,
-                          onChanged: (newState) =>
-                              updateState(tokenId, newState),
-                        );
-                      },
-                    ),
+                            return TokenStateCard(
+                              item: item,
+                              onChanged:
+                                  (newState) => updateState(tokenId, newState),
+                            );
+                          },
+                        ),
                     error: (e, st) {
                       return Container(
-                          padding: const EdgeInsets.only(top: 16),
-                          alignment: Alignment.topCenter,
-                          child: Text('Error Loading Tokens'));
+                        padding: const EdgeInsets.only(top: 16),
+                        alignment: Alignment.topCenter,
+                        child: Text('Error Loading Tokens'),
+                      );
                     },
                     loading: () {
                       return Container(
-                          padding: const EdgeInsets.only(top: 16),
-                          alignment: Alignment.topCenter,
-                          child: CupertinoActivityIndicator());
+                        padding: const EdgeInsets.only(top: 16),
+                        alignment: Alignment.topCenter,
+                        child: CupertinoActivityIndicator(),
+                      );
                     },
                   ),
                   const TopGradientWidget(),

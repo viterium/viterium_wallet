@@ -9,8 +9,7 @@ import 'vitc_swap_tokens_widget.dart';
 
 class VitcSwapTokenSelectSheet extends ConsumerWidget {
   final String title;
-  const VitcSwapTokenSelectSheet({Key? key, this.title = 'Tokens'})
-      : super(key: key);
+  const VitcSwapTokenSelectSheet({super.key, this.title = 'Tokens'});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

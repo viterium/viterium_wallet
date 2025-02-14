@@ -8,7 +8,7 @@ import 'intro_back_button.dart';
 import 'intro_providers.dart';
 
 class IntroPasswordOnLaunch extends ConsumerWidget {
-  const IntroPasswordOnLaunch({Key? key}) : super(key: key);
+  const IntroPasswordOnLaunch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,69 +34,75 @@ class IntroPasswordOnLaunch extends ConsumerWidget {
           bottom: MediaQuery.of(context).size.height * 0.035,
           top: MediaQuery.of(context).size.height * 0.075,
         ),
-        child: Column(children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(start: 20),
-                    child: const IntroBackButton(),
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: const IntroBackButton(),
+                      ),
+                    ],
                   ),
-                ]),
-                Container(
-                  margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: AutoSizeText(
-                    l10n.requireAPasswordToOpenHeader,
-                    maxLines: 3,
-                    stepGranularity: 0.5,
-                    style: styles.textStyleHeaderColored,
+                  Container(
+                    margin: const EdgeInsets.only(left: 40, right: 40, top: 10),
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: AutoSizeText(
+                      l10n.requireAPasswordToOpenHeader,
+                      maxLines: 3,
+                      stepGranularity: 0.5,
+                      style: styles.textStyleHeaderColored,
+                    ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsetsDirectional.only(
-                    start: 40,
-                    end: 40,
-                    top: 16,
+                  Container(
+                    margin: EdgeInsetsDirectional.only(
+                      start: 40,
+                      end: 40,
+                      top: 16,
+                    ),
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: AutoSizeText(
+                      l10n.createPasswordFirstParagraph,
+                      style: styles.textStyleParagraph,
+                      maxLines: 5,
+                      stepGranularity: 0.5,
+                    ),
                   ),
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: AutoSizeText(
-                    l10n.createPasswordFirstParagraph,
-                    style: styles.textStyleParagraph,
-                    maxLines: 5,
-                    stepGranularity: 0.5,
+                  Container(
+                    margin: const EdgeInsets.only(left: 40, right: 40, top: 8),
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: AutoSizeText(
+                      l10n.createPasswordSecondParagraph,
+                      style: styles.textStyleParagraphPrimary,
+                      maxLines: 4,
+                      stepGranularity: 0.5,
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 40, right: 40, top: 8),
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: AutoSizeText(
-                    l10n.createPasswordSecondParagraph,
-                    style: styles.textStyleParagraphPrimary,
-                    maxLines: 4,
-                    stepGranularity: 0.5,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Column(children: [
-              PrimaryButton(
-                title: l10n.noSkipButton,
-                onPressed: skipPassword,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28),
+              child: Column(
+                children: [
+                  PrimaryButton(
+                    title: l10n.noSkipButton,
+                    onPressed: skipPassword,
+                  ),
+                  const SizedBox(height: 16),
+                  PrimaryOutlineButton(
+                    title: l10n.yesButton,
+                    onPressed: setPassword,
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              PrimaryOutlineButton(
-                title: l10n.yesButton,
-                onPressed: setPassword,
-              ),
-            ]),
-          ),
-        ]),
+            ),
+          ],
+        ),
       ),
     );
   }

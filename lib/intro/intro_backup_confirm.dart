@@ -8,7 +8,7 @@ import 'intro_back_button.dart';
 import 'intro_providers.dart';
 
 class IntroBackupConfirm extends ConsumerWidget {
-  const IntroBackupConfirm({Key? key}) : super(key: key);
+  const IntroBackupConfirm({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

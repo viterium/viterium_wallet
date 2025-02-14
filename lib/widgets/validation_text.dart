@@ -5,7 +5,7 @@ import '../app_providers.dart';
 
 class ValidationText extends ConsumerWidget {
   final String data;
-  const ValidationText(this.data, {Key? key}) : super(key: key);
+  const ValidationText(this.data, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,10 +13,7 @@ class ValidationText extends ConsumerWidget {
 
     return Container(
       margin: const EdgeInsets.only(top: 5, bottom: 5),
-      child: Text(
-        data,
-        style: styles.textStyleParagraphThinPrimary,
-      ),
+      child: Text(data, style: styles.textStyleParagraphThinPrimary),
     );
   }
 }

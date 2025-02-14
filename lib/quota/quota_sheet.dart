@@ -17,7 +17,7 @@ import 'quota_item.dart';
 import 'quota_message_widget.dart';
 
 class QuotaSheet extends ConsumerWidget {
-  const QuotaSheet({Key? key}) : super(key: key);
+  const QuotaSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,15 +54,17 @@ class QuotaSheet extends ConsumerWidget {
       mainWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: const AccountWidget(),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: const AccountWidget(),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
@@ -83,34 +85,38 @@ class QuotaSheet extends ConsumerWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Builder(builder: (context) {
-                          final ut = Decimal.fromInt(21000);
-                          final current =
-                              (Decimal.parse(quota.currentQuota) / ut)
-                                  .toDecimal(scaleOnInfinitePrecision: 2);
-                          final max =
-                              (Decimal.parse(quota.maxQuota) / ut)
-                              .toDecimal(scaleOnInfinitePrecision: 2);
+                        Builder(
+                          builder: (context) {
+                            final ut = Decimal.fromInt(21000);
+                            final current = (Decimal.parse(quota.currentQuota) /
+                                    ut)
+                                .toDecimal(scaleOnInfinitePrecision: 2);
+                            final max = (Decimal.parse(quota.maxQuota) / ut)
+                                .toDecimal(scaleOnInfinitePrecision: 2);
 
-                          final digits = current.isInteger ? 0 : 2;
-                          final currentLabel = current.toStringAsFixed(digits);
-                          return RichText(
-                            textAlign: TextAlign.start,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '$currentLabel / ${max}',
-                                  style: styles.textStyleTransactionAmountSmall,
-                                ),
-                                TextSpan(
-                                  text: ' UT',
-                                  style: styles.textStyleTransactionUnitSmall,
-                                ),
-                              ],
-                            ),
-                            maxLines: 1,
-                          );
-                        }),
+                            final digits = current.isInteger ? 0 : 2;
+                            final currentLabel = current.toStringAsFixed(
+                              digits,
+                            );
+                            return RichText(
+                              textAlign: TextAlign.start,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '$currentLabel / ${max}',
+                                    style:
+                                        styles.textStyleTransactionAmountSmall,
+                                  ),
+                                  TextSpan(
+                                    text: ' UT',
+                                    style: styles.textStyleTransactionUnitSmall,
+                                  ),
+                                ],
+                              ),
+                              maxLines: 1,
+                            );
+                          },
+                        ),
                         const SizedBox(height: 8),
                         if (totalStakeAmount != null) ...[
                           RichText(
@@ -129,12 +135,14 @@ class QuotaSheet extends ConsumerWidget {
                             ),
                             maxLines: 1,
                           ),
-                        ]
+                        ],
                       ],
                     ),
-                  ]),
-            ),
-          ]),
+                  ],
+                ),
+              ),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 8),
             child: Text(
@@ -166,9 +174,7 @@ class QuotaSheet extends ConsumerWidget {
                       final item = items[index];
 
                       return ProviderScope(
-                        overrides: [
-                          quotaItemProvider.overrideWithValue(item),
-                        ],
+                        overrides: [quotaItemProvider.overrideWithValue(item)],
                         child: const QuotaItem(),
                       );
                     },
@@ -184,15 +190,12 @@ class QuotaSheet extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           children: [
-            PrimaryButton(
-              title: 'Get Quota',
-              onPressed: getQuota,
-            ),
+            PrimaryButton(title: 'Get Quota', onPressed: getQuota),
             const SizedBox(height: 16),
             PrimaryOutlineButton(
               title: 'Close',
               onPressed: () => Navigator.pop(context),
-            )
+            ),
           ],
         ),
       ),

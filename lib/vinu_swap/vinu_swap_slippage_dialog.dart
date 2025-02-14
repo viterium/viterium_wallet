@@ -10,8 +10,7 @@ import '../widgets/app_text_field.dart';
 class VinuSwapSlippageDialog extends HookConsumerWidget {
   final double slippage;
 
-  const VinuSwapSlippageDialog({Key? key, required this.slippage})
-    : super(key: key);
+  const VinuSwapSlippageDialog({super.key, required this.slippage});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

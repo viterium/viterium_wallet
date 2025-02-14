@@ -9,11 +9,12 @@ import '../util/ui_util.dart';
 import '../widgets/dialog.dart';
 import 'wallet_types.dart';
 
-final walletItemProvider =
-    Provider<WalletInfo>((ref) => throw UnimplementedError());
+final walletItemProvider = Provider<WalletInfo>(
+  (ref) => throw UnimplementedError(),
+);
 
 class WalletCard extends ConsumerWidget {
-  const WalletCard({Key? key}) : super(key: key);
+  const WalletCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -71,7 +72,9 @@ class WalletCard extends ConsumerWidget {
       final repository = ref.read(pushInfoRepositoryProvider);
       if (repository.anyPushEnabledForWalletId(wallet.wid)) {
         UIUtil.showSnackbar(
-            'First turn off Notifications of wallet accounts', context);
+          'First turn off Notifications of wallet accounts',
+          context,
+        );
         return;
       }
       confirmRemoveWallet();
@@ -89,7 +92,7 @@ class WalletCard extends ConsumerWidget {
               backgroundColor: theme.backgroundDark,
               foregroundColor: theme.text,
               onPressed: (_) => checkNotifications(),
-            )
+            ),
           ],
         ),
         child: Container(
@@ -117,17 +120,15 @@ class WalletCard extends ConsumerWidget {
                             textAlign: TextAlign.start,
                             maxLines: 1,
                             style: styles.textStyleParagraphBold.copyWith(
-                                fontSize: 18, overflow: TextOverflow.ellipsis),
+                              fontSize: 18,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    size: 20,
-                    color: theme.text30,
-                  ),
+                  Icon(Icons.arrow_forward_ios, size: 20, color: theme.text30),
                 ],
               ),
             ),

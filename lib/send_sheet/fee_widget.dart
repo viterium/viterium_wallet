@@ -6,10 +6,7 @@ import '../app_providers.dart';
 
 class FeeWidget extends ConsumerWidget {
   final Amount amount;
-  const FeeWidget({
-    Key? key,
-    required this.amount,
-  }) : super(key: key);
+  const FeeWidget({super.key, required this.amount});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,10 +20,7 @@ class FeeWidget extends ConsumerWidget {
         right: MediaQuery.of(context).size.width * 0.105,
         top: 5,
       ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 15,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       decoration: BoxDecoration(
         color: theme.backgroundDarkest,
         borderRadius: BorderRadius.circular(25),

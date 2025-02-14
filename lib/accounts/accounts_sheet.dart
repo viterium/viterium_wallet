@@ -11,7 +11,7 @@ import 'account.dart';
 import 'account_list_widget.dart';
 
 class AccountsSheet extends HookConsumerWidget {
-  const AccountsSheet({Key? key}) : super(key: key);
+  const AccountsSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,21 +30,14 @@ class AccountsSheet extends HookConsumerWidget {
 
       final index = accounts.firstAvailableIndex;
       if (index == null) {
-        UIUtil.showSnackbar(
-          'Max number of accounts reached.',
-          context,
-        );
+        UIUtil.showSnackbar('Max number of accounts reached.', context);
         addingAccount.value = false;
         return;
       }
 
       final name = l10n.defaultNewAccountName.replaceAll("%1", '${index + 1}');
       final address = await auth.addressAtIndex(index);
-      final account = Account(
-        index: index,
-        name: name,
-        address: address,
-      );
+      final account = Account(index: index, name: name, address: address);
       accounts.addAccount(account);
       addingAccount.value = false;
 
@@ -77,18 +70,20 @@ class AccountsSheet extends HookConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          PrimaryButton(
-            title: l10n.addAccount,
-            disabled: addingAccount.value,
-            onPressed: addAccount,
-          ),
-          const SizedBox(height: 16),
-          PrimaryOutlineButton(
-            title: l10n.close,
-            onPressed: () => Navigator.pop(context),
-          ),
-        ]),
+        child: Column(
+          children: [
+            PrimaryButton(
+              title: l10n.addAccount,
+              disabled: addingAccount.value,
+              onPressed: addAccount,
+            ),
+            const SizedBox(height: 16),
+            PrimaryOutlineButton(
+              title: l10n.close,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -20,7 +20,7 @@ import 'contact.dart';
 class ContactAddSheet extends ConsumerStatefulWidget {
   final String? address;
 
-  const ContactAddSheet({Key? key, this.address}) : super(key: key);
+  const ContactAddSheet({super.key, this.address});
 
   _ContactAddSheetState createState() => _ContactAddSheetState();
 }
@@ -93,15 +93,16 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               focusNode: _nameFocusNode,
               controller: _nameController,
-              textInputAction: widget.address != null
-                  ? TextInputAction.done
-                  : TextInputAction.next,
+              textInputAction:
+                  widget.address != null
+                      ? TextInputAction.done
+                      : TextInputAction.next,
               hintText: _showNameHint ? l10n.contactNameHint : "",
               keyboardType: TextInputType.text,
               style: styles.textStyleAppTextFieldSimple,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(20),
-                ContactInputFormatter()
+                ContactInputFormatter(),
               ],
               onSubmitted: (text) {
                 final scope = FocusScope.of(context);
@@ -127,17 +128,17 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
             ),
             // Enter Address container
             AppTextField(
-              padding: !_shouldShowTextField()
-                  ? EdgeInsets.symmetric(horizontal: 25, vertical: 15)
-                  : EdgeInsets.zero,
+              padding:
+                  !_shouldShowTextField()
+                      ? EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+                      : EdgeInsets.zero,
               focusNode: _addressFocusNode,
               controller: _addressController,
-              style: _addressValid
-                  ? styles.textStyleAddressText90
-                  : styles.textStyleAddressText60,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(65),
-              ],
+              style:
+                  _addressValid
+                      ? styles.textStyleAddressText90
+                      : styles.textStyleAddressText60,
+              inputFormatters: [LengthLimitingTextInputFormatter(65)],
               textInputAction: TextInputAction.done,
               maxLines: null,
               autocorrect: false,
@@ -150,7 +151,8 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
                   if (data == null) {
                     UIUtil.showSnackbar(l10n.qrInvalidAddress, context);
                   } else {
-                    final address = Address.tryParse(data) ??
+                    final address =
+                        Address.tryParse(data) ??
                         ViteUri.tryParse(data)?.address;
 
                     if (mounted && address != null) {
@@ -173,8 +175,9 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
                   if (!_showPasteButton) {
                     return;
                   }
-                  String? data =
-                      await UserDataUtil.getClipboardText(DataType.ADDRESS);
+                  String? data = await UserDataUtil.getClipboardText(
+                    DataType.ADDRESS,
+                  );
                   if (data != null) {
                     setState(() {
                       _addressValid = true;
@@ -209,27 +212,30 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
                   });
                 }
               },
-              overrideTextFieldWidget: !_shouldShowTextField()
-                  ? GestureDetector(
-                      onTap: () {
-                        if (widget.address != null) {
-                          return;
-                        }
-                        setState(() {
-                          _addressValidAndUnfocused = false;
-                        });
-                        Future.delayed(Duration(milliseconds: 50), () {
-                          FocusScope.of(context)
-                              .requestFocus(_addressFocusNode);
-                        });
-                      },
-                      child: AddressThreeLineText(
-                        address: widget.address != null
-                            ? widget.address!
-                            : _addressController.text,
-                      ),
-                    )
-                  : null,
+              overrideTextFieldWidget:
+                  !_shouldShowTextField()
+                      ? GestureDetector(
+                        onTap: () {
+                          if (widget.address != null) {
+                            return;
+                          }
+                          setState(() {
+                            _addressValidAndUnfocused = false;
+                          });
+                          Future.delayed(Duration(milliseconds: 50), () {
+                            FocusScope.of(
+                              context,
+                            ).requestFocus(_addressFocusNode);
+                          });
+                        },
+                        child: AddressThreeLineText(
+                          address:
+                              widget.address != null
+                                  ? widget.address!
+                                  : _addressController.text,
+                        ),
+                      )
+                      : null,
             ),
             // Enter Address Error Container
             Container(
@@ -245,10 +251,7 @@ class _ContactAddSheetState extends ConsumerState<ContactAddSheet> {
           padding: const EdgeInsets.symmetric(horizontal: 28),
           child: Column(
             children: [
-              PrimaryButton(
-                title: l10n.addContact,
-                onPressed: _addContact,
-              ),
+              PrimaryButton(title: l10n.addContact, onPressed: _addContact),
               const SizedBox(height: 16),
               PrimaryOutlineButton(
                 title: l10n.close,

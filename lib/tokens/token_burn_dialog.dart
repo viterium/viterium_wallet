@@ -16,7 +16,7 @@ import '../widgets/fiat_value_container.dart';
 class TokenBurnDialog extends HookConsumerWidget {
   final TokenInfo tokenInfo;
 
-  const TokenBurnDialog({Key? key, required this.tokenInfo}) : super(key: key);
+  const TokenBurnDialog({super.key, required this.tokenInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

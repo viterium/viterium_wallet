@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import 'intro_actions_widget.dart';
 
 class IntroWelcome extends ConsumerWidget {
-  const IntroWelcome({Key? key}) : super(key: key);
+  const IntroWelcome({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

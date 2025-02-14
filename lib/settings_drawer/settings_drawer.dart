@@ -29,7 +29,7 @@ import 'theme_dialog.dart';
 import 'version_widget.dart';
 
 class SettingsSheet extends ConsumerStatefulWidget {
-  const SettingsSheet({Key? key}) : super(key: key);
+  const SettingsSheet({super.key});
 
   _SettingsSheetState createState() => _SettingsSheetState();
 }

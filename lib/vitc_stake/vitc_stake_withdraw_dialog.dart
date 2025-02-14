@@ -18,8 +18,7 @@ import 'vitc_stake_types.dart';
 class VitcStakeWithdrawDialog extends HookConsumerWidget {
   final VitcPoolInfoAll poolInfo;
 
-  const VitcStakeWithdrawDialog({Key? key, required this.poolInfo})
-    : super(key: key);
+  const VitcStakeWithdrawDialog({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

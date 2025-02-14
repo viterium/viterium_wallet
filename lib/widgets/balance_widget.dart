@@ -6,7 +6,7 @@ import '../../app_icons.dart';
 import '../app_providers.dart';
 
 class BalanceWidget extends ConsumerWidget {
-  const BalanceWidget({Key? key}) : super(key: key);
+  const BalanceWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -18,11 +18,11 @@ class TransactionDetailsSheet extends HookConsumerWidget {
   final bool displayContactButton;
 
   const TransactionDetailsSheet({
-    Key? key,
+    super.key,
     required this.hash,
     required this.address,
     this.displayContactButton = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,42 +70,42 @@ class TransactionDetailsSheet extends HookConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(height: 24),
-              Stack(children: [
-                Visibility(
-                  visible: !addressCopied.value,
-                  replacement: SuccessButton(
-                    title: l10n.addressCopied,
+              Stack(
+                children: [
+                  Visibility(
+                    visible: !addressCopied.value,
+                    replacement: SuccessButton(title: l10n.addressCopied),
+                    child: PrimaryButton(
+                      title: l10n.copyAddress,
+                      onPressed: copyAddress,
+                    ),
                   ),
-                  child: PrimaryButton(
-                    title: l10n.copyAddress,
-                    onPressed: copyAddress,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Container(
-                        height: 55,
-                        width: 55,
-                        child: Visibility(
-                          visible: displayContactButton,
-                          child: TextButton(
-                            style: styles.innerButtonStyle,
-                            onPressed: addContact,
-                            child: Icon(
-                              AppIcons.addcontact,
-                              size: 35,
-                              color: iconColor,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Container(
+                          height: 55,
+                          width: 55,
+                          child: Visibility(
+                            visible: displayContactButton,
+                            child: TextButton(
+                              style: styles.innerButtonStyle,
+                              onPressed: addContact,
+                              child: Icon(
+                                AppIcons.addcontact,
+                                size: 35,
+                                color: iconColor,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ]),
+                    ],
+                  ),
+                ],
+              ),
               const SizedBox(height: 16),
               PrimaryOutlineButton(
                 title: l10n.viewDetails,

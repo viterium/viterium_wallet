@@ -17,10 +17,7 @@ import '../widgets/tap_outside_unfocus.dart';
 class TransferManualEntrySheet extends ConsumerStatefulWidget {
   final Function? validSeedCallback;
 
-  const TransferManualEntrySheet({
-    Key? key,
-    this.validSeedCallback,
-  }) : super(key: key);
+  const TransferManualEntrySheet({super.key, this.validSeedCallback});
 
   _TransferManualEntrySheetState createState() =>
       _TransferManualEntrySheetState();
@@ -62,108 +59,121 @@ class _TransferManualEntrySheetState
                 margin: EdgeInsets.only(
                   top: MediaQuery.of(context).size.height * 0.05,
                 ),
-                child: Column(children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 60,
-                      vertical: 10,
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                        horizontal: 60,
+                        vertical: 10,
+                      ),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        l10n.transferManualHint,
+                        style: styles.textStyleParagraph,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      l10n.transferManualHint,
-                      style: styles.textStyleParagraph,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(children: [
-                      AppTextField(
-                        focusNode: _seedInputFocusNode,
-                        controller: _seedInputController,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(128),
-                          LowerCaseTextFormatter(),
-                        ],
-                        textInputAction: TextInputAction.done,
-                        maxLines: null,
-                        autocorrect: false,
-                        suffixButton: TextFieldButton(
-                          icon: AppIcons.paste,
-                          onPressed: () async {
-                            String? data = await UserDataUtil.getClipboardText(
-                                DataType.SEED);
-                            if (data != null) {
-                              if (mounted) {
-                                _seedInputController.text = data;
+                    Expanded(
+                      child: Column(
+                        children: [
+                          AppTextField(
+                            focusNode: _seedInputFocusNode,
+                            controller: _seedInputController,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(128),
+                              LowerCaseTextFormatter(),
+                            ],
+                            textInputAction: TextInputAction.done,
+                            maxLines: null,
+                            autocorrect: false,
+                            suffixButton: TextFieldButton(
+                              icon: AppIcons.paste,
+                              onPressed: () async {
+                                String? data =
+                                    await UserDataUtil.getClipboardText(
+                                      DataType.SEED,
+                                    );
+                                if (data != null) {
+                                  if (mounted) {
+                                    _seedInputController.text = data;
+                                    setState(() => seedIsValid = true);
+                                  }
+                                } else {
+                                  if (mounted) {
+                                    setState(() => seedIsValid = false);
+                                  }
+                                }
+                              },
+                            ),
+                            fadeSuffixOnCondition: true,
+                            suffixShowFirstCondition:
+                                !ViteUtil.isValidSeed(
+                                  _seedInputController.text,
+                                ),
+                            keyboardType: TextInputType.text,
+                            style:
+                                seedIsValid
+                                    ? styles.textStyleSeed
+                                    : styles.textStyleSeedGray,
+                            onChanged: (text) {
+                              // Always reset the error message to be less annoying
+                              setState(() => hasError = false);
+                              // If valid seed, clear focus/close keyboard
+                              if (ViteUtil.isValidSeed(text) && mounted) {
+                                _seedInputFocusNode.unfocus();
                                 setState(() => seedIsValid = true);
-                              }
-                            } else {
-                              if (mounted) {
+                              } else if (mounted) {
                                 setState(() => seedIsValid = false);
                               }
-                            }
-                          },
-                        ),
-                        fadeSuffixOnCondition: true,
-                        suffixShowFirstCondition:
-                            !ViteUtil.isValidSeed(_seedInputController.text),
-                        keyboardType: TextInputType.text,
-                        style: seedIsValid
-                            ? styles.textStyleSeed
-                            : styles.textStyleSeedGray,
-                        onChanged: (text) {
-                          // Always reset the error message to be less annoying
-                          setState(() => hasError = false);
-                          // If valid seed, clear focus/close keyboard
-                          if (ViteUtil.isValidSeed(text) && mounted) {
-                            _seedInputFocusNode.unfocus();
-                            setState(() => seedIsValid = true);
-                          } else if (mounted) {
-                            setState(() => seedIsValid = false);
-                          }
-                        },
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        child: Text(
-                          l10n.seedInvalid,
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color:
-                                hasError ? theme.primary : Colors.transparent,
-                            fontFamily: kDefaultFontFamily,
-                            fontWeight: FontWeight.w600,
+                            },
                           ),
-                        ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5),
+                            child: Text(
+                              l10n.seedInvalid,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color:
+                                    hasError
+                                        ? theme.primary
+                                        : Colors.transparent,
+                                fontFamily: kDefaultFontFamily,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ]),
-                  ),
-                ]),
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Column(children: [
-                PrimaryButton(
-                  title: l10n.transfer,
-                  onPressed: () {
-                    final seed = _seedInputController.text;
-                    if (ViteUtil.isValidSeed(seed) &&
-                        widget.validSeedCallback != null) {
-                      widget.validSeedCallback!(seed);
-                    } else if (mounted) {
-                      setState(() => hasError = true);
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                PrimaryOutlineButton(
-                  title: l10n.cancel,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ]),
+              child: Column(
+                children: [
+                  PrimaryButton(
+                    title: l10n.transfer,
+                    onPressed: () {
+                      final seed = _seedInputController.text;
+                      if (ViteUtil.isValidSeed(seed) &&
+                          widget.validSeedCallback != null) {
+                        widget.validSeedCallback!(seed);
+                      } else if (mounted) {
+                        setState(() => hasError = true);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  PrimaryOutlineButton(
+                    title: l10n.cancel,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

@@ -9,7 +9,7 @@ import '../widgets/sheet_widget.dart';
 
 class SeedBackupSheet extends HookConsumerWidget {
   final List<String> mnemonic;
-  const SeedBackupSheet({Key? key, required this.mnemonic}) : super(key: key);
+  const SeedBackupSheet({super.key, required this.mnemonic});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,18 +40,17 @@ class SeedBackupSheet extends HookConsumerWidget {
       //     materialTapTargetSize: MaterialTapTargetSize.padded,
       //   ),
       mainWidget: Container(
-        child: Column(children: [
-          //if (mnemonic.value != null)
-          MnemonicDisplay(
-            wordList: mnemonic,
-            obscured: true,
-          )
-          // else
-          //   PlainSeedDisplay(
-          //     seed: _seed,
-          //     obscureSeed: true,
-          //   ),
-        ]),
+        child: Column(
+          children: [
+            //if (mnemonic.value != null)
+            MnemonicDisplay(wordList: mnemonic, obscured: true),
+            // else
+            //   PlainSeedDisplay(
+            //     seed: _seed,
+            //     obscureSeed: true,
+            //   ),
+          ],
+        ),
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),

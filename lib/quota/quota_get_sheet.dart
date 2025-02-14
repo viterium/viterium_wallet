@@ -28,7 +28,7 @@ import 'quota_providers.dart';
 import 'quota_stake_amounts.dart';
 
 class QuotaGetSheet extends HookConsumerWidget {
-  const QuotaGetSheet({Key? key}) : super(key: key);
+  const QuotaGetSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -263,16 +263,14 @@ class QuotaGetSheet extends HookConsumerWidget {
       title: title,
       rightWidget: SheetHeaderButton(
         icon: AppIcons.info,
-        onPressed: () =>
-            openUrl('https://docs.vite.org/vite-docs/reference/quota.html'),
+        onPressed:
+            () =>
+                openUrl('https://docs.vite.org/vite-docs/reference/quota.html'),
       ),
       mainWidget: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            'Lock VITE to get Quota',
-            style: styles.textStyleParagraphBold,
-          ),
+          Text('Lock VITE to get Quota', style: styles.textStyleParagraphBold),
           AppTextField(
             focusNode: amountFocusNode,
             controller: amountController,
@@ -301,10 +299,7 @@ class QuotaGetSheet extends HookConsumerWidget {
               onPressed: null,
             ),
             suffixButton: TextFieldButton(
-              widget: Text(
-                'VITE',
-                style: styles.textStyleDialogButtonText,
-              ),
+              widget: Text('VITE', style: styles.textStyleDialogButtonText),
               onPressed: null,
             ),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -348,19 +343,22 @@ class QuotaGetSheet extends HookConsumerWidget {
                 beneficiaryAddress.value = text;
               }
             },
-            overrideTextFieldWidget: beneficiaryAddress.value != null
-                ? GestureDetector(
-                    onTap: editBeneficiary,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 15),
-                      child: AddressThreeLineText(
-                        type: AddressThreeLineTextType.PRIMARY,
-                        address: beneficiaryAddress.value!,
+            overrideTextFieldWidget:
+                beneficiaryAddress.value != null
+                    ? GestureDetector(
+                      onTap: editBeneficiary,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                          vertical: 15,
+                        ),
+                        child: AddressThreeLineText(
+                          type: AddressThreeLineTextType.PRIMARY,
+                          address: beneficiaryAddress.value!,
+                        ),
                       ),
-                    ),
-                  )
-                : null,
+                    )
+                    : null,
           ),
           ValidationText(beneficiaryValidationText.value),
         ],
@@ -369,15 +367,12 @@ class QuotaGetSheet extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           children: [
-            PrimaryButton(
-              title: 'Lock VITE',
-              onPressed: confirmStakeForQuota,
-            ),
+            PrimaryButton(title: 'Lock VITE', onPressed: confirmStakeForQuota),
             const SizedBox(height: 16),
             PrimaryOutlineButton(
               title: 'Cancel',
               onPressed: () => Navigator.pop(context),
-            )
+            ),
           ],
         ),
       ),

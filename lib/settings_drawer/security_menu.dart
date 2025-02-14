@@ -17,7 +17,7 @@ import 'single_line_item.dart';
 class SecurityMenu extends ConsumerStatefulWidget {
   final VoidCallback onBackAction;
 
-  const SecurityMenu({Key? key, required this.onBackAction}) : super(key: key);
+  const SecurityMenu({super.key, required this.onBackAction});
 
   @override
   _SecurityMenuState createState() => _SecurityMenuState();

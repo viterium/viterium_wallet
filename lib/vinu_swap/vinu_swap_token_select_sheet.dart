@@ -9,8 +9,7 @@ import 'vinu_swap_tokens_widget.dart';
 
 class VinuSwapTokenSelectSheet extends ConsumerWidget {
   final String title;
-  const VinuSwapTokenSelectSheet({Key? key, this.title = 'Tokens'})
-      : super(key: key);
+  const VinuSwapTokenSelectSheet({super.key, this.title = 'Tokens'});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

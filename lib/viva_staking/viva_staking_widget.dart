@@ -9,7 +9,7 @@ import 'viva_staking_header.dart';
 import 'viva_staking_providers.dart';
 
 class VivaStakingWidget extends ConsumerWidget {
-  const VivaStakingWidget({Key? key}) : super(key: key);
+  const VivaStakingWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,26 +40,23 @@ class VivaStakingWidget extends ConsumerWidget {
           index -= 1;
           return switch ((pools.length, loading)) {
             (0, true) => Container(
-                padding: const EdgeInsets.only(top: 20),
-                alignment: Alignment.topCenter,
-                child: Text(
-                  'Loading...',
-                  style: styles.textStyleTransactionType,
-                ),
-              ),
+              padding: const EdgeInsets.only(top: 20),
+              alignment: Alignment.topCenter,
+              child: Text('Loading...', style: styles.textStyleTransactionType),
+            ),
             (0, false) => Container(
-                padding: const EdgeInsets.only(top: 20),
-                alignment: Alignment.topCenter,
-                child: Text(
-                  'No pools found',
-                  style: styles.textStyleTransactionType,
-                ),
+              padding: const EdgeInsets.only(top: 20),
+              alignment: Alignment.topCenter,
+              child: Text(
+                'No pools found',
+                style: styles.textStyleTransactionType,
               ),
+            ),
             _ => () {
-                final poolId = pools.keys.elementAt(index);
-                final poolInfo = pools[poolId]!;
-                return VivaPoolCard(poolInfo: poolInfo);
-              }(),
+              final poolId = pools.keys.elementAt(index);
+              final poolInfo = pools[poolId]!;
+              return VivaPoolCard(poolInfo: poolInfo);
+            }(),
           };
         },
       ),

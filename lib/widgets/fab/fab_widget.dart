@@ -12,11 +12,11 @@ class FabWidget extends HookConsumerWidget {
   final double width;
 
   const FabWidget({
-    Key? key,
+    super.key,
     required this.width,
     required this.controller,
     required this.onSelectedIndex,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

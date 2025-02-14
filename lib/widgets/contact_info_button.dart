@@ -9,16 +9,13 @@ class ContactInfoButton extends ConsumerWidget {
   final VoidCallback? onPressed;
 
   const ContactInfoButton({
-    Key? key,
+    super.key,
     this.visible = true,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SheetHeaderButton(
-      icon: AppIcons.search,
-      onPressed: onPressed,
-    );
+    return SheetHeaderButton(icon: AppIcons.search, onPressed: onPressed);
   }
 }

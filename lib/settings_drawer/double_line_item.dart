@@ -16,7 +16,7 @@ class DoubleLineItem extends ConsumerWidget {
   final bool disabled;
 
   const DoubleLineItem({
-    Key? key,
+    super.key,
     required this.heading,
     required this.defaultMethod,
     required this.icon,
@@ -24,7 +24,7 @@ class DoubleLineItem extends ConsumerWidget {
     required this.onPressed,
     this.onLongPress,
     this.disabled = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,9 +61,10 @@ class DoubleLineItem extends ConsumerWidget {
                   Container(
                     child: AutoSizeText(
                       heading,
-                      style: disabled
-                          ? styles.textStyleSettingItemHeader45
-                          : styles.textStyleSettingItemHeader,
+                      style:
+                          disabled
+                              ? styles.textStyleSettingItemHeader45
+                              : styles.textStyleSettingItemHeader,
                       maxLines: 1,
                       stepGranularity: 0.1,
                       minFontSize: 8,
@@ -72,9 +73,10 @@ class DoubleLineItem extends ConsumerWidget {
                   Container(
                     child: AutoSizeText(
                       defaultMethod.getDisplayName(ref),
-                      style: disabled
-                          ? styles.textStyleSettingItemSubheader30
-                          : styles.textStyleSettingItemSubheader,
+                      style:
+                          disabled
+                              ? styles.textStyleSettingItemSubheader30
+                              : styles.textStyleSettingItemSubheader,
                       maxLines: 1,
                       stepGranularity: 0.1,
                       minFontSize: 8,

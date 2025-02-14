@@ -6,7 +6,7 @@ import '../widgets/gradient_widgets.dart';
 import 'vitc_stake_widget.dart';
 
 class VitcStakePage extends ConsumerWidget {
-  const VitcStakePage({Key? key}) : super(key: key);
+  const VitcStakePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,18 +18,12 @@ class VitcStakePage extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: theme.backgroundDarkest,
         iconTheme: IconThemeData(color: theme.text),
-        title: Text(
-          'VITCStake v0.2',
-          style: styles.textStyleButtonTextOutline,
-        ),
+        title: Text('VITCStake v0.2', style: styles.textStyleButtonTextOutline),
         centerTitle: true,
       ),
       body: SafeArea(
         child: Stack(
-          children: [
-            const VitcStakeWidget(),
-            const BottomGradientWidget(),
-          ],
+          children: [const VitcStakeWidget(), const BottomGradientWidget()],
         ),
       ),
     );

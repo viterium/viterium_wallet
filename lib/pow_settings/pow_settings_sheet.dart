@@ -11,7 +11,7 @@ import 'pow_item.dart';
 import 'pow_providers.dart';
 
 class PowSettingsSheet extends ConsumerWidget {
-  const PowSettingsSheet({Key? key}) : super(key: key);
+  const PowSettingsSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,9 +42,7 @@ class PowSettingsSheet extends ConsumerWidget {
               }
               final config = items[index];
               return ProviderScope(
-                overrides: [
-                  powConfigItemProvider.overrideWithValue(config),
-                ],
+                overrides: [powConfigItemProvider.overrideWithValue(config)],
                 child: const PowItem(),
               );
             },
@@ -55,17 +53,16 @@ class PowSettingsSheet extends ConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          PrimaryButton(
-            title: l10n.add,
-            onPressed: addOption,
-          ),
-          const SizedBox(height: 16),
-          PrimaryOutlineButton(
-            title: l10n.close,
-            onPressed: () => Navigator.pop(context),
-          ),
-        ]),
+        child: Column(
+          children: [
+            PrimaryButton(title: l10n.add, onPressed: addOption),
+            const SizedBox(height: 16),
+            PrimaryOutlineButton(
+              title: l10n.close,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -12,13 +12,13 @@ class PrimaryOutlineButton extends ConsumerWidget {
   final bool locked;
 
   const PrimaryOutlineButton({
-    Key? key,
+    super.key,
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
     this.locked = false,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,9 +37,10 @@ class PrimaryOutlineButton extends ConsumerWidget {
             height: 55,
             margin: margin,
             child: OutlinedButton(
-              style: disabled
-                  ? styles.disabledPrimaryOutlinedButtonStyle
-                  : styles.outlinedPrimaryButtonStyle,
+              style:
+                  disabled
+                      ? styles.disabledPrimaryOutlinedButtonStyle
+                      : styles.outlinedPrimaryButtonStyle,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Visibility(
@@ -52,9 +53,10 @@ class PrimaryOutlineButton extends ConsumerWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: disabled
-                        ? styles.textStyleButtonPrimaryOutlineDisabled
-                        : styles.textStyleButtonPrimaryOutline,
+                    style:
+                        disabled
+                            ? styles.textStyleButtonPrimaryOutlineDisabled
+                            : styles.textStyleButtonPrimaryOutline,
                     maxLines: 1,
                   ),
                 ),
@@ -80,13 +82,13 @@ class PrimaryOutlineDarkButton extends ConsumerWidget {
   final bool locked;
 
   const PrimaryOutlineDarkButton({
-    Key? key,
+    super.key,
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
     this.locked = false,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -105,9 +107,10 @@ class PrimaryOutlineDarkButton extends ConsumerWidget {
             height: 55,
             margin: margin,
             child: OutlinedButton(
-              style: disabled
-                  ? styles.disabledPrimaryOutlinedDarkButtonStyle
-                  : styles.outlinedPrimaryDarkButtonStyle,
+              style:
+                  disabled
+                      ? styles.disabledPrimaryOutlinedDarkButtonStyle
+                      : styles.outlinedPrimaryDarkButtonStyle,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Visibility(
@@ -120,9 +123,10 @@ class PrimaryOutlineDarkButton extends ConsumerWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: disabled
-                        ? styles.textStyleButtonPrimaryOutlineDisabled
-                        : styles.textStyleButtonPrimaryOutline,
+                    style:
+                        disabled
+                            ? styles.textStyleButtonPrimaryOutlineDisabled
+                            : styles.textStyleButtonPrimaryOutline,
                     maxLines: 1,
                   ),
                 ),

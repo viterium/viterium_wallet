@@ -15,7 +15,7 @@ final _networkBannerProvider = Provider<String?>((ref) {
 class NetworkBanner extends ConsumerWidget {
   final Widget child;
 
-  const NetworkBanner({Key? key, required this.child}) : super(key: key);
+  const NetworkBanner({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

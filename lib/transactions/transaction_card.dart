@@ -13,10 +13,7 @@ import 'transaction_state_tag.dart';
 class TransactionCard extends ConsumerWidget {
   final AccountBlock item;
 
-  const TransactionCard({
-    Key? key,
-    required this.item,
-  }) : super(key: key);
+  const TransactionCard({super.key, required this.item});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -132,15 +129,17 @@ class TransactionCard extends ConsumerWidget {
                         maxLines: 2,
                       ),
                     ),
-                    Consumer(builder: (context, ref, _) {
-                      final txState = ref.watch(
-                        confirmationStatusProvider(item),
-                      );
-                      return Container(
-                        margin: const EdgeInsetsDirectional.only(top: 4),
-                        child: TransactionStateTag(state: txState),
-                      );
-                    }),
+                    Consumer(
+                      builder: (context, ref, _) {
+                        final txState = ref.watch(
+                          confirmationStatusProvider(item),
+                        );
+                        return Container(
+                          margin: const EdgeInsetsDirectional.only(top: 4),
+                          child: TransactionStateTag(state: txState),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

@@ -32,7 +32,7 @@ final _showInvalidChecksumProvider = Provider.autoDispose((ref) {
 });
 
 class IntroImportSeed extends HookConsumerWidget {
-  const IntroImportSeed({Key? key}) : super(key: key);
+  const IntroImportSeed({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,7 +55,8 @@ class IntroImportSeed extends HookConsumerWidget {
     ref.listen<String>(_mnemonicProvider, (previous, next) {
       final keyboardNotifier = ref.read(keyboardEnabledProvider.notifier);
       final words = next.trim().split(' ');
-      keyboardNotifier.state = words.length < 24 ||
+      keyboardNotifier.state =
+          words.length < 24 ||
           (words.length == 24 && !ViteUtil.isValidMnemonicWord(words.last));
 
       mnemonicController.text = next;
@@ -89,9 +90,10 @@ class IntroImportSeed extends HookConsumerWidget {
     ref.listen<Event<String>>(wordSelectedProvider, (_, value) {
       final mnemonic = ref.read(_mnemonicProvider.notifier);
       final text = mnemonic.state;
-      final index = value.data.isEmpty
-          ? text.trim().lastIndexOf(' ')
-          : text.lastIndexOf(' ');
+      final index =
+          value.data.isEmpty
+              ? text.trim().lastIndexOf(' ')
+              : text.lastIndexOf(' ');
       final word = value.data.isEmpty ? '' : value.data + ' ';
       mnemonic.state = text.substring(0, index + 1) + word;
 
@@ -127,10 +129,7 @@ class IntroImportSeed extends HookConsumerWidget {
         ref.read(wordPrefixProvider.notifier).update((state) => '');
         return;
       }
-      UIUtil.showSnackbar(
-        l10n.qrMnemonicError,
-        context,
-      );
+      UIUtil.showSnackbar(l10n.qrMnemonicError, context);
     }
 
     Future<void> pasteFromClipboard() async {
@@ -152,10 +151,7 @@ class IntroImportSeed extends HookConsumerWidget {
         ref.read(wordPrefixProvider.notifier).update((state) => '');
         return;
       }
-      UIUtil.showSnackbar(
-        l10n.pasteMnemonicError,
-        context,
-      );
+      UIUtil.showSnackbar(l10n.pasteMnemonicError, context);
     }
 
     void submitMnemonic() {
@@ -210,63 +206,72 @@ class IntroImportSeed extends HookConsumerWidget {
                       textAlign: TextAlign.start,
                     ),
                   ),
-                  Column(children: [
-                    Focus(
-                      onKeyEvent: (node, event) => KeyEventResult.handled,
-                      child: AppTextField(
-                        leftMargin: 40,
-                        rightMargin: 40,
-                        topMargin: 20,
-                        focusNode: mnemonicFocusNode,
-                        controller: mnemonicController,
-                        inputFormatters: [
-                          SingleSpaceInputFormatter(),
-                          LowerCaseTextFormatter(),
-                          FilteringTextInputFormatter.allow(RegExp("[a-z ]")),
-                        ],
-                        textInputAction: TextInputAction.done,
-                        maxLines: null,
-                        autocorrect: false,
-                        autofocus: true,
-                        enableInteractiveSelection: false,
-                        prefixButton: TextFieldButton(
-                          icon: AppIcons.scan,
-                          onPressed: scanQrCode,
+                  Column(
+                    children: [
+                      Focus(
+                        onKeyEvent: (node, event) => KeyEventResult.handled,
+                        child: AppTextField(
+                          leftMargin: 40,
+                          rightMargin: 40,
+                          topMargin: 20,
+                          focusNode: mnemonicFocusNode,
+                          controller: mnemonicController,
+                          inputFormatters: [
+                            SingleSpaceInputFormatter(),
+                            LowerCaseTextFormatter(),
+                            FilteringTextInputFormatter.allow(RegExp("[a-z ]")),
+                          ],
+                          textInputAction: TextInputAction.done,
+                          maxLines: null,
+                          autocorrect: false,
+                          autofocus: true,
+                          enableInteractiveSelection: false,
+                          prefixButton: TextFieldButton(
+                            icon: AppIcons.scan,
+                            onPressed: scanQrCode,
+                          ),
+                          fadePrefixOnCondition: true,
+                          prefixShowFirstCondition: !mnemonicIsValid,
+                          suffixButton: TextFieldButton(
+                            icon: AppIcons.paste,
+                            onPressed: pasteFromClipboard,
+                          ),
+                          fadeSuffixOnCondition: true,
+                          suffixShowFirstCondition: !mnemonicIsValid,
+                          keyboardType: TextInputType.none,
+                          style:
+                              mnemonicIsValid
+                                  ? styles.textStyleParagraphPrimary.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                  )
+                                  : styles.textStyleParagraph.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                  ),
                         ),
-                        fadePrefixOnCondition: true,
-                        prefixShowFirstCondition: !mnemonicIsValid,
-                        suffixButton: TextFieldButton(
-                          icon: AppIcons.paste,
-                          onPressed: pasteFromClipboard,
-                        ),
-                        fadeSuffixOnCondition: true,
-                        suffixShowFirstCondition: !mnemonicIsValid,
-                        keyboardType: TextInputType.none,
-                        style: mnemonicIsValid
-                            ? styles.textStyleParagraphPrimary
-                                .copyWith(fontWeight: FontWeight.w400)
-                            : styles.textStyleParagraph
-                                .copyWith(fontWeight: FontWeight.w400),
                       ),
-                    ),
-                    Consumer(builder: (context, ref, _) {
-                      final showInvalidChecksum =
-                          ref.watch(_showInvalidChecksumProvider);
-                      final invalidChecksumText = showInvalidChecksum
-                          ? 'Please check that your Secret Phrase\n is entered correctly!'
-                          : '';
-                      return Container(
-                        alignment: const AlignmentDirectional(0, 0),
-                        margin: const EdgeInsets.only(top: 6),
-                        child: Text(
-                          invalidChecksumText,
-                          style: styles.textStyleParagraphThinPrimary
-                              .copyWith(color: theme.success),
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    }),
-                  ]),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final showInvalidChecksum = ref.watch(
+                            _showInvalidChecksumProvider,
+                          );
+                          final invalidChecksumText =
+                              showInvalidChecksum
+                                  ? 'Please check that your Secret Phrase\n is entered correctly!'
+                                  : '';
+                          return Container(
+                            alignment: const AlignmentDirectional(0, 0),
+                            margin: const EdgeInsets.only(top: 6),
+                            child: Text(
+                              invalidChecksumText,
+                              style: styles.textStyleParagraphThinPrimary
+                                  .copyWith(color: theme.success),
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -281,11 +286,7 @@ class IntroImportSeed extends HookConsumerWidget {
                 child: TextButton(
                   style: styles.appIconButtonStyle,
                   onPressed: submitMnemonic,
-                  child: Icon(
-                    AppIcons.forward,
-                    color: theme.primary,
-                    size: 40,
-                  ),
+                  child: Icon(AppIcons.forward, color: theme.primary, size: 40),
                 ),
               )
             else

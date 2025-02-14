@@ -10,10 +10,7 @@ import '../widgets/address_widgets.dart';
 class SboVoteInfoCard extends ConsumerWidget {
   final RpcVoteInfo? voteInfo;
 
-  const SboVoteInfoCard({
-    Key? key,
-    required this.voteInfo,
-  }) : super(key: key);
+  const SboVoteInfoCard({super.key, required this.voteInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,29 +24,28 @@ class SboVoteInfoCard extends ConsumerWidget {
         height: 130,
         child: Align(
           alignment: Alignment.topCenter,
-          child: Text(
-            'No vote',
-            style: styles.textStyleSettingItemHeader,
-          ),
+          child: Text('No vote', style: styles.textStyleSettingItemHeader),
         ),
       );
     }
     var totalVotes = '';
     RpcSbpVoteInfo? votedSbp;
-    final index = ref.watch(sbpListProvider.select((value) {
-      final sbpList = value;
-      if (sbpList.isNotEmpty) {
-        for (int i = 0; i < sbpList.length; ++i) {
-          final sbp = sbpList[i];
-          if (sbp.sbpName == voteInfo.blockProducerName) {
-            totalVotes = sbp.votes;
-            votedSbp = sbp;
-            return i;
+    final index = ref.watch(
+      sbpListProvider.select((value) {
+        final sbpList = value;
+        if (sbpList.isNotEmpty) {
+          for (int i = 0; i < sbpList.length; ++i) {
+            final sbp = sbpList[i];
+            if (sbp.sbpName == voteInfo.blockProducerName) {
+              totalVotes = sbp.votes;
+              votedSbp = sbp;
+              return i;
+            }
           }
         }
-      }
-      return -1;
-    }));
+        return -1;
+      }),
+    );
 
     return Container(
       height: 130,
@@ -81,8 +77,10 @@ class SboVoteInfoCard extends ConsumerWidget {
                         maintainSize: true,
                         maintainAnimation: true,
                         child: AddressOneLineText(
-                            address: votedSbp?.blockProducingAddress ??
-                                '                                                       '),
+                          address:
+                              votedSbp?.blockProducingAddress ??
+                              '                                                       ',
+                        ),
                       ),
                     ],
                   ),

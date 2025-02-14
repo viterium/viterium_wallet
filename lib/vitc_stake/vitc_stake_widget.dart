@@ -9,7 +9,7 @@ import 'vitc_stake_header.dart';
 import 'vitc_stake_providers.dart';
 
 class VitcStakeWidget extends ConsumerWidget {
-  const VitcStakeWidget({Key? key}) : super(key: key);
+  const VitcStakeWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

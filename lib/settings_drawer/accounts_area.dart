@@ -9,7 +9,7 @@ import 'account_widget.dart';
 import 'recent_accounts.dart';
 
 class AccountsArea extends ConsumerWidget {
-  const AccountsArea({Key? key}) : super(key: key);
+  const AccountsArea({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -9,10 +9,7 @@ import 'viva_staking_types.dart';
 
 class VivaPoolInfoWidget extends ConsumerWidget {
   final VivaPoolInfoAll poolInfo;
-  const VivaPoolInfoWidget({
-    Key? key,
-    required this.poolInfo,
-  }) : super(key: key);
+  const VivaPoolInfoWidget({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,29 +57,25 @@ class VivaPoolInfoWidget extends ConsumerWidget {
       newInfo.totalStakingBalance,
       tokenInfo: stakingTokenInfo,
     );
-    final totalEarnedRaw = ended
-        ? newInfo.totalRewardBalance
-        : started
+    final totalEarnedRaw =
+        ended
+            ? newInfo.totalRewardBalance
+            : started
             ? (height - newInfo.startBlock) * newInfo.rewardPerPeriod
             : BigInt.zero;
-    final totalEarned = Amount.raw(
-      totalEarnedRaw,
-      tokenInfo: rewardTokenInfo,
-    );
+    final totalEarned = Amount.raw(totalEarnedRaw, tokenInfo: rewardTokenInfo);
     final poolTotal = Amount.raw(
       newInfo.totalRewardBalance,
       tokenInfo: rewardTokenInfo,
     );
 
     final time = Duration(seconds: blocks.toInt());
-    final timeStr = time.inDays > 0
-        ? '${time.inDays} Days ${time.inHours.remainder(24)} Hours'
-        : '${time.inHours} Hours ${time.inMinutes.remainder(60)} Minutes';
+    final timeStr =
+        time.inDays > 0
+            ? '${time.inDays} Days ${time.inHours.remainder(24)} Hours'
+            : '${time.inHours} Hours ${time.inMinutes.remainder(60)} Minutes';
 
-    var rewards = Amount.raw(
-      BigInt.zero,
-      tokenInfo: rewardTokenInfo,
-    );
+    var rewards = Amount.raw(BigInt.zero, tokenInfo: rewardTokenInfo);
     final staked = Amount.raw(
       userInfo.stakingBalance,
       tokenInfo: stakingTokenInfo,
@@ -90,29 +83,28 @@ class VivaPoolInfoWidget extends ConsumerWidget {
 
     if (userInfo.stakingBalance > BigInt.zero && started) {
       final rewardFactor = BigInt.from(10).pow(36);
-      final rewardDelta = blockDelta > BigInt.zero
-          ? (newInfo.rewardPerPeriod *
-              blockDelta *
-              rewardFactor ~/
-              newInfo.totalStakingBalance)
-          : BigInt.zero;
+      final rewardDelta =
+          blockDelta > BigInt.zero
+              ? (newInfo.rewardPerPeriod *
+                  blockDelta *
+                  rewardFactor ~/
+                  newInfo.totalStakingBalance)
+              : BigInt.zero;
 
       final rewardPerToken = newInfo.rewardPerToken + rewardDelta;
 
       final pendingAmount =
           userInfo.stakingBalance * rewardPerToken ~/ rewardFactor -
-              userInfo.rewardDebt;
+          userInfo.rewardDebt;
 
-      rewards = Amount.raw(
-        pendingAmount,
-        tokenInfo: rewardTokenInfo,
-      );
+      rewards = Amount.raw(pendingAmount, tokenInfo: rewardTokenInfo);
     }
 
     final unlocksIn = Duration(seconds: unlocksInRaw.toInt());
-    final unlocksInStr = unlocksIn.inDays > 0
-        ? '${unlocksIn.inDays} Days ${unlocksIn.inHours.remainder(24)} Hours'
-        : unlocksIn.inHours > 0
+    final unlocksInStr =
+        unlocksIn.inDays > 0
+            ? '${unlocksIn.inDays} Days ${unlocksIn.inHours.remainder(24)} Hours'
+            : unlocksIn.inHours > 0
             ? '${unlocksIn.inHours} Hours ${unlocksIn.inMinutes.remainder(60)} Minutes'
             : '${unlocksIn.inMinutes} Minutes ${unlocksIn.inSeconds.remainder(60)} Seconds';
 
@@ -185,18 +177,17 @@ class VivaPoolInfoWidget extends ConsumerWidget {
                         '$unlocksInRaw Blocks',
                         style: styles.textStyleAddressPrimary,
                       ),
-                      Text(unlocksInStr,
-                          style: styles.textStyleTransactionUnit),
+                      Text(
+                        unlocksInStr,
+                        style: styles.textStyleTransactionUnit,
+                      ),
                     ],
                   ),
                 ),
             ],
           ),
           const SizedBox(height: 40),
-          Text(
-            '$stakingSymbol staked',
-            style: styles.textStyleTransactionType,
-          ),
+          Text('$stakingSymbol staked', style: styles.textStyleTransactionType),
           Text(
             '${NumberUtil.formatedAmount(staked)}',
             style: styles.textStyleAddressPrimary,

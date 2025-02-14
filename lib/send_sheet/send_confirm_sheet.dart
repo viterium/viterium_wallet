@@ -24,11 +24,7 @@ class SendConfirmSheet extends HookConsumerWidget {
   final SendTx tx;
   final String? label;
 
-  SendConfirmSheet({
-    Key? key,
-    required this.tx,
-    this.label,
-  }) : super(key: key);
+  SendConfirmSheet({super.key, required this.tx, this.label});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -92,14 +88,13 @@ class SendConfirmSheet extends HookConsumerWidget {
         Navigator.of(context).pop();
 
         final sheet = tx.maybeMap(
-          sendTransfer: (_) => SendCompleteSheet(
-            amount: tx.amount,
-            toAddress: tx.toAddress,
-            data: tx.data,
-          ),
-          orElse: () => SendTxCompleteSheet(
-            tx: tx,
-          ),
+          sendTransfer:
+              (_) => SendCompleteSheet(
+                amount: tx.amount,
+                toAddress: tx.toAddress,
+                data: tx.data,
+              ),
+          orElse: () => SendTxCompleteSheet(tx: tx),
         );
 
         Sheets.showAppHeightNineSheet(
@@ -226,11 +221,7 @@ class SendConfirmSheet extends HookConsumerWidget {
                     amount: Amount.raw(fee, tokenInfo: TokenInfo.vite),
                   ),
                 ],
-                if (data != null)
-                  TxDataWidget(
-                    data: data,
-                    contract: contract,
-                  ),
+                if (data != null) TxDataWidget(data: data, contract: contract),
               ],
             ),
           ),
@@ -242,10 +233,7 @@ class SendConfirmSheet extends HookConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 28),
         child: Column(
           children: [
-            PrimaryButton(
-              title: l10n.confirm,
-              onPressed: onConfirm,
-            ),
+            PrimaryButton(title: l10n.confirm, onPressed: onConfirm),
             const SizedBox(height: 16),
             PrimaryOutlineButton(
               title: l10n.cancel,

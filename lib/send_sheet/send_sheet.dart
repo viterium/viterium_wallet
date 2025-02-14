@@ -44,13 +44,13 @@ class SendSheet extends ConsumerStatefulWidget {
   final Uint8List? data;
 
   const SendSheet({
-    Key? key,
+    super.key,
     this.contact,
     this.address,
     this.amountRaw,
     this.feeRaw,
     this.data,
-  }) : super(key: key);
+  });
 
   _SendSheetState createState() => _SendSheetState();
 }
@@ -151,7 +151,8 @@ class _SendSheetState extends ConsumerState<SendSheet> {
           _addressValidAndUnfocused = false;
         });
         _addressController.selection = TextSelection.fromPosition(
-            TextPosition(offset: _addressController.text.length));
+          TextPosition(offset: _addressController.text.length),
+        );
         if (_addressController.text.startsWith("@")) {
           setState(() {
             _contacts = ref
@@ -226,8 +227,9 @@ class _SendSheetState extends ConsumerState<SendSheet> {
         return;
       }
       // See if this address belongs to a contact
-      Contact? contact =
-          ref.read(contactsProvider).getContactWithAddress(viteAddress);
+      Contact? contact = ref
+          .read(contactsProvider)
+          .getContactWithAddress(viteAddress);
 
       _addressValidationText = '';
       _pasteButtonVisible = false;
@@ -388,10 +390,10 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                                       margin: EdgeInsets.only(
                                         left:
                                             MediaQuery.of(context).size.width *
-                                                0.105,
+                                            0.105,
                                         right:
                                             MediaQuery.of(context).size.width *
-                                                0.105,
+                                            0.105,
                                       ),
                                       alignment: Alignment.bottomCenter,
                                       constraints: const BoxConstraints(
@@ -403,8 +405,9 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                                         borderRadius: BorderRadius.circular(25),
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
+                                            borderRadius: BorderRadius.circular(
+                                              25,
+                                            ),
                                             color: theme.backgroundDarkest,
                                           ),
                                           child: Container(
@@ -416,11 +419,14 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                                             child: ListView.builder(
                                               shrinkWrap: true,
                                               padding: const EdgeInsets.only(
-                                                  bottom: 0, top: 0),
+                                                bottom: 0,
+                                                top: 0,
+                                              ),
                                               itemCount: _contacts.length,
                                               itemBuilder: (context, index) {
                                                 return _buildContactItem(
-                                                    _contacts[index]);
+                                                  _contacts[index],
+                                                );
                                               },
                                             ), // ********* The pop-up Contacts List End ********* //
                                             // ************************************************** //
@@ -508,7 +514,9 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                       final toAddress = Address.tryParse(destination);
                       if (toAddress == null) {
                         UIUtil.showSnackbar(
-                            'Invalid destination address', context);
+                          'Invalid destination address',
+                          context,
+                        );
                         return;
                       }
 
@@ -529,10 +537,7 @@ class _SendSheetState extends ConsumerState<SendSheet> {
                       Sheets.showAppHeightNineSheet(
                         context: context,
                         theme: theme,
-                        widget: SendConfirmSheet(
-                          tx: tx,
-                          label: contact?.name,
-                        ),
+                        widget: SendConfirmSheet(tx: tx, label: contact?.name),
                       );
                     },
                   ),
@@ -552,43 +557,45 @@ class _SendSheetState extends ConsumerState<SendSheet> {
 
   // Build contact items for the list
   Widget _buildContactItem(Contact contact) {
-    return Consumer(builder: (context, ref, _) {
-      final theme = ref.watch(themeProvider);
-      final styles = ref.watch(stylesProvider);
+    return Consumer(
+      builder: (context, ref, _) {
+        final theme = ref.watch(themeProvider);
+        final styles = ref.watch(stylesProvider);
 
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 42,
-            width: double.infinity,
-            child: TextButton(
-              onPressed: () {
-                _addressController.text = contact.name;
-                FocusManager.instance.primaryFocus?.unfocus();
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: 42,
+              width: double.infinity,
+              child: TextButton(
+                onPressed: () {
+                  _addressController.text = contact.name;
+                  FocusManager.instance.primaryFocus?.unfocus();
 
-                setState(() {
-                  _isContact = true;
-                  _contactButtonVisible = false;
-                  _pasteButtonVisible = false;
-                  _sendAddressStyle = AddressStyle.PRIMARY;
-                });
-              },
-              child: Text(
-                contact.name,
-                textAlign: TextAlign.center,
-                style: styles.textStyleAddressPrimary,
+                  setState(() {
+                    _isContact = true;
+                    _contactButtonVisible = false;
+                    _pasteButtonVisible = false;
+                    _sendAddressStyle = AddressStyle.PRIMARY;
+                  });
+                },
+                child: Text(
+                  contact.name,
+                  textAlign: TextAlign.center,
+                  style: styles.textStyleAddressPrimary,
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 25),
-            height: 1,
-            color: theme.text03,
-          ),
-        ],
-      );
-    });
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 25),
+              height: 1,
+              color: theme.text03,
+            ),
+          ],
+        );
+      },
+    );
   }
 
   /// Validate form data to see if valid
@@ -644,380 +651,395 @@ class _SendSheetState extends ConsumerState<SendSheet> {
   }
 
   Widget getEnterAmountContainer() {
-    return Consumer(builder: (context, ref, _) {
-      final theme = ref.watch(themeProvider);
-      final styles = ref.watch(stylesProvider);
-      final l10n = ref.watch(l10nProvider);
+    return Consumer(
+      builder: (context, ref, _) {
+        final theme = ref.watch(themeProvider);
+        final styles = ref.watch(stylesProvider);
+        final l10n = ref.watch(l10nProvider);
 
-      final tokenInfo = ref.watch(selectedTokenProvider);
-      final balance = ref.watch(balanceForTokenProvider(tokenInfo.tokenId));
-      final isMaxSend = amountRaw == balance;
+        final tokenInfo = ref.watch(selectedTokenProvider);
+        final balance = ref.watch(balanceForTokenProvider(tokenInfo.tokenId));
+        final isMaxSend = amountRaw == balance;
 
-      final formatter = NumberFormat.currency(name: '');
-      final currencyFormatter = CurrencyFormatter(
-        groupSeparator: formatter.symbols.GROUP_SEP,
-        decimalSeparator: formatter.symbols.DECIMAL_SEP,
-        maxDecimalDigits: tokenInfo.decimals,
-      );
+        final formatter = NumberFormat.currency(name: '');
+        final currencyFormatter = CurrencyFormatter(
+          groupSeparator: formatter.symbols.GROUP_SEP,
+          decimalSeparator: formatter.symbols.DECIMAL_SEP,
+          maxDecimalDigits: tokenInfo.decimals,
+        );
 
-      ref.listen<TokenInfo>(selectedTokenProvider, (_, tokenInfo) {
-        final text = _amountController.text
-            .replaceAll(currencyFormatter.groupSeparator, '')
-            .replaceAll(currencyFormatter.decimalSeparator, '.');
-        final amountDecimal = Decimal.tryParse(text);
-        if (amountDecimal == null) {
-          amountRaw = null;
-          return;
-        }
-        amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
-        setState(() => _amountValidationText = '');
-      });
+        ref.listen<TokenInfo>(selectedTokenProvider, (_, tokenInfo) {
+          final text = _amountController.text
+              .replaceAll(currencyFormatter.groupSeparator, '')
+              .replaceAll(currencyFormatter.decimalSeparator, '.');
+          final amountDecimal = Decimal.tryParse(text);
+          if (amountDecimal == null) {
+            amountRaw = null;
+            return;
+          }
+          amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
+          setState(() => _amountValidationText = '');
+        });
 
-      final amount = Amount.raw(
-        amountRaw ?? BigInt.zero,
-        tokenInfo: tokenInfo,
-      );
+        final amount = Amount.raw(
+          amountRaw ?? BigInt.zero,
+          tokenInfo: tokenInfo,
+        );
 
-      return FiatValueContainer(
-        amount: amount,
-        child: AppTextField(
-          focusNode: _amountFocusNode,
-          controller: _amountController,
-          topMargin: 15,
-          cursorColor: theme.primary,
-          style: styles.textStyleParagraphPrimary,
-          inputFormatters: [
-            currencyFormatter,
-          ],
-          onChanged: (text) {
-            text = text
-                .replaceAll(currencyFormatter.groupSeparator, '')
-                .replaceAll(currencyFormatter.decimalSeparator, '.');
-            final amountDecimal = Decimal.tryParse(text);
-            if (amountDecimal == null) {
-              amountRaw = null;
-              setState(() {});
-              return;
-            }
-            amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
-            // Always reset the error message to be less annoying
-            setState(() => _amountValidationText = '');
-          },
-          textInputAction: TextInputAction.done,
-          maxLines: null,
-          autocorrect: false,
-          hintText: _amountHint ?? l10n.enterAmount,
-          prefixButton: TextFieldButton(
-            icon: AppIcons.swapcurrency,
-            widget: TokenIconWidget(tokenId: tokenInfo.tokenId),
-            onPressed: () {
-              Sheets.showAppHeightEightSheet(
-                context: context,
-                widget: ProviderScope(
-                  overrides: [
-                    tokenCardActionProvider.overrideWithValue(
-                      TokenCardAction.selectToken,
-                    ),
-                  ],
-                  child: const TokenSelectSheet(),
-                ),
-                theme: theme,
-                backgroundColor: theme.background,
-              );
-            },
-          ),
-          suffixButton: TextFieldButton(
-            icon: AppIcons.max,
-            onPressed: () {
-              if (isMaxSend) {
+        return FiatValueContainer(
+          amount: amount,
+          child: AppTextField(
+            focusNode: _amountFocusNode,
+            controller: _amountController,
+            topMargin: 15,
+            cursorColor: theme.primary,
+            style: styles.textStyleParagraphPrimary,
+            inputFormatters: [currencyFormatter],
+            onChanged: (text) {
+              text = text
+                  .replaceAll(currencyFormatter.groupSeparator, '')
+                  .replaceAll(currencyFormatter.decimalSeparator, '.');
+              final amountDecimal = Decimal.tryParse(text);
+              if (amountDecimal == null) {
+                amountRaw = null;
+                setState(() {});
                 return;
               }
-              final tokenInfo = ref.read(selectedTokenProvider);
-              amountRaw = ref.read(balanceForTokenProvider(tokenInfo.tokenId));
+              amountRaw = Amount.value(amountDecimal, tokenInfo: tokenInfo).raw;
+              // Always reset the error message to be less annoying
+              setState(() => _amountValidationText = '');
+            },
+            textInputAction: TextInputAction.done,
+            maxLines: null,
+            autocorrect: false,
+            hintText: _amountHint ?? l10n.enterAmount,
+            prefixButton: TextFieldButton(
+              icon: AppIcons.swapcurrency,
+              widget: TokenIconWidget(tokenId: tokenInfo.tokenId),
+              onPressed: () {
+                Sheets.showAppHeightEightSheet(
+                  context: context,
+                  widget: ProviderScope(
+                    overrides: [
+                      tokenCardActionProvider.overrideWithValue(
+                        TokenCardAction.selectToken,
+                      ),
+                    ],
+                    child: const TokenSelectSheet(),
+                  ),
+                  theme: theme,
+                  backgroundColor: theme.background,
+                );
+              },
+            ),
+            suffixButton: TextFieldButton(
+              icon: AppIcons.max,
+              onPressed: () {
+                if (isMaxSend) {
+                  return;
+                }
+                final tokenInfo = ref.read(selectedTokenProvider);
+                amountRaw = ref.read(
+                  balanceForTokenProvider(tokenInfo.tokenId),
+                );
 
-              final amount =
-                  Amount.raw(amountRaw ?? BigInt.zero, tokenInfo: tokenInfo);
-              _amountController.text =
-                  NumberUtil.textFieldFormatedAmount(amount);
-              ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
+                final amount = Amount.raw(
+                  amountRaw ?? BigInt.zero,
+                  tokenInfo: tokenInfo,
+                );
+                _amountController.text = NumberUtil.textFieldFormatedAmount(
+                  amount,
+                );
+                ref.read(formatedTokenBalanceProvider(tokenInfo.tokenId));
 
-              _addressController.selection = TextSelection.fromPosition(
-                TextPosition(offset: _addressController.text.length),
-              );
-              _addressFocusNode.requestFocus();
+                _addressController.selection = TextSelection.fromPosition(
+                  TextPosition(offset: _addressController.text.length),
+                );
+                _addressFocusNode.requestFocus();
+              },
+            ),
+            fadeSuffixOnCondition: true,
+            suffixShowFirstCondition: !isMaxSend,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            textAlign: TextAlign.center,
+            onSubmitted: (text) {
+              //FocusScope.of(context).unfocus();
+              if (Address.tryParse(_addressController.text) == null) {
+                FocusScope.of(context).requestFocus(_addressFocusNode);
+              }
             },
           ),
-          fadeSuffixOnCondition: true,
-          suffixShowFirstCondition: !isMaxSend,
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          textAlign: TextAlign.center,
-          onSubmitted: (text) {
-            //FocusScope.of(context).unfocus();
-            if (Address.tryParse(_addressController.text) == null) {
-              FocusScope.of(context).requestFocus(_addressFocusNode);
-            }
-          },
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget getEnterAddressContainer() {
-    return Consumer(builder: (context, ref, _) {
-      final theme = ref.watch(themeProvider);
-      final l10n = ref.watch(l10nProvider);
-      final styles = ref.watch(stylesProvider);
+    return Consumer(
+      builder: (context, ref, _) {
+        final theme = ref.watch(themeProvider);
+        final l10n = ref.watch(l10nProvider);
+        final styles = ref.watch(stylesProvider);
 
-      return AppTextField(
-        topMargin: 124,
-        padding: _addressValidAndUnfocused
-            ? EdgeInsets.symmetric(horizontal: 25, vertical: 15)
-            : EdgeInsets.zero,
-        focusNode: _addressFocusNode,
-        controller: _addressController,
-        cursorColor: theme.primary,
-        inputFormatters: [
-          _isContact
-              ? LengthLimitingTextInputFormatter(20)
-              : LengthLimitingTextInputFormatter(kViteAddressLength),
-        ],
-        textInputAction: TextInputAction.done,
-        maxLines: null,
-        autocorrect: false,
-        hintText: _addressHint ?? l10n.enterAddress,
-        prefixButton: TextFieldButton(
-          icon: AppIcons.at,
-          onPressed: () {
-            if (_contactButtonVisible && _contacts.length == 0) {
-              // Show menu
-              FocusScope.of(context).requestFocus(_addressFocusNode);
-              if (_addressController.text.length == 0) {
-                _addressController.text = "@";
-                _addressController.selection = TextSelection.fromPosition(
-                    TextPosition(offset: _addressController.text.length));
+        return AppTextField(
+          topMargin: 124,
+          padding:
+              _addressValidAndUnfocused
+                  ? EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+                  : EdgeInsets.zero,
+          focusNode: _addressFocusNode,
+          controller: _addressController,
+          cursorColor: theme.primary,
+          inputFormatters: [
+            _isContact
+                ? LengthLimitingTextInputFormatter(20)
+                : LengthLimitingTextInputFormatter(kViteAddressLength),
+          ],
+          textInputAction: TextInputAction.done,
+          maxLines: null,
+          autocorrect: false,
+          hintText: _addressHint ?? l10n.enterAddress,
+          prefixButton: TextFieldButton(
+            icon: AppIcons.at,
+            onPressed: () {
+              if (_contactButtonVisible && _contacts.length == 0) {
+                // Show menu
+                FocusScope.of(context).requestFocus(_addressFocusNode);
+                if (_addressController.text.length == 0) {
+                  _addressController.text = "@";
+                  _addressController.selection = TextSelection.fromPosition(
+                    TextPosition(offset: _addressController.text.length),
+                  );
+                }
+                setState(() {
+                  _contacts = ref.read(contactsProvider).contacts;
+                });
               }
-              setState(() {
-                _contacts = ref.read(contactsProvider).contacts;
-              });
-            }
-          },
-        ),
-        fadePrefixOnCondition: true,
-        prefixShowFirstCondition:
-            _contactButtonVisible && _contacts.length == 0,
-        suffixButton: TextFieldButton(
-          icon: AppIcons.paste,
-          onPressed: () {
-            if (!_pasteButtonVisible) {
-              return;
-            }
-            Clipboard.getData("text/plain").then((ClipboardData? data) {
-              if (data == null || data.text == null) {
+            },
+          ),
+          fadePrefixOnCondition: true,
+          prefixShowFirstCondition:
+              _contactButtonVisible && _contacts.length == 0,
+          suffixButton: TextFieldButton(
+            icon: AppIcons.paste,
+            onPressed: () {
+              if (!_pasteButtonVisible) {
                 return;
               }
-              final viteAddress = ViteUtil.findAddressInString(data.text!);
-              if (viteAddress != null) {
-                final contacts = ref.read(contactsProvider);
-                final contact = contacts.getContactWithAddress(
-                  viteAddress,
-                  includeLabels: true,
-                );
-                if (contact == null) {
-                  setState(() {
-                    _isContact = false;
-                    _addressValidationText = "";
-                    _sendAddressStyle = AddressStyle.TEXT90;
-                    _pasteButtonVisible = false;
-                    _contactButtonVisible = false;
-                  });
-                  _addressController.text = viteAddress;
-                  _addressFocusNode.unfocus();
-                  _memoFocusNode.unfocus();
-                  setState(() {
-                    _addressValidAndUnfocused = true;
-                  });
-                } else {
-                  // Is a contact
-                  setState(() {
-                    _isContact = true;
-                    _addressValidationText = "";
-                    _sendAddressStyle = AddressStyle.PRIMARY;
-                    _pasteButtonVisible = false;
-                    _contactButtonVisible = false;
-                  });
-                  _addressController.text = contact.name;
+              Clipboard.getData("text/plain").then((ClipboardData? data) {
+                if (data == null || data.text == null) {
+                  return;
                 }
-              }
-            });
-          },
-        ),
-        fadeSuffixOnCondition: true,
-        suffixShowFirstCondition: _pasteButtonVisible,
-        style: _sendAddressStyle == AddressStyle.TEXT60
-            ? styles.textStyleAddressText60
-            : _sendAddressStyle == AddressStyle.TEXT90
-                ? styles.textStyleAddressText90
-                : styles.textStyleAddressPrimary,
-        onChanged: (text) {
-          if (text.length > 0) {
-            setState(() {
-              _contactButtonVisible = false;
-            });
-          } else {
-            setState(() {
-              _contactButtonVisible = true;
-            });
-          }
-          bool isContact = text.startsWith("@");
-          // Switch to contact mode if starts with @
-          if (isContact) {
-            setState(() {
-              _isContact = true;
-            });
-            final contacts = ref.read(contactsProvider);
-            final matchedList = contacts.getContactsWithNameLike(text);
-            setState(() => _contacts = matchedList);
-          } else {
-            setState(() {
-              _isContact = false;
-              _contacts = [];
-            });
-          }
-          // Always reset the error message to be less annoying
-          setState(() {
-            _addressValidationText = '';
-          });
-          if (!isContact && Address.tryParse(text) != null) {
-            FocusManager.instance.primaryFocus?.unfocus();
-
-            setState(() {
-              _sendAddressStyle = AddressStyle.TEXT90;
-              _addressValidationText = '';
-              _pasteButtonVisible = false;
-            });
-          } else if (!isContact) {
-            setState(() {
-              _sendAddressStyle = AddressStyle.TEXT60;
-              _pasteButtonVisible = true;
-            });
-          } else {
-            final contact = ref.read(contactsProvider).getContactWithName(text);
-            if (contact == null) {
+                final viteAddress = ViteUtil.findAddressInString(data.text!);
+                if (viteAddress != null) {
+                  final contacts = ref.read(contactsProvider);
+                  final contact = contacts.getContactWithAddress(
+                    viteAddress,
+                    includeLabels: true,
+                  );
+                  if (contact == null) {
+                    setState(() {
+                      _isContact = false;
+                      _addressValidationText = "";
+                      _sendAddressStyle = AddressStyle.TEXT90;
+                      _pasteButtonVisible = false;
+                      _contactButtonVisible = false;
+                    });
+                    _addressController.text = viteAddress;
+                    _addressFocusNode.unfocus();
+                    _memoFocusNode.unfocus();
+                    setState(() {
+                      _addressValidAndUnfocused = true;
+                    });
+                  } else {
+                    // Is a contact
+                    setState(() {
+                      _isContact = true;
+                      _addressValidationText = "";
+                      _sendAddressStyle = AddressStyle.PRIMARY;
+                      _pasteButtonVisible = false;
+                      _contactButtonVisible = false;
+                    });
+                    _addressController.text = contact.name;
+                  }
+                }
+              });
+            },
+          ),
+          fadeSuffixOnCondition: true,
+          suffixShowFirstCondition: _pasteButtonVisible,
+          style:
+              _sendAddressStyle == AddressStyle.TEXT60
+                  ? styles.textStyleAddressText60
+                  : _sendAddressStyle == AddressStyle.TEXT90
+                  ? styles.textStyleAddressText90
+                  : styles.textStyleAddressPrimary,
+          onChanged: (text) {
+            if (text.length > 0) {
               setState(() {
-                _sendAddressStyle = AddressStyle.TEXT60;
+                _contactButtonVisible = false;
               });
             } else {
               setState(() {
-                _pasteButtonVisible = false;
-                _sendAddressStyle = AddressStyle.PRIMARY;
+                _contactButtonVisible = true;
               });
             }
-          }
-        },
-        overrideTextFieldWidget: _addressValidAndUnfocused
-            ? GestureDetector(
-                onTap: () {
-                  setState(() => _addressValidAndUnfocused = false);
-                  Future.delayed(Duration(milliseconds: 50), () {
-                    FocusScope.of(context).requestFocus(_addressFocusNode);
-                  });
-                },
-                child: AddressThreeLineText(
-                  address: _addressController.text,
-                ),
-              )
-            : null,
-      );
-    });
+            bool isContact = text.startsWith("@");
+            // Switch to contact mode if starts with @
+            if (isContact) {
+              setState(() {
+                _isContact = true;
+              });
+              final contacts = ref.read(contactsProvider);
+              final matchedList = contacts.getContactsWithNameLike(text);
+              setState(() => _contacts = matchedList);
+            } else {
+              setState(() {
+                _isContact = false;
+                _contacts = [];
+              });
+            }
+            // Always reset the error message to be less annoying
+            setState(() {
+              _addressValidationText = '';
+            });
+            if (!isContact && Address.tryParse(text) != null) {
+              FocusManager.instance.primaryFocus?.unfocus();
+
+              setState(() {
+                _sendAddressStyle = AddressStyle.TEXT90;
+                _addressValidationText = '';
+                _pasteButtonVisible = false;
+              });
+            } else if (!isContact) {
+              setState(() {
+                _sendAddressStyle = AddressStyle.TEXT60;
+                _pasteButtonVisible = true;
+              });
+            } else {
+              final contact = ref
+                  .read(contactsProvider)
+                  .getContactWithName(text);
+              if (contact == null) {
+                setState(() {
+                  _sendAddressStyle = AddressStyle.TEXT60;
+                });
+              } else {
+                setState(() {
+                  _pasteButtonVisible = false;
+                  _sendAddressStyle = AddressStyle.PRIMARY;
+                });
+              }
+            }
+          },
+          overrideTextFieldWidget:
+              _addressValidAndUnfocused
+                  ? GestureDetector(
+                    onTap: () {
+                      setState(() => _addressValidAndUnfocused = false);
+                      Future.delayed(Duration(milliseconds: 50), () {
+                        FocusScope.of(context).requestFocus(_addressFocusNode);
+                      });
+                    },
+                    child: AddressThreeLineText(
+                      address: _addressController.text,
+                    ),
+                  )
+                  : null,
+        );
+      },
+    );
   }
 
   Widget getEnterMemoContainer() {
-    return Consumer(builder: (context, ref, _) {
-      final theme = ref.watch(themeProvider);
-      final l10n = ref.watch(l10nProvider);
+    return Consumer(
+      builder: (context, ref, _) {
+        final theme = ref.watch(themeProvider);
+        final l10n = ref.watch(l10nProvider);
 
-      return AppTextField(
-        padding: _memoValidAndUnfocused
-            ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
-            : EdgeInsets.zero,
-        focusNode: _memoFocusNode,
-        controller: _memoController,
-        cursorColor: theme.primary,
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(120),
-        ],
-        textInputAction: TextInputAction.done,
-        maxLines: null,
-        autocorrect: false,
-        hintText: l10n.enterMemo,
-        prefixButton: TextFieldButton(
-          icon: AppIcons.scan,
-          onPressed: () async {
-            FocusManager.instance.primaryFocus?.unfocus();
+        return AppTextField(
+          padding:
+              _memoValidAndUnfocused
+                  ? const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+                  : EdgeInsets.zero,
+          focusNode: _memoFocusNode,
+          controller: _memoController,
+          cursorColor: theme.primary,
+          inputFormatters: [LengthLimitingTextInputFormatter(120)],
+          textInputAction: TextInputAction.done,
+          maxLines: null,
+          autocorrect: false,
+          hintText: l10n.enterMemo,
+          prefixButton: TextFieldButton(
+            icon: AppIcons.scan,
+            onPressed: () async {
+              FocusManager.instance.primaryFocus?.unfocus();
 
-            final qr = await UserDataUtil.scanQrCode(context);
-            final data = qr?.code;
-            if (data == null) {
-              return;
-            }
-
-            _memoController.text = data;
-            _memoPasteButtonVisible = false;
-            _memoQrButtonVisible = false;
-
-            setState(() => _memoValidAndUnfocused = true);
-          },
-        ),
-        fadePrefixOnCondition: true,
-        prefixShowFirstCondition: _memoQrButtonVisible,
-        suffixButton: TextFieldButton(
-          icon: AppIcons.paste,
-          onPressed: () {
-            if (!_memoPasteButtonVisible) {
-              return;
-            }
-
-            Clipboard.getData("text/plain").then((ClipboardData? data) {
-              final text = data?.text;
-              if (text == null) {
+              final qr = await UserDataUtil.scanQrCode(context);
+              final data = qr?.code;
+              if (data == null) {
                 return;
               }
-              FocusManager.instance.primaryFocus?.unfocus();
-              _memoController.text = text;
+
+              _memoController.text = data;
               _memoPasteButtonVisible = false;
               _memoQrButtonVisible = false;
 
               setState(() => _memoValidAndUnfocused = true);
-            });
+            },
+          ),
+          fadePrefixOnCondition: true,
+          prefixShowFirstCondition: _memoQrButtonVisible,
+          suffixButton: TextFieldButton(
+            icon: AppIcons.paste,
+            onPressed: () {
+              if (!_memoPasteButtonVisible) {
+                return;
+              }
+
+              Clipboard.getData("text/plain").then((ClipboardData? data) {
+                final text = data?.text;
+                if (text == null) {
+                  return;
+                }
+                FocusManager.instance.primaryFocus?.unfocus();
+                _memoController.text = text;
+                _memoPasteButtonVisible = false;
+                _memoQrButtonVisible = false;
+
+                setState(() => _memoValidAndUnfocused = true);
+              });
+            },
+          ),
+          fadeSuffixOnCondition: true,
+          suffixShowFirstCondition: _memoPasteButtonVisible,
+          onChanged: (text) {
+            if (text.length > 0) {
+              setState(() {
+                _memoQrButtonVisible = false;
+                _memoPasteButtonVisible = false;
+              });
+            } else {
+              setState(() {
+                _memoQrButtonVisible = true;
+                _memoPasteButtonVisible = true;
+              });
+            }
           },
-        ),
-        fadeSuffixOnCondition: true,
-        suffixShowFirstCondition: _memoPasteButtonVisible,
-        onChanged: (text) {
-          if (text.length > 0) {
-            setState(() {
-              _memoQrButtonVisible = false;
-              _memoPasteButtonVisible = false;
-            });
-          } else {
-            setState(() {
-              _memoQrButtonVisible = true;
-              _memoPasteButtonVisible = true;
-            });
-          }
-        },
-        overrideTextFieldWidget: _memoValidAndUnfocused
-            ? GestureDetector(
-                onTap: () {
-                  setState(() => _memoValidAndUnfocused = false);
-                  Future.delayed(Duration(milliseconds: 50), () {
-                    FocusScope.of(context).requestFocus(_memoFocusNode);
-                  });
-                },
-                child: Text(_memoController.text),
-              )
-            : null,
-      );
-    });
+          overrideTextFieldWidget:
+              _memoValidAndUnfocused
+                  ? GestureDetector(
+                    onTap: () {
+                      setState(() => _memoValidAndUnfocused = false);
+                      Future.delayed(Duration(milliseconds: 50), () {
+                        FocusScope.of(context).requestFocus(_memoFocusNode);
+                      });
+                    },
+                    child: Text(_memoController.text),
+                  )
+                  : null,
+        );
+      },
+    );
   }
 }

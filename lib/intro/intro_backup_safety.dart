@@ -9,7 +9,7 @@ import 'intro_back_button.dart';
 import 'intro_providers.dart';
 
 class IntroBackupSafety extends ConsumerWidget {
-  const IntroBackupSafety({Key? key}) : super(key: key);
+  const IntroBackupSafety({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,15 +36,19 @@ class IntroBackupSafety extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(start: 20),
-                      child: const IntroBackButton(),
-                    ),
-                  ]),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 20),
+                        child: const IntroBackButton(),
+                      ),
+                    ],
+                  ),
                   Container(
-                    margin:
-                        const EdgeInsetsDirectional.only(start: 40, top: 15),
+                    margin: const EdgeInsetsDirectional.only(
+                      start: 40,
+                      top: 15,
+                    ),
                     child: Icon(
                       AppIcons.security,
                       size: 60,

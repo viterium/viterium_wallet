@@ -5,7 +5,7 @@ import '../app_providers.dart';
 import 'vitc_stake_providers.dart';
 
 class VitcStakeHeader extends ConsumerWidget {
-  const VitcStakeHeader({Key? key}) : super(key: key);
+  const VitcStakeHeader({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,19 +62,13 @@ class VitcStakeHeader extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Ended',
-                  style: styles.textStyleTransactionType,
-                ),
+                Text('Ended', style: styles.textStyleTransactionType),
                 Switch.adaptive(
                   activeColor: theme.primary,
                   value: !filter.ended,
                   onChanged: toggleEndedFilter,
                 ),
-                Text(
-                  'Live',
-                  style: styles.textStyleTransactionType,
-                ),
+                Text('Live', style: styles.textStyleTransactionType),
                 const SizedBox(width: 20),
               ],
             ),

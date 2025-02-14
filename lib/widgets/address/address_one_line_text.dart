@@ -9,11 +9,10 @@ class AddressOneLineText extends ConsumerWidget {
   final String address;
   final AddressOneLineTextType type;
   const AddressOneLineText({
-    Key? key,
+    super.key,
     required this.address,
     this.type = AddressOneLineTextType.PRIMARY,
-  })  : assert(address.length == 55),
-        super(key: key);
+  }) : assert(address.length == 55);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,10 +33,7 @@ class AddressOneLineText extends ConsumerWidget {
                     text: stringPartOne,
                     style: styles.textStyleAddressPrimary60,
                   ),
-                  TextSpan(
-                    text: "...",
-                    style: styles.textStyleAddressText60,
-                  ),
+                  TextSpan(text: "...", style: styles.textStyleAddressText60),
                   TextSpan(
                     text: stringPartFive,
                     style: styles.textStyleAddressPrimary60,
@@ -58,10 +54,7 @@ class AddressOneLineText extends ConsumerWidget {
                     text: stringPartOne,
                     style: styles.textStyleAddressPrimary,
                   ),
-                  TextSpan(
-                    text: "...",
-                    style: styles.textStyleAddressText90,
-                  ),
+                  TextSpan(text: "...", style: styles.textStyleAddressText90),
                   TextSpan(
                     text: stringPartFive,
                     style: styles.textStyleAddressPrimary,
@@ -82,10 +75,7 @@ class AddressOneLineText extends ConsumerWidget {
                     text: stringPartOne,
                     style: styles.textStyleAddressSuccess,
                   ),
-                  TextSpan(
-                    text: "...",
-                    style: styles.textStyleAddressText90,
-                  ),
+                  TextSpan(text: "...", style: styles.textStyleAddressText90),
                   TextSpan(
                     text: stringPartFive,
                     style: styles.textStyleAddressSuccess,

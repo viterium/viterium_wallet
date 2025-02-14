@@ -19,7 +19,7 @@ import 'node_providers.dart';
 import 'node_types.dart';
 
 class NodeAddSheet extends HookConsumerWidget {
-  const NodeAddSheet({Key? key}) : super(key: key);
+  const NodeAddSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -59,9 +59,7 @@ class NodeAddSheet extends HookConsumerWidget {
 
     useEffect(() {
       final listener = () {
-        stateNotifier.value = state.copyWith(
-          showWsHint: !wsFocusNode.hasFocus,
-        );
+        stateNotifier.value = state.copyWith(showWsHint: !wsFocusNode.hasFocus);
       };
       wsFocusNode.addListener(listener);
       return () => wsFocusNode.removeListener(listener);
@@ -75,9 +73,7 @@ class NodeAddSheet extends HookConsumerWidget {
 
       var state = stateNotifier.value;
       if (name.isEmpty) {
-        state = state.copyWith(
-          nameValidationText: 'Node name is empty',
-        );
+        state = state.copyWith(nameValidationText: 'Node name is empty');
         valid = false;
       }
       if (!isIP(http)) {
@@ -85,9 +81,7 @@ class NodeAddSheet extends HookConsumerWidget {
         if (httpUri == null ||
             httpUri.host.isEmpty ||
             !(const {'http', 'https'}.contains(httpUri.scheme))) {
-          state = state.copyWith(
-            httpValidationText: 'Invalid HTTP URL',
-          );
+          state = state.copyWith(httpValidationText: 'Invalid HTTP URL');
           valid = false;
         }
       }
@@ -96,9 +90,7 @@ class NodeAddSheet extends HookConsumerWidget {
         if (wsUri == null ||
             wsUri.host.isEmpty ||
             !(const {'ws', 'wss'}.contains(wsUri.scheme))) {
-          state = state.copyWith(
-            wsValidationText: 'Invalid WS URL',
-          );
+          state = state.copyWith(wsValidationText: 'Invalid WS URL');
           valid = false;
         }
       }
@@ -138,9 +130,10 @@ class NodeAddSheet extends HookConsumerWidget {
           throw Exception('Net ids do not match');
         }
 
-        final network = httpNodeInfo.netId == 0
-            ? ViteNetwork.devnet
-            : httpNodeInfo.netId == 1
+        final network =
+            httpNodeInfo.netId == 0
+                ? ViteNetwork.devnet
+                : httpNodeInfo.netId == 1
                 ? ViteNetwork.mainnet
                 : ViteNetwork.testnet;
         final notifier = ref.read(viteNodeSettingsProvider.notifier);
@@ -221,9 +214,7 @@ class NodeAddSheet extends HookConsumerWidget {
             hintText: state.showNameHint ? 'Enter Node Name' : '',
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.words,
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(20),
-            ],
+            inputFormatters: [LengthLimitingTextInputFormatter(20)],
           ),
           ValidationText(state.nameValidationText),
           AppTextField(
@@ -262,17 +253,16 @@ class NodeAddSheet extends HookConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          PrimaryButton(
-            title: l10n.add,
-            onPressed: addNode,
-          ),
-          const SizedBox(height: 16),
-          PrimaryOutlineButton(
-            title: l10n.cancel,
-            onPressed: () => Navigator.pop(context),
-          ),
-        ]),
+        child: Column(
+          children: [
+            PrimaryButton(title: l10n.add, onPressed: addNode),
+            const SizedBox(height: 16),
+            PrimaryOutlineButton(
+              title: l10n.cancel,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
       ),
     );
   }

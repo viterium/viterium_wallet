@@ -9,11 +9,11 @@ class RequestItemWidget extends ConsumerWidget {
   final String action;
 
   const RequestItemWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.subtitle,
     required this.action,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,22 +29,13 @@ class RequestItemWidget extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: styles.textStyleTransactionType,
-                ),
-                Text(
-                  subtitle,
-                  style: styles.textStyleTransactionUnit,
-                ),
+                Text(title, style: styles.textStyleTransactionType),
+                Text(subtitle, style: styles.textStyleTransactionUnit),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 6,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
               color: theme.text10,
               borderRadius: BorderRadius.circular(6),

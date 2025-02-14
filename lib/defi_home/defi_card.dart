@@ -6,9 +6,7 @@ import '../widgets/address_widgets.dart';
 import '../widgets/app_icon_button.dart';
 
 class DefiItemWidget extends ConsumerWidget {
-  const DefiItemWidget({
-    Key? key,
-  }) : super(key: key);
+  const DefiItemWidget({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container();
@@ -23,13 +21,13 @@ class DefiCard extends ConsumerWidget {
   final VoidCallback onPressed;
 
   const DefiCard({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.details,
     this.notice,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,10 +40,7 @@ class DefiCard extends ConsumerWidget {
         style: styles.cardButtonStyle,
         onPressed: onPressed,
         child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 12,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -82,12 +77,9 @@ class DefiCard extends ConsumerWidget {
               if (notice != null) ...[
                 Tooltip(
                   message: notice,
-                  child: AppIconButton(
-                    icon: Icons.error,
-                    onPressed: null,
-                  ),
-                )
-              ]
+                  child: AppIconButton(icon: Icons.error, onPressed: null),
+                ),
+              ],
             ],
           ),
         ),

@@ -9,11 +9,11 @@ class PinScreenButton extends ConsumerWidget {
   final void Function(String text) onTap;
 
   const PinScreenButton({
-    Key? key,
+    super.key,
     required this.text,
     this.size = 100,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

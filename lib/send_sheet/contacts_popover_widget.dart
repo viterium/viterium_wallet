@@ -12,10 +12,10 @@ class ContactsPopoverWidget extends ConsumerWidget {
   final ContactSelectionCallback callback;
 
   const ContactsPopoverWidget({
-    Key? key,
+    super.key,
     required this.contacts,
     required this.callback,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,9 +27,7 @@ class ContactsPopoverWidget extends ConsumerWidget {
         right: MediaQuery.of(context).size.width * 0.105,
       ),
       alignment: Alignment.bottomCenter,
-      constraints: const BoxConstraints(
-        maxHeight: 174,
-      ),
+      constraints: const BoxConstraints(maxHeight: 174),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: Container(
@@ -38,9 +36,7 @@ class ContactsPopoverWidget extends ConsumerWidget {
             color: theme.backgroundDarkest,
           ),
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
             margin: EdgeInsets.only(bottom: 50),
             child: ListView.builder(
               shrinkWrap: true,

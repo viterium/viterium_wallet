@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app_providers.dart';
 
 class WelcomeTransactionCard extends ConsumerWidget {
-  const WelcomeTransactionCard({Key? key}) : super(key: key);
+  const WelcomeTransactionCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,7 +34,9 @@ class WelcomeTransactionCard extends ConsumerWidget {
             Flexible(
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 14.0, horizontal: 15.0),
+                  vertical: 14.0,
+                  horizontal: 15.0,
+                ),
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: _getExampleHeaderSpan(context, ref),
@@ -85,18 +87,12 @@ class WelcomeTransactionCard extends ConsumerWidget {
     }
     return TextSpan(
       children: [
-        TextSpan(
-          text: splitStr[0],
-          style: styles.textStyleTransactionWelcome,
-        ),
+        TextSpan(text: splitStr[0], style: styles.textStyleTransactionWelcome),
         TextSpan(
           text: 'VITE',
           style: styles.textStyleTransactionWelcomePrimary,
         ),
-        TextSpan(
-          text: splitStr[1],
-          style: styles.textStyleTransactionWelcome,
-        ),
+        TextSpan(text: splitStr[1], style: styles.textStyleTransactionWelcome),
       ],
     );
   }

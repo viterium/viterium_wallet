@@ -9,11 +9,12 @@ import '../widgets/dialog.dart';
 import 'pow_providers.dart';
 import 'pow_types.dart';
 
-final powConfigItemProvider =
-    Provider<PowConfig>((ref) => throw UnimplementedError());
+final powConfigItemProvider = Provider<PowConfig>(
+  (ref) => throw UnimplementedError(),
+);
 
 class PowItem extends ConsumerWidget {
-  const PowItem({Key? key}) : super(key: key);
+  const PowItem({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,7 +70,7 @@ class PowItem extends ConsumerWidget {
             backgroundColor: theme.primary,
             foregroundColor: theme.backgroundDark,
             onPressed: (_) => confirmDeleteConfig(),
-          )
+          ),
         ],
       ),
       child: Column(

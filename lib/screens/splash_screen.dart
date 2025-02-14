@@ -18,7 +18,7 @@ final _noticeShownProvider = StateProvider<bool>((ref) {
 final _pushInfoProvider = StateProvider<PushInfo?>((ref) => null);
 
 class SplashScreen extends HookConsumerWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -152,8 +152,6 @@ class SplashScreen extends HookConsumerWidget {
       return;
     }, const []);
 
-    return Scaffold(
-      backgroundColor: theme.backgroundDark,
-    );
+    return Scaffold(backgroundColor: theme.backgroundDark);
   }
 }

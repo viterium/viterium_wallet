@@ -18,7 +18,7 @@ import 'pow_providers.dart';
 import 'pow_types.dart';
 
 class PowAddSheet extends HookConsumerWidget {
-  const PowAddSheet({Key? key}) : super(key: key);
+  const PowAddSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,9 +60,7 @@ class PowAddSheet extends HookConsumerWidget {
 
       var state = stateNotifier.value;
       if (name.isEmpty) {
-        state = state.copyWith(
-          nameValidationText: 'Name is empty',
-        );
+        state = state.copyWith(nameValidationText: 'Name is empty');
         valid = false;
       }
       if (!isIP(url)) {
@@ -70,9 +68,7 @@ class PowAddSheet extends HookConsumerWidget {
         if (uri == null ||
             uri.host.isEmpty ||
             !(const {'http', 'https'}.contains(uri.scheme))) {
-          state = state.copyWith(
-            urlValidationText: 'Invalid URL',
-          );
+          state = state.copyWith(urlValidationText: 'Invalid URL');
           valid = false;
         }
       }
@@ -161,9 +157,7 @@ class PowAddSheet extends HookConsumerWidget {
             hintText: state.showNameHint ? 'Enter Server Name' : '',
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.words,
-            inputFormatters: [
-              LengthLimitingTextInputFormatter(20),
-            ],
+            inputFormatters: [LengthLimitingTextInputFormatter(20)],
           ),
           ValidationText(state.nameValidationText),
           AppTextField(
@@ -186,17 +180,16 @@ class PowAddSheet extends HookConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          PrimaryButton(
-            title: 'Add PoW Server',
-            onPressed: addOption,
-          ),
-          const SizedBox(height: 16),
-          PrimaryOutlineButton(
-            title: l10n.cancel,
-            onPressed: () => Navigator.pop(context),
-          ),
-        ]),
+        child: Column(
+          children: [
+            PrimaryButton(title: 'Add PoW Server', onPressed: addOption),
+            const SizedBox(height: 16),
+            PrimaryOutlineButton(
+              title: l10n.cancel,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
       ),
     );
   }

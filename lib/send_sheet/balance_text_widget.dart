@@ -7,7 +7,7 @@ import '../app_providers.dart';
 final selectedTokenProvider = StateProvider<TokenInfo>((ref) => TokenInfo.vite);
 
 class BalanceTextWidget extends ConsumerWidget {
-  const BalanceTextWidget({Key? key}) : super(key: key);
+  const BalanceTextWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,10 +22,7 @@ class BalanceTextWidget extends ConsumerWidget {
         textAlign: TextAlign.start,
         text: TextSpan(
           children: [
-            TextSpan(
-              text: "(",
-              style: styles.textStyleTransactionUnitSmall,
-            ),
+            TextSpan(text: "(", style: styles.textStyleTransactionUnitSmall),
             TextSpan(
               text: tokenBalance,
               style: styles.textStyleBalanceAmountSmall,

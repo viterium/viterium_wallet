@@ -12,10 +12,10 @@ class TokenStateCard extends ConsumerWidget {
   final ValueChanged<TokenState> onChanged;
 
   const TokenStateCard({
-    Key? key,
+    super.key,
     required this.item,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,10 +36,7 @@ class TokenStateCard extends ConsumerWidget {
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-            horizontal: 12,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -94,10 +91,13 @@ class TokenStateCard extends ConsumerWidget {
                 child: Switch.adaptive(
                   activeColor: theme.primary,
                   value: item.state.enabled,
-                  onChanged: (value) => onChanged(TokenState(
-                    enabled: value,
-                    tokenInfo: value ? item.info : null,
-                  )),
+                  onChanged:
+                      (value) => onChanged(
+                        TokenState(
+                          enabled: value,
+                          tokenInfo: value ? item.info : null,
+                        ),
+                      ),
                 ),
               ),
             ],

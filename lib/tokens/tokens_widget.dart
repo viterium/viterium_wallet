@@ -12,7 +12,7 @@ import '../util/ui_util.dart';
 import 'token_card.dart';
 
 class TokensWidget extends ConsumerWidget {
-  const TokensWidget({Key? key}) : super(key: key);
+  const TokensWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,7 +22,8 @@ class TokensWidget extends ConsumerWidget {
     final items = ref.watch(sortedBalancesForAccountProvider(account));
     final sortOption = ref.watch(tokensSortOptionProvider);
 
-    final buildDefaultDragHandles = (kPlatformIsIOS || kPlatformIsAndroid) &&
+    final buildDefaultDragHandles =
+        (kPlatformIsIOS || kPlatformIsAndroid) &&
         sortOption == TokenSortOption.custom;
 
     Future<void> refresh() async {
@@ -79,10 +80,7 @@ class TokensWidget extends ConsumerWidget {
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return TokenCard(
-            key: Key(item.tokenInfo.tokenId),
-            item: item,
-          );
+          return TokenCard(key: Key(item.tokenInfo.tokenId), item: item);
         },
         onReorder: (oldIndex, newIndex) {
           final ids =

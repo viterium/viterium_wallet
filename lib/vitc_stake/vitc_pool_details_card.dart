@@ -9,10 +9,7 @@ import 'vitc_stake_types.dart';
 
 class VitcPoolDetailsCard extends ConsumerWidget {
   final VitcPoolInfoAll poolInfo;
-  const VitcPoolDetailsCard({
-    Key? key,
-    required this.poolInfo,
-  }) : super(key: key);
+  const VitcPoolDetailsCard({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,29 +39,31 @@ class VitcPoolDetailsCard extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(children: [
-                        TokenPairWidget(
-                          mainTokenId: rewardTokenId,
-                          secondaryTokenId: stakingTokenId,
-                        ),
-                        const SizedBox(width: 16),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Earn ${rewardTokenInfo.tokenName}',
-                                style: styles.textStyleTransactionType,
-                              ),
-                              Text(
-                                'Stake ${stakingTokenInfo.tokenName}',
-                                textAlign: TextAlign.start,
-                                style: styles.textStyleTransactionUnit,
-                              ),
-                            ],
+                      Row(
+                        children: [
+                          TokenPairWidget(
+                            mainTokenId: rewardTokenId,
+                            secondaryTokenId: stakingTokenId,
                           ),
-                        ),
-                      ]),
+                          const SizedBox(width: 16),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Earn ${rewardTokenInfo.tokenName}',
+                                  style: styles.textStyleTransactionType,
+                                ),
+                                Text(
+                                  'Stake ${stakingTokenInfo.tokenName}',
+                                  textAlign: TextAlign.start,
+                                  style: styles.textStyleTransactionUnit,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   VitcPoolInfoWidget(poolInfo: poolInfo),

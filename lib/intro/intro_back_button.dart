@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import 'intro_providers.dart';
 
 class IntroBackButton extends ConsumerWidget {
-  const IntroBackButton({Key? key}) : super(key: key);
+  const IntroBackButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

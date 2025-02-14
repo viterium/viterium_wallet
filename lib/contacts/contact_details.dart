@@ -22,10 +22,10 @@ class ContactDetails extends HookConsumerWidget {
   final String? documentsDirectory;
 
   const ContactDetails({
-    Key? key,
+    super.key,
     required this.contact,
     this.documentsDirectory,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,8 +38,7 @@ class ContactDetails extends HookConsumerWidget {
 
     void deleteContact() {
       ref.read(contactsProvider).removeContact(contact);
-      final message =
-          l10n.contactRemoved.replaceAll("%1", contact.name);
+      final message = l10n.contactRemoved.replaceAll("%1", contact.name);
       UIUtil.showSnackbar(message, context);
       Navigator.of(context).pop();
     }
@@ -78,128 +77,133 @@ class ContactDetails extends HookConsumerWidget {
       minimum: EdgeInsets.only(
         bottom: MediaQuery.of(context).size.height * 0.035,
       ),
-      child: Column(children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: 10, start: 10),
-              child: TrashcanButton(onPressed: confirmDeleteContact),
-            ),
-            // The header of the sheet
-            Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 15),
-                  constraints: BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width - 140),
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      l10n.contactHeader,
-                      style: ref.watch(stylesProvider).textStyleHeader(context),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: 10, start: 10),
+                child: TrashcanButton(onPressed: confirmDeleteContact),
+              ),
+              // The header of the sheet
+              Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 15),
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width - 140,
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        l10n.contactHeader,
+                        style: ref
+                            .watch(stylesProvider)
+                            .textStyleHeader(context),
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: 10, end: 10),
-              child: ContactInfoButton(
-                onPressed: () {
-                  final explorer = ref.read(blockExplorerProvider);
-                  openUrl(explorer.urlForAddress(contact.address));
-                },
+                ],
               ),
-            ),
-          ],
-        ),
-
-        // The main container that holds Contact Name and Contact Address
-        Expanded(
-          child: Container(
-            padding: EdgeInsetsDirectional.only(top: 4, bottom: 12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(),
-                // Contact Name container
-                Container(
-                  width: double.infinity,
-                  margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.105,
-                    right: MediaQuery.of(context).size.width * 0.105,
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: theme.backgroundDarkest,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Text(
-                    contact.name,
-                    textAlign: TextAlign.center,
-                    style: styles.textStyleDialogOptions,
-                  ),
+              Padding(
+                padding: const EdgeInsetsDirectional.only(top: 10, end: 10),
+                child: ContactInfoButton(
+                  onPressed: () {
+                    final explorer = ref.read(blockExplorerProvider);
+                    openUrl(explorer.urlForAddress(contact.address));
+                  },
                 ),
-                // Contact Address
-                GestureDetector(
-                  onTap: copyAddress,
-                  child: Container(
+              ),
+            ],
+          ),
+
+          // The main container that holds Contact Name and Contact Address
+          Expanded(
+            child: Container(
+              padding: EdgeInsetsDirectional.only(top: 4, bottom: 12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(),
+                  // Contact Name container
+                  Container(
                     width: double.infinity,
                     margin: EdgeInsets.only(
                       left: MediaQuery.of(context).size.width * 0.105,
                       right: MediaQuery.of(context).size.width * 0.105,
-                      top: 15,
                     ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 25,
-                      vertical: 15,
+                      vertical: 12,
                     ),
                     decoration: BoxDecoration(
                       color: theme.backgroundDarkest,
                       borderRadius: BorderRadius.circular(25),
                     ),
-                    child: AddressThreeLineText(
-                      address: contact.address,
-                      type: addressCopied.value
-                          ? AddressThreeLineTextType.SUCCESS_FULL
-                          : AddressThreeLineTextType.PRIMARY,
+                    child: Text(
+                      contact.name,
+                      textAlign: TextAlign.center,
+                      style: styles.textStyleDialogOptions,
                     ),
                   ),
-                ),
-                // Address Copied text container
-                Container(
-                  margin: const EdgeInsets.only(top: 5, bottom: 5),
-                  child: Text(
-                    addressCopied.value ? l10n.addressCopied : '',
-                    style: styles.textStyleParagraphThinSuccess,
+                  // Contact Address
+                  GestureDetector(
+                    onTap: copyAddress,
+                    child: Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0.105,
+                        right: MediaQuery.of(context).size.width * 0.105,
+                        top: 15,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 25,
+                        vertical: 15,
+                      ),
+                      decoration: BoxDecoration(
+                        color: theme.backgroundDarkest,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: AddressThreeLineText(
+                        address: contact.address,
+                        type:
+                            addressCopied.value
+                                ? AddressThreeLineTextType.SUCCESS_FULL
+                                : AddressThreeLineTextType.PRIMARY,
+                      ),
+                    ),
                   ),
+                  // Address Copied text container
+                  Container(
+                    margin: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: Text(
+                      addressCopied.value ? l10n.addressCopied : '',
+                      style: styles.textStyleParagraphThinSuccess,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 28),
+            child: Column(
+              children: [
+                PrimaryButton(title: l10n.send, onPressed: showSendSheet),
+                const SizedBox(height: 16),
+                PrimaryOutlineButton(
+                  title: l10n.close,
+                  onPressed: () => Navigator.pop(context),
                 ),
               ],
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: Column(children: [
-            PrimaryButton(
-              title: l10n.send,
-              onPressed: showSendSheet,
-            ),
-            const SizedBox(height: 16),
-            PrimaryOutlineButton(
-              title: l10n.close,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ]),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

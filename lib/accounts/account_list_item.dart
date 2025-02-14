@@ -15,7 +15,7 @@ import 'account_details_sheet.dart';
 class AccountListItem extends ConsumerWidget {
   final Account account;
 
-  const AccountListItem({Key? key, required this.account}) : super(key: key);
+  const AccountListItem({super.key, required this.account});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,17 +41,16 @@ class AccountListItem extends ConsumerWidget {
       final pushSettings = ref.read(pushSettingsForAccountProvider(account));
       if (pushSettings.pushEnabled) {
         UIUtil.showSnackbar(
-            'First turn off Notifications for this account', context);
+          'First turn off Notifications for this account',
+          context,
+        );
         return;
       }
 
       AppDialogs.showConfirmDialog(
         context,
         l10n.hideAccountHeader,
-        l10n.hideAccountText.replaceAll(
-          "%1",
-          l10n.addAccount,
-        ),
+        l10n.hideAccountText.replaceAll("%1", l10n.addAccount),
         l10n.YES,
         removeAccount,
         cancelText: l10n.NO,
@@ -106,9 +105,10 @@ class AccountListItem extends ConsumerWidget {
                           child: Icon(
                             AppIcons.accountwallet,
                             size: 30,
-                            color: accounts.isAccountSelected(account)
-                                ? theme.success
-                                : theme.primary,
+                            color:
+                                accounts.isAccountSelected(account)
+                                    ? theme.success
+                                    : theme.primary,
                           ),
                         ),
                         Center(

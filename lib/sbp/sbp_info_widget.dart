@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app_providers.dart';
 
 class SbpInfoWidget extends ConsumerWidget {
-  const SbpInfoWidget({Key? key}) : super(key: key);
+  const SbpInfoWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

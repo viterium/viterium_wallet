@@ -9,11 +9,11 @@ class SheetHeaderButton extends ConsumerWidget {
   final VoidCallback? onPressed;
 
   const SheetHeaderButton({
-    Key? key,
+    super.key,
     required this.icon,
     this.visible = true,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

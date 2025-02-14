@@ -9,13 +9,8 @@ class TextFieldButton extends ConsumerWidget {
   final Widget? widget;
   final void Function()? onPressed;
 
-  const TextFieldButton({
-    Key? key,
-    this.icon,
-    this.widget,
-    this.onPressed,
-  })  : assert(icon != null || widget != null),
-        super(key: key);
+  const TextFieldButton({super.key, this.icon, this.widget, this.onPressed})
+    : assert(icon != null || widget != null);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,9 +21,10 @@ class TextFieldButton extends ConsumerWidget {
       height: 48,
       width: 48,
       child: TextButton(
-        style: widget != null
-            ? styles.tokenTextFieldButtonStyle
-            : styles.appIconButtonStyle,
+        style:
+            widget != null
+                ? styles.tokenTextFieldButtonStyle
+                : styles.appIconButtonStyle,
         onPressed: onPressed,
         child: widget ?? Icon(icon, size: 20, color: theme.primary),
       ),
@@ -118,80 +114,85 @@ class AppTextField extends ConsumerWidget {
         color: theme.backgroundDarkest,
         borderRadius: BorderRadius.circular(25),
       ),
-      child: overrideTextFieldWidget == null
-          ? Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                TextField(
-                  enableInteractiveSelection: enableInteractiveSelection,
-                  textAlign: textAlign,
-                  keyboardAppearance: keyboardAppearance,
-                  autocorrect: autocorrect,
-                  maxLines: maxLines,
-                  focusNode: focusNode,
-                  controller: controller,
-                  cursorColor: cursorColor ?? theme.primary,
-                  inputFormatters: inputFormatters,
-                  textInputAction: textInputAction,
-                  textCapitalization:
-                      textCapitalization ?? TextCapitalization.none,
-                  keyboardType: keyboardType,
-                  obscureText: obscureText,
-                  autofocus: autofocus,
-                  onSubmitted: onSubmitted != null
-                      ? onSubmitted
-                      : (text) {
-                          if (textInputAction == TextInputAction.done) {
-                            FocusScope.of(context).unfocus();
-                          }
-                        },
-                  onChanged: onChanged,
-                  style: style,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: hintText,
-                    hintStyle: styles.textStyleAppTextFieldHint,
-                    prefixIcon: prefixButton == null
-                        ? const SizedBox()
-                        : const SizedBox(width: 48),
-                    suffixIcon: suffixButton == null
-                        ? const SizedBox()
-                        : const SizedBox(width: 48),
+      child:
+          overrideTextFieldWidget == null
+              ? Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  TextField(
+                    enableInteractiveSelection: enableInteractiveSelection,
+                    textAlign: textAlign,
+                    keyboardAppearance: keyboardAppearance,
+                    autocorrect: autocorrect,
+                    maxLines: maxLines,
+                    focusNode: focusNode,
+                    controller: controller,
+                    cursorColor: cursorColor ?? theme.primary,
+                    inputFormatters: inputFormatters,
+                    textInputAction: textInputAction,
+                    textCapitalization:
+                        textCapitalization ?? TextCapitalization.none,
+                    keyboardType: keyboardType,
+                    obscureText: obscureText,
+                    autofocus: autofocus,
+                    onSubmitted:
+                        onSubmitted != null
+                            ? onSubmitted
+                            : (text) {
+                              if (textInputAction == TextInputAction.done) {
+                                FocusScope.of(context).unfocus();
+                              }
+                            },
+                    onChanged: onChanged,
+                    style: style,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: hintText,
+                      hintStyle: styles.textStyleAppTextFieldHint,
+                      prefixIcon:
+                          prefixButton == null
+                              ? const SizedBox()
+                              : const SizedBox(width: 48),
+                      suffixIcon:
+                          suffixButton == null
+                              ? const SizedBox()
+                              : const SizedBox(width: 48),
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    fadePrefixOnCondition != null && prefixButton != null
-                        ? AnimatedCrossFade(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      fadePrefixOnCondition != null && prefixButton != null
+                          ? AnimatedCrossFade(
                             duration: Duration(
                               milliseconds: buttonFadeDurationMs,
                             ),
                             firstChild: prefixButton!,
-                            secondChild:
-                                const SizedBox(width: 48),
-                            crossFadeState: prefixShowFirstCondition!
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
+                            secondChild: const SizedBox(width: 48),
+                            crossFadeState:
+                                prefixShowFirstCondition!
+                                    ? CrossFadeState.showFirst
+                                    : CrossFadeState.showSecond,
                           )
-                        : prefixButton ?? const SizedBox(),
-                    fadeSuffixOnCondition != null && suffixButton != null
-                        ? AnimatedCrossFade(
-                            duration:
-                                Duration(milliseconds: buttonFadeDurationMs),
+                          : prefixButton ?? const SizedBox(),
+                      fadeSuffixOnCondition != null && suffixButton != null
+                          ? AnimatedCrossFade(
+                            duration: Duration(
+                              milliseconds: buttonFadeDurationMs,
+                            ),
                             firstChild: suffixButton!,
-                            secondChild:
-                                const SizedBox(width: 48),
-                            crossFadeState: suffixShowFirstCondition!
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
+                            secondChild: const SizedBox(width: 48),
+                            crossFadeState:
+                                suffixShowFirstCondition!
+                                    ? CrossFadeState.showFirst
+                                    : CrossFadeState.showSecond,
                           )
-                        : suffixButton ?? const SizedBox()
-                  ],
-                ),
-              ],
-            )
-          : overrideTextFieldWidget,
+                          : suffixButton ?? const SizedBox(),
+                    ],
+                  ),
+                ],
+              )
+              : overrideTextFieldWidget,
     );
   }
 }

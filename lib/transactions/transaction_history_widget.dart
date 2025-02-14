@@ -13,28 +13,28 @@ import 'unreceived_providers.dart';
 
 final _txListItemsProvider = Provider.autoDispose
     .family<List<TxListItem>, AccountTokenPair>((ref, pair) {
-  final unreceived = ref.watch(unreceivedProvider(pair.account.address));
-  final historyNotifier = ref.watch(transactionHistoryProvider(pair));
-  final txList = historyNotifier.history
-      .map((e) => TxListItem.transaction(e))
-      .toList(growable: true);
-  txList.add(TxListItem.loader(historyNotifier.hasMore));
-  if (pair.token != null || unreceived.blockCount == 0) {
-    return txList;
-  }
+      final unreceived = ref.watch(unreceivedProvider(pair.account.address));
+      final historyNotifier = ref.watch(transactionHistoryProvider(pair));
+      final txList = historyNotifier.history
+          .map((e) => TxListItem.transaction(e))
+          .toList(growable: true);
+      txList.add(TxListItem.loader(historyNotifier.hasMore));
+      if (pair.token != null || unreceived.blockCount == 0) {
+        return txList;
+      }
 
-  return [TxListItem.unreceived(unreceived)] + txList;
-});
+      return [TxListItem.unreceived(unreceived)] + txList;
+    });
 
 class TransactionHistoryWidget extends HookConsumerWidget {
   final Token? token;
   final String tokenSymbol;
 
   const TransactionHistoryWidget({
-    Key? key,
+    super.key,
     this.token,
     this.tokenSymbol = 'VITE',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,48 +69,49 @@ class TransactionHistoryWidget extends HookConsumerWidget {
         color: theme.primary,
         backgroundColor: theme.backgroundDark,
         onRefresh: refresh,
-        child: !txHistory.loading && items.length == 1
-            ? TransactionEmptyList(tokenSymbol: tokenSymbol)
-            : AutomaticAnimatedList<TxListItem>(
-                key: ValueKey(account),
-                physics: AlwaysScrollableScrollPhysics(),
-                padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 28),
-                insertDuration: const Duration(milliseconds: 500),
-                removeDuration: const Duration(milliseconds: 500),
-                keyingFunction: (item) => Key(item.id),
-                items: items,
-                itemBuilder: (context, item, animation) {
-                  return FadeTransition(
-                    key: Key(item.id),
-                    opacity: animation,
-                    child: SizeTransition(
-                      sizeFactor: CurvedAnimation(
-                        parent: animation,
-                        curve: Curves.easeOut,
-                        reverseCurve: Curves.easeIn,
-                      ),
-                      child: item.when(
-                        unreceived: (_) => const TransactionsUnreceivedCard(),
-                        transaction: (item) => TransactionCard(item: item),
-                        loader: (hasMore) {
-                          if (!hasMore) return const SizedBox();
+        child:
+            !txHistory.loading && items.length == 1
+                ? TransactionEmptyList(tokenSymbol: tokenSymbol)
+                : AutomaticAnimatedList<TxListItem>(
+                  key: ValueKey(account),
+                  physics: AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 28),
+                  insertDuration: const Duration(milliseconds: 500),
+                  removeDuration: const Duration(milliseconds: 500),
+                  keyingFunction: (item) => Key(item.id),
+                  items: items,
+                  itemBuilder: (context, item, animation) {
+                    return FadeTransition(
+                      key: Key(item.id),
+                      opacity: animation,
+                      child: SizeTransition(
+                        sizeFactor: CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.easeOut,
+                          reverseCurve: Curves.easeIn,
+                        ),
+                        child: item.when(
+                          unreceived: (_) => const TransactionsUnreceivedCard(),
+                          transaction: (item) => TransactionCard(item: item),
+                          loader: (hasMore) {
+                            if (!hasMore) return const SizedBox();
 
-                          return Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Loading Transactions...',
-                                style: styles.textStyleParagraph,
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Loading Transactions...',
+                                  style: styles.textStyleParagraph,
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                ),
       ),
     );
   }

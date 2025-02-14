@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../app_providers.dart';
 
 class LogoutScreen extends HookConsumerWidget {
-  const LogoutScreen({Key? key}) : super(key: key);
+  const LogoutScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

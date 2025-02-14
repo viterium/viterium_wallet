@@ -8,11 +8,12 @@ import '../util/ui_util.dart';
 import '../widgets/address_widgets.dart';
 import '../widgets/dialog.dart';
 
-final quotaItemProvider =
-    Provider<RpcStakeInfo>((ref) => throw UnimplementedError());
+final quotaItemProvider = Provider<RpcStakeInfo>(
+  (ref) => throw UnimplementedError(),
+);
 
 class QuotaItem extends ConsumerWidget {
-  const QuotaItem({Key? key}) : super(key: key);
+  const QuotaItem({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,15 +27,18 @@ class QuotaItem extends ConsumerWidget {
     final address = quotaInfo.beneficiary;
     final accounts = ref.watch(accountsProvider);
     final accountName = accounts.nameForAddress(address);
-    final contact =
-        contacts.getContactWithAddress(address, includeLabels: true);
+    final contact = contacts.getContactWithAddress(
+      address,
+      includeLabels: true,
+    );
     final hasId = quotaInfo.id != null;
 
     final name = accountName ?? contact?.name;
 
     final unlockDate =
-        DateTime.fromMillisecondsSinceEpoch(quotaInfo.expirationTime * 1000)
-            .toLocal();
+        DateTime.fromMillisecondsSinceEpoch(
+          quotaInfo.expirationTime * 1000,
+        ).toLocal();
     final now = DateTime.now();
     final unlocked = now.isAfter(unlockDate) && hasId;
     final unlockDateStr = DateFormat('yyyy.MM.dd HH:mm:ss').format(unlockDate);
@@ -127,7 +131,7 @@ class QuotaItem extends ConsumerWidget {
                             style: styles.addressText.copyWith(fontSize: 10),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -148,10 +152,7 @@ class QuotaItem extends ConsumerWidget {
                             '${amount.value}',
                             style: styles.textStyleAppTextFieldSimple,
                           ),
-                          Text(
-                            'VITE',
-                            style: styles.textStyleTransactionUnit,
-                          ),
+                          Text('VITE', style: styles.textStyleTransactionUnit),
                         ],
                       ),
                       const SizedBox(height: 12),
@@ -197,7 +198,7 @@ class QuotaItem extends ConsumerWidget {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

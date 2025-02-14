@@ -5,31 +5,31 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import 'unreceived_providers.dart';
 
-final _topBalanceByValueProvider =
-    Provider.autoDispose.family<BalanceInfo?, AccountInfo>((ref, accountInfo) {
-  if (accountInfo.balances.isEmpty) {
-    return null;
-  }
-  final exchangeRates = ref.watch(exchangeRatesProvider);
-  final tokenIds = accountInfo.balances.keys;
-  double valueForTokenId(TokenId tokenId) =>
-      (exchangeRates[tokenId]?.usdRate ?? 0) *
-      (accountInfo.balances[tokenId]?.value.toDouble() ?? 0);
+final _topBalanceByValueProvider = Provider.autoDispose
+    .family<BalanceInfo?, AccountInfo>((ref, accountInfo) {
+      if (accountInfo.balances.isEmpty) {
+        return null;
+      }
+      final exchangeRates = ref.watch(exchangeRatesProvider);
+      final tokenIds = accountInfo.balances.keys;
+      double valueForTokenId(TokenId tokenId) =>
+          (exchangeRates[tokenId]?.usdRate ?? 0) *
+          (accountInfo.balances[tokenId]?.value.toDouble() ?? 0);
 
-  var topTokenId = tokenIds.first;
-  var topValue = valueForTokenId(topTokenId);
-  for (final tokenId in tokenIds.skip(1)) {
-    final value = valueForTokenId(tokenId);
-    if (value > topValue) {
-      topTokenId = tokenId;
-      topValue = value;
-    }
-  }
-  return accountInfo.balances[topTokenId];
-});
+      var topTokenId = tokenIds.first;
+      var topValue = valueForTokenId(topTokenId);
+      for (final tokenId in tokenIds.skip(1)) {
+        final value = valueForTokenId(tokenId);
+        if (value > topValue) {
+          topTokenId = tokenId;
+          topValue = value;
+        }
+      }
+      return accountInfo.balances[topTokenId];
+    });
 
 class TransactionsUnreceivedCard extends ConsumerWidget {
-  const TransactionsUnreceivedCard({Key? key}) : super(key: key);
+  const TransactionsUnreceivedCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,9 +43,10 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
     final fiatValue = ref.watch(fiatFormatedForTotalValueProvider(unreceived));
 
     final totalBalances = unreceived.balances.length;
-    final tagText = totalBalances > 2
-        ? '+${totalBalances - 1} other tokens'
-        : '+1 other token';
+    final tagText =
+        totalBalances > 2
+            ? '+${totalBalances - 1} other tokens'
+            : '+1 other token';
 
     return Container(
       margin: EdgeInsetsDirectional.fromSTEB(14, 4, 14, 4),
@@ -66,8 +67,11 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                 children: [
                   Container(
                     margin: const EdgeInsetsDirectional.only(end: 12),
-                    child:
-                        Icon(Icons.receipt, color: theme.primary60, size: 20),
+                    child: Icon(
+                      Icons.receipt,
+                      color: theme.primary60,
+                      size: 20,
+                    ),
                   ),
                   Flexible(
                     flex: 1,
@@ -75,15 +79,17 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Consumer(builder: (context, ref, _) {
-                            final enabled =
-                                ref.watch(autoReceiveEnabledProvider);
-                            return Text(
-                              enabled ? 'Receiving' : 'Auto Receive Disabled',
-                              textAlign: TextAlign.start,
-                              style: styles.textStyleTransactionType,
-                            );
-                          }
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final enabled = ref.watch(
+                                autoReceiveEnabledProvider,
+                              );
+                              return Text(
+                                enabled ? 'Receiving' : 'Auto Receive Disabled',
+                                textAlign: TextAlign.start,
+                                style: styles.textStyleTransactionType,
+                              );
+                            },
                           ),
                           const SizedBox(height: 4),
                           RichText(
@@ -95,9 +101,10 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                                   style: styles.textStyleTransactionAmount,
                                 ),
                                 TextSpan(
-                                  text: unreceived.blockCount > 1
-                                      ? ' Transactions'.toUpperCase()
-                                      : ' Transaction'.toUpperCase(),
+                                  text:
+                                      unreceived.blockCount > 1
+                                          ? ' Transactions'.toUpperCase()
+                                          : ' Transaction'.toUpperCase(),
                                   style: styles.textStyleTransactionUnit,
                                 ),
                               ],
@@ -124,7 +131,8 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                           children: [
                             TextSpan(
                               text: topBalance.value.toStringAsFixed(
-                                  topBalance.value.isInteger ? 0 : 4),
+                                topBalance.value.isInteger ? 0 : 4,
+                              ),
                               style: styles.textStyleTransactionAmount,
                             ),
                             TextSpan(
@@ -143,10 +151,7 @@ class TransactionsUnreceivedCard extends ConsumerWidget {
                         color: theme.text10,
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: Text(
-                        tagText,
-                        style: styles.tagText,
-                      ),
+                      child: Text(tagText, style: styles.tagText),
                     )
                   else
                     FittedBox(

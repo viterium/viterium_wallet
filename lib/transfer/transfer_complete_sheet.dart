@@ -9,10 +9,7 @@ import '../widgets/buttons/success_outline_button.dart';
 
 class TransferCompleteSheet extends ConsumerWidget {
   final String transferAmount;
-  const TransferCompleteSheet({
-    Key? key,
-    required this.transferAmount,
-  }) : super(key: key);
+  const TransferCompleteSheet({super.key, required this.transferAmount});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -49,9 +46,7 @@ class TransferCompleteSheet extends ConsumerWidget {
                       maxHeight: MediaQuery.of(context).size.height * 0.2,
                       maxWidth: MediaQuery.of(context).size.width * 0.6,
                     ),
-                    child: Stack(
-                      children: [],
-                    ),
+                    child: Stack(children: []),
                   ),
                   Container(
                     alignment: AlignmentDirectional(-1, 0),

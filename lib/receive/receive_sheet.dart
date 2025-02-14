@@ -21,7 +21,7 @@ import '../widgets/sheet_handle.dart';
 import 'share_card.dart';
 
 class ReceiveSheet extends HookConsumerWidget {
-  const ReceiveSheet({Key? key}) : super(key: key);
+  const ReceiveSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,8 +42,9 @@ class ReceiveSheet extends HookConsumerWidget {
       if (shareCardKey.value.currentContext == null) {
         return null;
       }
-      RenderRepaintBoundary boundary = shareCardKey.value.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
+      RenderRepaintBoundary boundary =
+          shareCardKey.value.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage(pixelRatio: 5);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       return byteData?.buffer.asUint8List();
@@ -108,10 +109,9 @@ class ReceiveSheet extends HookConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(width: 60, height: 60),
-              Column(children: [
-                const SheetHandle(),
-                const AccountAddressWidget(),
-              ]),
+              Column(
+                children: [const SheetHandle(), const AccountAddressWidget()],
+              ),
               const SizedBox(width: 60, height: 60),
             ],
           ),
@@ -166,24 +166,24 @@ class ReceiveSheet extends HookConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: Column(children: [
-              Visibility(
-                visible: !addressCopied.value,
-                replacement: SuccessButton(
-                  title: l10n.addressCopied,
+            child: Column(
+              children: [
+                Visibility(
+                  visible: !addressCopied.value,
+                  replacement: SuccessButton(title: l10n.addressCopied),
+                  child: PrimaryButton(
+                    title: l10n.copyAddress,
+                    onPressed: copyAddress,
+                  ),
                 ),
-                child: PrimaryButton(
-                  title: l10n.copyAddress,
-                  onPressed: copyAddress,
+                const SizedBox(height: 16),
+                PrimaryOutlineButton(
+                  title: l10n.addressShare,
+                  disabled: showShareCard.value,
+                  onPressed: shareAddress,
                 ),
-              ),
-              const SizedBox(height: 16),
-              PrimaryOutlineButton(
-                title: l10n.addressShare,
-                disabled: showShareCard.value,
-                onPressed: shareAddress,
-              ),
-            ]),
+              ],
+            ),
           ),
         ],
       ),

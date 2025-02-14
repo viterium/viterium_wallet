@@ -13,26 +13,20 @@ import 'vite_node_item.dart';
 class ListViewEndItem extends ConsumerWidget {
   final Widget child;
 
-  const ListViewEndItem({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+  const ListViewEndItem({super.key, required this.child});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        child,
-        Divider(height: 2, color: theme.text15),
-      ],
+      children: [child, Divider(height: 2, color: theme.text15)],
     );
   }
 }
 
 class ViteNodesSheet extends ConsumerWidget {
-  const ViteNodesSheet({Key? key}) : super(key: key);
+  const ViteNodesSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,17 +71,16 @@ class ViteNodesSheet extends ConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          PrimaryButton(
-            title: l10n.addNode,
-            onPressed: addNode,
-          ),
-          const SizedBox(height: 16),
-          PrimaryOutlineButton(
-            title: l10n.close,
-            onPressed: () => Navigator.pop(context),
-          ),
-        ]),
+        child: Column(
+          children: [
+            PrimaryButton(title: l10n.addNode, onPressed: addNode),
+            const SizedBox(height: 16),
+            PrimaryOutlineButton(
+              title: l10n.close,
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
       ),
     );
   }

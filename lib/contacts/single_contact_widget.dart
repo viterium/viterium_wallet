@@ -13,10 +13,7 @@ import 'contact_details.dart';
 class SingleContactWidget extends ConsumerWidget {
   final Contact contact;
 
-  const SingleContactWidget({
-    Key? key,
-    required this.contact,
-  }) : super(key: key);
+  const SingleContactWidget({super.key, required this.contact});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,10 +30,7 @@ class SingleContactWidget extends ConsumerWidget {
 
     Future<void> copyAddress() async {
       await Clipboard.setData(ClipboardData(text: contact.address));
-      UIUtil.showSnackbar(
-        '${contact.name} address copied!',
-        context,
-      );
+      UIUtil.showSnackbar('${contact.name} address copied!', context);
     }
 
     return TextButton(

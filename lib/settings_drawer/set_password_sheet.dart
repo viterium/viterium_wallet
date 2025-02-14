@@ -11,7 +11,7 @@ import '../widgets/sheet_widget.dart';
 import '../widgets/tap_outside_unfocus.dart';
 
 class SetPasswordSheet extends HookConsumerWidget {
-  const SetPasswordSheet({Key? key}) : super(key: key);
+  const SetPasswordSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,9 +25,10 @@ class SetPasswordSheet extends HookConsumerWidget {
     final passwordError = useState<String>('');
     final passwordsMatch = useState(false);
 
-    final textStyle = passwordsMatch.value
-        ? styles.textStyleParagraphPrimary
-        : styles.textStyleParagraphText;
+    final textStyle =
+        passwordsMatch.value
+            ? styles.textStyleParagraphPrimary
+            : styles.textStyleParagraphText;
 
     void inputChanged(_) {
       passwordError.value = '';
@@ -101,10 +102,7 @@ class SetPasswordSheet extends HookConsumerWidget {
             // Confirm Password Text Field
             AppTextField(
               topMargin: 20,
-              padding: const EdgeInsetsDirectional.only(
-                start: 16,
-                end: 16,
-              ),
+              padding: const EdgeInsetsDirectional.only(start: 16, end: 16),
               focusNode: confirmFocusNode,
               controller: confirmController,
               textInputAction: TextInputAction.done,
@@ -130,17 +128,19 @@ class SetPasswordSheet extends HookConsumerWidget {
         ),
         bottomWidget: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: Column(children: [
-            PrimaryButton(
-              title: l10n.setPassword,
-              onPressed: submitAndEncrypt,
-            ),
-            const SizedBox(height: 16),
-            PrimaryOutlineButton(
-              title: l10n.close,
-              onPressed: () => Navigator.pop(context),
-            ),
-          ]),
+          child: Column(
+            children: [
+              PrimaryButton(
+                title: l10n.setPassword,
+                onPressed: submitAndEncrypt,
+              ),
+              const SizedBox(height: 16),
+              PrimaryOutlineButton(
+                title: l10n.close,
+                onPressed: () => Navigator.pop(context),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -13,7 +13,7 @@ import 'sbp_info_widget.dart';
 import 'sbp_select_dialog.dart';
 
 class VoteForSbpSheet extends ConsumerWidget {
-  const VoteForSbpSheet({Key? key}) : super(key: key);
+  const VoteForSbpSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,10 +46,7 @@ class VoteForSbpSheet extends ConsumerWidget {
 
       try {
         await accountService.cancelSbpVote(account.address);
-        UIUtil.showSnackbar(
-          l10n.revokeMessage,
-          context,
-        );
+        UIUtil.showSnackbar(l10n.revokeMessage, context);
       } catch (e, st) {
         final logger = ref.read(loggerProvider);
         logger.e('Failed to cancel SBP vote', e, st);
@@ -59,10 +56,12 @@ class VoteForSbpSheet extends ConsumerWidget {
 
     void confirmRevokeVote() {
       AppDialogs.showConfirmDialog(
-          context,
-          l10n.revokeVoteHeader,
-          l10n.revokeVoteText, l10n.revoke.toUpperCase(),
-          revokeVote);
+        context,
+        l10n.revokeVoteHeader,
+        l10n.revokeVoteText,
+        l10n.revoke.toUpperCase(),
+        revokeVote,
+      );
     }
 
     return SheetWidget(
@@ -77,19 +76,21 @@ class VoteForSbpSheet extends ConsumerWidget {
       ),
       bottomWidget: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(children: [
-          PrimaryButton(
-            title: l10n.changeVote,
-            disabled: sbpList.isEmpty,
-            onPressed: showSbpList,
-          ),
-          const SizedBox(height: 16),
-          PrimaryOutlineButton(
-            title: l10n.revokeVote,
-            disabled: votedSbp.value == null,
-            onPressed: confirmRevokeVote,
-          )
-        ]),
+        child: Column(
+          children: [
+            PrimaryButton(
+              title: l10n.changeVote,
+              disabled: sbpList.isEmpty,
+              onPressed: showSbpList,
+            ),
+            const SizedBox(height: 16),
+            PrimaryOutlineButton(
+              title: l10n.revokeVote,
+              disabled: votedSbp.value == null,
+              onPressed: confirmRevokeVote,
+            ),
+          ],
+        ),
       ),
     );
   }

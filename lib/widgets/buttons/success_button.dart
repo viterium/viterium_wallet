@@ -10,12 +10,12 @@ class SuccessButton extends ConsumerWidget {
   final Function? onPressed;
 
   const SuccessButton({
-    Key? key,
+    super.key,
     required this.title,
     this.margin = EdgeInsets.zero,
     this.disabled = false,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

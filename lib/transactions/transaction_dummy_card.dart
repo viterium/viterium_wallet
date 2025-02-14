@@ -11,12 +11,12 @@ class TransactionDummyCard extends ConsumerWidget {
   final String tokenSymbol;
 
   const TransactionDummyCard({
-    Key? key,
+    super.key,
     required this.type,
     required this.amount,
     required this.address,
     required this.tokenSymbol,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -6,7 +6,7 @@ import '../app_providers.dart';
 import '../util/util.dart';
 
 class NoticeDialog extends HookConsumerWidget {
-  const NoticeDialog({Key? key}) : super(key: key);
+  const NoticeDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

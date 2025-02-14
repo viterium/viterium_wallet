@@ -5,7 +5,7 @@ import 'contacts_providers.dart';
 import 'single_contact_widget.dart';
 
 class ContactListWidget extends ConsumerWidget {
-  const ContactListWidget({Key? key}) : super(key: key);
+  const ContactListWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -17,7 +17,7 @@ import '../widgets/sheet_util.dart';
 import 'transfer_manual_entry_sheet.dart';
 
 class TransferOverviewSheet extends ConsumerStatefulWidget {
-  const TransferOverviewSheet({Key? key}) : super(key: key);
+  const TransferOverviewSheet({super.key});
 
   @override
   _TransferOverviewSheetState createState() => _TransferOverviewSheetState();
@@ -59,7 +59,8 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
                     Container(
                       margin: EdgeInsets.only(top: 15),
                       constraints: BoxConstraints(
-                          maxWidth: MediaQuery.of(context).size.width - 140),
+                        maxWidth: MediaQuery.of(context).size.width - 140,
+                      ),
                       child: AutoSizeText(
                         l10n.transferHeader,
                         style: styles.textStyleHeader(context),
@@ -106,10 +107,7 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
                   ),
                   Container(
                     alignment: AlignmentDirectional(-1, 0),
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 50,
-                      vertical: 20,
-                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                     child: AutoSizeText(
                       l10n.transferIntro.replaceAll("%1", l10n.scanQrCode),
                       style: styles.textStyleParagraph,
@@ -123,34 +121,36 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Column(children: [
-                PrimaryButton(
-                  title: l10n.scanQrCode,
-                  onPressed: () async {
-                    // UIUtil.cancelLockEvent();
-                    final result = await UserDataUtil.scanQrCode(context);
+              child: Column(
+                children: [
+                  PrimaryButton(
+                    title: l10n.scanQrCode,
+                    onPressed: () async {
+                      // UIUtil.cancelLockEvent();
+                      final result = await UserDataUtil.scanQrCode(context);
 
-                    if (result?.rawBytes != null) {
-                      final data = Uint8List.fromList(result!.rawBytes!);
-                      final seed = bytesToHex(data);
-                      startTransfer(seed);
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-                PrimaryOutlineButton(
-                  title: l10n.manualEntry,
-                  onPressed: () {
-                    Sheets.showAppHeightNineSheet(
-                      context: context,
-                      widget: TransferManualEntrySheet(
-                        validSeedCallback: manualEntryCallback,
-                      ),
-                      theme: ref.read(themeProvider),
-                    );
-                  },
-                ),
-              ]),
+                      if (result?.rawBytes != null) {
+                        final data = Uint8List.fromList(result!.rawBytes!);
+                        final seed = bytesToHex(data);
+                        startTransfer(seed);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  PrimaryOutlineButton(
+                    title: l10n.manualEntry,
+                    onPressed: () {
+                      Sheets.showAppHeightNineSheet(
+                        context: context,
+                        widget: TransferManualEntrySheet(
+                          validSeedCallback: manualEntryCallback,
+                        ),
+                        theme: ref.read(themeProvider),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -163,23 +163,26 @@ class _TransferOverviewSheetState extends ConsumerState<TransferOverviewSheet> {
     startTransfer(seed, manualEntry: true);
   }
 
-  Future<void> startTransfer(
-    String seed, {
-    bool manualEntry = false,
-  }) async {
+  Future<void> startTransfer(String seed, {bool manualEntry = false}) async {
     final theme = ref.read(themeProvider);
     final l10n = ref.read(l10nProvider);
 
     // Show loading overlay
     _animationOpen = true;
-    AnimationType animation = manualEntry
-        ? AnimationType.TRANSFER_SEARCHING_MANUAL
-        : AnimationType.TRANSFER_SEARCHING_QR;
-    Navigator.of(context).push(AnimationLoadingOverlay(
-        animation, theme.animationOverlayStrong, theme.animationOverlayMedium,
+    AnimationType animation =
+        manualEntry
+            ? AnimationType.TRANSFER_SEARCHING_MANUAL
+            : AnimationType.TRANSFER_SEARCHING_QR;
+    Navigator.of(context).push(
+      AnimationLoadingOverlay(
+        animation,
+        theme.animationOverlayStrong,
+        theme.animationOverlayMedium,
         onPoppedCallback: () {
-      _animationOpen = false;
-    }));
+          _animationOpen = false;
+        },
+      ),
+    );
     // Get accounts from seed
     //final accounts = await getAddressesFromSeed(context, seed);
     try {

@@ -7,7 +7,7 @@ import '../core/core_providers.dart';
 import '../util/util.dart';
 
 class VersionWidget extends HookConsumerWidget {
-  const VersionWidget({Key? key}) : super(key: key);
+  const VersionWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

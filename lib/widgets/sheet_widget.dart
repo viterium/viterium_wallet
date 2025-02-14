@@ -12,13 +12,13 @@ class SheetWidget extends ConsumerWidget {
   final Widget bottomWidget;
 
   const SheetWidget({
-    Key? key,
+    super.key,
     required this.title,
     this.leftWidget,
     this.rightWidget,
     required this.mainWidget,
     this.bottomWidget = const SizedBox(),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,23 +41,25 @@ class SheetWidget extends ConsumerWidget {
                   child: leftWidget ?? const SizedBox(height: 50, width: 50),
                 ),
               Expanded(
-                child: Column(children: [
-                  const SheetHandle(),
-                  Container(
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 4,
-                      vertical: 8,
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        title.toUpperCase(),
-                        style: styles.textStyleHeader(context),
-                        textAlign: TextAlign.center,
+                child: Column(
+                  children: [
+                    const SheetHandle(),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 8,
+                      ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          title.toUpperCase(),
+                          style: styles.textStyleHeader(context),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                  ),
-                ]),
+                  ],
+                ),
               ),
               if (leftRight)
                 Padding(

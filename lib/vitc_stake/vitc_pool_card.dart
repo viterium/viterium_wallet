@@ -10,7 +10,7 @@ import 'vitc_stake_types.dart';
 
 class VitcPoolCard extends ConsumerWidget {
   final VitcPoolInfoAll poolInfo;
-  const VitcPoolCard({Key? key, required this.poolInfo}) : super(key: key);
+  const VitcPoolCard({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,9 +19,10 @@ class VitcPoolCard extends ConsumerWidget {
 
     final hasLockTime = poolInfo.timelock != BigInt.zero;
     final lockTime = Duration(seconds: poolInfo.timelock.toInt());
-    final lockTimeStr = lockTime.inDays > 1
-        ? '${lockTime.inDays} Days'
-        : lockTime.inHours > 0
+    final lockTimeStr =
+        lockTime.inDays > 1
+            ? '${lockTime.inDays} Days'
+            : lockTime.inHours > 0
             ? '${lockTime.inHours} Hours'
             : '${lockTime.inMinutes} Minutes';
 
@@ -45,10 +46,7 @@ class VitcPoolCard extends ConsumerWidget {
         },
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 12,
-            ),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
             child: Row(
               children: [
                 TokenPairWidget(
@@ -99,33 +97,36 @@ class VitcPoolCard extends ConsumerWidget {
                     ),
                   ),
                 ),
-                Consumer(builder: (context, ref, _) {
-                  final apr =
-                      ref.watch(vitcStakeAprForPoolInfoProvider(poolInfo));
-                  return apr.maybeWhen(
-                    data: (data) {
-                      if (data.isEmpty) {
-                        return const SizedBox();
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            'APR',
-                            textAlign: TextAlign.end,
-                            style: styles.textStyleTransactionType,
-                          ),
-                          Text(
-                            data,
-                            textAlign: TextAlign.end,
-                            style: styles.textStyleAddressPrimary,
-                          ),
-                        ],
-                      );
-                    },
-                    orElse: () => const SizedBox(),
-                  );
-                }),
+                Consumer(
+                  builder: (context, ref, _) {
+                    final apr = ref.watch(
+                      vitcStakeAprForPoolInfoProvider(poolInfo),
+                    );
+                    return apr.maybeWhen(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return const SizedBox();
+                        }
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'APR',
+                              textAlign: TextAlign.end,
+                              style: styles.textStyleTransactionType,
+                            ),
+                            Text(
+                              data,
+                              textAlign: TextAlign.end,
+                              style: styles.textStyleAddressPrimary,
+                            ),
+                          ],
+                        );
+                      },
+                      orElse: () => const SizedBox(),
+                    );
+                  },
+                ),
               ],
             ),
           ),

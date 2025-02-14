@@ -5,7 +5,7 @@ import '../app_providers.dart';
 import 'viva_staking_providers.dart';
 
 class VivaStakingHeader extends ConsumerWidget {
-  const VivaStakingHeader({Key? key}) : super(key: key);
+  const VivaStakingHeader({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,19 +62,13 @@ class VivaStakingHeader extends ConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  'Ended',
-                  style: styles.textStyleTransactionType,
-                ),
+                Text('Ended', style: styles.textStyleTransactionType),
                 Switch.adaptive(
                   activeColor: theme.primary,
                   value: !filter.ended,
                   onChanged: toggleEndedFilter,
                 ),
-                Text(
-                  'Live',
-                  style: styles.textStyleTransactionType,
-                ),
+                Text('Live', style: styles.textStyleTransactionType),
                 const SizedBox(width: 20),
               ],
             ),

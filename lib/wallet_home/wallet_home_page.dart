@@ -20,8 +20,10 @@ import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
 
 // FIXME - aggregate provider to keep alive
-final _homePageWatcherProvider =
-    Provider.autoDispose.family<void, Account>((ref, account) {
+final _homePageWatcherProvider = Provider.autoDispose.family<void, Account>((
+  ref,
+  account,
+) {
   ref.watch(accountsProvider);
   ref.watch(snapshotTickerProvider);
 
@@ -36,7 +38,7 @@ final _homePageWatcherProvider =
 });
 
 class WalletHomePage extends HookConsumerWidget {
-  const WalletHomePage({Key? key}) : super(key: key);
+  const WalletHomePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -195,8 +197,9 @@ class WalletHomePage extends HookConsumerWidget {
                     ),
                     onTap: (index) {
                       final timestamp = DateTime.now();
-                      final delta =
-                          timestamp.difference(lastTokensTouchTimestamp.value);
+                      final delta = timestamp.difference(
+                        lastTokensTouchTimestamp.value,
+                      );
                       if (index == 0 &&
                           lastTabIndex.value == index &&
                           delta.inMilliseconds > 30) {
@@ -210,8 +213,7 @@ class WalletHomePage extends HookConsumerWidget {
                     tabs: [
                       Tab(
                         child: Container(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          padding: const EdgeInsetsDirectional.only(top: 20),
                           width: double.infinity,
                           child: Text(
                             l10n.tokens.toUpperCase(),
@@ -222,8 +224,7 @@ class WalletHomePage extends HookConsumerWidget {
                       ),
                       Tab(
                         child: Container(
-                          margin:
-                              const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          margin: const EdgeInsetsDirectional.only(top: 20),
                           child: Text(
                             l10n.transactions.toUpperCase(),
                             textAlign: TextAlign.center,
@@ -265,15 +266,9 @@ class WalletHomePage extends HookConsumerWidget {
             padding: const EdgeInsets.only(left: 14, right: 14, bottom: 20),
             child: Row(
               children: [
-                Expanded(
-                  flex: 1,
-                  child: ReceiveActionButton(),
-                ),
+                Expanded(flex: 1, child: ReceiveActionButton()),
                 const SizedBox(width: 20),
-                Expanded(
-                  flex: 1,
-                  child: const SendActionButton(),
-                ),
+                Expanded(flex: 1, child: const SendActionButton()),
               ],
             ),
           ),

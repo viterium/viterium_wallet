@@ -11,10 +11,7 @@ import 'viva_withdraw_button.dart';
 class VivaStakingSheet extends ConsumerWidget {
   final VivaPoolInfoAll poolInfo;
 
-  const VivaStakingSheet({
-    Key? key,
-    required this.poolInfo,
-  }) : super(key: key);
+  const VivaStakingSheet({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,17 +33,19 @@ class VivaStakingSheet extends ConsumerWidget {
                 children: [
                   VivaClaimButton(poolInfo: poolInfo),
                   const SizedBox(height: 16),
-                  Row(children: [
-                    Expanded(
-                      flex: 1,
-                      child: VivaStakeButton(poolInfo: poolInfo),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      flex: 1,
-                      child: VivaWithdrawButton(poolInfo: poolInfo),
-                    ),
-                  ])
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: VivaStakeButton(poolInfo: poolInfo),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        flex: 1,
+                        child: VivaWithdrawButton(poolInfo: poolInfo),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

@@ -12,11 +12,7 @@ class TxDataWidget extends HookConsumerWidget {
   final Uint8List data;
   final Contract? contract;
 
-  const TxDataWidget({
-    Key? key,
-    required this.data,
-    this.contract,
-  }) : super(key: key);
+  const TxDataWidget({super.key, required this.data, this.contract});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -50,18 +46,16 @@ class TxDataWidget extends HookConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Data'.toUpperCase(),
-                style: styles.textStyleSubHeader,
-              ),
+              Text('Data'.toUpperCase(), style: styles.textStyleSubHeader),
               if (hasDecoded) ...[
                 TextButton(
                   style: styles.cardButtonStyle,
                   child: Text(
                     ' Decoded '.toUpperCase(),
-                    style: showDecoded.value
-                        ? styles.textStyleSubHeader
-                        : styles.textStyleSubHeaderUnselected,
+                    style:
+                        showDecoded.value
+                            ? styles.textStyleSubHeader
+                            : styles.textStyleSubHeaderUnselected,
                   ),
                   onPressed: () => showDecoded.value = true,
                 ),
@@ -70,9 +64,10 @@ class TxDataWidget extends HookConsumerWidget {
                   style: styles.cardButtonStyle,
                   child: Text(
                     ' Encoded '.toUpperCase(),
-                    style: !showDecoded.value
-                        ? styles.textStyleSubHeader
-                        : styles.textStyleSubHeaderUnselected,
+                    style:
+                        !showDecoded.value
+                            ? styles.textStyleSubHeader
+                            : styles.textStyleSubHeaderUnselected,
                   ),
                   onPressed: () => showDecoded.value = false,
                 ),
@@ -84,21 +79,21 @@ class TxDataWidget extends HookConsumerWidget {
         GestureDetector(
           onTap: () => showDecoded.value = !showDecoded.value,
           child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 400),
-              child: Column(children: [
+            duration: const Duration(milliseconds: 400),
+            child: Column(
+              children: [
                 if (showDecoded.value) ...[
                   if (function != null) ...[
-                    DataDecodedCard(
-                      data: data,
-                      abi: contract!.contractAbi,
-                    ),
+                    DataDecodedCard(data: data, abi: contract!.contractAbi),
                   ] else if (memo != null) ...[
                     DataMemoCard(memo: memo),
                   ] else
                     DataEncodedCard(data: data),
                 ] else
                   DataEncodedCard(data: data),
-              ])),
+              ],
+            ),
+          ),
         ),
       ],
     );

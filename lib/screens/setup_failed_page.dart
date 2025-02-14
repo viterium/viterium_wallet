@@ -11,10 +11,10 @@ class SetupFailedPage extends ConsumerWidget {
   final Function onRestart;
 
   const SetupFailedPage({
-    Key? key,
+    super.key,
     required this.error,
     required this.onRestart,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +62,9 @@ class SetupFailedPage extends ConsumerWidget {
                         ClipboardData(text: error.toString()),
                       );
                       UIUtil.showSnackbar(
-                          'Error message copied to clipboard.', context);
+                        'Error message copied to clipboard.',
+                        context,
+                      );
                     },
                   ),
                   const SizedBox(height: 16),

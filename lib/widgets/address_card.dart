@@ -12,11 +12,11 @@ class AddressCard extends HookConsumerWidget {
   final AddressThreeLineTextType type;
 
   const AddressCard({
-    Key? key,
+    super.key,
     required this.address,
     this.showLabel = true,
     this.type = AddressThreeLineTextType.PRIMARY,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -34,10 +34,7 @@ class AddressCard extends HookConsumerWidget {
     }, [address, showLabel]);
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 15,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       margin: EdgeInsets.only(
         left: MediaQuery.of(context).size.width * 0.105,
         right: MediaQuery.of(context).size.width * 0.105,

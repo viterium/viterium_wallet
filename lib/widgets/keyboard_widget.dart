@@ -12,8 +12,9 @@ class Event<T> {
 
 const kBackspaceKey = '⌫';
 
-final wordListProvider =
-    Provider<IList<String>>((ref) => kBip39EnglishWords.toIList());
+final wordListProvider = Provider<IList<String>>(
+  (ref) => kBip39EnglishWords.toIList(),
+);
 
 final wordPrefixProvider = StateProvider((ref) {
   return '';
@@ -55,7 +56,7 @@ final enabledKeysProvider = Provider((ref) {
 });
 
 class WordsWidget extends ConsumerWidget {
-  const WordsWidget({Key? key}) : super(key: key);
+  const WordsWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,13 +92,12 @@ class WordsWidget extends ConsumerWidget {
                 foregroundColor: theme.text,
               ),
               child: Text.rich(
-                TextSpan(children: [
-                  TextSpan(
-                    text: prefix,
-                    style: styles.textStyleKeyboardWord,
-                  ),
-                  TextSpan(text: word.substring(prefix.length)),
-                ]),
+                TextSpan(
+                  children: [
+                    TextSpan(text: prefix, style: styles.textStyleKeyboardWord),
+                    TextSpan(text: word.substring(prefix.length)),
+                  ],
+                ),
               ),
               onPressed: () {
                 final notifier = ref.read(wordSelectedProvider.notifier);
@@ -113,7 +113,7 @@ class WordsWidget extends ConsumerWidget {
 
 class KeyWidget extends ConsumerWidget {
   final String keyId;
-  const KeyWidget({Key? key, required this.keyId}) : super(key: key);
+  const KeyWidget({super.key, required this.keyId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -122,56 +122,59 @@ class KeyWidget extends ConsumerWidget {
 
     final enabled = ref.watch(enabledKeysProvider).contains(keyId);
 
-    return LayoutBuilder(builder: (context, constraints) {
-      double margin = constraints.maxWidth >= 40 ? 4 : 2;
-      return Container(
-        height: 48,
-        margin: EdgeInsets.all(margin),
-        decoration: BoxDecoration(
-          color: theme.background,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [theme.boxShadowButton],
-        ),
-        child: TextButton(
-          style: TextButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            backgroundColor: theme.background,
-            foregroundColor: theme.text,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double margin = constraints.maxWidth >= 40 ? 4 : 2;
+        return Container(
+          height: 48,
+          margin: EdgeInsets.all(margin),
+          decoration: BoxDecoration(
+            color: theme.background,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [theme.boxShadowButton],
           ),
-          child: Center(
-            child: Text(
-              keyId,
-              style: styles.textStyleKeyboardKey,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              backgroundColor: theme.background,
+              foregroundColor: theme.text,
             ),
+            child: Center(
+              child: Text(keyId, style: styles.textStyleKeyboardKey),
+            ),
+            onPressed:
+                !enabled
+                    ? null
+                    : () {
+                      final notifier = ref.read(wordPrefixProvider.notifier);
+                      if (keyId == kBackspaceKey) {
+                        final state = notifier.state;
+                        if (state.isEmpty) {
+                          ref
+                              .read(wordSelectedProvider.notifier)
+                              .update((state) => Event(''));
+                        }
+                        notifier.update(
+                          (state) =>
+                              state.isEmpty
+                                  ? state
+                                  : state.substring(0, state.length - 1),
+                        );
+                      } else {
+                        notifier.update((state) => state + keyId);
+                      }
+                    },
           ),
-          onPressed: !enabled
-              ? null
-              : () {
-                  final notifier = ref.read(wordPrefixProvider.notifier);
-                  if (keyId == kBackspaceKey) {
-                    final state = notifier.state;
-                    if (state.isEmpty) {
-                      ref.read(wordSelectedProvider.notifier).update(
-                            (state) => Event(''),
-                          );
-                    }
-                    notifier.update((state) => state.isEmpty
-                        ? state
-                        : state.substring(0, state.length - 1));
-                  } else {
-                    notifier.update((state) => state + keyId);
-                  }
-                },
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
 class KeyboardWidget extends ConsumerWidget {
-  const KeyboardWidget({Key? key}) : super(key: key);
+  const KeyboardWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

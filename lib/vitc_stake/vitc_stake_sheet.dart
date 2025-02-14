@@ -11,10 +11,7 @@ import 'vitc_withdraw_button.dart';
 class VitcStakeSheet extends ConsumerWidget {
   final VitcPoolInfoAll poolInfo;
 
-  const VitcStakeSheet({
-    Key? key,
-    required this.poolInfo,
-  }) : super(key: key);
+  const VitcStakeSheet({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +45,7 @@ class VitcStakeSheet extends ConsumerWidget {
                         child: VitcWithdrawButton(poolInfo: poolInfo),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

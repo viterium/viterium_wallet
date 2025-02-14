@@ -9,10 +9,7 @@ import 'sheet_util.dart';
 class SelectedWalletButton extends ConsumerWidget {
   final Size size;
 
-  const SelectedWalletButton({
-    Key? key,
-    this.size = const Size(60, 45),
-  }) : super(key: key);
+  const SelectedWalletButton({super.key, this.size = const Size(60, 45)});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,10 +57,7 @@ class SelectedWalletButton extends ConsumerWidget {
             height: size.height,
             child: TextButton(
               style: styles.walletButtonStyle,
-              child: SizedBox(
-                width: size.width,
-                height: size.height,
-              ),
+              child: SizedBox(width: size.width, height: size.height),
               onPressed: showAccountDetails,
             ),
           ),

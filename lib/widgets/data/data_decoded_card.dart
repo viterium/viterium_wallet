@@ -11,11 +11,7 @@ class DataDecodedCard extends HookConsumerWidget {
   final Uint8List data;
   final ContractAbi abi;
 
-  const DataDecodedCard({
-    Key? key,
-    required this.data,
-    required this.abi,
-  }) : super(key: key);
+  const DataDecodedCard({super.key, required this.data, required this.abi});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,13 +31,11 @@ class DataDecodedCard extends HookConsumerWidget {
     }, [abi, data]);
 
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 15,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
       margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.105,
-          right: MediaQuery.of(context).size.width * 0.105),
+        left: MediaQuery.of(context).size.width * 0.105,
+        right: MediaQuery.of(context).size.width * 0.105,
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
         color: theme.backgroundDarkest,
@@ -73,10 +67,7 @@ class DataDecodedCard extends HookConsumerWidget {
                   ),
                 ],
               ),
-              Text(
-                '${inputs[i]}',
-                style: styles.textStyleAddressText90,
-              ),
+              Text('${inputs[i]}', style: styles.textStyleAddressText90),
               const SizedBox(height: 8),
             ],
           ],

@@ -9,10 +9,7 @@ import 'viva_staking_types.dart';
 
 class VivaPoolDetailsCard extends ConsumerWidget {
   final VivaPoolInfoAll poolInfo;
-  const VivaPoolDetailsCard({
-    Key? key,
-    required this.poolInfo,
-  }) : super(key: key);
+  const VivaPoolDetailsCard({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,29 +39,31 @@ class VivaPoolDetailsCard extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(children: [
-                        TokenPairWidget(
-                          mainTokenId: rewardTokenId,
-                          secondaryTokenId: stakingTokenId,
-                        ),
-                        const SizedBox(width: 16),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Earn ${rewardTokenInfo.tokenName}',
-                                style: styles.textStyleTransactionType,
-                              ),
-                              Text(
-                                'Stake ${stakingTokenInfo.tokenName}',
-                                textAlign: TextAlign.start,
-                                style: styles.textStyleTransactionUnit,
-                              ),
-                            ],
+                      Row(
+                        children: [
+                          TokenPairWidget(
+                            mainTokenId: rewardTokenId,
+                            secondaryTokenId: stakingTokenId,
                           ),
-                        ),
-                      ]),
+                          const SizedBox(width: 16),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Earn ${rewardTokenInfo.tokenName}',
+                                  style: styles.textStyleTransactionType,
+                                ),
+                                Text(
+                                  'Stake ${stakingTokenInfo.tokenName}',
+                                  textAlign: TextAlign.start,
+                                  style: styles.textStyleTransactionUnit,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   VivaPoolInfoWidget(poolInfo: poolInfo),
