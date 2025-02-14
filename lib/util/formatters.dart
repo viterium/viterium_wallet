@@ -96,7 +96,8 @@ class CurrencyFormatter extends TextInputFormatter {
   String _formatNumber(String numberStr) {
     final number = Decimal.tryParse(numberStr);
     if (number != null) {
-      return numberFormat.format(DecimalIntl(number));
+      final formatter = DecimalFormatter(numberFormat);
+      return formatter.format(number);
     }
     return numberStr;
   }
@@ -110,11 +111,17 @@ class CurrencyFormatter extends TextInputFormatter {
     final inputSymbols = workingText.split('');
     if (!symbols.containsAll(inputSymbols)) {
       if (decimalSeparator == ',' && workingText.endsWith('.')) {
-        workingText =
-            workingText.replaceRange(workingText.length - 1, null, ',');
+        workingText = workingText.replaceRange(
+          workingText.length - 1,
+          null,
+          ',',
+        );
       } else if (decimalSeparator == '.' && workingText.endsWith(',')) {
-        workingText =
-            workingText.replaceRange(workingText.length - 1, null, '.');
+        workingText = workingText.replaceRange(
+          workingText.length - 1,
+          null,
+          '.',
+        );
       } else {
         return oldValue;
       }
@@ -122,10 +129,8 @@ class CurrencyFormatter extends TextInputFormatter {
 
     // Workaround for iOS Number Keyboard missmatch
     if (workingText.endsWith(groupSeparator)) {
-      workingText = workingText.substring(
-            0,
-            workingText.length - groupSeparator.length,
-          ) +
+      workingText =
+          workingText.substring(0, workingText.length - groupSeparator.length) +
           decimalSeparator;
     }
     workingText = workingText.replaceAll(groupSeparator, '');
@@ -149,7 +154,8 @@ class CurrencyFormatter extends TextInputFormatter {
       );
     }
 
-    final newText = _formatNumber(splitStr[0]) +
+    final newText =
+        _formatNumber(splitStr[0]) +
         decimalSeparator +
         splitStr[1].substring(0, min(splitStr[1].length, maxDecimalDigits));
 
@@ -166,7 +172,9 @@ class CurrencyFormatter extends TextInputFormatter {
 /// Input formatter that ensures text starts with @
 class ContactInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
@@ -188,15 +196,18 @@ class ContactInputFormatter extends TextInputFormatter {
     }
 
     return newValue.copyWith(
-        text: workingText,
-        selection: TextSelection.collapsed(offset: workingText.length));
+      text: workingText,
+      selection: TextSelection.collapsed(offset: workingText.length),
+    );
   }
 }
 
 /// Input formatter that ensures only one space between words
 class SingleSpaceInputFormatter extends TextInputFormatter {
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
@@ -218,7 +229,9 @@ class SingleSpaceInputFormatter extends TextInputFormatter {
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,
@@ -230,7 +243,9 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 class LowerCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     return TextEditingValue(
       text: newValue.text.toLowerCase(),
       selection: newValue.selection,

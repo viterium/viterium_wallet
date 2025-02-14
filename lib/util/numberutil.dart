@@ -32,20 +32,22 @@ class NumberUtil {
     }
     final valueScale = value.scale;
     final scale = min(
-        valueScale,
-        value < min6DigitsValue
-            ? amount.tokenInfo.decimals
-            : value < min4DigitsValue
-                ? 6
-                : 4);
+      valueScale,
+      value < min6DigitsValue
+          ? amount.tokenInfo.decimals
+          : value < min4DigitsValue
+          ? 6
+          : 4,
+    );
     value = value.truncate(scale: scale);
 
-    final formatter = NumberFormat.currency(
+    final numberFormat = NumberFormat.currency(
       name: '',
       symbol: '',
       decimalDigits: scale,
     );
-    final formated = formatter.format(DecimalIntl(value)).trim();
+    final formatter = DecimalFormatter(numberFormat);
+    final formated = formatter.format(value).trim();
     if (showApprox && amount.value != value) {
       return '~$formated';
     }
@@ -128,8 +130,10 @@ class NumberUtil {
       final amount = getStringFromRaw(amountRaw, decimals, precision);
       return amount;
     } else {
-      final amount =
-          getDecimalFromRaw(amountRaw, decimals).toStringAsFixed(precision);
+      final amount = getDecimalFromRaw(
+        amountRaw,
+        decimals,
+      ).toStringAsFixed(precision);
       return '~' + amount;
     }
   }
@@ -138,8 +142,10 @@ class NumberUtil {
   /// be parsed. Expects "." to be decimal separator
   /// @param amount $1,512
   /// @returns 1.512
-  static String sanitizeNumber(String input,
-      {int maxDecimalDigits = maxDecimalDigits}) {
+  static String sanitizeNumber(
+    String input, {
+    int maxDecimalDigits = maxDecimalDigits,
+  }) {
     String sanitized = "";
     List<String> splitStr = input.split(".");
     if (splitStr.length > 1) {

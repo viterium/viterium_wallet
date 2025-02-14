@@ -17,16 +17,20 @@ final _exchangeRateBoxProvider = Provider((ref) {
   return db.getTypedBox<ExchangeRate>(db.exchangeRateBox);
 });
 
-final _vitexExchangeRatesRemoteProvider =
-    FutureProvider.family<IMap<TokenId, VitexExchangeRate>?, IList<TokenId>>(
-        (ref, tokens) async {
+final _vitexExchangeRatesRemoteProvider = FutureProvider.family<
+  IMap<TokenId, VitexExchangeRate>?,
+  IList<TokenId>
+>((ref, tokens) async {
   ref.watch(remoteRefreshProvider);
 
   final log = ref.read(loggerProvider);
   log.d('Fetching vitex rates');
 
-  final response = await http.get(Uri.parse(
-      'https://api.vitex.net/api/v2/exchange-rate?tokenIds=${tokens.join(",")}'));
+  final response = await http.get(
+    Uri.parse(
+      'https://api.vitex.net/api/v2/exchange-rate?tokenIds=${tokens.join(",")}',
+    ),
+  );
 
   if (response.statusCode != 200) {
     return <TokenId, VitexExchangeRate>{}.lock;
@@ -64,46 +68,52 @@ final exchangeRatesProvider = Provider.autoDispose((ref) {
   final box = ref.watch(_exchangeRateBoxProvider);
   final remote = ref.watch(exchangeRatesRemoteProvider);
 
-  remote.whenOrNull(data: (data) {
-    if (data == null) {
-      return;
-    }
-    for (final entry in data.entries) {
-      box.set(entry.key, ExchangeRate.vitex(entry.value));
-    }
-  });
+  remote.whenOrNull(
+    data: (data) {
+      if (data == null) {
+        return;
+      }
+      for (final entry in data.entries) {
+        box.set(entry.key, ExchangeRate.vitex(entry.value));
+      }
+    },
+  );
 
   return remote.asData?.value ??
       box.getAll().map((key, value) => MapEntry(key, value.exchangeRate)).lock;
 });
 
-final aprExchangeRateForTokenIdProvider =
-    Provider.autoDispose.family<VitexExchangeRate, TokenId>((ref, tokenId) {
-  final box = ref.watch(_exchangeRateBoxProvider);
+final aprExchangeRateForTokenIdProvider = Provider.autoDispose
+    .family<VitexExchangeRate, TokenId>((ref, tokenId) {
+      final box = ref.watch(_exchangeRateBoxProvider);
 
-  final rate = box.tryGet(tokenId);
-  if (rate != null) {
-    return rate.exchangeRate;
-  }
+      final rate = box.tryGet(tokenId);
+      if (rate != null) {
+        return rate.exchangeRate;
+      }
 
-  final remote = ref.watch(_vitexExchangeRatesRemoteProvider([tokenId].lock));
-  remote.whenOrNull(data: (data) {
-    if (data == null) {
-      return;
-    }
-    for (final entry in data.entries) {
-      box.set(entry.key, ExchangeRate.vitex(entry.value));
-    }
-  });
-  return remote.valueOrNull?[tokenId] ??
-      VitexExchangeRate.zero(tokenId: tokenId);
-});
+      final remote = ref.watch(
+        _vitexExchangeRatesRemoteProvider([tokenId].lock),
+      );
+      remote.whenOrNull(
+        data: (data) {
+          if (data == null) {
+            return;
+          }
+          for (final entry in data.entries) {
+            box.set(entry.key, ExchangeRate.vitex(entry.value));
+          }
+        },
+      );
+      return remote.valueOrNull?[tokenId] ??
+          VitexExchangeRate.zero(tokenId: tokenId);
+    });
 
-final exchangeRateForTokenIdProvider =
-    Provider.autoDispose.family<VitexExchangeRate, TokenId>((ref, tokenId) {
-  final exchangeRates = ref.watch(exchangeRatesProvider);
-  return exchangeRates[tokenId] ?? VitexExchangeRate.zero(tokenId: tokenId);
-});
+final exchangeRateForTokenIdProvider = Provider.autoDispose
+    .family<VitexExchangeRate, TokenId>((ref, tokenId) {
+      final exchangeRates = ref.watch(exchangeRatesProvider);
+      return exchangeRates[tokenId] ?? VitexExchangeRate.zero(tokenId: tokenId);
+    });
 
 // TODO - move to own file
 
@@ -121,30 +131,30 @@ final totalBtcValueProvider = Provider.autoDispose((ref) {
   return value;
 });
 
-final totalFiatValueForAccountInfoProvider =
-    Provider.autoDispose.family<Decimal, AccountInfo>((ref, accountInfo) {
-  final exchangeRates = ref.watch(exchangeRatesProvider);
-  final coingeckoRates = ref.watch(coingeckoRatesProvider);
-  final currency = ref.watch(currencyProvider).currency;
+final totalFiatValueForAccountInfoProvider = Provider.autoDispose
+    .family<Decimal, AccountInfo>((ref, accountInfo) {
+      final exchangeRates = ref.watch(exchangeRatesProvider);
+      final coingeckoRates = ref.watch(coingeckoRatesProvider);
+      final currency = ref.watch(currencyProvider).currency;
 
-  final value = accountInfo.balances.entries.fold<Decimal>(
-    Decimal.zero,
-    (total, balances) {
-      final entry = exchangeRates[balances.key];
-      if (entry == null) {
-        return total;
-      }
-      var fiatRate = entry.fiatRate(currency);
-      if (fiatRate == Decimal.zero) {
-        final btcRate = coingeckoRates.fiatRate(currency);
-        fiatRate = btcRate * entry.btcRateDecimal;
-      }
+      final value = accountInfo.balances.entries.fold<Decimal>(Decimal.zero, (
+        total,
+        balances,
+      ) {
+        final entry = exchangeRates[balances.key];
+        if (entry == null) {
+          return total;
+        }
+        var fiatRate = entry.fiatRate(currency);
+        if (fiatRate == Decimal.zero) {
+          final btcRate = coingeckoRates.fiatRate(currency);
+          fiatRate = btcRate * entry.btcRateDecimal;
+        }
 
-      return total + balances.value.value * fiatRate;
-    },
-  );
-  return value;
-});
+        return total + balances.value.value * fiatRate;
+      });
+      return value;
+    });
 
 final totalFiatValueProvider = Provider.autoDispose((ref) {
   final accountInfo = ref.watch(selectedAccountInfoProvider);
@@ -152,67 +162,81 @@ final totalFiatValueProvider = Provider.autoDispose((ref) {
   return value;
 });
 
-final fiatValueForTokenProvider =
-    Provider.autoDispose.family<Decimal, TokenId>((ref, tokenId) {
-  final balance = ref.watch(balanceInfoForTokenProvider(tokenId));
-  final exchangeRate = ref.watch(exchangeRateForTokenIdProvider(tokenId));
-  final coingeckoRates = ref.watch(coingeckoRatesProvider);
-  final currency = ref.watch(currencyProvider).currency;
-  var fiatRate = exchangeRate.fiatRate(currency);
-  if (fiatRate == Decimal.zero) {
-    final btcRate = coingeckoRates.fiatRate(currency);
-    fiatRate = btcRate * exchangeRate.btcRateDecimal;
-  }
-  if (balance == null) return Decimal.zero;
-  return balance.value * fiatRate;
-});
+final fiatValueForTokenProvider = Provider.autoDispose.family<Decimal, TokenId>(
+  (ref, tokenId) {
+    final balance = ref.watch(balanceInfoForTokenProvider(tokenId));
+    final exchangeRate = ref.watch(exchangeRateForTokenIdProvider(tokenId));
+    final coingeckoRates = ref.watch(coingeckoRatesProvider);
+    final currency = ref.watch(currencyProvider).currency;
+    var fiatRate = exchangeRate.fiatRate(currency);
+    if (fiatRate == Decimal.zero) {
+      final btcRate = coingeckoRates.fiatRate(currency);
+      fiatRate = btcRate * exchangeRate.btcRateDecimal;
+    }
+    if (balance == null) return Decimal.zero;
+    return balance.value * fiatRate;
+  },
+);
 
-final formatedFiatValueForTokenProvider =
-    Provider.autoDispose.family<String, TokenId>((ref, tokenId) {
-  final balance = ref.watch(fiatValueForTokenProvider(tokenId));
-  final currency = ref.watch(currencyProvider);
+final formatedFiatValueForTokenProvider = Provider.autoDispose
+    .family<String, TokenId>((ref, tokenId) {
+      final balance = ref.watch(fiatValueForTokenProvider(tokenId));
+      final currency = ref.watch(currencyProvider);
 
-  return NumberFormat.currency(
-    symbol: currency.getCurrencySymbol(),
-    name: currency.getIso4217Code(),
-  ).format(DecimalIntl(balance));
-});
+      final numberFormat = NumberFormat.currency(
+        symbol: currency.getCurrencySymbol(),
+        name: currency.getIso4217Code(),
+      );
+      final formatter = DecimalFormatter(numberFormat);
+      return formatter.format(balance);
+    });
 
 final totalBtcFormatedProvider = Provider.autoDispose((ref) {
   final btcBalance = ref.watch(totalBtcValueProvider);
   final decimals = btcBalance >= Decimal.parse('0.001') ? 4 : 6;
-  return NumberFormat.currency(
+  final numberFormat = NumberFormat.currency(
     name: '',
     symbol: '',
     decimalDigits: decimals,
-  ).format(DecimalIntl(btcBalance));
+  );
+  final formatter = DecimalFormatter(numberFormat);
+  return formatter.format(btcBalance);
 });
 
-final fiatFormatedForTotalValueProvider =
-    Provider.autoDispose.family<String, AccountInfo>((ref, accountInfo) {
-  final balance = ref.watch(totalFiatValueForAccountInfoProvider(accountInfo));
-  final currency = ref.watch(currencyProvider);
+final fiatFormatedForTotalValueProvider = Provider.autoDispose
+    .family<String, AccountInfo>((ref, accountInfo) {
+      final balance = ref.watch(
+        totalFiatValueForAccountInfoProvider(accountInfo),
+      );
+      final currency = ref.watch(currencyProvider);
 
-  return NumberFormat.currency(
-    symbol: currency.getCurrencySymbol(),
-    name: currency.getIso4217Code(),
-  ).format(DecimalIntl(balance));
-});
+      final numberFormat = NumberFormat.currency(
+        symbol: currency.getCurrencySymbol(),
+        name: currency.getIso4217Code(),
+      );
+      final formatter = DecimalFormatter(numberFormat);
+      return formatter.format(balance);
+    });
 
 final totalFiatFormatedProvider = Provider.autoDispose((ref) {
   final balance = ref.watch(totalFiatValueProvider);
   final currency = ref.watch(currencyProvider);
 
-  return NumberFormat.currency(
+  final numberFormat = NumberFormat.currency(
     symbol: currency.getCurrencySymbol(),
     name: currency.getIso4217Code(),
-  ).format(DecimalIntl(balance));
+  );
+  final formatter = DecimalFormatter(numberFormat);
+  return formatter.format(balance);
 });
 
-final fiatForAmountProvider =
-    Provider.autoDispose.family<Decimal, Amount>((ref, amount) {
-  final exchangeRate =
-      ref.watch(aprExchangeRateForTokenIdProvider(amount.tokenId));
+final fiatForAmountProvider = Provider.autoDispose.family<Decimal, Amount>((
+  ref,
+  amount,
+) {
+  final exchangeRate = ref.watch(
+    aprExchangeRateForTokenIdProvider(amount.tokenId),
+  );
   final coingeckoRates = ref.watch(coingeckoRatesProvider);
   final currency = ref.watch(currencyProvider).currency;
   var fiatRate = exchangeRate.fiatRate(currency);
@@ -223,13 +247,15 @@ final fiatForAmountProvider =
   return amount.value * fiatRate;
 });
 
-final fiatFormatedForAmountProvider =
-    Provider.autoDispose.family<String, Amount>((ref, amount) {
-  final fiat = ref.watch(fiatForAmountProvider(amount));
-  final currency = ref.watch(currencyProvider);
+final fiatFormatedForAmountProvider = Provider.autoDispose
+    .family<String, Amount>((ref, amount) {
+      final fiat = ref.watch(fiatForAmountProvider(amount));
+      final currency = ref.watch(currencyProvider);
 
-  return NumberFormat.currency(
-    symbol: currency.getCurrencySymbol(),
-    name: currency.getIso4217Code(),
-  ).format(DecimalIntl(fiat));
-});
+      final numberFormat = NumberFormat.currency(
+        symbol: currency.getCurrencySymbol(),
+        name: currency.getIso4217Code(),
+      );
+      final formatter = DecimalFormatter(numberFormat);
+      return formatter.format(fiat);
+    });
