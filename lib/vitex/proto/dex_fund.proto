@@ -1,0 +1,250 @@
+syntax="proto3";
+
+package proto;
+
+//storage
+message Account {
+    bytes Token = 1;
+    bytes Available = 2;
+    bytes Locked   = 3;
+    bytes VxLocked = 4; // lock for dividend, will release after 7 days
+    bytes VxUnlocking = 5;
+    bytes CancellingStake = 6;
+}
+
+message VxUnlock {
+    uint64 PeriodId = 1;
+    bytes Amount = 2;
+}
+
+message VxUnlocks {
+    repeated VxUnlock Unlocks = 1;
+}
+
+message CancelStake {
+    uint64 PeriodId = 1;
+    bytes Amount = 2;
+}
+
+message CancelStakes {
+    repeated CancelStake Cancels = 1;
+}
+
+//storage
+message Fund {
+    bytes Address = 1;
+    repeated Account Accounts = 2;
+}
+
+message AccountSettle {
+    bool IsTradeToken = 1;
+    bytes IncAvailable = 2;
+    bytes ReduceLocked = 3;
+    bytes ReleaseLocked = 4;
+}
+
+message FundSettle {
+    bytes Address = 1;
+    repeated AccountSettle AccountSettles = 2;
+}
+
+message FeeSettle {
+    bytes Address = 1;
+    bytes BaseFee = 2; // FeeSumAccount.BaseAmount, FeeSumAccount.InviterBonusAmount, UserFeeAccount.InviterBonusAmount
+    bytes OperatorFee = 3; // OperatorFeeAccount.Amount
+}
+
+//must be same markets
+message SettleActions {
+    bytes TradeToken = 1;
+    bytes QuoteToken = 2;
+    repeated FundSettle FundActions = 3;
+    repeated FeeSettle FeeActions = 4;
+}
+
+message FeeForDividend { // for dividend
+    bytes Token = 1;
+                         // rolled amount : 99% part of last period BaseAmount rolled to this period +
+                         // open new market fee +
+                         // create new inviter fee +
+                         // trade baseFee[include markets allow mine and not allow mine]
+    bytes DividendPoolAmount = 2;
+    bool NotRoll = 3;
+}
+
+message FeeForMine { // for mine, sum amounts with same quoteTokenType
+    int32 QuoteTokenType = 1;
+    bytes BaseAmount = 2; // normal trade fee
+    bytes InviteBonusAmount = 3; // invitee trade fee
+}
+
+message DexFeesByPeriod {
+    repeated FeeForDividend FeesForDividend = 1;
+    repeated FeeForMine FeesForMine = 2;
+    uint64 lastValidPeriod = 3;
+    bool FinishDividend = 4;
+    bool FinishMine = 5;
+}
+
+message FeeAccount { // for vx mine
+    int32 QuoteTokenType = 1;
+    bytes BaseAmount = 2;
+    bytes InviteBonusAmount = 3;
+}
+
+message FeesByPeriod {
+    repeated FeeAccount Fees = 1;
+    uint64 Period = 2;
+}
+
+message UserFees {
+    repeated FeesByPeriod Fees = 1;
+}
+
+message OperatorMarketFee {
+    int32 MarketId = 1;
+    int32 TakerOperatorFeeRate = 2;
+    int32 MakerOperatorFeeRate = 3;
+    bytes Amount = 4;
+}
+
+message OperatorFeeAccount {
+    bytes Token = 1;
+    repeated OperatorMarketFee MarketFees = 2;
+}
+
+message OperatorFeesByPeriod {
+    repeated OperatorFeeAccount OperatorFees = 1;
+}
+
+message VxFundByPeriod {
+    uint64 Period = 1; // last snapshot height in period
+    bytes Amount = 2;
+}
+
+message VxFunds {
+    repeated VxFundByPeriod Funds = 1;
+}
+
+message VIPStaking {
+    int64 Timestamp = 1;
+    int32 StakedTimes = 2; // Staked times in case duplicate stakes happen
+    repeated bytes StakingHashes = 3; // in case duplicate stakes happen
+}
+
+message DelegateStakeInfo {
+    int32 StakeType = 1; // 1 StakeForMining, 2 StakeForVIP, 3 StakeForSuperVIP, 4, AgentSuperVIP
+    bytes Address = 2;
+    bytes Principal = 3; // in case stake for other address
+    bytes Amount = 4;
+    int32 Status = 5; // 0 pending, 1 confirmed, 2 cancelling
+    uint64 SerialNo = 6;
+    bytes Id = 7; //not set on serialize
+}
+
+message DelegateStakeAddressIndex {
+    bytes Id = 1;
+    int32 StakeType = 2;
+}
+
+message MiningStakingByPeriod {
+    uint64 Period = 1; // last snapshot height in period
+    bytes Amount = 2;
+}
+
+message MiningStakings {
+    repeated MiningStakingByPeriod Stakings = 1;
+}
+
+message VxSettleAction {
+    bytes Address = 1;
+    bytes Amount = 2;
+}
+
+message VxSettleActions {
+    uint64 Period = 1;
+    int32 Page = 2;
+    repeated VxSettleAction actions = 3;
+}
+
+//event
+message PeriodJobForBiz {
+    uint64 Period = 1;
+    int32  BizType = 2;
+}
+
+//event
+message FeeDividendForVxHolder {
+    bytes Address = 1;
+    bytes VxAmount = 2;
+    bytes FeeToken = 3; // fee token to dividend
+    bytes FeeDividend = 4;
+}
+
+//event
+message MinedVxForFee { // reused by trade fee and invitee fee
+    bytes Address = 1;
+    int32 QuoteTokenType = 2; // 1 vite, 2 eth, 3 btc, 4 usd
+    bytes FeeAmount = 3; // decimals depends on QuoteTokenType
+    bytes MinedAmount = 4; // mined vx amount
+}
+
+//event
+message MinedVxForStaking {
+    bytes Address = 1;
+    bytes StakedAmount = 2; // Staked vite amount
+    bytes MinedAmount = 3; // mined vx amount
+}
+
+//event
+message OperatorFeeDividend {
+    bytes Address = 1;
+    int32 MarketId = 2;
+    int32 TakerOperatorFeeRate = 3;
+    int32 MakerOperatorFeeRate = 4;
+    bytes Amount = 5; //depend on marketInfo.QuoteToken
+}
+
+//event
+message MinedVxForOperation {
+    int32 BizType = 1; // 1 MineForMaker, 2 MineForMaintainer
+    bytes Address = 2;
+    bytes Amount = 3;
+}
+
+//event
+message InviteRelation {
+    bytes Inviter = 1;
+    bytes Invitee = 2;
+    uint32 InviteCode = 3;
+}
+
+//event
+message SettleMakerMinedVx {
+    uint64 PeriodId = 1;
+    int32 Page = 2;
+    bool  Finish = 3;
+}
+
+//event
+message MarketAgentRelation {
+    bytes Principal = 1;
+    bytes Agent = 2;
+    int32 MarketId = 3;
+}
+
+//event
+message BurnVite {
+    int32 BizType = 1; // 1 BurnForDexViteFee
+    bytes Amount = 2;
+}
+
+//event
+message TransferAsset {
+    int32 BizType = 1; // 1 deposit, 2 agentDeposit, 3 withdraw, 4 assignedWithdraw, 5 transfer
+    bytes From = 2;
+    bytes To = 3;
+    bytes Token = 4;
+    bytes Amount = 5;
+    bytes Extra = 6;
+}

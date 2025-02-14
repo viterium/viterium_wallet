@@ -9,7 +9,7 @@ import '../contacts/contact.dart';
 import '../core/vault.dart';
 import '../push_notifications/push_types.dart';
 import '../tokens/token_types.dart';
-import '../vitex/vitex_types.dart';
+import '../vitex_api/vitex_types.dart';
 import 'boxes.dart';
 import 'json_type_adapter.dart';
 

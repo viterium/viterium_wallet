@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vite/vite.dart';
 
 import '../app_icons.dart';
@@ -22,7 +22,7 @@ import '../widgets/sheet_util.dart';
 import 'token_burn_dialog.dart';
 import 'token_icon_widget.dart';
 
-class TokenSheet extends ConsumerWidget {
+class TokenSheet extends HookConsumerWidget {
   final TokenInfo tokenInfo;
   const TokenSheet({Key? key, required this.tokenInfo}) : super(key: key);
 
@@ -253,63 +253,57 @@ class TokenSheet extends ConsumerWidget {
                   ]),
                 ),
               ),
-              // TabBar(
-              //   indicatorWeight: 3,
-              //   indicatorColor: theme.primary60,
-              //   indicatorPadding: const EdgeInsets.only(left: 20, right: 20),
-              //   tabs: [
-              //     Tab(
-              //       child: Container(
-              Container(
-                margin: const EdgeInsets.only(top: 20, left: 20),
-                width: double.infinity,
-                child: Text(
-                  CaseChange.toUpperCase(l10n.transactions, ref),
-                  textAlign: TextAlign.start,
-                  style: styles.textStyleTabLabel,
-                ),
-              ),
-              //),
-              // Tab(
-              //   child: Container(
-              //     margin: const EdgeInsets.only(top: 20),
-              //     width: double.infinity,
-              //     child: Text(
-              //       CaseChange.toUpperCase('Staking', ref),
-              //       textAlign: TextAlign.center,
-              //       style: TextStyle(
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.w100,
-              //         color: theme.text,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              //],
-              //),
-              Expanded(
-                // child: TabBarView(
-                //   children: [
-                // Stack(
-                child: Stack(
-                  children: [
-                    TransactionHistoryWidget(
-                      token: token,
-                      tokenSymbol: tokenInfo.symbolLabel,
+              TabBar(
+                indicatorWeight: 3,
+                indicatorColor: theme.primary60,
+                indicatorPadding: const EdgeInsets.only(left: 20, right: 20),
+                tabs: [
+                  // Tab(
+                  //   child: Container(
+                  //     margin: const EdgeInsets.only(top: 20),
+                  //     width: double.infinity,
+                  //     child: Text(
+                  //       CaseChange.toUpperCase('Vitex', ref),
+                  //       textAlign: TextAlign.center,
+                  //       style: TextStyle(
+                  //         fontSize: 14,
+                  //         fontWeight: FontWeight.w100,
+                  //         color: theme.text,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  Tab(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 20, left: 20),
+                      width: double.infinity,
+                      child: Text(
+                        CaseChange.toUpperCase(l10n.transactions, ref),
+                        textAlign: TextAlign.start,
+                        style: styles.textStyleTabLabel,
+                      ),
                     ),
-                    const TopGradientWidget(),
-                    const BottomGradientWidget(),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    // Stack(children: [
+                    //   const VitexWidget(),
+                    //   const TopGradientWidget(),
+                    //   const BottomGradientWidget(),
+                    // ]),
+                    Stack(children: [
+                      TransactionHistoryWidget(
+                        token: token,
+                        tokenSymbol: tokenInfo.symbolLabel,
+                      ),
+                      const TopGradientWidget(),
+                      const BottomGradientWidget(),
+                    ]),
                   ],
                 ),
-                // Stack(
-                //   children: [
-                //     VivaStakingWidget(token: token),
-                //     const TopGradientWidget(),
-                //     const BottomGradientWidget(),
-                //   ],
-                //),
-                //],
-                //),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 28),
