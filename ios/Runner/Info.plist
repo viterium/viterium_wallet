@@ -103,7 +103,5 @@
 	<false/>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcons.appiconset</string>
-	<key>FLTEnableImpeller</key>
-  	<false />
 </dict>
 </plist>
