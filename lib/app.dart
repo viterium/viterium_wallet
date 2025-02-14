@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:oktoast/oktoast.dart';
@@ -90,19 +89,16 @@ class App extends HookConsumerWidget {
                   useMaterial3: false,
                   primaryColor: theme.primary,
                   colorScheme: ThemeData().colorScheme.copyWith(
-                        brightness: Brightness.dark,
-                        secondary: theme.primary10,
-                        surface: theme.backgroundDark,
-                      ),
+                    brightness: Brightness.dark,
+                    secondary: theme.primary10,
+                    surface: theme.backgroundDark,
+                  ),
                   fontFamily: kDefaultFontFamily,
                   brightness: Brightness.dark,
                   tooltipTheme: TooltipThemeData(
                     preferBelow: false,
                     margin: EdgeInsets.symmetric(vertical: 10),
-                    padding: EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 10,
-                    ),
+                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                     decoration: BoxDecoration(
                       color: theme.backgroundDarkest,
                       borderRadius: BorderRadius.circular(25),
@@ -115,13 +111,14 @@ class App extends HookConsumerWidget {
                 ),
                 localizationsDelegates: [
                   AppLocalizationsDelegate(language),
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalCupertinoLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate
+                  // GlobalMaterialLocalizations.delegate,
+                  // GlobalCupertinoLocalizations.delegate,
+                  // GlobalWidgetsLocalizations.delegate
                 ],
-                locale: language.language == AvailableLanguage.DEFAULT
-                    ? null
-                    : language.getLocale(),
+                locale:
+                    language.language == AvailableLanguage.DEFAULT
+                        ? null
+                        : language.getLocale(),
                 supportedLocales: supportedLocales,
                 initialRoute: '/',
                 onGenerateRoute: (RouteSettings settings) {
