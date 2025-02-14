@@ -11,8 +11,6 @@ import 'currency_notifier.dart';
 import 'language_notifier.dart';
 import 'theme_setting_notifier.dart';
 
-typedef TypeFactory<T> = T Function<T>(dynamic);
-
 class SettingsRepository {
   final GenericBox box;
   const SettingsRepository(this.box);
