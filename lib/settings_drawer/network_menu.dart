@@ -12,17 +12,13 @@ import '../pow_settings/pow_settings_sheet.dart';
 import '../settings/block_explorer_setting.dart';
 import '../settings/block_explorers.dart';
 import '../widgets/app_icon_button.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
 import 'double_line_item.dart';
 
 class NetworkMenu extends ConsumerWidget {
   final VoidCallback onBackAction;
-  const NetworkMenu({
-    Key? key,
-    required this.onBackAction,
-  }) : super(key: key);
+  const NetworkMenu({Key? key, required this.onBackAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -108,17 +104,21 @@ class NetworkMenu extends ConsumerWidget {
                         onPressed: () => _changePowServer(context, ref),
                       ),
                       Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final blockExplorer = ref.watch(blockExplorerProvider);
-                        return DoubleLineItem(
-                          heading: l10n.blockExplorer,
-                          defaultMethod: BlockExplorerSetting(blockExplorer),
-                          icon: AppIcons.search,
-                          onPressed: () {
-                            _explorerDialog(context, ref);
-                          },
-                        );
-                      }),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final blockExplorer = ref.watch(
+                            blockExplorerProvider,
+                          );
+                          return DoubleLineItem(
+                            heading: l10n.blockExplorer,
+                            defaultMethod: BlockExplorerSetting(blockExplorer),
+                            icon: AppIcons.search,
+                            onPressed: () {
+                              _explorerDialog(context, ref);
+                            },
+                          );
+                        },
+                      ),
                     ],
                   ),
                   const ListBottomGradient(),
@@ -150,26 +150,30 @@ class NetworkMenu extends ConsumerWidget {
   }
 
   Future<void> _explorerDialog(BuildContext context, WidgetRef ref) async {
-    BlockExplorer? selection = await showAppDialog<BlockExplorer>(
-        context: context,
-        builder: (context) {
-          return AppSimpleDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                ref.read(l10nProvider).blockExplorer,
-                style: ref.read(stylesProvider).textStyleDialogHeader,
-              ),
+    final selection = await showDialog<BlockExplorer>(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              ref.read(l10nProvider).blockExplorer,
+              style: ref.read(stylesProvider).textStyleDialogHeader,
             ),
-            children: _buildExplorerOptions(context, ref),
-          );
-        });
-    if (selection != null) {
-      final notifier = ref.read(blockExplorerSettingsProvider.notifier);
-      final network = ref.read(viteNetworkProvider);
+          ),
+          children: _buildExplorerOptions(context, ref),
+        );
+      },
+    );
 
-      notifier.updateBlockExplorer(selection, network: network);
+    if (selection == null) {
+      return;
     }
+
+    final notifier = ref.read(blockExplorerSettingsProvider.notifier);
+    final network = ref.read(viteNetworkProvider);
+
+    notifier.updateBlockExplorer(selection, network: network);
   }
 
   List<Widget> _buildExplorerOptions(BuildContext context, WidgetRef ref) {

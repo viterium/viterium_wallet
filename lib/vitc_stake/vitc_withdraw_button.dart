@@ -5,7 +5,6 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
 import 'vitc_stake_providers.dart';
@@ -14,10 +13,7 @@ import 'vitc_stake_withdraw_dialog.dart';
 
 class VitcWithdrawButton extends ConsumerWidget {
   final VitcPoolInfoAll poolInfo;
-  const VitcWithdrawButton({
-    super.key,
-    required this.poolInfo,
-  });
+  const VitcWithdrawButton({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +25,7 @@ class VitcWithdrawButton extends ConsumerWidget {
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
 
-      final amount = await showAppDialog<Amount>(
+      final amount = await showDialog<Amount>(
         context: context,
         builder: (_) => VitcStakeWithdrawDialog(poolInfo: poolInfo),
       );

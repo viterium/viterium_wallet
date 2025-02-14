@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/core_providers.dart';
-import '../widgets/app_simpledialog.dart';
 
 class DefiEnabledDialog extends ConsumerWidget {
   const DefiEnabledDialog({Key? key}) : super(key: key);
@@ -11,13 +10,10 @@ class DefiEnabledDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final styles = ref.watch(stylesProvider);
 
-    return AppSimpleDialog(
+    return SimpleDialog(
       title: Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Text(
-          'DeFi Center',
-          style: styles.textStyleDialogHeader,
-        ),
+        child: Text('DeFi Center', style: styles.textStyleDialogHeader),
       ),
       children: [
         for (final value in [true, false])

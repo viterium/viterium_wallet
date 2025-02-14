@@ -13,7 +13,6 @@ import '../sbp/sbp_sheet.dart';
 import '../settings/available_currency.dart';
 import '../settings/available_themes.dart';
 import '../settings_advanced/advanced_menu.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
@@ -108,7 +107,7 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
   }
 
   Future<void> _showCurrencyDialog() async {
-    final selection = await showAppDialog<AvailableCurrencies>(
+    final selection = await showDialog<AvailableCurrencies>(
       context: context,
       builder: (context) => const CurrencyDialog(),
     );
@@ -118,19 +117,8 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
     }
   }
 
-  // Future<void> _showLanguageDialog() async {
-  //   final selection = await showAppDialog<AvailableLanguage>(
-  //     context: context,
-  //     builder: (context) => const LanguageDialog(),
-  //   );
-  //   if (selection != null) {
-  //     final notifier = ref.read(languageProvider.notifier);
-  //     notifier.updateLanguage(LanguageSetting(selection));
-  //   }
-  // }
-
   Future<void> _showThemeDialog() async {
-    final selection = await showAppDialog<ThemeOptions>(
+    final selection = await showDialog<ThemeOptions>(
       context: context,
       builder: (context) => const ThemeDialog(),
     );
@@ -167,284 +155,322 @@ class _SettingsSheetState extends ConsumerState<SettingsSheet>
       canPop: false,
       onPopInvokedWithResult: _onBackButtonPressed,
       child: ClipRect(
-        child: Stack(children: [
-          Consumer(builder: (context, ref, _) {
-            return Container(
-              color: ref.watch(themeProvider).backgroundDark,
-              constraints: BoxConstraints.expand(),
-            );
-          }),
-          buildMainSettings(context),
-          SlideTransition(
-            position: _contactsOffsetFloat,
-            child: ContactsWidget(onBackAction: () {
-              setState(() => _contactsOpen = false);
-              _contactsController.reverse();
-            }),
-          ),
-          SlideTransition(
-            position: _securityOffsetFloat,
-            child: SecurityMenu(onBackAction: () {
-              setState(() => _securityOpen = false);
-              _securityController.reverse();
-            }),
-          ),
-          SlideTransition(
-            position: _networkOffsetFloat,
-            child: NetworkMenu(onBackAction: () {
-              setState(() => _networkOpen = false);
-              _networkController.reverse();
-            }),
-          ),
-          SlideTransition(
-            position: _advancedOffsetFloat,
-            child: AdvancedMenu(onBackAction: () {
-              setState(() => _advancedOpen = false);
-              _advancedController.reverse();
-            }),
-          ),
-        ]),
+        child: Stack(
+          children: [
+            Consumer(
+              builder: (context, ref, _) {
+                return Container(
+                  color: ref.watch(themeProvider).backgroundDark,
+                  constraints: BoxConstraints.expand(),
+                );
+              },
+            ),
+            buildMainSettings(context),
+            SlideTransition(
+              position: _contactsOffsetFloat,
+              child: ContactsWidget(
+                onBackAction: () {
+                  setState(() => _contactsOpen = false);
+                  _contactsController.reverse();
+                },
+              ),
+            ),
+            SlideTransition(
+              position: _securityOffsetFloat,
+              child: SecurityMenu(
+                onBackAction: () {
+                  setState(() => _securityOpen = false);
+                  _securityController.reverse();
+                },
+              ),
+            ),
+            SlideTransition(
+              position: _networkOffsetFloat,
+              child: NetworkMenu(
+                onBackAction: () {
+                  setState(() => _networkOpen = false);
+                  _networkController.reverse();
+                },
+              ),
+            ),
+            SlideTransition(
+              position: _advancedOffsetFloat,
+              child: AdvancedMenu(
+                onBackAction: () {
+                  setState(() => _advancedOpen = false);
+                  _advancedController.reverse();
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget buildMainSettings(BuildContext context) {
-    return Consumer(builder: (context, ref, _) {
-      final theme = ref.watch(themeProvider);
-      final styles = ref.watch(stylesProvider);
-      final l10n = ref.watch(l10nProvider);
+    return Consumer(
+      builder: (context, ref, _) {
+        final theme = ref.watch(themeProvider);
+        final styles = ref.watch(stylesProvider);
+        final l10n = ref.watch(l10nProvider);
 
-      final hasMnemonic = ref.watch(walletHasMnemonic);
+        final hasMnemonic = ref.watch(walletHasMnemonic);
 
-      void showQuotaSheet() {
-        Sheets.showAppHeightNineSheet(
-          context: context,
-          widget: const QuotaSheet(),
-          theme: ref.read(themeProvider),
-        );
-      }
+        void showQuotaSheet() {
+          Sheets.showAppHeightNineSheet(
+            context: context,
+            widget: const QuotaSheet(),
+            theme: ref.read(themeProvider),
+          );
+        }
 
-      return Container(
-        decoration: BoxDecoration(color: theme.backgroundDark),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: const AccountsArea(),
-              ),
-              // Settings items
-              Expanded(
-                child: Stack(children: [
-                  ListView(
-                    primary: false,
-                    padding: const EdgeInsets.only(top: 15),
+        return Container(
+          decoration: BoxDecoration(color: theme.backgroundDark),
+          child: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: const AccountsArea(),
+                ),
+                // Settings items
+                Expanded(
+                  child: Stack(
                     children: [
-                      Container(
-                        margin:
-                            EdgeInsetsDirectional.only(start: 30, bottom: 10),
-                        child: Text(
-                          l10n.preferences,
-                          style: styles.textStyleAppTextFieldHint,
-                        ),
-                      ),
-                      Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final currency = ref.watch(currencyProvider);
-                        return DoubleLineItem(
-                          heading: l10n.currency,
-                          defaultMethod: currency,
-                          icon: AppIcons.currency,
-                          onPressed: _showCurrencyDialog,
-                        );
-                      }),
-                      // Divider(height: 2, color: theme.text15),
-                      // Consumer(builder: (context, ref, _) {
-                      //   return SettingsDoubleLineItem(
-                      //     heading: localization.language,
-                      //     defaultMethod: ref.watch(languageProvider),
-                      //     icon: AppIcons.language,
-                      //     onPressed: _showLanguageDialog,
-                      //   );
-                      // }),
-                      Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final themeSetting = ref.watch(themeSettingProvider);
-                        return DoubleLineItem(
-                          heading: l10n.themeHeader,
-                          defaultMethod: themeSetting,
-                          icon: AppIcons.theme,
-                          onPressed: _showThemeDialog,
-                        );
-                      }),
-                      Consumer(builder: (context, ref, _) {
-                        final network = ref.watch(viteNetworkProvider);
-                        final token = ref.read(pushTokenProvider);
-                        if (network != ViteNetwork.mainnet || token.isEmpty) {
-                          return const SizedBox();
-                        }
-                        return const PushSettingsItem();
-                      }),
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.securityHeader,
-                        settingIcon: AppIcons.security,
-                        onPressed: () {
-                          setState(() => _securityOpen = true);
-                          _securityController.forward();
-                        },
-                      ),
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.networkHeader,
-                        settingIcon: Icons.language,
-                        iconSize: 28,
-                        onPressed: () {
-                          setState(() => _networkOpen = true);
-                          _networkController.forward();
-                        },
-                      ),
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.advancedHeader,
-                        settingIcon: Icons.settings_applications_outlined,
-                        iconSize: 28,
-                        onPressed: () {
-                          setState(() => _advancedOpen = true);
-                          _advancedController.forward();
-                        },
-                      ),
-                      Divider(height: 2, color: theme.text15),
-                      Container(
-                        margin: const EdgeInsetsDirectional.only(
-                          start: 30,
-                          top: 20,
-                          bottom: 10,
-                        ),
-                        child: Text(
-                          l10n.manage,
-                          style: styles.textStyleAppTextFieldHint,
-                        ),
-                      ),
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.contactsHeader,
-                        settingIcon: AppIcons.contact,
-                        onPressed: () {
-                          setState(() => _contactsOpen = true);
-                          _contactsController.forward();
-                        },
-                      ),
-
-                      Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final quota = ref.watch(currentQuotaLabelProvider);
-                        return DoubleLineItem(
-                          heading: 'Quota',
-                          defaultMethod: SelectionItem(quota),
-                          icon: Icons.pie_chart_sharp,
-                          iconSize: 28,
-                          onPressed: showQuotaSheet,
-                        );
-                      }),
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.changeSbpAuthenticate,
-                        settingIcon: AppIcons.changerepresentative,
-                        onPressed: () {
-                          Sheets.showAppHeightEightSheet(
-                            context: context,
-                            widget: const VoteForSbpSheet(),
-                            theme: ref.read(themeProvider),
-                          );
-                        },
-                      ),
-                      if (hasMnemonic.asData?.value == true) ...[
-                        Divider(height: 2, color: theme.text15),
-                        SingleLineItem(
-                          heading: l10n.backupSecretPhrase,
-                          settingIcon: AppIcons.backupseed,
-                          onPressed: () async {
-                            final authUtil = ref.read(authUtilProvider);
-                            final walletAuth = ref.read(walletAuthProvider);
-                            final notifier =
-                                ref.read(walletAuthProvider.notifier);
-                            var auth = false;
-                            List<String>? mnemonic = null;
-                            if (walletAuth.isEncrypted) {
-                              final notifier =
-                                  ref.read(walletAuthProvider.notifier);
-                              auth = await authUtil.authenticateWithPassword(
-                                  context, (password) async {
-                                try {
-                                  mnemonic = await notifier.getMnemonic(
-                                      password: password);
-                                  return true;
-                                } catch (e) {
-                                  return false;
-                                }
-                              });
-                            } else {
-                              auth = await authUtil.authenticate(
-                                context,
-                                l10n.pinSeedBackup,
-                                l10n.fingerprintSeedBackup,
-                              );
-                            }
-                            if (auth) {
-                              if (mnemonic == null) {
-                                mnemonic = await notifier.getMnemonic();
-                              }
-                              Sheets.showAppHeightNineSheet(
-                                context: context,
-                                theme: ref.read(themeProvider),
-                                widget: SeedBackupSheet(mnemonic: mnemonic!),
-                              );
-                            }
-                          },
-                        ),
-                      ],
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.shareViterium,
-                        settingIcon: AppIcons.share,
-                        onPressed: () {
-                          Share.share(
-                            l10n.shareViteriumText,
-                            subject: l10n.shareViteriumSubject,
-                          );
-                        },
-                      ),
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.logoutOrSwitchWallet,
-                        settingIcon: AppIcons.logout,
-                        onPressed: () {
-                          AppDialogs.showConfirmDialog(
-                            context,
-                            l10n.areYouSure,
-                            l10n.logoutDialogContent,
-                            l10n.YES,
-                            () {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                '/logout',
-                                (_) => false,
+                      ListView(
+                        primary: false,
+                        padding: const EdgeInsets.only(top: 15),
+                        children: [
+                          Container(
+                            margin: EdgeInsetsDirectional.only(
+                              start: 30,
+                              bottom: 10,
+                            ),
+                            child: Text(
+                              l10n.preferences,
+                              style: styles.textStyleAppTextFieldHint,
+                            ),
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final currency = ref.watch(currencyProvider);
+                              return DoubleLineItem(
+                                heading: l10n.currency,
+                                defaultMethod: currency,
+                                icon: AppIcons.currency,
+                                onPressed: _showCurrencyDialog,
                               );
                             },
-                          );
-                        },
+                          ),
+                          // Divider(height: 2, color: theme.text15),
+                          // Consumer(builder: (context, ref, _) {
+                          //   return SettingsDoubleLineItem(
+                          //     heading: localization.language,
+                          //     defaultMethod: ref.watch(languageProvider),
+                          //     icon: AppIcons.language,
+                          //     onPressed: _showLanguageDialog,
+                          //   );
+                          // }),
+                          Divider(height: 2, color: theme.text15),
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final themeSetting = ref.watch(
+                                themeSettingProvider,
+                              );
+                              return DoubleLineItem(
+                                heading: l10n.themeHeader,
+                                defaultMethod: themeSetting,
+                                icon: AppIcons.theme,
+                                onPressed: _showThemeDialog,
+                              );
+                            },
+                          ),
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final network = ref.watch(viteNetworkProvider);
+                              final token = ref.read(pushTokenProvider);
+                              if (network != ViteNetwork.mainnet ||
+                                  token.isEmpty) {
+                                return const SizedBox();
+                              }
+                              return const PushSettingsItem();
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.securityHeader,
+                            settingIcon: AppIcons.security,
+                            onPressed: () {
+                              setState(() => _securityOpen = true);
+                              _securityController.forward();
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.networkHeader,
+                            settingIcon: Icons.language,
+                            iconSize: 28,
+                            onPressed: () {
+                              setState(() => _networkOpen = true);
+                              _networkController.forward();
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.advancedHeader,
+                            settingIcon: Icons.settings_applications_outlined,
+                            iconSize: 28,
+                            onPressed: () {
+                              setState(() => _advancedOpen = true);
+                              _advancedController.forward();
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          Container(
+                            margin: const EdgeInsetsDirectional.only(
+                              start: 30,
+                              top: 20,
+                              bottom: 10,
+                            ),
+                            child: Text(
+                              l10n.manage,
+                              style: styles.textStyleAppTextFieldHint,
+                            ),
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.contactsHeader,
+                            settingIcon: AppIcons.contact,
+                            onPressed: () {
+                              setState(() => _contactsOpen = true);
+                              _contactsController.forward();
+                            },
+                          ),
+
+                          Divider(height: 2, color: theme.text15),
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final quota = ref.watch(
+                                currentQuotaLabelProvider,
+                              );
+                              return DoubleLineItem(
+                                heading: 'Quota',
+                                defaultMethod: SelectionItem(quota),
+                                icon: Icons.pie_chart_sharp,
+                                iconSize: 28,
+                                onPressed: showQuotaSheet,
+                              );
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.changeSbpAuthenticate,
+                            settingIcon: AppIcons.changerepresentative,
+                            onPressed: () {
+                              Sheets.showAppHeightEightSheet(
+                                context: context,
+                                widget: const VoteForSbpSheet(),
+                                theme: ref.read(themeProvider),
+                              );
+                            },
+                          ),
+                          if (hasMnemonic.asData?.value == true) ...[
+                            Divider(height: 2, color: theme.text15),
+                            SingleLineItem(
+                              heading: l10n.backupSecretPhrase,
+                              settingIcon: AppIcons.backupseed,
+                              onPressed: () async {
+                                final authUtil = ref.read(authUtilProvider);
+                                final walletAuth = ref.read(walletAuthProvider);
+                                final notifier = ref.read(
+                                  walletAuthProvider.notifier,
+                                );
+                                var auth = false;
+                                List<String>? mnemonic = null;
+                                if (walletAuth.isEncrypted) {
+                                  final notifier = ref.read(
+                                    walletAuthProvider.notifier,
+                                  );
+                                  auth = await authUtil
+                                      .authenticateWithPassword(context, (
+                                        password,
+                                      ) async {
+                                        try {
+                                          mnemonic = await notifier.getMnemonic(
+                                            password: password,
+                                          );
+                                          return true;
+                                        } catch (e) {
+                                          return false;
+                                        }
+                                      });
+                                } else {
+                                  auth = await authUtil.authenticate(
+                                    context,
+                                    l10n.pinSeedBackup,
+                                    l10n.fingerprintSeedBackup,
+                                  );
+                                }
+                                if (auth) {
+                                  if (mnemonic == null) {
+                                    mnemonic = await notifier.getMnemonic();
+                                  }
+                                  Sheets.showAppHeightNineSheet(
+                                    context: context,
+                                    theme: ref.read(themeProvider),
+                                    widget: SeedBackupSheet(
+                                      mnemonic: mnemonic!,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.shareViterium,
+                            settingIcon: AppIcons.share,
+                            onPressed: () {
+                              Share.share(
+                                l10n.shareViteriumText,
+                                subject: l10n.shareViteriumSubject,
+                              );
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          SingleLineItem(
+                            heading: l10n.logoutOrSwitchWallet,
+                            settingIcon: AppIcons.logout,
+                            onPressed: () {
+                              AppDialogs.showConfirmDialog(
+                                context,
+                                l10n.areYouSure,
+                                l10n.logoutDialogContent,
+                                l10n.YES,
+                                () {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/logout',
+                                    (_) => false,
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          Divider(height: 2, color: theme.text15),
+                          const VersionWidget(),
+                        ],
                       ),
-                      Divider(height: 2, color: theme.text15),
-                      const VersionWidget(),
+                      const ListTopGradient(),
                     ],
                   ),
-                  const ListTopGradient()
-                ]),
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

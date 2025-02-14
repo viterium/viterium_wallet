@@ -7,7 +7,6 @@ import '../settings/authentication_method.dart';
 import '../settings/device_lock_timeout.dart';
 import '../settings/device_unlock_option.dart';
 import '../widgets/app_icon_button.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
 import 'disable_password_sheet.dart';
@@ -18,10 +17,7 @@ import 'single_line_item.dart';
 class SecurityMenu extends ConsumerStatefulWidget {
   final VoidCallback onBackAction;
 
-  const SecurityMenu({
-    Key? key,
-    required this.onBackAction,
-  }) : super(key: key);
+  const SecurityMenu({Key? key, required this.onBackAction}) : super(key: key);
 
   @override
   _SecurityMenuState createState() => _SecurityMenuState();
@@ -29,11 +25,13 @@ class SecurityMenu extends ConsumerStatefulWidget {
 
 class _SecurityMenuState extends ConsumerState<SecurityMenu> {
   bool _hasBiometrics = false;
-  AuthenticationMethod _curAuthMethod =
-      AuthenticationMethod(AuthMethod.BIOMETRICS);
+  AuthenticationMethod _curAuthMethod = AuthenticationMethod(
+    AuthMethod.BIOMETRICS,
+  );
   UnlockSetting _curUnlockSetting = UnlockSetting(UnlockOption.NO);
-  LockTimeoutSetting _curTimeoutSetting =
-      LockTimeoutSetting(LockTimeoutOption.ONE);
+  LockTimeoutSetting _curTimeoutSetting = LockTimeoutSetting(
+    LockTimeoutOption.ONE,
+  );
 
   @override
   void initState() {
@@ -50,9 +48,10 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
     // Get default auth method setting
     _curAuthMethod = sharedPrefsUtil.getAuthMethod();
     // Get default unlock settings
-    _curUnlockSetting = sharedPrefsUtil.getLock()
-        ? UnlockSetting(UnlockOption.YES)
-        : UnlockSetting(UnlockOption.NO);
+    _curUnlockSetting =
+        sharedPrefsUtil.getLock()
+            ? UnlockSetting(UnlockOption.YES)
+            : UnlockSetting(UnlockOption.NO);
 
     _curTimeoutSetting = sharedPrefsUtil.getLockTimeout();
   }
@@ -108,85 +107,87 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
               ),
             ),
             Expanded(
-                child: Stack(
-              children: [
-                ListView(
-                  padding: const EdgeInsets.only(top: 15),
-                  children: [
-                    Container(
-                      margin: const EdgeInsetsDirectional.only(
-                        start: 30,
-                        bottom: 10,
+              child: Stack(
+                children: [
+                  ListView(
+                    padding: const EdgeInsets.only(top: 15),
+                    children: [
+                      Container(
+                        margin: const EdgeInsetsDirectional.only(
+                          start: 30,
+                          bottom: 10,
+                        ),
+                        child: Text(
+                          l10n.preferences,
+                          style: styles.textStyleAppTextFieldHint,
+                        ),
                       ),
-                      child: Text(
-                        l10n.preferences,
-                        style: styles.textStyleAppTextFieldHint,
-                      ),
-                    ),
-                    // Authentication Method
-                    if (_hasBiometrics) ...[
+                      // Authentication Method
+                      if (_hasBiometrics) ...[
+                        Divider(height: 2, color: theme.text15),
+                        DoubleLineItem(
+                          heading: l10n.authMethod,
+                          defaultMethod: _curAuthMethod,
+                          icon: AppIcons.fingerprint,
+                          onPressed: _authMethodDialog,
+                        ),
+                      ],
+                      // Authenticate on Launch
+                      if (encryptedSecret == null) ...[
+                        Divider(height: 2, color: theme.text15),
+                        DoubleLineItem(
+                          heading: l10n.lockAppSetting,
+                          defaultMethod: _curUnlockSetting,
+                          icon: AppIcons.lock,
+                          onPressed: _lockDialog,
+                        ),
+                      ],
+                      // Authentication Timer
                       Divider(height: 2, color: theme.text15),
                       DoubleLineItem(
-                        heading: l10n.authMethod,
-                        defaultMethod: _curAuthMethod,
-                        icon: AppIcons.fingerprint,
-                        onPressed: _authMethodDialog,
+                        heading: l10n.autoLockHeader,
+                        defaultMethod: _curTimeoutSetting,
+                        icon: AppIcons.timer,
+                        onPressed: _lockTimeoutDialog,
+                        disabled:
+                            _curUnlockSetting.setting == UnlockOption.NO &&
+                            encryptedSecret == null,
                       ),
-                    ],
-                    // Authenticate on Launch
-                    if (encryptedSecret == null) ...[
+                      // Encrypt option
+                      if (encryptedSecret == null) ...[
+                        Divider(height: 2, color: theme.text15),
+                        SingleLineItem(
+                          heading: l10n.setWalletPassword,
+                          settingIcon: AppIcons.walletpassword,
+                          onPressed: () {
+                            Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: const SetPasswordSheet(),
+                              theme: ref.read(themeProvider),
+                            );
+                          },
+                        ),
+                      ] else ...[
+                        Divider(height: 2, color: theme.text15),
+                        SingleLineItem(
+                          heading: l10n.disableWalletPassword,
+                          settingIcon: AppIcons.walletpassworddisabled,
+                          onPressed: () {
+                            Sheets.showAppHeightNineSheet(
+                              context: context,
+                              widget: const DisablePasswordSheet(),
+                              theme: ref.read(themeProvider),
+                            );
+                          },
+                        ),
+                      ],
                       Divider(height: 2, color: theme.text15),
-                      DoubleLineItem(
-                        heading: l10n.lockAppSetting,
-                        defaultMethod: _curUnlockSetting,
-                        icon: AppIcons.lock,
-                        onPressed: _lockDialog,
-                      ),
                     ],
-                    // Authentication Timer
-                    Divider(height: 2, color: theme.text15),
-                    DoubleLineItem(
-                      heading: l10n.autoLockHeader,
-                      defaultMethod: _curTimeoutSetting,
-                      icon: AppIcons.timer,
-                      onPressed: _lockTimeoutDialog,
-                      disabled: _curUnlockSetting.setting == UnlockOption.NO &&
-                          encryptedSecret == null,
-                    ),
-                    // Encrypt option
-                    if (encryptedSecret == null) ...[
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.setWalletPassword,
-                        settingIcon: AppIcons.walletpassword,
-                        onPressed: () {
-                          Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: const SetPasswordSheet(),
-                            theme: ref.read(themeProvider),
-                          );
-                        },
-                      ),
-                    ] else ...[
-                      Divider(height: 2, color: theme.text15),
-                      SingleLineItem(
-                        heading: l10n.disableWalletPassword,
-                        settingIcon: AppIcons.walletpassworddisabled,
-                        onPressed: () {
-                          Sheets.showAppHeightNineSheet(
-                            context: context,
-                            widget: const DisablePasswordSheet(),
-                            theme: ref.read(themeProvider),
-                          );
-                        },
-                      ),
-                    ],
-                    Divider(height: 2, color: theme.text15),
-                  ],
-                ),
-                const ListTopGradient(),
-              ],
-            )),
+                  ),
+                  const ListTopGradient(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -200,59 +201,57 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
     final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
 
     switch (await showDialog<AuthMethod>(
-        context: context,
-        barrierColor: theme.barrier,
-        builder: (BuildContext context) {
-          return AppSimpleDialog(
-            title: Text(
-              l10n.authMethod,
-              style: styles.textStyleDialogHeader,
+      context: context,
+      barrierColor: theme.barrier,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(l10n.authMethod, style: styles.textStyleDialogHeader),
+          children: [
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, AuthMethod.BIOMETRICS);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  l10n.biometricsMethod,
+                  style: styles.textStyleDialogOptions,
+                ),
+              ),
             ),
-            children: [
-              AppSimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, AuthMethod.BIOMETRICS);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    l10n.biometricsMethod,
-                    style: styles.textStyleDialogOptions,
-                  ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, AuthMethod.PIN);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  l10n.pinMethod,
+                  style: styles.textStyleDialogOptions,
                 ),
               ),
-              AppSimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, AuthMethod.PIN);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    l10n.pinMethod,
-                    style: styles.textStyleDialogOptions,
-                  ),
-                ),
-              ),
-            ],
-          );
-        })) {
+            ),
+          ],
+        );
+      },
+    )) {
       case AuthMethod.PIN:
         sharedPrefsUtil
             .setAuthMethod(AuthenticationMethod(AuthMethod.PIN))
             .then((result) {
-          setState(() {
-            _curAuthMethod = AuthenticationMethod(AuthMethod.PIN);
-          });
-        });
+              setState(() {
+                _curAuthMethod = AuthenticationMethod(AuthMethod.PIN);
+              });
+            });
         break;
       case AuthMethod.BIOMETRICS:
         sharedPrefsUtil
             .setAuthMethod(AuthenticationMethod(AuthMethod.BIOMETRICS))
             .then((result) {
-          setState(() {
-            _curAuthMethod = AuthenticationMethod(AuthMethod.BIOMETRICS);
-          });
-        });
+              setState(() {
+                _curAuthMethod = AuthenticationMethod(AuthMethod.BIOMETRICS);
+              });
+            });
         break;
       default:
         break;
@@ -266,42 +265,34 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
     final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
 
     switch (await showDialog<UnlockOption>(
-        context: context,
-        barrierColor: theme.barrier,
-        builder: (BuildContext context) {
-          return AppSimpleDialog(
-            title: Text(
-              l10n.lockAppSetting,
-              style: styles.textStyleDialogHeader,
+      context: context,
+      barrierColor: theme.barrier,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Text(l10n.lockAppSetting, style: styles.textStyleDialogHeader),
+          children: [
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, UnlockOption.NO);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(l10n.no, style: styles.textStyleDialogOptions),
+              ),
             ),
-            children: [
-              AppSimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, UnlockOption.NO);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    l10n.no,
-                    style: styles.textStyleDialogOptions,
-                  ),
-                ),
+            SimpleDialogOption(
+              onPressed: () {
+                Navigator.pop(context, UnlockOption.YES);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(l10n.yes, style: styles.textStyleDialogOptions),
               ),
-              AppSimpleDialogOption(
-                onPressed: () {
-                  Navigator.pop(context, UnlockOption.YES);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    l10n.yes,
-                    style: styles.textStyleDialogOptions,
-                  ),
-                ),
-              ),
-            ],
-          );
-        })) {
+            ),
+          ],
+        );
+      },
+    )) {
       case UnlockOption.YES:
         sharedPrefsUtil.setLock(true).then((result) {
           setState(() {
@@ -339,27 +330,28 @@ class _SecurityMenuState extends ConsumerState<SecurityMenu> {
   }
 
   Future<void> _lockTimeoutDialog() async {
-    LockTimeoutOption? selection = await showAppDialog<LockTimeoutOption>(
-        context: context,
-        builder: (BuildContext context) {
-          return AppSimpleDialog(
-            title: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                ref.read(l10nProvider).autoLockHeader,
-                style: ref.read(stylesProvider).textStyleDialogHeader,
-              ),
+    LockTimeoutOption? selection = await showDialog<LockTimeoutOption>(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(
+              ref.read(l10nProvider).autoLockHeader,
+              style: ref.read(stylesProvider).textStyleDialogHeader,
             ),
-            children: _buildLockTimeoutOptions(),
-          );
-        });
+          ),
+          children: _buildLockTimeoutOptions(),
+        );
+      },
+    );
     if (selection == null) {
       return;
     }
     final sharedPrefsUtil = ref.read(sharedPrefsUtilProvider);
-    sharedPrefsUtil
-        .setLockTimeout(LockTimeoutSetting(selection))
-        .then((result) {
+    sharedPrefsUtil.setLockTimeout(LockTimeoutSetting(selection)).then((
+      result,
+    ) {
       if (_curTimeoutSetting.setting != selection) {
         sharedPrefsUtil.setLockTimeout(LockTimeoutSetting(selection)).then((_) {
           setState(() {

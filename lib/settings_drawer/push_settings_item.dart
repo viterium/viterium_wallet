@@ -5,7 +5,6 @@ import 'package:push/push.dart';
 import '../app_icons.dart';
 import '../app_providers.dart';
 import '../util/ui_util.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/dialog.dart';
 import 'double_line_item.dart';
 import 'notifications_info_dialog.dart';
@@ -96,7 +95,7 @@ class PushSettingsItem extends ConsumerWidget {
     }
 
     Future<void> showPushSettingsDialog() async {
-      final selection = await showAppDialog<bool>(
+      final selection = await showDialog<bool>(
         context: context,
         builder: (context) => const PushSettingsDialog(),
       );

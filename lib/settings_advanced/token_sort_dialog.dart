@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
-import '../widgets/app_simpledialog.dart';
 import 'setting_token_sort_option.dart';
 import 'tokens_settings.dart';
 
@@ -14,13 +13,10 @@ class TokenSortDialog extends ConsumerWidget {
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
-    return AppSimpleDialog(
+    return SimpleDialog(
       title: Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Text(
-          l10n.tokenSort,
-          style: styles.textStyleDialogHeader,
-        ),
+        child: Text(l10n.tokenSort, style: styles.textStyleDialogHeader),
       ),
       children: [
         for (final value in TokenSortOption.values)

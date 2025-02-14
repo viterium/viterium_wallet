@@ -13,7 +13,6 @@ import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/util.dart';
 import '../widgets/app_icon_button.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
 import '../widgets/gradient_widgets.dart';
@@ -44,8 +43,9 @@ class TokenSheet extends HookConsumerWidget {
 
     final canBurnToken = balanceRaw > BigInt.zero && !tokenInfo.isOwnerBurnOnly;
 
-    final unreceivedBalance =
-        ref.watch(unreceivedBalanceForTokenProvider(tokenId));
+    final unreceivedBalance = ref.watch(
+      unreceivedBalanceForTokenProvider(tokenId),
+    );
     var unreceivedBalanceDisplay = '0';
     var unreceivedCount = '';
     if (unreceivedBalance != null) {
@@ -63,7 +63,7 @@ class TokenSheet extends HookConsumerWidget {
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
 
-      final amount = await showAppDialog<Amount>(
+      final amount = await showDialog<Amount>(
         context: context,
         builder: (_) => TokenBurnDialog(tokenInfo: tokenInfo),
       );
@@ -87,8 +87,10 @@ class TokenSheet extends HookConsumerWidget {
           'Sending burn request',
         );
         await autoreceiveService.pauseAutoreceive();
-        final data =
-            tokenIssuanceContract.contractAbi.encodeFunction('Burn', []);
+        final data = tokenIssuanceContract.contractAbi.encodeFunction(
+          'Burn',
+          [],
+        );
         await accountService.callContract(
           address: account.address,
           contractAddress: tokenIssuanceContract.address,
@@ -125,7 +127,7 @@ class TokenSheet extends HookConsumerWidget {
         bottom: MediaQuery.of(context).size.height * 0.035,
       ),
       child: DefaultTabController(
-        length: 2,
+        length: 1,
         child: Container(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -143,114 +145,127 @@ class TokenSheet extends HookConsumerWidget {
                     vertical: 10,
                     horizontal: 12,
                   ),
-                  child: Column(children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(children: [
-                          TokenIconWidget(tokenId: tokenId),
-                          const SizedBox(width: 12),
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        tokenInfo.tokenName,
-                                        style: styles.textStyleTransactionType,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        tokenInfo.symbolLabel,
-                                        style: styles.textStyleTransactionType,
-                                      ),
-                                    ]),
-                                Text(
-                                  tokenId,
-                                  textAlign: TextAlign.start,
-                                  style: styles.textStyleTransactionUnit,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ]),
-                        AppIconButton(
-                          icon: AppIcons.info,
-                          size: const Size(40, 40),
-                          onPressed: showTokenInfo,
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 8),
-                            Tooltip(
-                              message: exactBalance,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  balance,
-                                  textAlign: TextAlign.end,
-                                  style: styles.textStyleHeader(context),
-                                  maxLines: 1,
-                                ),
-                              ),
-                            ),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                '≈ $fiatValue',
-                                textAlign: TextAlign.end,
-                                style: styles.textStyleAppTextField,
-                                maxLines: 1,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              TokenIconWidget(tokenId: tokenId),
+                              const SizedBox(width: 12),
+                              Container(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'Unreceived $unreceivedCount',
-                                      style: styles.textStyleTransactionType,
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          tokenInfo.tokenName,
+                                          style:
+                                              styles.textStyleTransactionType,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          tokenInfo.symbolLabel,
+                                          style:
+                                              styles.textStyleTransactionType,
+                                        ),
+                                      ],
                                     ),
-                                    const SizedBox(height: 4),
                                     Text(
-                                      unreceivedBalanceDisplay,
-                                      style: styles.textStyleAddressPrimary,
-                                      maxLines: 1,
+                                      tokenId,
+                                      textAlign: TextAlign.start,
+                                      style: styles.textStyleTransactionUnit,
                                     ),
                                   ],
                                 ),
-                                if (canBurnToken)
-                                  TextButton(
-                                    style: styles.dialogButtonStyle,
-                                    child: Text(
-                                      'BURN',
-                                      style: styles.textStyleDialogButtonText,
-                                    ),
-                                    onPressed: burnToken,
+                              ),
+                            ],
+                          ),
+                          AppIconButton(
+                            icon: AppIcons.info,
+                            size: const Size(40, 40),
+                            onPressed: showTokenInfo,
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 8,
+                          left: 8,
+                          right: 8,
+                        ),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 8),
+                              Tooltip(
+                                message: exactBalance,
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    balance,
+                                    textAlign: TextAlign.end,
+                                    style: styles.textStyleHeader(context),
+                                    maxLines: 1,
                                   ),
-                              ],
-                            ),
-                          ],
+                                ),
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  '≈ $fiatValue',
+                                  textAlign: TextAlign.end,
+                                  style: styles.textStyleAppTextField,
+                                  maxLines: 1,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Unreceived $unreceivedCount',
+                                        style: styles.textStyleTransactionType,
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        unreceivedBalanceDisplay,
+                                        style: styles.textStyleAddressPrimary,
+                                        maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  if (canBurnToken)
+                                    TextButton(
+                                      style: styles.dialogButtonStyle,
+                                      child: Text(
+                                        'BURN',
+                                        style: styles.textStyleDialogButtonText,
+                                      ),
+                                      onPressed: burnToken,
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
                 ),
               ),
               TabBar(
@@ -294,14 +309,16 @@ class TokenSheet extends HookConsumerWidget {
                     //   const TopGradientWidget(),
                     //   const BottomGradientWidget(),
                     // ]),
-                    Stack(children: [
-                      TransactionHistoryWidget(
-                        token: token,
-                        tokenSymbol: tokenInfo.symbolLabel,
-                      ),
-                      const TopGradientWidget(),
-                      const BottomGradientWidget(),
-                    ]),
+                    Stack(
+                      children: [
+                        TransactionHistoryWidget(
+                          token: token,
+                          tokenSymbol: tokenInfo.symbolLabel,
+                        ),
+                        const TopGradientWidget(),
+                        const BottomGradientWidget(),
+                      ],
+                    ),
                   ],
                 ),
               ),

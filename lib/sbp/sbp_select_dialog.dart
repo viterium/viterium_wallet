@@ -4,7 +4,6 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../util/ui_util.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/dialog.dart';
 import 'sbp_vote_info_item.dart';
 
@@ -56,14 +55,11 @@ class SbpSelectDialog extends ConsumerWidget {
       }
     }
 
-    return AppSimpleDialog(
+    return SimpleDialog(
       title: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         margin: EdgeInsets.only(bottom: 10),
-        child: Text(
-          l10n.candidateNodes,
-          style: styles.textStyleDialogHeader,
-        ),
+        child: Text(l10n.candidateNodes, style: styles.textStyleDialogHeader),
       ),
       children: [
         for (final sbp in sbpList.asMap().entries)

@@ -8,7 +8,6 @@ import '../settings_drawer/double_line_item.dart';
 import '../settings_drawer/single_line_item.dart';
 import '../tokens/tokens_manage_sheet.dart';
 import '../widgets/app_icon_button.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/gradient_widgets.dart';
 import '../widgets/sheet_util.dart';
 import 'auto_receive_dialog.dart';
@@ -22,10 +21,7 @@ import 'tokens_settings_provider.dart';
 
 class AdvancedMenu extends ConsumerWidget {
   final VoidCallback onBackAction;
-  const AdvancedMenu({
-    Key? key,
-    required this.onBackAction,
-  }) : super(key: key);
+  const AdvancedMenu({Key? key, required this.onBackAction}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +39,7 @@ class AdvancedMenu extends ConsumerWidget {
     }
 
     Future<void> changeTokenOrder() async {
-      final selection = await showAppDialog<TokenSortOption>(
+      final selection = await showDialog<TokenSortOption>(
         context: context,
         builder: (_) => const TokenSortDialog(),
       );
@@ -55,7 +51,7 @@ class AdvancedMenu extends ConsumerWidget {
     }
 
     Future<void> changeDefiEnabled() async {
-      final enabled = await showAppDialog<bool>(
+      final enabled = await showDialog<bool>(
         context: context,
         builder: (_) => const DefiEnabledDialog(),
       );
@@ -66,7 +62,7 @@ class AdvancedMenu extends ConsumerWidget {
     }
 
     Future<void> changeAutoReceiveEnabled() async {
-      final enabled = await showAppDialog<bool>(
+      final enabled = await showDialog<bool>(
         context: context,
         builder: (_) => const AutoReceiveDialog(),
       );
@@ -77,7 +73,7 @@ class AdvancedMenu extends ConsumerWidget {
     }
 
     Future<void> changeShowFiatValue() async {
-      final enabled = await showAppDialog<bool>(
+      final enabled = await showDialog<bool>(
         context: context,
         builder: (_) => const ShowFiatValueDialog(),
       );
@@ -147,52 +143,62 @@ class AdvancedMenu extends ConsumerWidget {
                         onPressed: manageTokens,
                       ),
                       Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final account = ref.watch(selectedAccountProvider);
-                        final settings =
-                            ref.watch(tokensSettingsProvider(account));
-                        return DoubleLineItem(
-                          heading: l10n.tokenSort,
-                          defaultMethod:
-                              SettingTokenSortOption(settings.sortOption),
-                          icon: Icons.sort,
-                          iconSize: 28,
-                          onPressed: changeTokenOrder,
-                        );
-                      }),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final account = ref.watch(selectedAccountProvider);
+                          final settings = ref.watch(
+                            tokensSettingsProvider(account),
+                          );
+                          return DoubleLineItem(
+                            heading: l10n.tokenSort,
+                            defaultMethod: SettingTokenSortOption(
+                              settings.sortOption,
+                            ),
+                            icon: Icons.sort,
+                            iconSize: 28,
+                            onPressed: changeTokenOrder,
+                          );
+                        },
+                      ),
                       Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final enabled = ref.watch(defiEnabledProvider);
-                        return DoubleLineItem(
-                          heading: 'DeFi Center',
-                          defaultMethod: SettingEnabledItem(enabled),
-                          icon: AppIconsCustom.defi,
-                          iconSize: 28,
-                          onPressed: changeDefiEnabled,
-                        );
-                      }),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final enabled = ref.watch(defiEnabledProvider);
+                          return DoubleLineItem(
+                            heading: 'DeFi Center',
+                            defaultMethod: SettingEnabledItem(enabled),
+                            icon: AppIconsCustom.defi,
+                            iconSize: 28,
+                            onPressed: changeDefiEnabled,
+                          );
+                        },
+                      ),
                       Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final enabled = ref.watch(autoReceiveEnabledProvider);
-                        return DoubleLineItem(
-                          heading: 'Auto Receive',
-                          defaultMethod: SettingEnabledItem(enabled),
-                          icon: Icons.receipt,
-                          iconSize: 24,
-                          onPressed: changeAutoReceiveEnabled,
-                        );
-                      }),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final enabled = ref.watch(autoReceiveEnabledProvider);
+                          return DoubleLineItem(
+                            heading: 'Auto Receive',
+                            defaultMethod: SettingEnabledItem(enabled),
+                            icon: Icons.receipt,
+                            iconSize: 24,
+                            onPressed: changeAutoReceiveEnabled,
+                          );
+                        },
+                      ),
                       Divider(height: 2, color: theme.text15),
-                      Consumer(builder: (context, ref, _) {
-                        final enabled = ref.watch(showFiatValueProvider);
-                        return DoubleLineItem(
-                          heading: 'Show Fiat Value',
-                          defaultMethod: SettingEnabledItem(enabled),
-                          icon: Icons.attach_money,
-                          iconSize: 24,
-                          onPressed: changeShowFiatValue,
-                        );
-                      }),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final enabled = ref.watch(showFiatValueProvider);
+                          return DoubleLineItem(
+                            heading: 'Show Fiat Value',
+                            defaultMethod: SettingEnabledItem(enabled),
+                            icon: Icons.attach_money,
+                            iconSize: 24,
+                            onPressed: changeShowFiatValue,
+                          );
+                        },
+                      ),
                     ],
                   ),
                   const ListBottomGradient(),

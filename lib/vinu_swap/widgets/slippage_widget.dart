@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app_providers.dart';
-import '../../widgets/app_simpledialog.dart';
 import '../vinu_swap_slippage_dialog.dart';
 
 class SlippageWidget extends ConsumerWidget {
@@ -15,11 +14,9 @@ class SlippageWidget extends ConsumerWidget {
     final settings = ref.watch(vinuSwapSettingsProvider);
 
     Future<void> changeSlippage() async {
-      final slippage = await showAppDialog<double>(
+      final slippage = await showDialog<double>(
         context: context,
-        builder: (_) => VinuSwapSlippageDialog(
-          slippage: settings.slippage,
-        ),
+        builder: (_) => VinuSwapSlippageDialog(slippage: settings.slippage),
       );
 
       if (slippage != null) {
@@ -32,10 +29,7 @@ class SlippageWidget extends ConsumerWidget {
       style: styles.dialogButtonStyle,
       child: Column(
         children: [
-          Text(
-            'Slippage Tolerance:',
-            style: styles.textStyleTransactionType,
-          ),
+          Text('Slippage Tolerance:', style: styles.textStyleTransactionType),
           Text(
             '${(settings.slippage * 100).toStringAsFixed(2)}%',
             style: styles.textStyleAddressPrimary,

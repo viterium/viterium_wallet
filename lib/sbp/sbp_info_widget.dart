@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
-import '../widgets/app_simpledialog.dart';
 
 class SbpInfoWidget extends ConsumerWidget {
   const SbpInfoWidget({Key? key}) : super(key: key);
@@ -14,11 +13,8 @@ class SbpInfoWidget extends ConsumerWidget {
     final title = l10n.sbpInfoHeader;
     final content = '${l10n.sbpInfo}\n\n${l10n.sbpInfoContinued}';
 
-    return AppAlertDialog(
-      title: Text(
-        title,
-        style: styles.textStyleButtonPrimaryOutline,
-      ),
+    return AlertDialog(
+      title: Text(title, style: styles.textStyleButtonPrimaryOutline),
       content: SingleChildScrollView(
         child: Text(content, style: styles.textStyleParagraph),
       ),

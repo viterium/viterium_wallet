@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
 import '../settings/available_currency.dart';
-import '../widgets/app_simpledialog.dart';
 
 class CurrencyDialog extends ConsumerWidget {
   const CurrencyDialog({Key? key}) : super(key: key);
@@ -14,13 +13,10 @@ class CurrencyDialog extends ConsumerWidget {
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
-    return AppSimpleDialog(
+    return SimpleDialog(
       title: Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Text(
-          l10n.currency,
-          style: styles.textStyleDialogHeader,
-        ),
+        child: Text(l10n.currency, style: styles.textStyleDialogHeader),
       ),
       children: [
         for (final value in AvailableCurrencies.values)

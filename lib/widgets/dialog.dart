@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app_providers.dart';
 import '../util/caseconverter.dart';
-import 'app_simpledialog.dart';
 
 class AppDialogs {
   static void showInProgressDialog(
@@ -14,47 +13,56 @@ class AppDialogs {
     String? cancelText,
     Function? onCancel,
   }) {
-    showAppDialog(
+    showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => PopScope(
-        canPop: false,
-        child: Consumer(builder: (context, ref, _) {
-          final l10n = ref.watch(l10nProvider);
-          final styles = ref.watch(stylesProvider);
+      builder:
+          (context) => PopScope(
+            canPop: false,
+            child: Consumer(
+              builder: (context, ref, _) {
+                final l10n = ref.watch(l10nProvider);
+                final styles = ref.watch(stylesProvider);
 
-          final contentPadding = contentWidget != null
-              ? const EdgeInsets.only(top: 20, left: 20, right: 20)
-              : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
+                final contentPadding =
+                    contentWidget != null
+                        ? const EdgeInsets.only(top: 20, left: 20, right: 20)
+                        : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
 
-          return AppAlertDialog(
-            title: Text(title, style: styles.textStyleButtonPrimaryOutline),
-            contentPadding: contentPadding,
-            content: SingleChildScrollView(
-              child: contentWidget ??
-                  Text(content, style: styles.textStyleParagraph),
+                return AlertDialog(
+                  title: Text(
+                    title,
+                    style: styles.textStyleButtonPrimaryOutline,
+                  ),
+                  contentPadding: contentPadding,
+                  content: SingleChildScrollView(
+                    child:
+                        contentWidget ??
+                        Text(content, style: styles.textStyleParagraph),
+                  ),
+                  actions:
+                      onCancel != null
+                          ? [
+                            TextButton(
+                              style: styles.dialogButtonStyle,
+                              child: Container(
+                                constraints: BoxConstraints(maxWidth: 100),
+                                child: Text(
+                                  cancelText ?? l10n.cancel.toUpperCase(),
+                                  style: styles.textStyleDialogButtonText,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                onCancel.call();
+                              },
+                            ),
+                          ]
+                          : null,
+                );
+              },
             ),
-            actions: onCancel != null
-                ? [
-                    TextButton(
-                      style: styles.dialogButtonStyle,
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: 100),
-                        child: Text(
-                          cancelText ?? l10n.cancel.toUpperCase(),
-                          style: styles.textStyleDialogButtonText,
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        onCancel.call();
-                      },
-                    ),
-                  ]
-                : null,
-          );
-        }),
-      ),
+          ),
     );
   }
 
@@ -66,45 +74,53 @@ class AppDialogs {
     String? closeText,
     Function? onClose,
   }) {
-    showAppDialog(
+    showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => PopScope(
-        canPop: false,
-        child: Consumer(builder: (context, ref, _) {
-          final l10n = ref.watch(l10nProvider);
-          final styles = ref.watch(stylesProvider);
+      builder:
+          (context) => PopScope(
+            canPop: false,
+            child: Consumer(
+              builder: (context, ref, _) {
+                final l10n = ref.watch(l10nProvider);
+                final styles = ref.watch(stylesProvider);
 
-          final contentPadding = contentWidget != null
-              ? const EdgeInsets.only(top: 20, left: 20, right: 20)
-              : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
+                final contentPadding =
+                    contentWidget != null
+                        ? const EdgeInsets.only(top: 20, left: 20, right: 20)
+                        : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
 
-          return AppAlertDialog(
-            title: Text(title, style: styles.textStyleButtonPrimaryOutline),
-            contentPadding: contentPadding,
-            content: SingleChildScrollView(
-              child: contentWidget ??
-                  Text(content, style: styles.textStyleParagraph),
-            ),
-            actions: [
-              TextButton(
-                style: styles.dialogButtonStyle,
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: 100),
-                  child: Text(
-                    closeText ?? l10n.close.toUpperCase(),
-                    style: styles.textStyleDialogButtonText,
+                return AlertDialog(
+                  title: Text(
+                    title,
+                    style: styles.textStyleButtonPrimaryOutline,
                   ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onClose?.call();
-                },
-              ),
-            ],
-          );
-        }),
-      ),
+                  contentPadding: contentPadding,
+                  content: SingleChildScrollView(
+                    child:
+                        contentWidget ??
+                        Text(content, style: styles.textStyleParagraph),
+                  ),
+                  actions: [
+                    TextButton(
+                      style: styles.dialogButtonStyle,
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 100),
+                        child: Text(
+                          closeText ?? l10n.close.toUpperCase(),
+                          style: styles.textStyleDialogButtonText,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        onClose?.call();
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
     );
   }
 
@@ -118,63 +134,64 @@ class AppDialogs {
     String? cancelText,
     Function? cancelAction,
   }) {
-    showAppDialog(
+    showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return Consumer(builder: (context, ref, _) {
-          if (cancelText == null) {
-            final l10n = ref.watch(l10nProvider);
-            cancelText = l10n.cancel.toUpperCase();
-          }
-          final styles = ref.watch(stylesProvider);
+        return Consumer(
+          builder: (context, ref, _) {
+            if (cancelText == null) {
+              final l10n = ref.watch(l10nProvider);
+              cancelText = l10n.cancel.toUpperCase();
+            }
+            final styles = ref.watch(stylesProvider);
 
-          final contentPadding = contentWidget != null
-              ? const EdgeInsets.only(top: 20, left: 20, right: 20)
-              : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
+            final contentPadding =
+                contentWidget != null
+                    ? const EdgeInsets.only(top: 20, left: 20, right: 20)
+                    : const EdgeInsetsDirectional.fromSTEB(24, 20, 24, 24);
 
-          return AppAlertDialog(
-            title: Text(
-              title,
-              style: styles.textStyleButtonPrimaryOutline,
-            ),
-            contentPadding: contentPadding,
-            content: SingleChildScrollView(
-              child: contentWidget ??
-                  Text(content, style: styles.textStyleParagraph),
-            ),
-            actions: [
-              TextButton(
-                style: styles.dialogButtonStyle,
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: 120),
-                  child: Text(
-                    cancelText!,
-                    style: styles.textStyleDialogButtonText,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  cancelAction?.call();
-                },
+            return AlertDialog(
+              title: Text(title, style: styles.textStyleButtonPrimaryOutline),
+              contentPadding: contentPadding,
+              content: SingleChildScrollView(
+                child:
+                    contentWidget ??
+                    Text(content, style: styles.textStyleParagraph),
               ),
-              TextButton(
-                style: styles.dialogButtonStyle,
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: 120),
-                  child: Text(
-                    buttonText,
-                    style: styles.textStyleDialogButtonText,
+              actions: [
+                TextButton(
+                  style: styles.dialogButtonStyle,
+                  child: Container(
+                    constraints: BoxConstraints(maxWidth: 120),
+                    child: Text(
+                      cancelText!,
+                      style: styles.textStyleDialogButtonText,
+                    ),
                   ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    cancelAction?.call();
+                  },
                 ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onPressed();
-                },
-              ),
-            ],
-          );
-        });
+                TextButton(
+                  style: styles.dialogButtonStyle,
+                  child: Container(
+                    constraints: BoxConstraints(maxWidth: 120),
+                    child: Text(
+                      buttonText,
+                      style: styles.textStyleDialogButtonText,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    onPressed();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }
@@ -186,7 +203,7 @@ enum AnimationType {
   TRANSFER_SEARCHING_QR,
   TRANSFER_SEARCHING_MANUAL,
   TRANSFER_TRANSFERRING,
-  MANTA
+  MANTA,
 }
 
 class AnimationLoadingOverlay extends ModalRoute<void> {
@@ -241,19 +258,19 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   ) {
     return Material(
       type: MaterialType.transparency,
-      child: SafeArea(
-        child: _buildOverlayContent(context),
-      ),
+      child: SafeArea(child: _buildOverlayContent(context)),
     );
   }
 
   Widget _getAnimation(BuildContext context) {
-    return Consumer(builder: (context, ref, _) {
-      final theme = ref.watch(themeProvider);
-      return CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(theme.primary60),
-      );
-    });
+    return Consumer(
+      builder: (context, ref, _) {
+        final theme = ref.watch(themeProvider);
+        return CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(theme.primary60),
+        );
+      },
+    );
   }
 
   Widget _buildOverlayContent(BuildContext context) {
@@ -293,23 +310,26 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
               ),
               Container(
                 margin: EdgeInsets.only(
-                    left: 10,
-                    top: 20,
-                    bottom: MediaQuery.of(context).size.height * 0.15),
+                  left: 10,
+                  top: 20,
+                  bottom: MediaQuery.of(context).size.height * 0.15,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Consumer(builder: (context, ref, _) {
-                      final styles = ref.watch(stylesProvider);
-                      return Text(
-                        CaseChange.toUpperCase(
-                          ref.watch(l10nProvider).transferLoading,
-                          ref,
-                        ),
-                        style: styles.textStyleHeader2Colored,
-                      );
-                    }),
+                    Consumer(
+                      builder: (context, ref, _) {
+                        final styles = ref.watch(stylesProvider);
+                        return Text(
+                          CaseChange.toUpperCase(
+                            ref.watch(l10nProvider).transferLoading,
+                            ref,
+                          ),
+                          style: styles.textStyleHeader2Colored,
+                        );
+                      },
+                    ),
                     Container(
                       margin: EdgeInsets.only(bottom: 7),
                       width: 33.333,
@@ -325,7 +345,8 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
         return Center(
           child: Container(
             margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.05),
+              bottom: MediaQuery.of(context).size.height * 0.05,
+            ),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width,
             child: _getAnimation(context),
@@ -334,19 +355,22 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
       default:
         return Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: type == AnimationType.SEND
-              ? MainAxisAlignment.end
-              : MainAxisAlignment.center,
+          mainAxisAlignment:
+              type == AnimationType.SEND
+                  ? MainAxisAlignment.end
+                  : MainAxisAlignment.center,
           children: [
             Container(
-              margin: type == AnimationType.SEND
-                  ? EdgeInsets.only(bottom: 10, left: 90, right: 90)
-                  : EdgeInsets.zero,
+              margin:
+                  type == AnimationType.SEND
+                      ? EdgeInsets.only(bottom: 10, left: 90, right: 90)
+                      : EdgeInsets.zero,
               //Widgth/Height ratio is needed because BoxFit is not working as expected
               width: type == AnimationType.SEND ? double.infinity : 100,
-              height: type == AnimationType.SEND
-                  ? MediaQuery.of(context).size.width
-                  : 100,
+              height:
+                  type == AnimationType.SEND
+                      ? MediaQuery.of(context).size.width
+                      : 100,
               child: _getAnimation(context),
             ),
           ],
@@ -355,8 +379,12 @@ class AnimationLoadingOverlay extends ModalRoute<void> {
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return child;
   }
 }

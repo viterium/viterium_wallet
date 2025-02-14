@@ -5,24 +5,22 @@ import 'package:intl/intl.dart';
 
 import '../app_providers.dart';
 import '../util/formatters.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
 
 class VinuSwapSlippageDialog extends HookConsumerWidget {
   final double slippage;
 
-  const VinuSwapSlippageDialog({
-    Key? key,
-    required this.slippage,
-  }) : super(key: key);
+  const VinuSwapSlippageDialog({Key? key, required this.slippage})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
     final styles = ref.watch(stylesProvider);
 
-    final controller =
-        useTextEditingController(text: (slippage * 100).toStringAsFixed(2));
+    final controller = useTextEditingController(
+      text: (slippage * 100).toStringAsFixed(2),
+    );
 
     final formatter = NumberFormat.percentPattern();
 
@@ -32,14 +30,11 @@ class VinuSwapSlippageDialog extends HookConsumerWidget {
       Navigator.of(context).pop(slippage);
     }
 
-    return AppSimpleDialog(
+    return SimpleDialog(
       contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Text(
-          'Slippage',
-          style: styles.textStyleDialogHeader,
-        ),
+        child: Text('Slippage', style: styles.textStyleDialogHeader),
       ),
       children: [
         AppTextField(
@@ -56,10 +51,7 @@ class VinuSwapSlippageDialog extends HookConsumerWidget {
               decimalSeparator: formatter.symbols.DECIMAL_SEP,
             ),
           ],
-          suffixButton: TextFieldButton(
-            icon: Icons.percent,
-            onPressed: null,
-          ),
+          suffixButton: TextFieldButton(icon: Icons.percent, onPressed: null),
           onSubmitted: onResult,
         ),
         Row(
@@ -67,10 +59,7 @@ class VinuSwapSlippageDialog extends HookConsumerWidget {
           children: [
             TextButton(
               style: styles.dialogButtonStyle,
-              child: Text(
-                'SAVE',
-                style: styles.textStyleDialogButtonText,
-              ),
+              child: Text('SAVE', style: styles.textStyleDialogButtonText),
               onPressed: () => onResult(controller.text),
             ),
           ],

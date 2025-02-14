@@ -5,7 +5,6 @@ import 'package:vite/vite.dart';
 import '../app_providers.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
 import 'vitc_stake_providers.dart';
@@ -14,10 +13,7 @@ import 'vitc_stake_types.dart';
 
 class VitcStakeButton extends ConsumerWidget {
   final VitcPoolInfoAll poolInfo;
-  const VitcStakeButton({
-    super.key,
-    required this.poolInfo,
-  });
+  const VitcStakeButton({super.key, required this.poolInfo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,7 +23,7 @@ class VitcStakeButton extends ConsumerWidget {
       final accountService = ref.read(accountServiceProvider);
       final autoreceiveService = ref.read(autoreceiveServiceProvider(account));
 
-      final amount = await showAppDialog<Amount>(
+      final amount = await showDialog<Amount>(
         context: context,
         builder: (_) => VitcStakeStakeDialog(poolInfo: poolInfo),
       );
@@ -70,9 +66,6 @@ class VitcStakeButton extends ConsumerWidget {
       }
     }
 
-    return PrimaryOutlineButton(
-      title: 'Stake',
-      onPressed: stake,
-    );
+    return PrimaryOutlineButton(title: 'Stake', onPressed: stake);
   }
 }

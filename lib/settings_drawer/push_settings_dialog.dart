@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/core_providers.dart';
-import '../widgets/app_simpledialog.dart';
 
 class PushSettingsDialog extends ConsumerWidget {
   const PushSettingsDialog({Key? key}) : super(key: key);
@@ -12,13 +11,10 @@ class PushSettingsDialog extends ConsumerWidget {
     final styles = ref.watch(stylesProvider);
     final l10n = ref.watch(l10nProvider);
 
-    return AppSimpleDialog(
+    return SimpleDialog(
       title: Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Text(
-          l10n.notifications,
-          style: styles.textStyleDialogHeader,
-        ),
+        child: Text(l10n.notifications, style: styles.textStyleDialogHeader),
       ),
       children: [
         for (final value in [true, false])

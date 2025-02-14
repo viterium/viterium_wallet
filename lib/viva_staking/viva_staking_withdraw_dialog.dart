@@ -10,7 +10,6 @@ import '../app_providers.dart';
 import '../tokens/token_icon_widget.dart';
 import '../util/formatters.dart';
 import '../util/numberutil.dart';
-import '../widgets/app_simpledialog.dart';
 import '../widgets/app_text_field.dart';
 import '../widgets/fiat_value_container.dart';
 import '../widgets/warning_widget.dart';
@@ -20,10 +19,8 @@ import 'viva_staking_types.dart';
 class VivaStakingWithdrawDialog extends HookConsumerWidget {
   final VivaPoolInfoAll poolInfo;
 
-  const VivaStakingWithdrawDialog({
-    Key? key,
-    required this.poolInfo,
-  }) : super(key: key);
+  const VivaStakingWithdrawDialog({Key? key, required this.poolInfo})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,8 +33,10 @@ class VivaStakingWithdrawDialog extends HookConsumerWidget {
     final amountRaw = useState(BigInt.zero);
 
     final stakingValue = useMemoized(() {
-      final amount = Amount.raw(userInfo.stakingBalance,
-          tokenInfo: poolInfo.stakingTokenInfo);
+      final amount = Amount.raw(
+        userInfo.stakingBalance,
+        tokenInfo: poolInfo.stakingTokenInfo,
+      );
       return NumberUtil.formatedAmount(amount);
     }, [userInfo.stakingBalance]);
 
@@ -84,102 +83,102 @@ class VivaStakingWithdrawDialog extends HookConsumerWidget {
       Navigator.of(context).pop(amount);
     }
 
-    return LayoutBuilder(builder: (context, constraints) {
-      return AppSimpleDialog(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: Text(
-            'Withdraw Amount',
-            style: styles.textStyleDialogHeader,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SimpleDialog(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 8,
           ),
-        ),
-        children: [
-          Container(
-            alignment: Alignment.center,
-            child: RichText(
-              textAlign: TextAlign.start,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: '(',
-                    style: styles.textStyleTransactionUnitSmall,
-                  ),
-                  TextSpan(
-                    text: stakingValue,
-                    style: styles.textStyleBalanceAmountSmall,
-                  ),
-                  TextSpan(
-                    text: ' ${poolInfo.stakingTokenInfo.symbolLabel})',
-                    style: styles.textStyleTransactionUnitSmall,
-                  ),
-                ],
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text('Withdraw Amount', style: styles.textStyleDialogHeader),
+          ),
+          children: [
+            Container(
+              alignment: Alignment.center,
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '(',
+                      style: styles.textStyleTransactionUnitSmall,
+                    ),
+                    TextSpan(
+                      text: stakingValue,
+                      style: styles.textStyleBalanceAmountSmall,
+                    ),
+                    TextSpan(
+                      text: ' ${poolInfo.stakingTokenInfo.symbolLabel})',
+                      style: styles.textStyleTransactionUnitSmall,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8),
-          Container(
-            width: constraints.maxWidth * 0.7,
-            child: FiatValueContainer(
-              amount: Amount.raw(
-                amountRaw.value,
-                tokenInfo: poolInfo.stakingTokenInfo,
-              ),
-              child: AppTextField(
-                leftMargin: 0,
-                rightMargin: 0,
-                controller: controller,
-                cursorColor: theme.primary,
-                style: styles.textStyleParagraphPrimary,
-                textInputAction: TextInputAction.done,
-                maxLines: null,
-                autocorrect: false,
-                hintText: l10n.enterAmount,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                textAlign: TextAlign.center,
-                inputFormatters: [formatter],
-                prefixButton: TextFieldButton(
-                  icon: AppIcons.swapcurrency,
-                  widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
-                ),
-                suffixButton: TextFieldButton(
-                  icon: AppIcons.max,
-                  onPressed: onMax,
-                ),
-                onChanged: onAmountChanged,
-                onSubmitted: (_) => onWithdraw(),
-              ),
-            ),
-          ),
-          if (poolInfo.hasShortLockTime) ...[
             const SizedBox(height: 8),
-            WarningWidget(text: 'Withdrawing will reset time lock'),
-          ],
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(
-                style: styles.dialogButtonStyle,
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(
-                  'CLOSE',
-                  style: styles.textStyleDialogButtonText,
+            Container(
+              width: constraints.maxWidth * 0.7,
+              child: FiatValueContainer(
+                amount: Amount.raw(
+                  amountRaw.value,
+                  tokenInfo: poolInfo.stakingTokenInfo,
+                ),
+                child: AppTextField(
+                  leftMargin: 0,
+                  rightMargin: 0,
+                  controller: controller,
+                  cursorColor: theme.primary,
+                  style: styles.textStyleParagraphPrimary,
+                  textInputAction: TextInputAction.done,
+                  maxLines: null,
+                  autocorrect: false,
+                  hintText: l10n.enterAmount,
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
+                  textAlign: TextAlign.center,
+                  inputFormatters: [formatter],
+                  prefixButton: TextFieldButton(
+                    icon: AppIcons.swapcurrency,
+                    widget: TokenIconWidget(tokenId: poolInfo.stakingTokenId),
+                  ),
+                  suffixButton: TextFieldButton(
+                    icon: AppIcons.max,
+                    onPressed: onMax,
+                  ),
+                  onChanged: onAmountChanged,
+                  onSubmitted: (_) => onWithdraw(),
                 ),
               ),
-              TextButton(
-                style: styles.dialogButtonStyle,
-                child: Text(
-                  'WITHDRAW',
-                  style: styles.textStyleDialogButtonText,
-                ),
-                onPressed: onWithdraw,
-              ),
+            ),
+            if (poolInfo.hasShortLockTime) ...[
+              const SizedBox(height: 8),
+              WarningWidget(text: 'Withdrawing will reset time lock'),
             ],
-          ),
-        ],
-      );
-    });
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  style: styles.dialogButtonStyle,
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('CLOSE', style: styles.textStyleDialogButtonText),
+                ),
+                TextButton(
+                  style: styles.dialogButtonStyle,
+                  child: Text(
+                    'WITHDRAW',
+                    style: styles.textStyleDialogButtonText,
+                  ),
+                  onPressed: onWithdraw,
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }
