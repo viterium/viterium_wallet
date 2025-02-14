@@ -88,7 +88,6 @@ class App extends HookConsumerWidget {
                 title: 'Viterium',
                 theme: ThemeData(
                   useMaterial3: false,
-                  dialogBackgroundColor: theme.backgroundDark,
                   primaryColor: theme.primary,
                   colorScheme: ThemeData().colorScheme.copyWith(
                         brightness: Brightness.dark,
@@ -109,6 +108,9 @@ class App extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(25),
                     ),
                     textStyle: styles.textStyleAddressText60,
+                  ),
+                  dialogTheme: DialogThemeData(
+                    backgroundColor: theme.backgroundDark,
                   ),
                 ),
                 localizationsDelegates: [
