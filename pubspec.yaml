@@ -5,50 +5,49 @@ publish_to: "none"
 version: 1.4.1+13
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
-  flutter: '>=3.22.0'
+  sdk: '>=3.7.0 <4.0.0'
+  flutter: '>=3.29.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
 
   flutter_secure_storage: 9.0.0
   shared_preferences: 2.2.3
-  web_socket_channel: 2.4.5
-  package_info_plus: 8.0.0
-  device_info_plus: 10.1.0
-  json_annotation: 4.8.1
-  intl: 0.19.0
-  decimal: 2.3.3
-  rational: 2.2.2
+  #socket_channel: 2.4.5
+  package_info_plus: 8.2.1
+  device_info_plus: 11.3.0
+  json_annotation: 4.9.0
+  #intl: 0.19.0
+  decimal: 3.0.2
+  rational: 2.2.3
   logger: 1.3.0
   hive_flutter: 1.1.0
   path_provider: 2.1.3
-  local_auth: 2.2.0
+  local_auth: 2.3.0
   qr_flutter: 4.1.0
   qr_code_scanner: 1.0.1
-  share_plus: 9.0.0
-  file_picker: 8.0.2
-  app_links: 4.0.1
-  http: 1.2.1
+  share_plus: 10.1.4
+  file_picker: 8.3.5
+  app_links: 6.3.3
+  http: 1.2.2
   flutter_vibrate: 1.3.0
   flutter_slidable: 3.1.2
   validators: 3.0.0
   auto_size_text: 3.0.0
   url_launcher: 6.2.6
-  devicelocale: 0.7.1
+  #devicelocale: 0.7.1
   flutter_riverpod: 2.5.1
   hooks_riverpod: 2.5.1
   flutter_hooks: 0.20.5
-  freezed_annotation: 2.4.1
+  freezed_annotation: 2.4.4
   json_converter: 2.0.0
   fast_immutable_collections: 10.2.2
-  extended_image: 8.2.0
+  extended_image: 9.1.0
   vite:
     path: ../vite_dart
-  viteconnect: 0.0.2
+  viteconnect:
+    path: ../viteconnect_dart
   #google_fonts: ^2.3.2
   cupertino_icons: 1.0.8
   oktoast: 3.4.0
@@ -60,16 +59,16 @@ dependencies:
   push: 2.1.0
   crypton: 2.2.1
   flutter_portal: 1.1.4
-  collection: 1.18.0
+  collection: 1.19.1
   protobuf: 3.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: 2.4.9
-  json_serializable: 6.7.1
-  flutter_lints: 3.0.2
-  freezed: 2.5.2
+  build_runner: 2.4.15
+  json_serializable: 6.9.4
+  flutter_lints: 5.0.0
+  freezed: 2.5.8
 
 # The following section is specific to Flutter.
 flutter:
