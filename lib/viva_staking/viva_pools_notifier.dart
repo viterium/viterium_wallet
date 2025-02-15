@@ -4,31 +4,33 @@ import 'package:vite/vite.dart';
 
 import '../app_providers.dart';
 import '../tokens/token_info_provider.dart';
+import 'viva_staking_providers.dart';
 import 'viva_staking_service.dart';
 import 'viva_staking_types.dart';
 
-const _kVivaStakingCacheKey = '_kVivaStakingCacheKey';
+const _kVivaStakingV4CacheKey = '_kVivaStakingV4CacheKey';
+const _kVivaStakingV5CacheKey = '_kVivaStakingV5CacheKey';
 
 extension VivaStakingCacheExtension on CacheRepository {
-  Future<VivaStakingCache> getVivaStakingCache() async {
-    final state = await box.tryGet(
-          _kVivaStakingCacheKey,
-          typeFactory: VivaStakingCache.fromJson,
-        ) ??
+  Future<VivaStakingCache> getVivaStakingCache(String key) async {
+    final state =
+        await box.tryGet(key, typeFactory: VivaStakingCache.fromJson) ??
         const VivaStakingCache();
 
     return state;
   }
 
-  Future<void> setVivaStakingCache(VivaStakingCache cache) async {
-    await box.set(_kVivaStakingCacheKey, cache);
+  Future<void> setVivaStakingCache(String key, VivaStakingCache cache) async {
+    await box.set(key, cache);
   }
 
   Future<void> updateVivaStakingCacheWithPoolInfo(
-      VivaPoolInfoAll poolInfo) async {
-    final state = await getVivaStakingCache();
+    VivaPoolInfoAll poolInfo,
+    String key,
+  ) async {
+    final state = await getVivaStakingCache(key);
     final pools = state.pools.add(poolInfo.poolId, poolInfo);
-    return setVivaStakingCache(state.copyWith(pools: pools));
+    return setVivaStakingCache(key, state.copyWith(pools: pools));
   }
 }
 
@@ -38,11 +40,19 @@ class VivaPoolsNotifier extends StateNotifier<VivaPoolsState> {
 
   VivaPoolsNotifier({required this.ref}) : super((IMap(), true)) {
     final cache = ref.read(cacheRepositoryProvider);
-    cache.getVivaStakingCache().then((cache) {
-      state = (cache.pools, state.$2);
-      refreshPoolsInfo();
-    }).catchError((_) {});
+    cache
+        .getVivaStakingCache(cacheKey)
+        .then((cache) {
+          state = (cache.pools, state.$2);
+          refreshPoolsInfo();
+        })
+        .catchError((_) {});
   }
+
+  late final String cacheKey = switch (ref.read(vivaStakingVersionProvider)) {
+    VivaStakingVersion.v4 => _kVivaStakingV4CacheKey,
+    VivaStakingVersion.v5 => _kVivaStakingV5CacheKey,
+  };
 
   Future<void> refreshPoolsInfo() async {
     final noPools = await service.getPoolCount();
@@ -55,9 +65,11 @@ class VivaPoolsNotifier extends StateNotifier<VivaPoolsState> {
       await refreshPoolWithId(stakeVitePoolNo);
     }
 
-    for (BigInt poolId = noPools - BigInt.one;
-        poolId >= BigInt.zero;
-        poolId -= BigInt.one) {
+    for (
+      BigInt poolId = noPools - BigInt.one;
+      poolId >= BigInt.zero;
+      poolId -= BigInt.one
+    ) {
       if (!mounted) {
         return;
       }
@@ -91,9 +103,11 @@ class VivaPoolsNotifier extends StateNotifier<VivaPoolsState> {
       return;
     }
 
-    final TokenInfo stakingTokenInfo = oldInfo?.stakingTokenInfo ??
+    final TokenInfo stakingTokenInfo =
+        oldInfo?.stakingTokenInfo ??
         await ref.read(tokenInfoProvider(poolInfo.stakingTokenId).future);
-    final TokenInfo rewardsTokenInfo = oldInfo?.rewardTokenInfo ??
+    final TokenInfo rewardsTokenInfo =
+        oldInfo?.rewardTokenInfo ??
         await ref.read(tokenInfoProvider(poolInfo.rewardTokenId).future);
 
     if (!mounted) {
@@ -110,7 +124,7 @@ class VivaPoolsNotifier extends StateNotifier<VivaPoolsState> {
     final lastSnapshotHeight = ref.read(lastKnownSnapshotHeightProvider);
     if (newInfo.endBlock <= lastSnapshotHeight) {
       final cache = ref.read(cacheRepositoryProvider);
-      cache.updateVivaStakingCacheWithPoolInfo(newInfo);
+      cache.updateVivaStakingCacheWithPoolInfo(newInfo, cacheKey);
     }
 
     state = (pools.add(poolId, newInfo), state.$2);
