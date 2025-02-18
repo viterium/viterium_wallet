@@ -105,6 +105,7 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
               borderLength: 30,
               borderWidth: 10,
               cutOutSize: scanArea,
+              overlayColor: Color.fromRGBO(0, 0, 0, 0.5),
             ),
           ),
           SafeArea(
