@@ -1,8 +1,8 @@
 import 'package:vite/vite.dart';
 
 import 'constants.dart';
-import 'extensions.dart';
 import 'types.dart';
+import 'vitex_extensions.dart';
 
 class VitexService {
   final ViteClient client;
@@ -199,8 +199,11 @@ class VitexService {
       if (to > endHeight) {
         to = endHeight;
       }
-      final blocks =
-          await client.getAccountBlocksByHeightRange(address, from, to);
+      final blocks = await client.getAccountBlocksByHeightRange(
+        address,
+        from,
+        to,
+      );
       if (blocks.isEmpty) {
         break;
       }
@@ -245,12 +248,7 @@ class VitexService {
     required Address address,
     required Hash hash,
     required int count,
-  }) =>
-      client.getAccountBlocks(
-        address,
-        accountBlockHash: hash,
-        count: count,
-      );
+  }) => client.getAccountBlocks(address, accountBlockHash: hash, count: count);
 
   // get the blocks from previous timepoint of hash to currentHash
   Future<Map<String, AccountBlock>> getAccountBlockMap({

@@ -12,6 +12,7 @@ import '../util/caseconverter.dart';
 import '../util/numberutil.dart';
 import '../util/ui_util.dart';
 import '../util/util.dart';
+import '../vitex/vitex_widget.dart';
 import '../widgets/app_icon_button.dart';
 import '../widgets/buttons.dart';
 import '../widgets/dialog.dart';
@@ -127,7 +128,7 @@ class TokenSheet extends HookConsumerWidget {
         bottom: MediaQuery.of(context).size.height * 0.035,
       ),
       child: DefaultTabController(
-        length: 1,
+        length: 2,
         child: Container(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -273,21 +274,21 @@ class TokenSheet extends HookConsumerWidget {
                 indicatorColor: theme.primary60,
                 indicatorPadding: const EdgeInsets.only(left: 20, right: 20),
                 tabs: [
-                  // Tab(
-                  //   child: Container(
-                  //     margin: const EdgeInsets.only(top: 20),
-                  //     width: double.infinity,
-                  //     child: Text(
-                  //       CaseChange.toUpperCase('Vitex', ref),
-                  //       textAlign: TextAlign.center,
-                  //       style: TextStyle(
-                  //         fontSize: 14,
-                  //         fontWeight: FontWeight.w100,
-                  //         color: theme.text,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Tab(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      width: double.infinity,
+                      child: Text(
+                        CaseChange.toUpperCase('Vitex', ref),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w100,
+                          color: theme.text,
+                        ),
+                      ),
+                    ),
+                  ),
                   Tab(
                     child: Container(
                       margin: const EdgeInsets.only(top: 20, left: 20),
@@ -304,11 +305,13 @@ class TokenSheet extends HookConsumerWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    // Stack(children: [
-                    //   const VitexWidget(),
-                    //   const TopGradientWidget(),
-                    //   const BottomGradientWidget(),
-                    // ]),
+                    Stack(
+                      children: [
+                        VitexWidget(tokenInfo: tokenInfo),
+                        const TopGradientWidget(),
+                        const BottomGradientWidget(),
+                      ],
+                    ),
                     Stack(
                       children: [
                         TransactionHistoryWidget(
