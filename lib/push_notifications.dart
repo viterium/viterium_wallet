@@ -5,7 +5,7 @@ import 'package:vite/vite.dart';
 import 'push_notifications/push_providers.dart';
 
 void Function() setupPushNotifications(WidgetRef ref) {
-  final onNewTokenSubscription = Push.instance.onNewToken.listen((token) {
+  final unsubscribeOnNewToken = Push.instance.addOnNewToken((token) {
     final notifier = ref.read(pushTokenSettingsProvider.notifier);
     notifier.updateToken(token);
   });
@@ -37,8 +37,9 @@ void Function() setupPushNotifications(WidgetRef ref) {
     notifier.state = id;
   });
 
-  final onNotificationTapSubscription =
-      Push.instance.onNotificationTap.listen((data) {
+  final unsubscribeOnNotificationTap = Push.instance.addOnNotificationTap((
+    data,
+  ) {
     final id = getIdFromData(data);
     if (id == null) {
       return;
@@ -50,12 +51,13 @@ void Function() setupPushNotifications(WidgetRef ref) {
 
   final onMessageCancel = Push.instance.addOnMessage((message) {});
 
-  final onBackgroundMessageCancel =
-      Push.instance.addOnBackgroundMessage((message) {});
+  final onBackgroundMessageCancel = Push.instance.addOnBackgroundMessage(
+    (message) {},
+  );
 
   return () {
-    onNewTokenSubscription.cancel();
-    onNotificationTapSubscription.cancel();
+    unsubscribeOnNewToken();
+    unsubscribeOnNotificationTap();
     onMessageCancel();
     onBackgroundMessageCancel();
   };
