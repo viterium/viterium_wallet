@@ -1,8 +1,8 @@
-import 'package:barcode_finder/barcode_finder.dart' as bf;
+//import 'package:barcode_finder/barcode_finder.dart' as bf;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 import '../app_providers.dart';
 import '../util/platform.dart';
@@ -61,13 +61,14 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
         return;
       }
       try {
-        final code = await bf.BarcodeFinder.scanFile(
-          path: file.path,
-          formats: const [bf.BarcodeFormat.QR_CODE],
-        );
-        if (code == null) throw 'Empty Result';
-        result = Barcode(code, BarcodeFormat.qrcode, null);
-        Navigator.of(context).pop(result);
+        // final code = await bf.BarcodeFinder.scanFile(
+        //   path: file.path,
+        //   formats: const [bf.BarcodeFormat.QR_CODE],
+        // );
+        // if (code == null) throw 'Empty Result';
+        // result = Barcode(code, BarcodeFormat.qrcode, null);
+        // Navigator.of(context).pop(result);
+        throw 'Not Implemented';
       } catch (e) {
         UIUtil.showSnackbar('No QR code found', context);
       }
@@ -182,11 +183,5 @@ class _QrScannerWidgetState extends ConsumerState<QrScannerWidget> {
         Navigator.of(context).pop(result);
       }
     });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 }
