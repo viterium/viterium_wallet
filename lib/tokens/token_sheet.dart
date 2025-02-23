@@ -279,13 +279,9 @@ class TokenSheet extends HookConsumerWidget {
                       margin: const EdgeInsets.only(top: 20),
                       width: double.infinity,
                       child: Text(
-                        CaseChange.toUpperCase('Vitex', ref),
+                        'VITEX',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w100,
-                          color: theme.text,
-                        ),
+                        style: styles.textStyleTabLabel,
                       ),
                     ),
                   ),
@@ -295,7 +291,7 @@ class TokenSheet extends HookConsumerWidget {
                       width: double.infinity,
                       child: Text(
                         CaseChange.toUpperCase(l10n.transactions, ref),
-                        textAlign: TextAlign.start,
+                        textAlign: TextAlign.center,
                         style: styles.textStyleTabLabel,
                       ),
                     ),

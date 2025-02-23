@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vite/vite.dart';
@@ -213,10 +214,22 @@ class VitexWidget extends ConsumerWidget {
               available: BigInt.zero,
               locked: BigInt.zero,
             );
-        return VitexAccountFundInfoWidget(accountFund: accountFund);
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: SingleChildScrollView(
+            child: VitexAccountFundInfoWidget(accountFund: accountFund),
+          ),
+        );
       },
       error: (error, stackTrace) => Text(error.toString()),
-      loading: () => const CircularProgressIndicator(),
+      loading:
+          () => Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: const CupertinoActivityIndicator(),
+            ),
+          ),
     );
   }
 }
