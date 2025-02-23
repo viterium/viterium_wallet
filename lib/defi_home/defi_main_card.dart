@@ -48,7 +48,7 @@ class DefiMainCard extends ConsumerWidget {
               },
             ),
             Container(
-              height: 90,
+              height: 92,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
