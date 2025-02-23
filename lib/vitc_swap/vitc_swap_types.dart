@@ -5,7 +5,7 @@ import 'package:vite/vite.dart';
 part 'vitc_swap_types.freezed.dart';
 part 'vitc_swap_types.g.dart';
 
-const kVitcSwapLastHeight = 329800;
+const kVitcSwapLastHeight = 800000;
 
 const kVitcSwapTokenIdList = [
   'tti_5649544520544f4b454e6e40',
@@ -44,6 +44,9 @@ const kVitcSwapTokenIdList = [
   'tti_3eb2bbf86d2f5873b62452b0',
   'tti_b18e6488eeb30541da7f5010',
   'tti_2ebf3bd74d4895b0ee81257d',
+  'tti_b16504fe7ab6ba16618c3645',
+  'tti_f9bd6782f966f899d74d7df8',
+  'tti_eb42c3dded05ac0fb45f43fa',
 ];
 
 @freezed
@@ -85,14 +88,13 @@ class VitcSwapState with _$VitcSwapState {
     required TokenInfo fromToken,
     required TokenInfo toToken,
     required double slippage,
-  }) =>
-      VitcSwapState(
-        fromAmount: Amount.raw(BigInt.zero, tokenInfo: fromToken),
-        toAmount: Amount.raw(BigInt.zero, tokenInfo: toToken),
-        slippage: slippage,
-        requestId: 0,
-        callId: 0,
-      );
+  }) => VitcSwapState(
+    fromAmount: Amount.raw(BigInt.zero, tokenInfo: fromToken),
+    toAmount: Amount.raw(BigInt.zero, tokenInfo: toToken),
+    slippage: slippage,
+    requestId: 0,
+    callId: 0,
+  );
 
   TokenInfo get fromToken => fromAmount.tokenInfo;
   TokenInfo get toToken => toAmount.tokenInfo;
@@ -109,12 +111,12 @@ class TokenLiquidity with _$TokenLiquidity {
   }) = _TokenLiquidity;
 
   factory TokenLiquidity.fromList(List<Object> list) => TokenLiquidity(
-        total: list[0] as BigInt,
-        totalVite: list[1] as BigInt,
-        k: list[2] as BigInt,
-        tokenSupply: list[3] as BigInt,
-        lpToken: list[4] as Token,
-      );
+    total: list[0] as BigInt,
+    totalVite: list[1] as BigInt,
+    k: list[2] as BigInt,
+    tokenSupply: list[3] as BigInt,
+    lpToken: list[4] as Token,
+  );
 }
 
 @freezed
