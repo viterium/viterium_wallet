@@ -32,20 +32,18 @@ class PowSettingsSheet extends ConsumerWidget {
       title: title,
       mainWidget: Stack(
         children: [
-          ListView.builder(
+          ListView.separated(
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(vertical: 10),
-            itemCount: items.length + 1,
+            itemCount: items.length,
             itemBuilder: (context, index) {
-              if (index == items.length) {
-                return Divider(height: 2, color: theme.text15);
-              }
               final config = items[index];
               return ProviderScope(
                 overrides: [powConfigItemProvider.overrideWithValue(config)],
                 child: const PowItem(),
               );
             },
+            separatorBuilder: (_, _) => Divider(height: 2, color: theme.text15),
           ),
           const ListTopGradient(),
           const ListBottomGradient(),

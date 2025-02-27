@@ -16,17 +16,15 @@ class AccountListWidget extends ConsumerWidget {
     final accounts = ref.watch(accountsProvider);
     final accountList = accounts.accounts;
 
-    return ListView.builder(
+    return ListView.separated(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      itemCount: accountList.length + 1,
+      itemCount: accountList.length,
       controller: scrollController,
       itemBuilder: (context, index) {
-        if (index == accountList.length) {
-          return Divider(height: 2, color: theme.text15);
-        }
         final account = accountList[index];
         return AccountListItem(account: account);
       },
+      separatorBuilder: (_, _) => Divider(height: 2, color: theme.text15),
     );
   }
 }

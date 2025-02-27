@@ -10,21 +10,6 @@ import 'node_add_sheet.dart';
 import 'node_providers.dart';
 import 'vite_node_item.dart';
 
-class ListViewEndItem extends ConsumerWidget {
-  final Widget child;
-
-  const ListViewEndItem({super.key, required this.child});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = ref.watch(themeProvider);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [child, Divider(height: 2, color: theme.text15)],
-    );
-  }
-}
-
 class ViteNodesSheet extends ConsumerWidget {
   const ViteNodesSheet({super.key});
 
@@ -48,14 +33,11 @@ class ViteNodesSheet extends ConsumerWidget {
       title: title,
       mainWidget: Stack(
         children: [
-          ListView.builder(
+          ListView.separated(
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(vertical: 10),
-            itemCount: items.length + 1,
+            itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
-              if (index == items.length) {
-                return Divider(height: 2, color: theme.text15);
-              }
               final config = items[index];
               return ProviderScope(
                 overrides: [
@@ -64,6 +46,7 @@ class ViteNodesSheet extends ConsumerWidget {
                 child: const ViteNodeItem(),
               );
             },
+            separatorBuilder: (_, _) => Divider(height: 2, color: theme.text15),
           ),
           const ListTopGradient(),
           const ListBottomGradient(),

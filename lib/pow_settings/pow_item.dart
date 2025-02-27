@@ -75,7 +75,6 @@ class PowItem extends ConsumerWidget {
       ),
       child: Column(
         children: [
-          Divider(height: 2, color: theme.text15),
           TextButton(
             style: styles.defaultTextButtonStyle,
             onPressed: changeConfig,
