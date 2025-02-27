@@ -64,22 +64,24 @@ class AccountListItem extends ConsumerWidget {
 
     return Slidable(
       endActionPane: ActionPane(
-        extentRatio: 0.4,
+        extentRatio: 0.2 * (account.index > 0 ? 2 : 1),
         motion: const StretchMotion(),
         children: [
           SlidableAction(
             icon: Icons.edit,
             backgroundColor: theme.primary,
             foregroundColor: theme.backgroundDark,
-            onPressed: (_) => showAccountDetails,
+            onPressed: (_) => showAccountDetails(),
           ),
-          if (account.index > 0)
+          if (account.index > 0) ...[
+            const SizedBox(width: 1),
             SlidableAction(
               icon: Icons.delete,
               backgroundColor: theme.primary,
               foregroundColor: theme.backgroundDark,
-              onPressed: (_) => confirmDeleteAccount,
+              onPressed: (_) => confirmDeleteAccount(),
             ),
+          ],
         ],
       ),
       child: Column(
